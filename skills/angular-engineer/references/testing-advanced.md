@@ -1,4 +1,4 @@
-# Advanced Testing Patterns — Angular 14 (Karma + Jasmine)
+# Advanced Testing Patterns (Karma + Jasmine)
 
 ---
  

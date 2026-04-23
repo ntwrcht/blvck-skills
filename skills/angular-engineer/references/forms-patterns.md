@@ -1,5 +1,14 @@
 # Reactive Forms Patterns
 
+> Template examples use Angular Material. Check `.context/angular.md` for this project's design system.
+>
+> | Design system | Field wrapper | Input | Error |
+> |---|---|---|---|
+> | **Angular Material** | `<mat-form-field>` | `matInput` | `<mat-error>` |
+> | **Bootstrap 5** | `<div class="mb-3">` | `class="form-control"` | `<div class="invalid-feedback">` |
+> | **Tailwind** | `<div class="flex flex-col gap-1">` | `class="border rounded px-3 py-2"` | `<p class="text-red-500 text-sm">` |
+> | **Plain HTML** | `<div>` | `<input>` | `<span class="error">` |
+
 ## Table of Contents
 1. FormBuilder Basics & Typed Forms (ng14+)
 2. Nested FormGroups
@@ -319,50 +328,5 @@ Usage in a parent form — works exactly like a native input:
 
 ## 8. Form Submission Pattern
 
-Standard pattern for handling loading state, server errors, and reset after success.
-
-```typescript
-@Component({ ... })
-export class UserFormComponent implements OnDestroy {
-  form = this.fb.group({ ... });
-  isSubmitting = false;
-  serverError: string | null = null;
-
-  private destroy$ = new Subject<void>();
-
-  constructor(private userService: UserService, private router: Router) {}
-
-  onSubmit(): void {
-    if (this.form.invalid || this.isSubmitting) return;
-
-    this.isSubmitting = true;
-    this.serverError = null;
-
-    this.userService.create(this.form.getRawValue()).pipe(
-      takeUntil(this.destroy$),
-      finalize(() => { this.isSubmitting = false; })
-    ).subscribe({
-      next: () => this.router.navigate(['/users']),
-      error: (err: HttpErrorResponse) => {
-        this.serverError = err.error?.message ?? 'Something went wrong. Please try again.';
-      },
-    });
-  }
-
-  ngOnDestroy(): void { this.destroy$.next(); this.destroy$.complete(); }
-}
-```
-
-```html
-<form [formGroup]="form" (ngSubmit)="onSubmit()">
-  <!-- fields -->
-
-  <mat-error *ngIf="serverError">{{ serverError }}</mat-error>
-
-  <button mat-raised-button color="primary" type="submit"
-          [disabled]="form.invalid || isSubmitting">
-    <mat-spinner *ngIf="isSubmitting" diameter="20"></mat-spinner>
-    <span *ngIf="!isSubmitting">Save</span>
-  </button>
-</form>
-```
+→ See `references/error-handling.md` §5 for the full form submission pattern including
+loading state, server error mapping, field-level validation errors, and 422 handling.

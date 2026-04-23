@@ -1,12 +1,12 @@
 # Context Template
 
 This file defines the format for `.context.md` and all `.context/*.md` files.
-Claude reads this when `.context.md` does not exist, to know what questions
-to ask and what format to generate.
+It is LLM-agnostic — all providers and skills read from the same source.
+Each skill reads only its own section; no skill needs to load the full file.
 
 ---
 
-## .context.md (project root index)
+## .context.md (project root — canonical manifest)
 
 ```
 name:        ___
@@ -15,9 +15,9 @@ description: ___
 
 # Stack
 frontend:    ___    # e.g. Angular 17
-backend:     ___    # e.g. Go, Node.js
-database:    ___    # e.g. MongoDB
-infra:       ___    # e.g. GKE, EKS
+backend:     ___    # e.g. Node.js, Go, Strapi
+database:    ___    # e.g. PostgreSQL, MongoDB
+infra:       ___    # e.g. GKE, EKS, Vercel
 cdn_waf:     ___    # e.g. Cloudflare
 
 # Git (summary — details in .context/git.md)
@@ -28,6 +28,10 @@ ticket_prefix:  ___
 # Angular (if applicable — details in .context/angular.md)
 version:        ___
 module_style:   standalone
+
+# Strapi (if applicable — details in .context/strapi.md)
+version:        ___
+database:       ___
 
 # Analytics (if applicable — details in .context/analytics.md)
 ga4_id:         ___
@@ -42,6 +46,37 @@ size:           ___
 methodology:    scrum
 sprint_length:  2 weeks
 pm_tool:        Jira
+```
+
+---
+
+## Provider stubs (generate only if file does not exist)
+
+Each provider file is a thin pointer — the manifest stays in `.context.md`.
+
+**CLAUDE.md**
+```markdown
+@.context.md
+```
+
+**GEMINI.md**
+```markdown
+Project context: see .context.md
+```
+
+**.cursorrules**
+```
+Project context: see .context.md
+```
+
+**.github/copilot-instructions.md**
+```markdown
+Project context: see .context.md
+```
+
+**.windsurfrules**
+```
+Project context: see .context.md
 ```
 
 ---
@@ -120,6 +155,34 @@ base_url:     environment.apiUrl
 auth_header:  Authorization: Bearer <token>
 envelope:     { data: T, meta?: M }
 error_shape:  { error: string, code?: string }
+```
+
+---
+
+## .context/strapi.md
+
+```
+version:        ___     # e.g. 5.x
+database:       ___     # e.g. PostgreSQL, SQLite
+auth_method:    JWT
+api_style:      REST / GraphQL / both
+```
+
+### Content Types
+| Name | Kind | Key Fields |
+|---|---|---|
+| (list existing — check before creating new) | | |
+
+### Custom Plugins
+| Plugin | Purpose |
+|---|
+| (list if any) | |
+
+### API Conventions
+```
+base_url:     /api
+populate:     explicit (never populate=*)
+error_shape:  { error: { status, name, message, details } }
 ```
 
 ---

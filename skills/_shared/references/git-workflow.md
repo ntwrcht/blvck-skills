@@ -90,11 +90,11 @@ BREAKING CHANGE: /api/v1/* endpoints removed. Migrate to /api/v2/*.
 Scope = the part of the codebase affected. Keep it consistent across the team.
 
 ```bash
-# Features / modules
+# Features / modules (use your project's actual feature names)
 feat(auth): ...
-feat(bot-builder): ...
-feat(flow-editor): ...
-feat(channel): ...
+feat(dashboard): ...
+feat(checkout): ...
+feat(notifications): ...
 feat(analytics): ...
 
 # Layers
@@ -114,11 +114,15 @@ refactor: migrate all components to standalone
 chore: upgrade Angular to v17
 ```
 
+> **Project scopes:** Replace the examples above with your project's actual module names.
+> Check `.context/git.md` for the agreed scope list. Add new scopes there when a new
+> feature domain is introduced so the whole team uses the same vocabulary.
+
 ### Good vs Bad
 
 ```
-✅ feat(channel): add WhatsApp Business integration
-✅ fix(flow-editor): prevent crash on circular node detection
+✅ feat(auth): add OAuth2 social login support
+✅ fix(dashboard): prevent crash when data is empty on first load
 ✅ refactor(user-service): replace BehaviorSubject with signal state
 ✅ chore(deps): upgrade @angular/core to 17.3.0
 ✅ ci(deploy): add staging environment step
@@ -323,20 +327,41 @@ Closes #
 
 ## 8. Changelog Generation
 
-### Automated (standard-version)
+### Automated (release-please)
 
 ```bash
-npm install --save-dev standard-version
+npm install --save-dev release-please
 
-# Bump version + generate CHANGELOG.md + create git tag
-npx standard-version
+# release-please uses two config files at the repo root:
+# release-please-config.json — defines packages and release type
+# .release-please-manifest.json — tracks current versions
+```
 
-# Preview without writing
-npx standard-version --dry-run
+**`release-please-config.json`** — minimal single-package setup:
+```json
+{
+  "$schema": "https://raw.githubusercontent.com/googleapis/release-please/main/schemas/config.json",
+  "release-type": "node",
+  "packages": {
+    ".": {}
+  }
+}
+```
 
-# Force specific bump
-npx standard-version --release-as minor
-npx standard-version --release-as 2.0.0
+**`.release-please-manifest.json`** — tracks the current version:
+```json
+{
+  ".": "1.2.3"
+}
+```
+
+**Run locally** (dry-run to preview, then apply):
+```bash
+# Preview the next release without writing
+npx release-please release-pr --repo-url=<owner>/<repo> --dry-run
+
+# Or use the GitHub Action (recommended) — release-please opens a PR automatically
+# on every merge to main, bumping the version and updating CHANGELOG.md
 ```
 
 **What gets included:**

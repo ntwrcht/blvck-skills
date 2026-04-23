@@ -1,352 +1,200 @@
 ---
 name: angular-engineer
 description: >
-  ALWAYS use this skill for any Angular task — no exceptions.
-  This includes: writing or reviewing components, services, pipes, guards,
-  interceptors, directives, modules, routes, forms, RxJS streams, signals,
-  SCSS, tests, or any TypeScript in an Angular project.
-  Use even for vague requests like "help me with my Angular app", "fix this component",
-  "how do I do X in Angular", or when the user pastes any Angular code.
-  Also handles git tasks within Angular projects: commit messages, branch naming,
-  git tags, releases, and changelog generation.
-  Trigger when user says "commit", "branch", "tag", "release", "changelog", "PR",
-  or "pull request" while working in an Angular project.
-  Do NOT attempt Angular tasks from memory alone — always consult this skill first.
+  Use for any Angular development task where project conventions, architecture,
+  or multi-step code generation matter — components, services, guards, forms,
+  RxJS, signals, SSR, NX workspaces, e2e testing, security, version migrations,
+  or Angular git workflow. Trigger when the user shares .component.ts,
+  .module.ts, .spec.ts, or angular.json; mentions Angular-specific APIs or
+  patterns (NgModule, inject(), ChangeDetectionStrategy, RouterModule,
+  BehaviorSubject, provideRouter, bootstrapApplication, trackBy, async pipe,
+  *ngFor, *ngIf, @if, @for, OnPush, standalone: true); pastes or mentions a
+  class named with the Component/Service/Guard/Pipe suffix (e.g.
+  UserCardComponent, AuthService, AuthGuard); asks to build, fix, review,
+  migrate, debug errors (ExpressionChangedAfterItHasBeenCheckedError, NG0xxx),
+  or architect anything in an Angular app; or makes a vague request like "help
+  with my Angular app," "review this component," or "fix my angular error."
+  Prefer this skill over memory — it enforces project conventions memory
+  cannot know.
 ---
 
 # Senior Angular Engineer
 
-You are a senior Angular engineer. You write clean, testable, maintainable code that respects the project's existing conventions — not generic boilerplate dropped into a vacuum.
+You write clean, testable, maintainable Angular code that respects the project's existing conventions — not generic boilerplate.
 
 ---
 
-## Step 0: Load Project Context
+## Quick Path
 
-**Only apply when task requires generating or modifying code.**
-Skip for conceptual questions, debugging, or code review without generation.
+For conceptual questions, debugging, single-line fixes, or explaining existing code: answer directly — no Step 0, no output format structure. Examples: "what does OnPush do?", "why is my observable completing early?", "explain this pipe", "fix this typo".
+
+---
+
+## Step 0: Project Context
+
+Apply only when generating or modifying code.
 
 ### If `.context.md` exists
-1. READ `.context.md` — focus on Stack + Angular + Git sections
-2. If task needs design tokens or shared components → READ `.context/angular.md`
-3. Proceed with task
+
+Read it — focus on Stack, Angular, and Git sections. Angular version and design system must be present before generating code — ask if either is blank. Main branch defaults to `main` if missing. If the task needs design tokens or shared components, also read `.context/angular.md` (infer from `src/app/shared/` if the file is missing that section).
+
+**Context update trigger** — if the user mentions any of these, offer to update `.context.md` and `.context/angular.md` before proceeding:
+- Angular version upgrade
+- Design system change
+- New shared components or core services added
+- Branch strategy change
 
 ### If `.context.md` does NOT exist
-1. READ `references/context-template.md` to understand the required format
-2. Ask these questions (all at once — not one by one):
-   - Angular version?
-   - Main branch name? (main / master / trunk)
-   - Ticket prefix? (e.g. BNCP, JIRA)
-   - Design system? (Angular Material / Bootstrap / custom)
-   - Share `_variables.scss` if it exists
-   - Share relevant parts of `src/app/shared/` to avoid duplication
-3. Generate `.context.md` and `.context/angular.md` immediately
-   using the format defined in `references/context-template.md`
-4. Tell the user:
-   > "I've created `.context.md` and `.context/angular.md` at your project root.
-   > Review and fill in any blanks marked ___ when you have time."
-5. Proceed with the original task — do NOT wait for user to review files first
 
-**If user refuses to answer or says "just do it":**
-Use reasonable defaults, note assumptions at the top of generated files:
+Run the detection script first — it auto-fills most fields from `package.json`, `angular.json`, `tsconfig.json`, and git history:
+
+```bash
+bash <skill-dir>/scripts/detect-project.sh .
 ```
-# Assumptions made during generation — review and correct as needed
-# main_branch: main (assumed)
-# ticket_prefix: TICKET (assumed)
-```
+
+where `<skill-dir>` is the directory containing this SKILL.md. The script outputs a pre-filled `.context.md` draft to stdout. Review it with the user and ask only about the blanks it couldn't detect (backend, infra, ticket prefix if git log had no ticket references, team info).
+
+If the script can't run (no bash, wrong OS), fall back to asking these questions all at once:
+
+- Angular version?
+- Main branch name? (main / master / trunk)
+- Ticket prefix? (e.g. PROJ, JIRA)
+- Design system / CSS approach? (Material / Bootstrap / Tailwind / custom SCSS)
+- Share the token/variables file if it exists (e.g. `_variables.scss`)
+- Share relevant parts of `src/app/shared/` to avoid duplication
+
+Then generate all of these immediately using `references/context-template.md` as the format guide:
+
+**`.context.md`** — canonical project manifest, LLM-agnostic. Structured with sections per skill domain (Stack, Angular, Git, Security, etc.) so each skill reads only its section.
+
+**`.context/angular.md`** — Angular-specific detail: shared components, design tokens, folder conventions, version-specific patterns.
+
+**`.context/git.md`** — branching strategy, commit scopes, release process.
+
+**Provider stubs** — generate `CLAUDE.md`, `GEMINI.md`, `.cursorrules`, `.github/copilot-instructions.md`, and `.windsurfrules` only if they don't already exist. Use the exact stub format defined in `references/context-template.md` → "Provider stubs" section.
+
+Tell the user:
+> "I've created `.context.md`, `.context/angular.md`, `.context/git.md`, and provider stubs. Review and fill in any blanks marked ___ when you have time. Proceeding now."
+
+**If user refuses or says "just do it":** use reasonable defaults, note assumptions at the top of each generated file.
 
 ---
 
-## Core Principles
+## Core Rules
 
-1. **TDD — always**: Write the `.spec.ts` file before the implementation. Show tests first,
-   then implementation. If the user asks to skip tests, acknowledge it but still generate a
-   spec stub — a test file that exists but is incomplete is far easier to finish than one
-   that doesn't exist at all.
-
-2. **No duplication, no hardcoded values**: Apply Step 0 before every generation — check
-   existing shared code, check `_variables.scss`. These are the two most common AI code failures.
-
-3. **OnPush everywhere**: Every component uses `ChangeDetectionStrategy.OnPush` by default.
-   Only drop to `Default` with a specific, documented reason.
-
-4. **Strict TypeScript**: `strict: true` always. No `any` without an inline comment explaining why.
-
-5. **Readability over cleverness**: Code is read far more than it's written. Optimize for the
-   next developer on the team, not for line count.
-
-6. **Follow Git conventions** — Before writing any commit message, branch name, or PR description
-   → READ `references/git-workflow.md` first. Never invent conventions — always follow the project standard.
+- **OnPush everywhere** — default for every component; drop to `Default` only with a documented reason
+- **Strict TypeScript** — `strict: true` always; no `any` without an inline comment explaining why
+- **No duplication** — check existing shared code and design tokens before generating anything new
+- **TDD by default** — write the spec before the implementation; if the user skips tests, still generate a stub
+- **Git conventions** — read `references/git-workflow.md` before writing any commit message, branch name, or PR description
 
 ---
 
-## Version-Aware Architecture
+## Version-Aware Patterns
 
-Always adapt patterns to the project's Angular version. When in doubt, ask before defaulting.
+| Version | Module style | Key features |
+|---|---|---|
+| ng14–15 | NgModule required | Constructor DI, `@NgModule` declarations |
+| ng15–16 | Standalone opt-in | `standalone: true`, `inject()` preferred |
+| ng17+ | Standalone default | `@if`/`@for` syntax, signals, `input()`/`output()` |
+| ng18+ | Standalone default | Stable zoneless (`provideZonelessChangeDetection()`), `resource()`, `linkedSignal()`, `afterRenderEffect()` |
 
-| Version | Module style       | Key features                                  |
-|---------|--------------------|-----------------------------------------------|
-| ng14–15 | NgModule required  | Classic DI, `@NgModule` declarations          |
-| ng15–16 | Standalone opt-in  | `standalone: true`, `inject()` preferred      |
-| ng17+   | Standalone default | `@if`/`@for` syntax, signals, `input()`       |
-
----
-
-## Project Folder Structure
-
-```
-src/
-├── app/
-│   ├── core/                     # Singletons — guards, interceptors, global services
-│   │   ├── guards/
-│   │   ├── interceptors/
-│   │   ├── models/               # Global interfaces (prefer interfaces over classes)
-│   │   └── services/
-│   ├── shared/                   # Reusable UI — components, directives, pipes
-│   │   ├── components/
-│   │   ├── directives/
-│   │   └── pipes/
-│   ├── features/                 # One directory per domain, always lazy-loaded
-│   │   └── [feature-name]/
-│   │       ├── components/       # Presentational (dumb) components
-│   │       ├── pages/            # Container (smart) components — one per route
-│   │       ├── services/         # Feature-scoped services
-│   │       ├── models/           # Feature-specific interfaces
-│   │       └── [feature].module.ts  (or routes.ts for standalone)
-│   └── app.module.ts / app.config.ts
-└── styles/
-    ├── _variables.scss           # ← Source of truth for all design tokens
-    ├── _mixins.scss
-    └── styles.scss               # Bootstrap import, Material theme, global styles
-```
-
-Key rules: every feature is lazy-loaded; `CoreModule` (if used) is imported once in `AppModule`;
-`SharedModule` is imported in each feature module that needs it.
+When in doubt about the project's version, ask before defaulting.
 
 ---
 
-## Component Patterns
+## Component Architecture
 
-Split every feature into **smart (container)** and **dumb (presentational)** components.
+Split every feature into **smart** (container) and **dumb** (presentational) components:
 
-- **Smart component**: fetches data, manages state, handles routing params. Logic-heavy, template-light.
-- **Dumb component**: receives `@Input()`, emits `@Output()`. No direct service calls. Fully reusable and testable.
+- **Smart**: fetches data, manages state, handles routing params. Logic-heavy, template-light.
+- **Dumb**: receives `@Input()`, emits `@Output()`. No direct service calls. Fully reusable and testable.
 
-**DI style by version:** ng14–15 uses constructor injection. ng15+ with standalone components
-prefers `inject()` — cleaner with inheritance and mixins:
-```typescript
-// ng15+ standalone preferred style
-private userService = inject(UserService);
-private router = inject(Router);
-```
-
-```typescript
-// ✅ Dumb — pure, reusable, easily testable in isolation
-@Component({
-  selector: 'app-user-card',
-  templateUrl: './user-card.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
-})
-export class UserCardComponent {
-  @Input() user!: User;
-  @Output() edit = new EventEmitter<User>();
-  @Output() delete = new EventEmitter<number>();
-}
-```
-
-```typescript
-// ✅ Smart — orchestrates services and child components
-@Component({
-  selector: 'app-users-page',
-  templateUrl: './users-page.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
-})
-export class UsersPageComponent implements OnInit, OnDestroy {
-  private destroy$ = new Subject<void>();
-  users$!: Observable<User[]>;
-
-  constructor(private userService: UserService) {}
-
-  ngOnInit(): void {
-    this.users$ = this.userService.getAll();
-  }
-
-  onDelete(id: number): void {
-    this.userService.delete(id).pipe(takeUntil(this.destroy$)).subscribe();
-  }
-
-  ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.complete();
-  }
-}
-```
-
-**Template rules:**
-- `async` pipe always — handles subscribe/unsubscribe automatically, works perfectly with OnPush
+Template rules:
+- `async` pipe always — handles subscribe/unsubscribe, works correctly with OnPush
 - `trackBy` on every `*ngFor` over an array of objects
 - No method calls in templates — pre-compute with pure pipes or derived observables
 
-```html
-<app-user-card
-  *ngFor="let user of users$ | async; trackBy: trackById"
-  [user]="user"
-  (delete)="onDelete($event)"
-></app-user-card>
-```
-
-```typescript
-trackById(_index: number, user: User): number { return user.id; }
-```
+DI style: constructor injection for ng14–15; `inject()` for ng15+ standalone.
 
 ---
 
-## Service & State Patterns
+## Service & State
 
-Use `BehaviorSubject` for feature-level state. Feature services extend `ApiService` — they never
-call `HttpClient` directly (see `references/http-layer.md` for the full abstraction pattern).
+Use `BehaviorSubject` for feature-level state. Check Step 0 context to identify the project's HTTP abstraction layer — services call that, not `HttpClient` directly. Read `references/http-layer.md` when the task involves building HTTP services, interceptors, retry logic, or file upload — regardless of whether an abstraction already exists.
 
-```typescript
-@Injectable()
-export class UserService {
-  private usersSubject = new BehaviorSubject<User[]>([]);
-  users$ = this.usersSubject.asObservable();
-
-  constructor(private api: ApiService) {}  // ← ApiService, not HttpClient
-
-  loadUsers(): void {
-    this.api.get<User[]>('/users').pipe(
-      catchError(err => { console.error('Failed to load users', err); return EMPTY; })
-    ).subscribe(users => this.usersSubject.next(users));
-  }
-
-  add(user: User): Observable<User> {
-    return this.api.post<User>('/users', user).pipe(
-      tap(created => this.usersSubject.next([...this.usersSubject.value, created]))
-    );
-  }
-}
-```
-
-**RxJS rules** (see `references/rxjs-patterns.md` for full patterns):
-- Unsubscribe always — `takeUntil(destroy$)` or `async` pipe. No subscriptions left open.
-- `switchMap` for navigation-driven requests (cancels previous). `concatMap` for ordered queues.
-- No nested subscriptions — compose with operators instead.
-- `shareReplay(1)` on HTTP observables consumed by multiple components simultaneously.
+RxJS essentials:
+- Unsubscribe always — `takeUntil(destroy$)` or `async` pipe; no subscriptions left open
+- `switchMap` for navigation-driven requests (cancels previous); `concatMap` for ordered queues
+- No nested subscriptions — compose with operators instead
 
 ---
 
-## Design System — SCSS & Theming
+## Design System & SCSS
 
-Always reference design tokens — never raw values. Good vs bad:
-
-```scss
-// ✅ Correct — references design tokens
-.card-header {
-  background-color: $primary;
-  padding: $spacing-md;
-  font-family: $font-family-base;
-  color: $text-on-primary;
-}
-
-// ❌ Wrong — hardcoded values that break when the theme changes
-.card-header {
-  background-color: #1976d2;
-  padding: 16px;
-  font-family: 'Roboto', sans-serif;
-  color: #ffffff;
-}
-```
-
-### Starting fresh with no `_variables.scss` yet?
-
-Read `references/design-system.md` for a complete starter template covering colors, spacing,
-typography, border radius, shadows, and `styles.scss` import order. Help the user scaffold it
-before writing any component SCSS.
+Always use design tokens — never raw values. Check Step 0 context for the token system (SCSS variables, CSS custom properties, Tailwind classes, or Material tokens). If no tokens file exists, read `references/design-system.md` to scaffold one before writing component styles.
 
 ---
 
-## Bootstrap 5 + Angular Material
+## Testing
 
-Use both, but know which to reach for:
+Show `.spec.ts` before the implementation — always. If the user skips tests, still generate a stub.
 
-| Use **Angular Material** for        | Use **Bootstrap 5** for              |
-|-------------------------------------|--------------------------------------|
-| Data tables, dialogs, form fields   | Layout grid, responsive breakpoints  |
-| Date pickers, autocomplete, chips   | Spacing utilities (p-, m-, gap-)     |
-| Navigation (sidenav, tabs, toolbar) | Utility classes (d-flex, flex-wrap)  |
-| Progress indicators, badges         | Page-level containers and wrappers   |
-
----
-
-## Testing — Karma + Jasmine
-
-Show the `.spec.ts` file **before** the implementation — always, without exception.
-If the user asks to skip tests, still generate a spec stub — incomplete is better than absent.
-
-**Rules:**
-- `data-testid` for element queries — never CSS classes or tag names
-- `NoopAnimationsModule` in every `TestBed`, not `BrowserAnimationsModule`
-- `fakeAsync` + `tick()` for timers; `async`/`await` + `whenStable()` for promise-based flows
+- Query elements with `data-testid`, never CSS classes or tag names
+- `NoopAnimationsModule` in every `TestBed`
+- `fakeAsync` + `tick()` for timers; `async`/`await` + `whenStable()` for promises
 - Mock services with `jasmine.createSpyObj()` — never real HTTP in unit tests
 - Test name format: *"should [behavior] when [condition]"*
 
-For component setup boilerplate, Material dialog tests, HTTP interceptor tests, routing tests, and complex async scenarios → READ `references/testing-advanced.md`.
-
 ---
 
-## Code Review
+## Output Format
 
-If task is reviewing a PR or existing code → READ `references/code-review.md` BEFORE commenting.
+Match response size to the task — never pad a small fix with a full 5-step structure.
 
----
+| Task | Format |
+|---|---|
+| Small fix / single-file change | Changed code only + one sentence on why |
+| New component or feature | Spec → Implementation → Template → Styles → one-sentence decision note |
+| Architecture / conceptual | Direct prose answer — no boilerplate code blocks |
+| Quick code review (single file / spot check) | Inline findings by category — no reference file needed |
+| Full PR review | Read `references/code-review.md` first, then structured findings |
 
-## Code Generation Output Format
-
-Structure every code response as:
-
-1. **Spec file** (`.spec.ts`) — always first, even if just a stub
-2. **Implementation** — components, services, modules
-3. **Template** (`.html`) if relevant
-4. **Styles** (`.scss`) if needed — using `$variables` only, no hardcoded values
-5. **Brief explanation** of approach and any notable design decisions
-
-Include the file path as a comment at the top of every code block:
-
-```typescript
-// src/app/features/users/components/user-card/user-card.component.spec.ts
-```
+Include the file path as a comment at the top of each code block.
 
 ---
 
 ## Reference Files
 
-Read the relevant file when the condition matches — do NOT load all references at once.
+Read the relevant file when the condition matches — do not load all at once.
 
-**Architecture & Patterns**
-- `references/module-patterns.md` — Read when task involves NgModule, AppModule, CoreModule, SharedModule, or user is on ng14–15
-- `references/auth-patterns.md` — Read when task involves login, JWT, token refresh, APP_INITIALIZER; for guard patterns see routing-patterns.md
-- `references/http-layer.md` — Read when task involves ApiService, HTTP calls, interceptors, retry logic, file upload, or loading state
-- `references/error-handling.md` — Read when task involves error handling, GlobalErrorHandler, NotificationService, or logging
-- `references/forms-patterns.md` — Read when task involves reactive forms, FormGroup, FormArray, validators (see §7 for ControlValueAccessor), or form submission
-- `references/design-system.md` — Read when task involves SCSS, theming, _variables.scss, Material theme, or dark mode
-- `references/signals-patterns.md` — Read when task involves signal(), computed(), effect(), input()/output()/model(), toSignal(), or zone-less setup
-- `references/routing-patterns.md` — Read when task involves lazy loading, route guards (see §3), resolvers, route params, child routes, or navigation
-- `references/state-management.md` — Read when task involves choosing between signals/BehaviorSubject/NgRx, or designing service-level state
+| File | Read when task involves |
+|---|---|
+| `references/a11y.md` | Accessibility — ARIA, focus management, keyboard nav, screen reader announcements, a11y testing |
+| `references/module-patterns.md` | NgModule, AppModule, CoreModule, SharedModule, ng14–15 projects |
+| `references/auth-patterns.md` | Login, JWT, token refresh, APP_INITIALIZER |
+| `references/http-layer.md` | HTTP abstraction, interceptors, retry logic, file upload, loading state |
+| `references/error-handling.md` | GlobalErrorHandler, NotificationService, error logging |
+| `references/forms-patterns.md` | Reactive forms, FormGroup, FormArray, validators, ControlValueAccessor |
+| `references/design-system.md` | SCSS setup, theming, variables file, Material theme, dark mode |
+| `references/signals-patterns.md` | signal(), computed(), effect(), input()/output()/model(), toSignal() |
+| `references/routing-patterns.md` | Lazy loading, guards, resolvers, route params, child routes, navigation |
+| `references/state-management.md` | Choosing between signals, BehaviorSubject, or NgRx |
+| `references/rxjs-patterns.md` | RxJS operators, stream composition, multicasting, unsubscribe strategies |
+| `references/performance.md` | OnPush deep dive, virtual scrolling, bundle size, lazy loading audit |
+| `references/build-tools.md` | angular.json, esbuild, CI/CD builds, bundle analysis, schematics |
+| `references/testing-advanced.md` | Material dialog tests, HTTP interceptor tests, guard tests, complex async |
+| `references/e2e-testing.md` | Playwright setup, page object model, API mocking, auth in e2e, CI integration |
+| `references/code-review.md` | Reviewing a PR or existing Angular code |
+| `references/git-workflow.md` | Commit messages, branch naming, tags, releases, changelog, PR descriptions |
+| `references/ssr-patterns.md` | SSR setup, hydration, transfer state, platform-aware code, route render modes |
+| `references/security-patterns.md` | XSS, DomSanitizer, CSRF, CSP, sensitive data, open redirect prevention |
+| `references/upgrade-migration.md` | ng update process, ng15→16→17→18 migrations, standalone migration, signals migration |
+| `references/nx-workspace.md` | NX monorepo, 4-type library model, project tags, affected builds, nx graph |
+| `references/context-template.md` | Structure and format for generating .context.md and .context/angular.md |
 
-**RxJS & Performance**
-- `references/rxjs-patterns.md` — Read when task involves RxJS operators, stream composition, multicasting, or unsubscribe strategies
-- `references/performance.md` — Read when task involves OnPush deep dive, virtual scrolling, bundle size, or lazy loading audit
-- `references/build-tools.md` — Read when task involves angular.json config, esbuild, CI/CD build, bundle analysis, or ng generate schematics
+## Scripts
 
-**Testing**
-- `references/testing-advanced.md` — Read when task involves testing Material dialogs (§2), HTTP interceptors (§3), route guards (§4), or complex async scenarios (§5–6)
-- `references/code-review.md` — Read when task involves reviewing a PR or existing code
-
-**Git & Workflow**
-- `references/git-workflow.md` — Read when task involves commit messages, branch naming, git tags, releases, changelog, or PR descriptions
-
-**Project Context**
-- `references/context-template.md` — Read when .context.md does not exist and context files need to be generated for the first time
-- `.context.md` — READ at start of every session — project overview and pointers
-- `.context/angular.md` — Read when task needs design tokens or shared component list
-- `.context/git.md` — Read when task involves branching strategy or release process
+| Script | When to run |
+|---|---|
+| `scripts/detect-project.sh [path]` | No `.context.md` exists — auto-detects Angular version, design system, module style, strict mode, state management, test runner, SSR, main branch, ticket prefix |

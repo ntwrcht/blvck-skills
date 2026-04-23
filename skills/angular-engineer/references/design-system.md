@@ -1,5 +1,8 @@
 # Design System — SCSS & Theming
 
+> Check `.context/angular.md` for which design system this project uses, then jump to the relevant section below.
+> Sections: [SCSS Variables (Material/Bootstrap)](#scss) · [Tailwind CSS](#tailwind) · [CSS Custom Properties](#css-vars)
+
 ## Starter `_variables.scss`
 
 Use this as the base when a project has no `_variables.scss` yet.
@@ -184,5 +187,139 @@ Apply via a theme class on `<body>` and an Angular Material dark theme:
 // In a ThemeService
 toggleDarkMode(isDark: boolean): void {
   document.body.classList.toggle('dark-theme', isDark);
+}
+```
+
+---
+
+## Tailwind CSS
+
+Use Tailwind when `.context/angular.md` shows `design_system: tailwind`.
+
+### Setup
+
+```bash
+npm install -D tailwindcss postcss autoprefixer
+npx tailwindcss init
+```
+
+```js
+// tailwind.config.js
+module.exports = {
+  content: ['./src/**/*.{html,ts}'],
+  theme: {
+    extend: {
+      colors: {
+        primary:   '#1976d2',
+        accent:    '#ff4081',
+        surface:   '#ffffff',
+        background:'#f5f5f5',
+      },
+      spacing: {
+        xs: '4px', sm: '8px', md: '16px', lg: '24px', xl: '32px',
+      },
+    },
+  },
+};
+```
+
+```scss
+/* src/styles.scss */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+```
+
+### Component conventions
+
+```html
+<!-- Use config tokens, not arbitrary values -->
+<div class="bg-surface rounded-md p-md shadow-sm">
+  <h2 class="text-primary font-medium text-lg">{{ title }}</h2>
+  <p class="text-gray-600 text-sm mt-xs">{{ subtitle }}</p>
+</div>
+
+<!-- Extract repeated patterns to @apply in component SCSS -->
+```
+
+```scss
+/* user-card.component.scss */
+.user-card {
+  @apply bg-surface rounded-md p-md shadow-sm flex items-center gap-sm;
+
+  &__name  { @apply text-primary font-medium; }
+  &__email { @apply text-gray-500 text-sm; }
+}
+```
+
+### Dark mode (Tailwind)
+
+```js
+// tailwind.config.js
+module.exports = { darkMode: 'class', ... };
+```
+
+```typescript
+toggleDarkMode(isDark: boolean): void {
+  document.documentElement.classList.toggle('dark', isDark);
+}
+```
+
+---
+
+## CSS Custom Properties
+
+Use when `.context/angular.md` shows `design_system: css-vars` or a framework-agnostic token system.
+
+```scss
+/* src/styles/_tokens.css */
+:root {
+  --color-primary:     #1976d2;
+  --color-accent:      #ff4081;
+  --color-surface:     #ffffff;
+  --color-background:  #f5f5f5;
+  --color-text:        rgba(0,0,0,0.87);
+  --color-text-muted:  rgba(0,0,0,0.54);
+
+  --spacing-xs:  4px;
+  --spacing-sm:  8px;
+  --spacing-md:  16px;
+  --spacing-lg:  24px;
+  --spacing-xl:  32px;
+
+  --radius-sm:   2px;
+  --radius:      4px;
+  --radius-lg:   8px;
+
+  --shadow-sm:   0 1px 3px rgba(0,0,0,0.12);
+  --shadow:      0 2px 6px rgba(0,0,0,0.15);
+}
+
+/* Dark mode override */
+[data-theme='dark'] {
+  --color-surface:     #1e1e1e;
+  --color-background:  #121212;
+  --color-text:        rgba(255,255,255,0.87);
+  --color-text-muted:  rgba(255,255,255,0.54);
+}
+```
+
+```scss
+/* Component usage */
+.user-card {
+  background:    var(--color-surface);
+  border-radius: var(--radius);
+  padding:       var(--spacing-md);
+  box-shadow:    var(--shadow-sm);
+
+  &__name  { color: var(--color-text); }
+  &__email { color: var(--color-text-muted); font-size: 0.875rem; }
+}
+```
+
+```typescript
+// ThemeService — works with any token system
+toggleDarkMode(isDark: boolean): void {
+  document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
 }
 ```

@@ -165,10 +165,10 @@ NODE_OPTIONS=--max-old-space-size=4096 ng build --configuration=production
   "build": "ng build",
   "build:prod": "ng build --configuration=production",
   "build:stats": "ng build --configuration=production --stats-json",
+  "analyze": "npm run build:stats && npx esbuild-bundle-analyzer dist/my-app/browser/stats.json",
   "test": "ng test --watch=false --browsers=ChromeHeadless",
   "test:ci": "ng test --watch=false --browsers=ChromeHeadless --code-coverage",
-  "lint": "ng lint",
-  "analyze": "webpack-bundle-analyzer dist/my-app/stats.json"
+  "lint": "ng lint"
 }
 ```
 
@@ -176,27 +176,43 @@ NODE_OPTIONS=--max-old-space-size=4096 ng build --configuration=production
 
 ## 5. Bundle Analysis
 
-Install:
+Angular 17+ uses esbuild, not Webpack — `webpack-bundle-analyzer` does not work.
+Use the Angular-native approach instead:
+
 ```bash
-npm install --save-dev webpack-bundle-analyzer
+# Generate stats file
+ng build --configuration=production --stats-json
+
+# Option A — esbuild-bundle-analyzer (recommended for ng17+)
+npx esbuild-bundle-analyzer dist/my-app/browser/stats.json
+
+# Option B — source-map-explorer (works with any bundler)
+npm install --save-dev source-map-explorer
+ng build --configuration=production --source-map
+npx source-map-explorer 'dist/my-app/browser/*.js'
 ```
 
-Run:
-```bash
-npm run build:stats
-npx webpack-bundle-analyzer dist/my-app/stats.json
+```json
+// package.json
+{
+  "scripts": {
+    "build:stats": "ng build --configuration=production --stats-json",
+    "analyze": "npm run build:stats && npx esbuild-bundle-analyzer dist/my-app/browser/stats.json"
+  }
+}
 ```
 
 **What to look for:**
 - Duplicate libraries (lodash imported twice via different paths)
-- Unexpectedly large chunks (a lazy route that's too eager)
-- `common` chunk growing too large — split more aggressively
-- Third-party libraries that should be CDN-loaded instead
+- Unexpectedly large lazy chunks (a route that's too eager)
+- Third-party libraries over 50KB — look for lighter alternatives
+- Angular Material modules imported fully when only a subset is used
 
 **Quick wins:**
-- Import only what you use: `import { debounceTime } from 'rxjs/operators'` not `import * as rxjs from 'rxjs'`
+- Import only what you use from RxJS — modern bundlers tree-shake well but explicit imports help
 - Use `@defer` blocks (ng17+) for heavy components below the fold
-- Tree-shake Angular Material: import only the modules you use
+- Tree-shake Angular Material: import only the component modules you use
+- Replace `moment` with `date-fns` (fully tree-shakeable)
 
 ---
 

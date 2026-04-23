@@ -1,4 +1,4 @@
-# Performance Optimization for Angular 14
+# Performance Optimization
 
 ## 1. OnPush Change Detection
 
@@ -199,28 +199,39 @@ async loadChart(): Promise<void> {
 
 ---
 
-## 7. HTTP Caching with shareReplay
+## 7. HTTP Caching
 
-Prevent duplicate HTTP calls when multiple components need the same data:
-```typescript
-@Injectable({ providedIn: 'root' })
-export class ReferenceDataService {
-  // These are called once per session — cache the result
-  readonly countries$ = this.http.get<Country[]>('/api/countries').pipe(
-    shareReplay(1)
-  );
-
-  readonly currencies$ = this.http.get<Currency[]>('/api/currencies').pipe(
-    shareReplay(1)
-  );
-
-  constructor(private http: HttpClient) {}
-}
-```
+→ See `references/http-layer.md` §6 for the `shareReplay` caching pattern.
 
 ---
 
-## 8. Performance Checklist
+## 8. Image Optimization with NgOptimizedImage
+
+`NgOptimizedImage` (from `@angular/common`) is the preferred Angular approach over the bare `loading="lazy"` HTML attribute. It automatically generates `srcset`, enforces intrinsic `width`/`height` to prevent layout shift, and prioritizes LCP images.
+
+```typescript
+// component or module
+import { NgOptimizedImage } from '@angular/common';
+
+@Component({
+  imports: [NgOptimizedImage],
+  // ...
+})
+```
+
+```html
+<!-- Replace <img src="..." loading="lazy"> with: -->
+<img ngSrc="/assets/hero.jpg" width="800" height="600" loading="lazy" alt="Hero">
+
+<!-- LCP image — add priority to preload and skip lazy loading -->
+<img ngSrc="/assets/above-fold.jpg" width="1200" height="630" priority alt="Above fold">
+```
+
+**Why**: automatic `srcset` generation, LCP prioritization via preconnect hints, and enforced `width`/`height` attributes that prevent cumulative layout shift (CLS).
+
+---
+
+## 9. Performance Checklist
 
 Before releasing a feature, verify:
 
@@ -230,5 +241,5 @@ Before releasing a feature, verify:
 - [ ] Feature module is lazy-loaded (open DevTools Network tab, confirm chunk loads on navigation)
 - [ ] Lists with 100+ items use CDK virtual scroll
 - [ ] No `shareReplay` missing on HTTP observables used by multiple components
-- [ ] Images have `loading="lazy"` and explicit `width`/`height`
+- [ ] Images use `NgOptimizedImage` (`ngSrc`) with explicit `width`/`height`; LCP images have `priority`
 - [ ] Run `ng build --prod` and check bundle sizes — no unexpected large additions

@@ -1,4 +1,4 @@
-# RxJS Patterns for Angular 14
+# RxJS Patterns
 
 ## Unsubscribe Strategies
 
@@ -30,13 +30,17 @@ export class MyComponent implements OnInit, OnDestroy {
 
 ### async pipe (preferred when possible — zero manual unsubscribe)
 ```typescript
-// Component
+// Component (ng17+ control flow syntax)
 @Component({
   template: `
-    <div *ngFor="let user of users$ | async; trackBy: trackById">
-      {{ user.name }}
-    </div>
-    <p *ngIf="loading$ | async">Loading...</p>
+    @for (user of users$ | async; track user.id) {
+      <div>{{ user.name }}</div>
+    }
+    @if (loading$ | async) {
+      <p>Loading...</p>
+    }
+    <!-- ng14–16: *ngFor="let user of users$ | async; trackBy: trackById" -->
+    <!-- ng14–16: *ngIf="loading$ | async"                                -->
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -44,7 +48,6 @@ export class UsersComponent {
   users$ = this.userService.users$;
   loading$ = this.userService.loading$;
   constructor(private userService: UserService) {}
-  trackById = (_: number, u: User) => u.id;
 }
 ```
 
@@ -162,53 +165,10 @@ getWithRetry<T>(url: string): Observable<T> {
 
 ---
 
-## shareReplay — share a single HTTP request among multiple subscribers
-```typescript
-// Without shareReplay: each subscriber triggers a new HTTP request
-// With shareReplay(1): one request, result cached and replayed to all
+## shareReplay & Loading + Error State
 
-@Injectable()
-export class ConfigService {
-  // Loaded once, shared across all components that need it
-  readonly config$ = this.http.get<AppConfig>('/api/config').pipe(
-    shareReplay(1)
-  );
-
-  constructor(private http: HttpClient) {}
-}
-```
-
----
-
-## Loading + Error State Pattern
-```typescript
-interface AsyncState<T> {
-  data: T | null;
-  loading: boolean;
-  error: string | null;
-}
-
-@Injectable()
-export class UserService {
-  private state = new BehaviorSubject<AsyncState<User[]>>({
-    data: null, loading: false, error: null
-  });
-
-  readonly state$ = this.state.asObservable();
-  readonly users$ = this.state$.pipe(map(s => s.data));
-  readonly loading$ = this.state$.pipe(map(s => s.loading));
-  readonly error$ = this.state$.pipe(map(s => s.error));
-
-  loadUsers(): void {
-    this.state.next({ data: null, loading: true, error: null });
-
-    this.http.get<User[]>('/api/users').subscribe({
-      next: data => this.state.next({ data, loading: false, error: null }),
-      error: err => this.state.next({ data: null, loading: false, error: err.message }),
-    });
-  }
-}
-```
+→ See `references/http-layer.md` §5 (loading/error state) and §6 (shareReplay caching)
+for the full patterns — keeping them in one place avoids drift between duplicates.
 
 ---
 
@@ -227,4 +187,114 @@ export class SearchComponent implements OnInit {
     shareReplay(1),
   );
 }
+
+---
+
+## Subject Variants — When to Use Each
+
+| Variant | Holds current value | Late subscribers | Typical use |
+|---|---|---|---|
+| `Subject` | No | Miss all past emissions | Events, fire-and-forget |
+| `BehaviorSubject(init)` | Yes (1 value) | Get current value immediately | UI state, selected item |
+| `ReplaySubject(n)` | Yes (last n) | Replay last n emissions | Cache recent values |
+| `AsyncSubject` | Last only | Get last value after `complete()` | Rarely needed |
+
+```typescript
+// Subject — late subscriber gets nothing from before subscribe
+const click$ = new Subject<MouseEvent>();
+click$.next(event);                          // missed by any subscriber added later
+
+// BehaviorSubject — late subscriber always gets the current value
+const currentUser$ = new BehaviorSubject<User | null>(null);
+currentUser$.next(loggedInUser);
+currentUser$.subscribe(u => console.log(u)); // immediately logs loggedInUser
+
+// ReplaySubject — late subscriber gets last 3 values
+const recentSearches$ = new ReplaySubject<string>(3);
+recentSearches$.next('angular');
+recentSearches$.next('rxjs');
+recentSearches$.next('signals');
+recentSearches$.subscribe(s => console.log(s)); // logs all three immediately
+
+// AsyncSubject — emits only after complete(), only the last value
+const result$ = new AsyncSubject<number>();
+result$.next(1);
+result$.next(2);
+result$.complete();                          // subscriber now receives 2
+```
+
+---
+
+## `takeUntilDestroyed()` (ng16+)
+
+`takeUntilDestroyed()` from `@angular/core/rxjs-interop` replaces the manual
+`destroy$ + takeUntil` pattern. In components it captures the destroy context
+automatically; in services pass an explicit `DestroyRef`.
+
+```typescript
+// src/app/features/users/users.component.ts  — no args: uses component's DestroyRef
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+
+@Component({ ... })
+export class UsersComponent {
+  constructor(private userService: UserService) {
+    this.userService.users$
+      .pipe(takeUntilDestroyed())           // no manual ngOnDestroy needed
+      .subscribe(users => this.users = users);
+  }
+}
+```
+
+```typescript
+// src/app/core/polling.service.ts  — inject DestroyRef explicitly (service context)
+import { DestroyRef, inject, Injectable } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+
+@Injectable()
+export class PollingService {
+  private destroyRef = inject(DestroyRef);
+
+  startPolling(): void {
+    interval(5000)
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(() => this.refresh());
+  }
+}
+```
+
+For ng14–15 projects, continue using the `takeUntil(destroy$)` pattern from section 1.
+
+---
+
+## `withLatestFrom`
+
+Use `withLatestFrom` when a trigger observable should sample the latest value of a
+state observable without subscribing to the state as a trigger itself.
+`combineLatest` re-emits whenever either source emits; `withLatestFrom` emits only
+when the trigger emits.
+
+```typescript
+// Button click samples current user state — user$ changes do NOT trigger emission
+@Component({ ... })
+export class ProfileComponent {
+  private saveClick$ = new Subject<void>();
+
+  constructor(
+    private authService: AuthService,
+    private profileService: ProfileService,
+  ) {
+    this.saveClick$.pipe(
+      withLatestFrom(this.authService.currentUser$),  // state, not a trigger
+      switchMap(([_, user]) => this.profileService.save(user)),
+      takeUntilDestroyed(),
+    ).subscribe();
+  }
+
+  onSave(): void { this.saveClick$.next(); }
+}
+```
+
+Use `combineLatest` when you need to react to changes in any of the combined streams
+(e.g. a view-model built from multiple state slices). Use `withLatestFrom` when only
+one stream drives the emission and the rest are read-only snapshots.
 ```

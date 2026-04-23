@@ -1,5 +1,9 @@
 # Error Handling Patterns
 
+> **Assumption:** `NotificationService` (§3) wraps Angular Material `MatSnackBar`.
+> If this project uses a different toast library, replace `MatSnackBar` with your equivalent
+> and keep the same `showSuccess` / `showError` / `showInfo` public API so callers don't change.
+
 ## Table of Contents
 1. Global ErrorHandler
 2. HTTP Error Interceptor (status-based routing)
@@ -124,47 +128,69 @@ providers: [
 
 ## 3. Notification Service (Snackbar / Toast)
 
-A thin wrapper around `MatSnackBar` so components never import Material directly
-and the notification style is consistent across the app.
+Define `NotificationService` as a stable public API that components depend on.
+The implementation swaps based on the project's design system — components never change.
 
 ```typescript
-// src/app/core/services/notification.service.ts
+// src/app/core/services/notification.service.ts — public contract (always this shape)
 export type NotificationType = 'success' | 'error' | 'info' | 'warning';
 
 @Injectable({ providedIn: 'root' })
-export class NotificationService {
-  constructor(private snackBar: MatSnackBar) {}
+export abstract class NotificationService {
+  abstract showSuccess(message: string, duration?: number): void;
+  abstract showError(message: string, duration?: number): void;
+  abstract showInfo(message: string, duration?: number): void;
+  abstract showWarning(message: string, duration?: number): void;
+}
+```
 
-  showSuccess(message: string, duration = 3000): void {
-    this.show(message, 'success', duration);
-  }
+### Implementation — Angular Material (MatSnackBar)
 
-  showError(message: string, duration = 5000): void {
-    this.show(message, 'error', duration);
-  }
+```typescript
+// src/app/core/services/material-notification.service.ts
+@Injectable()
+export class MaterialNotificationService extends NotificationService {
+  private snackBar = inject(MatSnackBar);
 
-  showInfo(message: string, duration = 3000): void {
-    this.show(message, 'info', duration);
-  }
+  showSuccess(message: string, duration = 3000): void { this.show(message, 'success', duration); }
+  showError(message: string, duration = 5000): void   { this.show(message, 'error', duration); }
+  showInfo(message: string, duration = 3000): void    { this.show(message, 'info', duration); }
+  showWarning(message: string, duration = 4000): void { this.show(message, 'warning', duration); }
 
   private show(message: string, type: NotificationType, duration: number): void {
     this.snackBar.open(message, 'Dismiss', {
       duration,
       horizontalPosition: 'end',
       verticalPosition: 'top',
-      panelClass: [`snack-${type}`],  // apply via styles.scss: .snack-error { background: $warn; }
+      panelClass: [`snack-${type}`],
     });
   }
 }
+
+// Register in app.config.ts or CoreModule:
+// { provide: NotificationService, useClass: MaterialNotificationService }
 ```
 
-Style the snackbar variants in `styles.scss`:
 ```scss
-// styles/styles.scss
+// styles.scss — snackbar color variants
 .snack-success .mdc-snackbar__surface { background-color: $success !important; }
 .snack-error   .mdc-snackbar__surface { background-color: $warn !important; }
 .snack-info    .mdc-snackbar__surface { background-color: $primary !important; }
 .snack-warning .mdc-snackbar__surface { background-color: $accent !important; }
+```
+
+### Implementation — Tailwind / plain toast library
+
+```typescript
+// src/app/core/services/toast-notification.service.ts
+// Swap in any toast library (ngx-toastr, hot-toast, custom) — components stay unchanged
+@Injectable()
+export class ToastNotificationService extends NotificationService {
+  showSuccess(message: string): void { /* toastr.success(message) */ }
+  showError(message: string): void   { /* toastr.error(message) */ }
+  showInfo(message: string): void    { /* toastr.info(message) */ }
+  showWarning(message: string): void { /* toastr.warning(message) */ }
+}
 ```
 
 ---

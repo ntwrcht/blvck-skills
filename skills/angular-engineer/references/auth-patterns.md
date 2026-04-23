@@ -14,6 +14,10 @@
 Single source of truth for authentication state. Persists token in `localStorage` and exposes
 reactive state so components and guards can react to login/logout without polling.
 
+> **Why `HttpClient` directly here:** Auth endpoints (login, refresh, `/me`) are called before
+> any token exists, so they cannot go through `ApiService` which adds the `Authorization` header.
+> This is the one intentional exception to the "never use HttpClient directly" rule.
+
 ```typescript
 // src/app/core/services/auth.service.ts
 export interface AuthUser {

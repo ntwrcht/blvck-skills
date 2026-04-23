@@ -153,7 +153,43 @@ export class UserStateService {
 
 ---
 
-## 3. NgRx (Cross-Feature / Complex State)
+## 3. Server State — Modern Alternatives
+
+The Decision Matrix lists `RxJS + shareReplay(1)` as the baseline for server state. Two maintained alternatives remove the boilerplate:
+
+### resource() (ng18+)
+
+Declarative async data fetching built on signals. No manual loading/error flags needed.
+
+```typescript
+// ng18+ — declarative server state with signals
+userResource = resource({
+  request: () => ({ id: this.userId() }),
+  loader: ({ request }) => fetch(`/api/users/${request.id}`).then(r => r.json()),
+});
+// Access: userResource.value(), userResource.isLoading(), userResource.error()
+```
+
+### Angular Query (`@tanstack/angular-query-experimental`)
+
+For complex caching, background refetch, and optimistic updates, prefer Angular Query over hand-rolled `shareReplay` patterns.
+
+```typescript
+import { injectQuery } from '@tanstack/angular-query-experimental';
+
+// In a component or service
+userQuery = injectQuery(() => ({
+  queryKey: ['user', this.userId()],
+  queryFn: () => fetch(`/api/users/${this.userId()}`).then(r => r.json()),
+}));
+// Access: userQuery.data(), userQuery.isLoading(), userQuery.error()
+```
+
+**Decision note:** use `resource()` for simple fetch-and-display cases in ng18+ projects. Reach for Angular Query when you need cache invalidation, background polling, or optimistic updates.
+
+---
+
+## 4. NgRx (Cross-Feature / Complex State)
 
 Use when: multiple features share state, you need devtools/time-travel debug, or side effects are complex.
 
@@ -221,7 +257,7 @@ export class UserEffects {
 
 ---
 
-## 4. Signals vs BehaviorSubject — Quick Reference
+## 5. Signals vs BehaviorSubject — Quick Reference
 
 ```typescript
 // ✅ Signal — synchronous, simpler
@@ -242,7 +278,7 @@ countSignal = toSignal(this.count$, { initialValue: 0 });
 
 ---
 
-## 5. Anti-Patterns to Avoid
+## 6. Anti-Patterns to Avoid
 
 - ❌ `effect()` to sync one signal into another — use `computed()` instead
 - ❌ `BehaviorSubject` exposed directly (not `.asObservable()`) — allows external mutation
