@@ -34,6 +34,7 @@ SHARED_DIR="$SKILLS_DIR/_shared/references"
 INSTALL_TARGETS=(
   "$HOME/.claude/skills"
   "$HOME/.gemini/skills"
+  "$HOME/.codex/skills"
 )
 
 # ── Shared references per skill ───────────────────────────────────────────────
