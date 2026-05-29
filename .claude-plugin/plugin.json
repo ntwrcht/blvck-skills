@@ -1,0 +1,16 @@
+{
+  "name": "agent-skills",
+  "description": "Reusable engineering and productivity skills for AI coding agents.",
+  "version": "1.0.0",
+  "skills": [
+    "./skills/engineering/angular-engineer",
+    "./skills/engineering/debug-mantra",
+    "./skills/engineering/ga4-analytics",
+    "./skills/engineering/post-mortem",
+    "./skills/engineering/scrutinize",
+    "./skills/engineering/security-audit",
+    "./skills/engineering/strapi-engineer",
+    "./skills/productivity/grill-me",
+    "./skills/productivity/management-talk"
+  ]
+}

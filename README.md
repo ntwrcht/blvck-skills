@@ -42,6 +42,7 @@ Skills that are no longer used.
 ## 🚀 Getting Started
 
 This repository uses a symlinking strategy to "install" shippable skills into your AI assistant's configuration directories.
+It also includes a Claude Code plugin manifest for loading the same shippable skills as a namespaced plugin.
 
 ### Prerequisites
 
@@ -66,6 +67,12 @@ To unlink every shippable skill from those providers:
 
 ```bash
 ./scripts/un-link-skill.sh
+```
+
+To test the Claude Code plugin locally:
+
+```bash
+claude --plugin-dir .
 ```
 
 ## 📂 Project Structure
@@ -107,6 +114,7 @@ The dev-loop scripts use these provider targets:
 - `$HOME/.gemini/skills`
 
 For those scripts, shippable skills are skills in `engineering/`, `productivity/`, and `misc/`. Skills in `personal/`, `in-progress/`, and `deprecated/` are listed but not linked.
+The Claude plugin manifest follows the same shippable-skill rule, so plugin installs do not include personal, draft, or deprecated skills.
 
 ## 🛡️ Security & Trust
 
