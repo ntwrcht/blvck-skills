@@ -1,6 +1,6 @@
 ---
 name: stakeholder-update
-description: ALWAYS use this skill when drafting, rewriting, or reviewing stakeholder updates, weekly or monthly status reports, sprint summaries, launch announcements, risk escalations, executive updates, customer-facing progress notes, or audience-specific versions of the same project update.
+description: Audience-aware workflow for stakeholder updates, status reports, sprint summaries, launch notes, risk escalations, executive updates, customer progress notes, and multi-audience variants.
 argument-hint: "<update type and audience>"
 ---
 

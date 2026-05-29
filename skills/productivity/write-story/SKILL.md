@@ -1,6 +1,6 @@
 ---
 name: write-story
-description: "ALWAYS use this skill for backlog-story work: drafting, rewriting, splitting, reviewing, checking sprint readiness, adding acceptance criteria or Definition of Done, and optionally creating approved items in Jira when a Jira MCP/tool is connected. Trigger on requests like \"make a ticket\", \"write a story\", \"turn this into backlog\", \"create tasks\", \"split this work\", \"add acceptance criteria\", \"check sprint readiness\", \"add this to Jira\", or \"break this feature into stories\". This is the fast path for backlog-ready work without a full product spec."
+description: "Backlog item workflow for drafting, rewriting, splitting, reviewing readiness, adding acceptance criteria or Definition of Done, and preparing approved Jira payloads when a Jira MCP/tool is connected."
 argument-hint: "<backlog item brief>"
 ---
 

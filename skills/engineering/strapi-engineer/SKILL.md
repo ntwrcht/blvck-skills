@@ -1,16 +1,9 @@
 ---
 name: strapi-engineer
 description: >
-  ALWAYS use this skill for any Strapi task — no exceptions.
-  This includes: content types, plugins, controllers, services, routes,
-  policies, lifecycle hooks, RBAC, JWT, populate queries, webhooks,
-  GraphQL, or any Strapi architecture decision.
-  Use even when the user asks general backend questions if Strapi is the context.
-  Also handles git tasks within Strapi projects: commit messages, branch naming,
-  git tags, releases, and changelog generation.
-  Trigger when user says "commit", "branch", "tag", "release", "changelog", "PR",
-  or "pull request" while working in a Strapi project.
-  Do NOT attempt Strapi tasks from memory alone — always consult this skill first.
+  Strapi project guidance for content types, plugins, controllers, services,
+  routes, policies, lifecycle hooks, RBAC, JWT, populate queries, webhooks,
+  GraphQL, architecture decisions, and project git workflow.
 ---
 
 # Strapi Senior Engineer

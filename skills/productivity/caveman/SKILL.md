@@ -1,10 +1,8 @@
 ---
 name: caveman
 description: >
-  Ultra-terse communication mode for compressed technical responses. Use only
-  when the user explicitly says "caveman mode", "talk like caveman", "use
-  caveman", or invokes "/caveman". Do not trigger from generic requests like
-  "be brief" or "less tokens" unless they also ask for caveman style.
+  Ultra-terse communication mode for compressed technical responses while
+  preserving technical substance.
 ---
 
 # Caveman

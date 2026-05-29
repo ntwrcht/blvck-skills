@@ -1,11 +1,9 @@
 ---
 name: grill-me
 description: >
-  Relentlessly interview the user about a plan or design until reaching shared
-  understanding and resolving the decision tree. Use when the user wants to
-  stress-test a plan, get grilled on a design, pressure-test an approach, or
-  mentions "grill me". Ask one question at a time. If an answer can be found by
-  exploring the codebase or supplied artifacts, inspect them instead of asking.
+  Plan and design pressure-testing workflow that resolves decisions, risks, and
+  tradeoffs one question at a time, using codebase or artifact checks when
+  available.
 ---
 
 # Grill Me
@@ -40,4 +38,3 @@ Keep the question narrow enough for the user to answer directly. Avoid dumping a
 - Do not propose implementation until the core decisions are resolved.
 - Do not generate files by default.
 - If the user explicitly asks to save the resolved decisions, ask for or infer a clear destination path before writing.
-

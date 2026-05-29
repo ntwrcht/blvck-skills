@@ -1,12 +1,9 @@
 ---
 name: post-mortem
 description: >
-  Write the canonical engineering record of a fixed and validated bug: summary,
-  symptom, root cause, mechanism, fix, validation, and why it slipped through.
-  Use after a debug session lands a real fix, before closing the ticket. Trigger
-  on /post-mortem, postmortem, RCA, root cause analysis, document this fix, write
-  up the root cause, close out this bug with a writeup, or when the user hands
-  over a fixed-and-validated bug and asks for an engineering writeup.
+  Engineering writeup format for fixed and validated bugs, including summary,
+  symptom, root cause, mechanism, fix, validation, and why the issue slipped
+  through.
 ---
 
 # Post-mortem

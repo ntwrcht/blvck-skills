@@ -1,15 +1,9 @@
 ---
 name: ga4-analytics
 description: >
-  ALWAYS use this skill for any GA4 or analytics tracking task — no exceptions.
-  This includes: designing event taxonomy, implementing gtag.js or GTM dataLayer,
-  tracking user journeys and funnels, measuring feature adoption, capturing errors
-  and drop-off points, performance tracking, and building measurement strategy.
-  Use even for vague requests like "how do I track this", "what events should I fire",
-  "is my tracking correct", or "help me understand user behavior".
-  Use when user mentions GA4, GTM, dataLayer, gtag, events, funnels, conversion,
-  analytics, tracking, or user behavior measurement.
-  Do NOT attempt analytics tasks from memory alone — always consult this skill first.
+  GA4 and GTM measurement planning for event taxonomy, dataLayer or gtag
+  implementation, funnels, feature adoption, conversion tracking, error capture,
+  performance tracking, and analytics validation.
 ---
 
 # GA4 Analytics & Measurement

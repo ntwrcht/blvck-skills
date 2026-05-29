@@ -1,16 +1,9 @@
 ---
 name: security-audit
 description: >
-  ALWAYS use this skill for any security task — no exceptions.
-  This includes: security code review, vulnerability assessment, threat modeling,
-  OWASP Top 10 analysis, API security review, authentication and authorization audit,
-  secret management, infrastructure security, compliance checklist (PDPA, GDPR, SOC2,
-  ISO 27001), pentest finding documentation, and remediation recommendations.
-  Use even for vague requests like "is this code secure", "review this for security issues",
-  "what could go wrong here", "how should I handle auth", or "help me write a security report".
-  Use when user mentions: vulnerability, CVE, pentest, OWASP, XSS, CSRF, injection,
-  authentication, authorization, secrets, encryption, compliance, audit, or security review.
-  Do NOT attempt security tasks from memory alone — always consult this skill first.
+  Security review workflow for code, APIs, infrastructure, authentication,
+  authorization, secrets, vulnerability assessment, threat modeling, compliance,
+  pentest findings, and remediation recommendations.
 ---
 
 # Security Audit

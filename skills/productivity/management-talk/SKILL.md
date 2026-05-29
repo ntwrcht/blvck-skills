@@ -1,14 +1,9 @@
 ---
 name: management-talk
 description: >
-  Rewrite engineer-to-engineer content for engineering-org leadership: VPs,
-  directors, PMs, release managers, and execs in an engineering-savvy company.
-  Shape the message for JIRA comments, Slack posts, async standup lines, email,
-  or meeting talking points. Use when the user asks to write or rewrite for
-  management, execs, VPs, directors, PMs, release managers, asks for an executive
-  summary, leadership update, status update, says to make something less
-  technical or less jargony, or asks for a Slack, email, standup, or meeting
-  version of engineering work.
+  Engineering-content rewrite workflow for leadership and cross-functional
+  audiences, including JIRA comments, Slack posts, standup notes, email, and
+  meeting talking points.
 ---
 
 # Management Talk

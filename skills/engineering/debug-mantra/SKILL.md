@@ -1,13 +1,8 @@
 ---
 name: debug-mantra
 description: >
-  Four-mantra debugging discipline: reproduce, trace the fail path, falsify the
-  hypothesis, and cross-reference every breadcrumb. Use for /debug-mantra and
-  proactively whenever debugging starts: user reports a bug, says something is
-  broken, throwing, failing, asks to debug, diagnose, investigate an issue, or
-  pastes a stack trace, failing test, or error log. Recite the mantra block
-  verbatim at the start of the debugging session unless the user says to skip it,
-  then apply the four steps in order before proposing a fix.
+  Structured debugging workflow for reproducing failures, tracing the fail path,
+  falsifying hypotheses, and cross-referencing evidence before proposing a fix.
 ---
 
 # Debug Mantra

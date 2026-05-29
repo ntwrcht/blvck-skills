@@ -1,10 +1,8 @@
 ---
 name: tdd
 description: >
-  Test-driven development with a red-green-refactor loop. Use when the user
-  asks for TDD, test-first development, red-green-refactor, or wants a feature
-  or bug fix implemented one behavior at a time through failing tests,
-  minimal implementation, and refactoring.
+  Test-driven development workflow using red-green-refactor cycles, observable
+  behavior tests, minimal implementation, and refactoring while green.
 ---
 
 # Test-Driven Development

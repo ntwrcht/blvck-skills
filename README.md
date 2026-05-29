@@ -8,25 +8,25 @@ A collection of specialized expert agent skills for AI assistants (like Gemini C
 
 | Skill Name | Description |
 | :--- | :--- |
-| [**Angular Engineer**](skills/engineering/angular-engineer/SKILL.md) | Expert guidance for Angular development, RxJS, Signals, and enterprise patterns. |
-| [**Debug Mantra**](skills/engineering/debug-mantra/SKILL.md) | Four-step debugging discipline: reproduce, trace the fail path, falsify hypotheses, and track every run as a breadcrumb. |
-| [**GA4 Analytics**](skills/engineering/ga4-analytics/SKILL.md) | Measurement strategy, GA4 implementation, GTM, and event taxonomy. |
+| [**Angular Engineer**](skills/engineering/angular-engineer/SKILL.md) | Angular project guidance for components, services, routing, forms, RxJS, Signals, SSR, and migrations. |
+| [**Debug Mantra**](skills/engineering/debug-mantra/SKILL.md) | Structured debugging workflow for reproducing, tracing, and falsifying bugs. |
+| [**GA4 Analytics**](skills/engineering/ga4-analytics/SKILL.md) | GA4 and GTM measurement planning, event taxonomy, funnels, and tracking implementation. |
 | [**Git Guardrails for Claude Code**](skills/engineering/git-guardrails-claude-code/SKILL.md) | Set up Claude Code hooks that block dangerous git commands before they execute. |
-| [**Post-mortem**](skills/engineering/post-mortem/SKILL.md) | Engineering record for a fixed and validated bug: root cause, mechanism, fix, validation, and follow-ups. |
-| [**Scrutinize**](skills/engineering/scrutinize/SKILL.md) | Outsider-perspective review of plans, PRs, diffs, and code changes: question intent, trace real paths, and verify claims. |
-| [**Security Audit**](skills/engineering/security-audit/SKILL.md) | Security code review, vulnerability assessment, and compliance (OWASP, GDPR). |
-| [**Strapi Engineer**](skills/engineering/strapi-engineer/SKILL.md) | Specialized in Strapi headless CMS, content types, plugins, and backend logic. |
-| [**TDD**](skills/engineering/tdd/SKILL.md) | Test-driven development with a red-green-refactor loop, public-interface tests, and incremental behavior slices. |
+| [**Post-mortem**](skills/engineering/post-mortem/SKILL.md) | Engineering writeup format for fixed and validated bugs. |
+| [**Scrutinize**](skills/engineering/scrutinize/SKILL.md) | External review workflow for plans, PRs, diffs, design docs, and code changes. |
+| [**Security Audit**](skills/engineering/security-audit/SKILL.md) | Security review workflow for code, APIs, infrastructure, authentication, secrets, and compliance. |
+| [**Strapi Engineer**](skills/engineering/strapi-engineer/SKILL.md) | Strapi project guidance for content types, plugins, controllers, services, policies, RBAC, and GraphQL. |
+| [**TDD**](skills/engineering/tdd/SKILL.md) | Test-driven development workflow using red-green-refactor behavior slices. |
 
 ### Productivity
 
 | Skill Name | Description |
 | :--- | :--- |
-| [**Write Story**](skills/productivity/write-story/SKILL.md) | Draft, split, refine, and review generic backlog items, user stories, job stories, WWA items, bugs, spikes, and acceptance criteria. |
+| [**Write Story**](skills/productivity/write-story/SKILL.md) | Backlog item drafting, story splitting, acceptance criteria, and readiness review. |
 | [**Caveman**](skills/productivity/caveman/SKILL.md) | Ultra-terse communication mode for compressed technical responses. |
-| [**Grill Me**](skills/productivity/grill-me/SKILL.md) | One-question-at-a-time plan/design interrogation with recommended answers and codebase-first checks. |
-| [**Management Talk**](skills/productivity/management-talk/SKILL.md) | Rewrite engineering content for leadership, PMs, release managers, Slack, email, standup, and meeting channels. |
-| [**Stakeholder Update**](skills/productivity/stakeholder-update/SKILL.md) | Draft audience-aware stakeholder updates, status reports, launch notes, risk escalations, and customer-facing progress notes. |
+| [**Grill Me**](skills/productivity/grill-me/SKILL.md) | Plan and design pressure-testing through one-question-at-a-time review. |
+| [**Management Talk**](skills/productivity/management-talk/SKILL.md) | Engineering-content rewrite workflow for leadership and cross-functional audiences. |
+| [**Stakeholder Update**](skills/productivity/stakeholder-update/SKILL.md) | Audience-aware status updates, sprint summaries, launch notes, and risk escalations. |
 
 ### Misc
 
@@ -60,6 +60,12 @@ To list every `SKILL.md` in the repo:
 
 ```bash
 ./scripts/list-skills.sh
+```
+
+To check that public skill descriptions stay neutral:
+
+```bash
+./scripts/validate-skill-descriptions.sh
 ```
 
 For my own dev loop, symlink every shippable skill into Claude, Codex, and a local Gemini extension, and inject shared references:
@@ -138,6 +144,10 @@ To maintain a secure environment, this project adheres to the following standard
 
 1.  Create a new folder in the appropriate bucket under `skills/`.
 2.  Add a `SKILL.md` file following the established template.
-3.  Add supporting documentation in the `references/` subfolder.
-4.  Update the `get_shared_refs` function in `scripts/_skills-lib.sh` if your skill needs shared assets.
-5.  Submit a Pull Request!
+3.  Keep the YAML `description` and README entry neutral: describe scope only, not activation policy. Avoid phrases such as `ALWAYS use`, `MUST use`, `Use when`, `Trigger when`, `Trigger on`, `proactively whenever`, `no exceptions`, and `Do NOT attempt`.
+4.  Put activation rules inside the `SKILL.md` body under a `When to Use` or `When Not to Use` section, with clear boundaries against overlapping skills.
+5.  Add supporting documentation in the `references/` subfolder.
+6.  Update the `get_shared_refs` function in `scripts/_skills-lib.sh` if your skill needs shared assets.
+7.  For skills in `engineering/`, `productivity/`, or `misc/`, add a neutral linked entry to the top-level `README.md`, the bucket `README.md`, and `.claude-plugin/plugin.json`. Do not add `personal/`, `in-progress/`, or `deprecated/` skills to those shippable indexes.
+8.  Run `./scripts/list-skills.sh` and `./scripts/validate-skill-descriptions.sh`.
+9.  Submit a Pull Request!
