@@ -12,10 +12,14 @@ A collection of specialized expert agent skills for AI assistants (like Gemini C
 | **Strapi Engineer** | Specialized in Strapi headless CMS, content types, plugins, and backend logic. |
 | **Security Audit** | Security code review, vulnerability assessment, and compliance (OWASP, GDPR). |
 | **GA4 Analytics** | Measurement strategy, GA4 implementation, GTM, and event taxonomy. |
+| **Debug Mantra** | Four-step debugging discipline: reproduce, trace the fail path, falsify hypotheses, and track every run as a breadcrumb. |
+| **Post-mortem** | Engineering record for a fixed and validated bug: root cause, mechanism, fix, validation, and follow-ups. |
 
 ### Productivity
 
-Daily non-code workflow tools.
+| Skill Name | Description |
+| :--- | :--- |
+| **Management Talk** | Rewrite engineering content for leadership, PMs, release managers, Slack, email, standup, and meeting channels. |
 
 ### Misc
 
