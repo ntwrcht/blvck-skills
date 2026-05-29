@@ -14,6 +14,7 @@ A collection of specialized expert agent skills for AI assistants (like Gemini C
 | **GA4 Analytics** | Measurement strategy, GA4 implementation, GTM, and event taxonomy. |
 | **Debug Mantra** | Four-step debugging discipline: reproduce, trace the fail path, falsify hypotheses, and track every run as a breadcrumb. |
 | **Post-mortem** | Engineering record for a fixed and validated bug: root cause, mechanism, fix, validation, and follow-ups. |
+| **Scrutinize** | Outsider-perspective review of plans, PRs, diffs, and code changes: question intent, trace real paths, and verify claims. |
 
 ### Productivity
 
