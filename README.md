@@ -8,20 +8,22 @@ A collection of specialized expert agent skills for AI assistants (like Gemini C
 
 | Skill Name | Description |
 | :--- | :--- |
-| **Angular Engineer** | Expert guidance for Angular development, RxJS, Signals, and enterprise patterns. |
-| **Strapi Engineer** | Specialized in Strapi headless CMS, content types, plugins, and backend logic. |
-| **Security Audit** | Security code review, vulnerability assessment, and compliance (OWASP, GDPR). |
-| **GA4 Analytics** | Measurement strategy, GA4 implementation, GTM, and event taxonomy. |
-| **Debug Mantra** | Four-step debugging discipline: reproduce, trace the fail path, falsify hypotheses, and track every run as a breadcrumb. |
-| **Post-mortem** | Engineering record for a fixed and validated bug: root cause, mechanism, fix, validation, and follow-ups. |
-| **Scrutinize** | Outsider-perspective review of plans, PRs, diffs, and code changes: question intent, trace real paths, and verify claims. |
+| [**Angular Engineer**](skills/engineering/angular-engineer/SKILL.md) | Expert guidance for Angular development, RxJS, Signals, and enterprise patterns. |
+| [**Debug Mantra**](skills/engineering/debug-mantra/SKILL.md) | Four-step debugging discipline: reproduce, trace the fail path, falsify hypotheses, and track every run as a breadcrumb. |
+| [**GA4 Analytics**](skills/engineering/ga4-analytics/SKILL.md) | Measurement strategy, GA4 implementation, GTM, and event taxonomy. |
+| [**Git Guardrails for Claude Code**](skills/engineering/git-guardrails-claude-code/SKILL.md) | Set up Claude Code hooks that block dangerous git commands before they execute. |
+| [**Post-mortem**](skills/engineering/post-mortem/SKILL.md) | Engineering record for a fixed and validated bug: root cause, mechanism, fix, validation, and follow-ups. |
+| [**Scrutinize**](skills/engineering/scrutinize/SKILL.md) | Outsider-perspective review of plans, PRs, diffs, and code changes: question intent, trace real paths, and verify claims. |
+| [**Security Audit**](skills/engineering/security-audit/SKILL.md) | Security code review, vulnerability assessment, and compliance (OWASP, GDPR). |
+| [**Strapi Engineer**](skills/engineering/strapi-engineer/SKILL.md) | Specialized in Strapi headless CMS, content types, plugins, and backend logic. |
+| [**TDD**](skills/engineering/tdd/SKILL.md) | Test-driven development with a red-green-refactor loop, public-interface tests, and incremental behavior slices. |
 
 ### Productivity
 
 | Skill Name | Description |
 | :--- | :--- |
-| **Grill Me** | One-question-at-a-time plan/design interrogation with recommended answers and codebase-first checks. |
-| **Management Talk** | Rewrite engineering content for leadership, PMs, release managers, Slack, email, standup, and meeting channels. |
+| [**Grill Me**](skills/productivity/grill-me/SKILL.md) | One-question-at-a-time plan/design interrogation with recommended answers and codebase-first checks. |
+| [**Management Talk**](skills/productivity/management-talk/SKILL.md) | Rewrite engineering content for leadership, PMs, release managers, Slack, email, standup, and meeting channels. |
 
 ### Misc
 
