@@ -83,3 +83,10 @@ Close with a one-line verdict: `ship`, `fix then ship`, `rework`, or `reject`, w
 - No flattery and no hedging. State the finding.
 - Prefer this environment's clickable file-link format for local files when practical.
 
+## Optional Context Artifact
+
+Default to chat output. If the user asks to persist, hand off, or reuse the review context, write or update `.context/scrutiny.md` in the current workspace.
+
+Use a named file such as `.context/scrutiny-<pr-or-topic>.md` when the review is tied to a specific PR, design, or topic and the default file already appears unrelated.
+
+Do not create files by default. If no clear workspace exists, keep the review in chat unless the user provides a path.

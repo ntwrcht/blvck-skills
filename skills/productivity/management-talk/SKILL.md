@@ -119,3 +119,11 @@ Example: `Fixed Tada hang affecting dumbModel runs (JIRA-12345). PR #5751 in rev
 - Never post to Slack, email, or any non-Jira channel.
 - Avoid hedging unless uncertainty is real.
 - Stay blameless and concrete.
+
+## Optional Context Artifact
+
+Default to chat output. If the user asks to persist, hand off, or reuse the leadership-facing update, write or update `.context/management-update.md` in the current workspace.
+
+Use a named file such as `.context/management-update-<ticket-or-topic>.md` when the update is tied to a specific ticket, release, incident, or topic and the default file already appears unrelated.
+
+Do not create files by default. If no clear workspace exists, keep the draft in chat unless the user provides a path.

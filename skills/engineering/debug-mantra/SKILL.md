@@ -73,3 +73,10 @@ When a new hypothesis appears, cross-check it against the full ledger. If any pr
 - If you catch yourself proposing a fix without a reliable repro, stop and return to reproduction.
 - The mantra is a constraint carried by the agent, not advice to deliver back to the user beyond the required recital.
 
+## Optional Context Artifact
+
+Default to keeping the experiment ledger in chat. If the user asks to persist, hand off, or reuse the debugging context, write or update `.context/debug-ledger.md` in the current workspace.
+
+Use a named file such as `.context/debug-ledger-<ticket-or-topic>.md` when the current context is tied to a specific ticket, PR, incident, or topic and the default file already appears unrelated.
+
+Do not create files by default. If no clear workspace exists, keep the ledger in chat unless the user provides a path.

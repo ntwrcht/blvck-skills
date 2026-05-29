@@ -122,7 +122,7 @@ If none are warranted, write: `None — the fix is sufficient and no class-of-bu
    - Wait for explicit approval such as "post it", "go ahead", or "yes".
    - Only then use the available Jira tool to post.
    - If posting fails, report the failure and leave the draft in chat.
-6. If the user asks to create a file, create it only after the destination path is clear.
+6. If the user asks to create a file, use the artifact convention below unless they provide a destination path.
 7. Offer the `management-talk` handoff: "Want a leadership-flavored version?"
 
 ## Rules
@@ -134,3 +134,11 @@ If none are warranted, write: `None — the fix is sufficient and no class-of-bu
 - Keep it blameless.
 - Get explicit sign-off before posting to Jira. Print-only output needs no approval.
 - One revision is normal. If the user requests a third pass, ask what specific section is wrong.
+
+## Optional Context Artifact
+
+Default to chat output. If the user asks to persist, hand off, or reuse the post-mortem, write or update `.context/post-mortem.md` in the current workspace.
+
+If a ticket key, PR number, incident key, or clear topic is available, suggest a named durable file such as `docs/postmortems/<ticket-or-topic>.md` or `.context/post-mortem-<ticket-or-topic>.md`.
+
+Use the stable `.context/post-mortem.md` path only when it appears to belong to the same active bug. Ask before overwriting unrelated content. If no clear workspace exists, keep the draft in chat unless the user provides a path.
