@@ -22,6 +22,7 @@ A collection of specialized expert agent skills for AI assistants (like Gemini C
 
 | Skill Name | Description |
 | :--- | :--- |
+| [**Caveman**](skills/productivity/caveman/SKILL.md) | Ultra-terse communication mode for compressed technical responses. |
 | [**Grill Me**](skills/productivity/grill-me/SKILL.md) | One-question-at-a-time plan/design interrogation with recommended answers and codebase-first checks. |
 | [**Management Talk**](skills/productivity/management-talk/SKILL.md) | Rewrite engineering content for leadership, PMs, release managers, Slack, email, standup, and meeting channels. |
 
