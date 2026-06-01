@@ -14,3 +14,4 @@ Daily code-work skills.
 | [Security Audit](security-audit/SKILL.md) | Security review workflow for code, APIs, infrastructure, authentication, secrets, and compliance. |
 | [Strapi Engineer](strapi-engineer/SKILL.md) | Strapi project guidance for content types, plugins, controllers, services, policies, RBAC, and GraphQL. |
 | [TDD](tdd/SKILL.md) | Test-driven development workflow using red-green-refactor behavior slices. |
+| [Technical Trading Strategy](technical-trading-strategy/SKILL.md) | Technical trading strategy research and engineering guidance for rule design, Python backtesting, validation, risk controls, and implementation review. |
