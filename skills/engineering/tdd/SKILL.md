@@ -1,84 +1,46 @@
 ---
 name: tdd
-description: >
-  Test-driven development workflow using red-green-refactor cycles, observable
-  behavior tests, minimal implementation, and refactoring while green.
+description: "Develop behavior through red-green-refactor test slices that exercise public interfaces and real code paths. Use when adding features, fixing bugs with regression tests, shaping APIs through examples, or refactoring while preserving observable behavior."
 ---
 
 # Test-Driven Development
 
-Use a vertical red-green-refactor loop: one behavior, one failing test, one
-minimal implementation, then repeat. Tests should verify behavior through public
-interfaces, not implementation details.
+Work in vertical behavior slices: one failing test, one minimal implementation, one refactor pass while green.
 
-## Operating Stance
+## When to Use
 
-- Behavior first: name tests after what callers or users can observe.
-- Public interface only: avoid testing private methods or internal structure.
-- Integration-style by default: exercise real code paths unless a system boundary
-  makes that impractical.
-- One slice at a time: do not write all tests first and all implementation after.
-- Refactor only while green: never clean up while tests are failing.
+Use this skill when the user asks for TDD, red-green-refactor, regression tests before a bug fix, API behavior examples, or implementation driven by observable behavior.
+
+Use `debug-mantra` first when the failure mechanism is unknown. Use `scrutinize` for review-only work where no implementation is requested.
+
+## Core Rule
+
+Tests should describe what callers or users observe through public interfaces. Avoid locking tests to private methods, incidental structure, or implementation order.
 
 ## Workflow
 
-### 1. Frame the Behavior
+1. **Frame the first behavior.** Identify the public interface, expected observable outcome, and first risk to prove. For obvious changes, infer from local code and continue.
+2. **Red.** Write one focused test for one behavior. Run it and confirm it fails for the expected reason.
+3. **Green.** Make the smallest production change that passes the current test. Avoid speculative branches, abstractions, configuration, or future behavior.
+4. **Repeat vertically.** Add the next test only after the previous slice is green. Let each cycle respond to what the last one revealed.
+5. **Refactor while green.** Simplify names, structure, duplication, and boundaries. Rerun focused tests after each meaningful refactor, then broaden the test run.
+6. **Report the loop.** Summarize behaviors added, tests written, implementation changed, and validation run.
 
-Before coding, identify the public interface and the first behavior to prove.
-If the interface, priority, or risk is unclear, ask the user:
+## Testing Rules
 
-> What should the public interface look like? Which behaviors matter most?
+- Prefer integration-style tests through real code paths unless a system boundary makes that impractical.
+- Mock only external boundaries such as network, time, filesystem, randomness, or third-party services.
+- Name tests after behavior, not implementation.
+- Keep fixtures small and representative.
+- A regression test should fail on the old bug and pass with the fix.
+- Do not refactor while tests are red.
 
-For small or obvious changes, infer from the codebase and continue. Use the
-project's domain vocabulary in test names and respect ADRs or local conventions
-around the code being touched.
-
-### 2. Red
-
-Write one test for one observable behavior.
-
-Checklist:
-
-- The test fails for the expected reason.
-- The test describes behavior, not implementation.
-- The test uses the public interface.
-- The test would survive an internal refactor.
-
-### 3. Green
-
-Write the smallest code change that makes the current test pass.
-
-Rules:
-
-- Do not anticipate future tests.
-- Do not add speculative branches, types, or configuration.
-- Keep mocks at system boundaries only.
-- Run the focused test until it passes.
-
-### 4. Repeat
-
-Add the next behavior only after the previous test is green. Each test should
-respond to what the last cycle revealed.
-
-Avoid horizontal slicing:
-
-```text
-Wrong: test1, test2, test3 -> impl1, impl2, impl3
-Right: test1 -> impl1 -> test2 -> impl2 -> test3 -> impl3
-```
-
-### 5. Refactor
-
-After all intended behavior is green, simplify the design and rerun tests after
-each meaningful refactor. Prefer deep modules: small interfaces with complexity
-hidden inside.
-
-## References
+## Reference Map
 
 Load only the reference needed for the current decision:
 
-- [tests.md](tests.md): good and bad behavior tests.
-- [mocking.md](mocking.md): when to mock and how to design mockable boundaries.
-- [interface-design.md](interface-design.md): interface choices that make tests natural.
+- [tests.md](tests.md): behavior test examples and anti-patterns.
+- [mocking.md](mocking.md): boundary mocking guidance.
+- [interface-design.md](interface-design.md): API shapes that make tests natural.
 - [deep-modules.md](deep-modules.md): small interfaces with deep implementations.
 - [refactoring.md](refactoring.md): cleanup candidates after green.

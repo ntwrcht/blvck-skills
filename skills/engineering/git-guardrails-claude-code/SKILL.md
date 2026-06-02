@@ -1,114 +1,66 @@
 ---
 name: git-guardrails-claude-code
-description: >
-  Set up Claude Code hooks to block dangerous git commands before they execute,
-  including git push, reset --hard, clean, branch -D, checkout ., and restore ..
-  Covers local or global hook installation, settings merges, and safety checks.
+description: "Install Claude Code PreToolUse hooks that block dangerous git commands before execution. Use when setting up local or global guardrails for git push, force push, reset --hard, clean, branch deletion, checkout ., or restore ."
 ---
 
 # Git Guardrails for Claude Code
 
-Set up a Claude Code `PreToolUse` hook that blocks dangerous git commands before
-Claude executes them.
+Set up a Claude Code `PreToolUse` hook that blocks high-risk git commands before Claude executes them.
+
+## When to Use
+
+Use this skill when the user wants Claude Code git safety hooks, local project guardrails, global guardrails, or protection from destructive commands such as push, force push, hard reset, clean, branch deletion, checkout dot, or restore dot.
+
+This skill installs Claude Code hooks only. For ordinary repository policy, server-side git hooks, GitHub branch protection, or CI rules, provide separate guidance.
+
+## Core Rule
+
+Preserve existing Claude settings. Merge hook entries; never overwrite unrelated settings, hooks, or user scripts.
 
 ## Blocked Commands
 
 The bundled hook blocks:
 
-- `git push`, including force push variants.
+- `git push`, including force-push variants.
 - `git reset --hard`.
 - `git clean -f` and `git clean -fd`.
 - `git branch -D`.
 - `git checkout .`.
 - `git restore .`.
 
-When blocked, Claude receives a message saying the command is not authorized.
-
 ## Workflow
 
-### 1. Ask Scope
+1. **Choose scope.** Ask for project-only `.claude/settings.json` or global `~/.claude/settings.json` unless the user already specified it.
+2. **Copy the hook.** Use [scripts/block-dangerous-git.sh](scripts/block-dangerous-git.sh). Copy it to `.claude/hooks/block-dangerous-git.sh` for project scope or `~/.claude/hooks/block-dangerous-git.sh` for global scope.
+3. **Make it executable.** Run `chmod +x <hook-path>`.
+4. **Merge settings.** Add a `hooks.PreToolUse` entry with matcher `Bash` and command pointing at the hook. Keep existing hooks and settings.
+5. **Customize if requested.** Edit the copied script only for requested additions or removals.
+6. **Verify.** Pipe a blocked command payload into the hook and confirm exit code `2` with a `BLOCKED:` stderr message.
 
-Ask whether to install the hook for:
+## Settings Snippets
 
-- This project only: `.claude/settings.json`.
-- All projects: `~/.claude/settings.json`.
-
-### 2. Copy the Hook
-
-Use the bundled script:
-
-- [scripts/block-dangerous-git.sh](scripts/block-dangerous-git.sh)
-
-Copy it to the target location:
-
-- Project: `.claude/hooks/block-dangerous-git.sh`.
-- Global: `~/.claude/hooks/block-dangerous-git.sh`.
-
-Make it executable:
-
-```bash
-chmod +x <path-to-script>
-```
-
-### 3. Merge the Hook Setting
-
-If the settings file already exists, merge into `hooks.PreToolUse`; do not
-overwrite unrelated settings or hooks.
-
-Project setting:
+Project command:
 
 ```json
-{
-  "hooks": {
-    "PreToolUse": [
-      {
-        "matcher": "Bash",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "\"$CLAUDE_PROJECT_DIR\"/.claude/hooks/block-dangerous-git.sh"
-          }
-        ]
-      }
-    ]
-  }
-}
+"command": "\"$CLAUDE_PROJECT_DIR\"/.claude/hooks/block-dangerous-git.sh"
 ```
 
-Global setting:
+Global command:
 
 ```json
-{
-  "hooks": {
-    "PreToolUse": [
-      {
-        "matcher": "Bash",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "~/.claude/hooks/block-dangerous-git.sh"
-          }
-        ]
-      }
-    ]
-  }
-}
+"command": "~/.claude/hooks/block-dangerous-git.sh"
 ```
 
-### 4. Customize Patterns
-
-Ask whether the user wants to add or remove blocked patterns. Edit the copied
-script if they do.
-
-### 5. Verify
-
-Run a blocked-command check:
+Verification command:
 
 ```bash
-printf '%s\n' '{"tool_input":{"command":"git push origin main"}}' | <path-to-script>
+printf '%s\n' '{"tool_input":{"command":"git push origin main"}}' | <hook-path>
 ```
 
-Expected result:
+## Operating Rules
 
-- Exit code `2`.
-- A `BLOCKED:` message printed to stderr.
+- Ask before choosing local versus global scope when unspecified.
+- Read existing settings before editing them.
+- Preserve unrelated JSON keys and hook entries.
+- Do not weaken blocked patterns unless the user explicitly asks.
+- Report the installed path, settings path, and verification result.

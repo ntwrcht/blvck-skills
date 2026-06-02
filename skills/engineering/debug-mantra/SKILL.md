@@ -1,17 +1,27 @@
 ---
 name: debug-mantra
-description: >
-  Structured debugging workflow for reproducing failures, tracing the fail path,
-  falsifying hypotheses, and cross-referencing evidence before proposing a fix.
+description: "Debug failures with a disciplined repro, fail-path trace, hypothesis falsification, and experiment ledger. Use when investigating bugs, flaky tests, crashes, regressions, hangs, or unexplained behavior before proposing a fix."
 ---
 
 # Debug Mantra
 
-Four-step discipline for any debug session. Recite verbatim once, then apply the steps in order.
+Run debugging as an evidence loop: reproduce, trace, falsify, then fix.
 
-## Required Recital
+## When to Use
 
-Recite this block verbatim as the first thing in your first response for a debugging session:
+Use this skill for active debugging: failing tests, production defects, flaky behavior, crashes, hangs, performance regressions, data corruption, or any bug report where the cause is not already proven.
+
+Use the relevant language or framework skill alongside this one when implementation patterns matter. After the bug is fixed and validated, use `post-mortem` for the engineering writeup.
+
+## When Not to Use
+
+- The user only wants a code review, design review, or plan critique. Use `scrutinize`.
+- The root cause and validated fix are already known. Implement or document instead.
+- The user asks for pure test-first development of new behavior. Use `tdd`.
+
+## Required Mantra
+
+Recite once at the start of the first debugging response unless the user says to skip it:
 
 > **Mantra:**
 > 1. **First is reproducibility.** Can the issue be reproduced reliably?
@@ -19,59 +29,24 @@ Recite this block verbatim as the first thing in your first response for a debug
 > 3. **Question your hypothesis.** What would disprove it?
 > 4. **Every run is a breadcrumb.** Cross-reference all of them.
 
-If the user says "skip the mantra", skip the recital but still apply the workflow silently.
-
 ## Workflow
 
-### 1. Reproduce Reliably
-
-Build a runnable repro before anything else.
-
-- Reliable repro: capture exact steps, inputs, and environment as a runnable artifact such as a failing test, curl script, CLI invocation, or replay harness.
-- Flaky repro: raise the failure rate first with loops, stress, parallel runs, narrowed timing windows, or injected sleeps. A 50% flake is debuggable; a 1% flake is not.
-- No repro: stop and say so explicitly. Ask for environment access, captured artifacts such as HAR/log/core dumps, or permission to instrument. Do not hypothesize yet.
-
-Target a fast, deterministic pass/fail signal: 1-5 seconds where practical. Pin time, seed randomness, freeze network access, and isolate filesystem state when relevant.
-
-### 2. Know the Fail Path
-
-Once reproducible, find where the code breaks and what stops it from breaking. Escalate in this order:
-
-1. Attach a debugger if the environment supports it. Step to the failure site before turning knobs.
-2. If a debugger is unavailable or cannot reach the bug, trace the source path end-to-end and enumerate every knob that can influence the outcome: config flags, environment variables, feature toggles, branch conditions, input shape, timing, concurrency, and build options. Flip one axis at a time.
-3. If outside knobs do not move the failure, add in-code instrumentation at suspected fail sites. Use a unique prefix such as `[DBG-a4f2]` so cleanup is one grep.
-
-### 3. Falsify the Hypothesis
-
-When a candidate root cause appears, scrutinize it before testing a fix.
-
-- Generate 3-5 ranked hypotheses, not one.
-- For each serious candidate, ask whether it explains the symptom end-to-end.
-- Define the simplest proof and the cleanest disproof.
-- Run the disproof first. If the hypothesis survives, it is stronger. If it fails, discard it.
-
-### 4. Treat Every Run as a Breadcrumb
-
-Maintain a running ledger of experiments in the session. Each entry records what changed, what happened, and what it ruled in or out.
-
-When a new hypothesis appears, cross-check it against the full ledger. If any prior run contradicts it, the hypothesis is wrong or incomplete. Design the single next experiment whose outcome would make the conclusion certain.
+1. **Reproduce.** Turn the report into a fast pass/fail signal: failing test, CLI command, curl script, replay harness, loop, stress run, or captured artifact. If there is no repro, stop and ask for access, logs, dumps, HAR files, inputs, or permission to instrument.
+2. **Trace the fail path.** Prefer a debugger when available. Otherwise trace source from entry point to failure and enumerate knobs: config, environment, feature flags, inputs, timing, concurrency, build options, external services, and cached state.
+3. **Instrument only after tracing.** Add targeted logs or probes at suspected boundaries. Use a unique prefix such as `[DBG-a4f2]` so cleanup is one grep.
+4. **Rank hypotheses.** Keep 3-5 candidates. For each serious candidate, state what would prove it and what would disprove it. Run the disproof first when possible.
+5. **Maintain a breadcrumb ledger.** Record each run as: change, observation, and what it ruled in or out. Cross-check every new theory against earlier runs.
+6. **Fix only after evidence converges.** The fix must explain the original symptom, the fail path, and the ledger. Validate against the original repro before broadening tests.
 
 ## Operating Rules
 
-- Recite the mantra block once per debugging session, in the first response only.
-- Do not re-recite mid-session.
-- Apply the four steps in order.
-- Do not propose a fix before a reliable repro exists.
-- Do not start testing hypotheses before the fail path has been narrowed.
-- Do not commit to a hypothesis before trying to disprove it.
-- Do not declare a hypothesis correct until it fits every prior breadcrumb.
-- If you catch yourself proposing a fix without a reliable repro, stop and return to reproduction.
-- The mantra is a constraint carried by the agent, not advice to deliver back to the user beyond the required recital.
+- Do not propose a fix before a reliable repro or a concrete missing-repro blocker.
+- Do not skip fail-path tracing and jump from symptom to patch.
+- Do not keep a hypothesis that contradicts a prior run.
+- Change one axis at a time unless a combined test is explicitly needed.
+- Keep user-facing updates tied to evidence: what was tried, what happened, and what it means.
+- Remove temporary instrumentation before finishing unless the user asks to keep it.
 
-## Optional Context Artifact
+## Optional Artifact
 
-Default to keeping the experiment ledger in chat. If the user asks to persist, hand off, or reuse the debugging context, write or update `.context/debug-ledger.md` in the current workspace.
-
-Use a named file such as `.context/debug-ledger-<ticket-or-topic>.md` when the current context is tied to a specific ticket, PR, incident, or topic and the default file already appears unrelated.
-
-Do not create files by default. If no clear workspace exists, keep the ledger in chat unless the user provides a path.
+Default to a chat ledger. If the user asks to persist or hand off context, write `.context/debug-ledger.md` or `.context/debug-ledger-<ticket-or-topic>.md` when a ticket, PR, incident, or topic is clear. Ask before overwriting unrelated context.
