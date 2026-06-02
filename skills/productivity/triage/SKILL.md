@@ -43,7 +43,7 @@ Every triaged issue should carry exactly one category role and one state role. I
 
 ## Tracker Mapping
 
-Treat the roles above as canonical concepts, not literal tracker labels. First look for a project-local mapping such as `.triage/roles.md`, `.triage/config.md`, or equivalent repository documentation. If no mapping exists, inspect existing tracker labels/statuses/fields and ask the maintainer to confirm the mapping before mutation.
+Treat the roles above as canonical concepts, not literal tracker labels. First look for `.context/INDEX.md` and `.context/triage.md`, then project-local mapping such as `.triage/roles.md`, `.triage/config.md`, or equivalent repository documentation. If no mapping exists, inspect existing tracker labels/statuses/fields and ask the maintainer to confirm the mapping before mutation.
 
 Adapt to available tracker tools:
 
@@ -55,7 +55,7 @@ Adapt to available tracker tools:
 ## Workflow
 
 1. Interpret the maintainer request: show attention queue, triage a specific issue, perform a quick state override, or list issues in a state.
-2. Gather context. Read the issue body, comments, current roles, reporter, dates, and prior triage notes. Check project docs, relevant code paths, ADRs, and `.out-of-scope/*.md` when present.
+2. Gather context. Read the issue body, comments, current roles, reporter, dates, and prior triage notes. Check `.context/INDEX.md`, `.context/project.md`, `.context/git-workflow.md`, `.context/triage.md`, project docs, relevant code paths, ADRs, and `.out-of-scope/*.md` when present.
 3. Recommend category and state with reasoning, a brief codebase or tracker-context summary, and any mapping uncertainty. Wait for maintainer direction before mutation.
 4. For bugs, attempt lightweight reproduction before grilling: follow reporter steps, trace the likely code path, and run targeted commands when reasonable. Report confirmed repro, failed repro, or insufficient detail.
 5. If the issue needs shaping, run a focused `grill-me` session. Preserve resolved facts in the final triage notes or brief.

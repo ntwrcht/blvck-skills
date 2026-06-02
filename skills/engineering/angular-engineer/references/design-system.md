@@ -1,6 +1,6 @@
 # Design System — SCSS & Theming
 
-> Check `.context/angular.md` for which design system this project uses, then jump to the relevant section below.
+> Check `.context/INDEX.md`, then `.context/engineering.md`, for which design system this project uses, then jump to the relevant section below.
 > Sections: [SCSS Variables (Material/Bootstrap)](#scss) · [Tailwind CSS](#tailwind) · [CSS Custom Properties](#css-vars)
 
 ## Starter `_variables.scss`
@@ -194,7 +194,7 @@ toggleDarkMode(isDark: boolean): void {
 
 ## Tailwind CSS
 
-Use Tailwind when `.context/angular.md` shows `design_system: tailwind`.
+Use Tailwind when `.context/engineering.md` shows `design_system: tailwind`.
 
 ### Setup
 
@@ -269,7 +269,7 @@ toggleDarkMode(isDark: boolean): void {
 
 ## CSS Custom Properties
 
-Use when `.context/angular.md` shows `design_system: css-vars` or a framework-agnostic token system.
+Use when `.context/engineering.md` shows `design_system: css-vars` or a framework-agnostic token system.
 
 ```scss
 /* src/styles/_tokens.css */

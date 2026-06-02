@@ -23,7 +23,7 @@ Answer directly for conceptual questions, explanations, single-line fixes, or sm
 
 ## Workflow
 
-1. Inspect local context before changing code. Read `.context.md` and `.context/angular.md` when present; if they are missing and project code changes are needed, follow `references/project-context.md`.
+1. Inspect local context before changing code. Read `.context/INDEX.md` when present, then load relevant domain files such as `.context/project.md`, `.context/engineering.md`, `.context/git-workflow.md`, `.context/security.md`, `.context/learning.md`, and `.context/adr/`. If context is missing and project code changes are needed, follow `references/project-context.md`.
 2. Confirm Angular version and module style from context, `package.json`, `angular.json`, or source layout before choosing APIs.
 3. Check nearby code for naming, folder structure, shared UI, design tokens, HTTP wrappers, state services, and test style.
 4. Load only the reference files needed for the task from the Reference Map.
@@ -60,7 +60,7 @@ Ask before defaulting when the Angular version or module style is unclear and th
 
 ## Reference Map
 
-- `references/project-context.md`: missing or stale `.context.md`, `.context/angular.md`, or provider stubs.
+- `references/project-context.md`: missing or stale `.context/` domain files or provider stubs.
 - `references/module-patterns.md`: NgModule, AppModule, CoreModule, SharedModule, Angular 14-16 projects.
 - `references/signals-patterns.md`: Signals, `computed`, `effect`, `input`, `output`, `model`, `toSignal`.
 - `references/rxjs-patterns.md`: RxJS operators, stream composition, multicasting, unsubscribe strategy.

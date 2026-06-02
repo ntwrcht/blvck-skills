@@ -2,8 +2,8 @@
 
 ## Step 0: Check Project Git Config
 
-Before any git operation, check `.context.md` at the project root.
-Read the `## Git` section for:
+Before any git operation, check `.context/INDEX.md` at the project root.
+If it lists `.context/git-workflow.md`, read that file for:
 
 ```
 main_branch:    main / master / trunk
@@ -12,7 +12,7 @@ ticket_prefix:  BNCP / JIRA / GH
 tag_format:     v{semver}
 ```
 
-If `.context.md` doesn't exist, ask:
+If `.context/INDEX.md` or `.context/git-workflow.md` doesn't exist, ask:
 - What is the main branch? (`main` / `master` / `trunk`)
 - What branching strategy? (trunk-based / git flow)
 - What is the ticket prefix? (e.g. `BNCP-`)
@@ -115,7 +115,7 @@ chore: upgrade Angular to v17
 ```
 
 > **Project scopes:** Replace the examples above with your project's actual module names.
-> Check `.context/git.md` for the agreed scope list. Add new scopes there when a new
+> Check `.context/git-workflow.md` for the agreed scope list. Add new scopes there when a new
 > feature domain is introduced so the whole team uses the same vocabulary.
 
 ### Good vs Bad
@@ -244,7 +244,7 @@ PATCH — bug fix         (fix, perf)
 
 ```bash
 # 1. Ensure you're on main and up to date
-git checkout <main_branch from .context.md> && git pull
+git checkout <main_branch from .context/git-workflow.md> && git pull
 
 # 2. Create annotated tag (not lightweight)
 git tag -a v1.2.0 -m "Release v1.2.0

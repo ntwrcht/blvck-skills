@@ -20,8 +20,8 @@ Every finding must be grounded in evidence and must explain trust boundary, expl
 ## Workflow
 
 1. Define scope from the request: target files, endpoints, services, infrastructure, compliance regime, data sensitivity, and whether the system is internet-facing.
-2. Inspect local context before asking questions. Read `.context.md`, `.context/security.md`, security docs, configs, routes, auth code, dependency manifests, IaC, and prior findings when relevant.
-3. If scope is ambiguous, state reasonable assumptions and continue with the highest-risk surfaces first. Ask only when a missing answer would materially change severity or remediation. If the user asks to bootstrap reusable context, use `references/context-template.md`.
+2. Inspect local context before asking questions. Read `.context/INDEX.md`, then relevant domain files such as `.context/project.md`, `.context/security.md`, `.context/engineering.md`, `.context/learning.md`, and `.context/adr/`, plus security docs, configs, routes, auth code, dependency manifests, IaC, and prior findings when relevant.
+3. If scope is ambiguous, state reasonable assumptions and continue with the highest-risk surfaces first. Ask only when a missing answer would materially change severity or remediation. If the user asks to bootstrap reusable context, use `skills/productivity/setup-context/references/domains.md`.
 4. Trace untrusted input across trust boundaries: request entry, parsing, validation, authn, authz, business logic, storage, outbound calls, logging, and response shaping.
 5. Check controls in context rather than by checklist alone. A weakness is a finding only when exploitability and impact are defensible.
 6. Classify severity using the framework below, and make the reasoning explicit.
@@ -77,7 +77,7 @@ Load only the reference needed for the current audit surface:
 - `references/infrastructure.md`: cloud config, deployment, network exposure, secrets management, IaC.
 - `references/compliance.md`: PDPA, GDPR, SOC2, ISO 27001, PCI-DSS gap analysis.
 - `references/report-template.md`: formal security report, pentest findings, executive summary, remediation roadmap.
-- `references/context-template.md`: optional `.context.md` and `.context/security.md` structure for reusable project context.
+- `references/context-template.md`: optional `.context/` domain structure for reusable project context.
 
 ## Safety Boundaries
 

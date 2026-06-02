@@ -34,8 +34,11 @@ generating, modifying, reviewing, or debugging project code.
 
 ## Workflow
 
-1. Inspect local context before changing code: `pyproject.toml`, `setup.cfg`,
-   `setup.py`, `requirements*.txt`, lockfiles, source layout, tests, and nearby
+1. Inspect local context before changing code: `.context/INDEX.md` when present,
+   relevant domain files such as `.context/project.md`, `.context/engineering.md`,
+   `.context/git-workflow.md`, `.context/security.md`, `.context/learning.md`,
+   and `.context/adr/`, plus `pyproject.toml`, `setup.cfg`, `setup.py`,
+   `requirements*.txt`, lockfiles, source layout, tests, and nearby
    implementation patterns.
 2. Load only the reference files needed for the task from the Reference Map.
 3. For structural or cross-module changes, state the problem shape, ownership

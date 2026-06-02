@@ -19,12 +19,13 @@ Tests should describe what callers or users observe through public interfaces. A
 
 ## Workflow
 
-1. **Frame the first behavior.** Identify the public interface, expected observable outcome, and first risk to prove. For obvious changes, infer from local code and continue.
-2. **Red.** Write one focused test for one behavior. Run it and confirm it fails for the expected reason.
-3. **Green.** Make the smallest production change that passes the current test. Avoid speculative branches, abstractions, configuration, or future behavior.
-4. **Repeat vertically.** Add the next test only after the previous slice is green. Let each cycle respond to what the last one revealed.
-5. **Refactor while green.** Simplify names, structure, duplication, and boundaries. Rerun focused tests after each meaningful refactor, then broaden the test run.
-6. **Report the loop.** Summarize behaviors added, tests written, implementation changed, and validation run.
+1. **Load relevant context.** Read `.context/INDEX.md` when present, then load useful domains such as `.context/project.md`, `.context/engineering.md`, `.context/learning.md`, and `.context/adr/`.
+2. **Frame the first behavior.** Identify the public interface, expected observable outcome, and first risk to prove. For obvious changes, infer from local code and continue.
+3. **Red.** Write one focused test for one behavior. Run it and confirm it fails for the expected reason.
+4. **Green.** Make the smallest production change that passes the current test. Avoid speculative branches, abstractions, configuration, or future behavior.
+5. **Repeat vertically.** Add the next test only after the previous slice is green. Let each cycle respond to what the last one revealed.
+6. **Refactor while green.** Simplify names, structure, duplication, and boundaries. Rerun focused tests after each meaningful refactor, then broaden the test run.
+7. **Report the loop.** Summarize behaviors added, tests written, implementation changed, and validation run.
 
 ## Testing Rules
 

@@ -1,6 +1,6 @@
 # Reactive Forms Patterns
 
-> Template examples use Angular Material. Check `.context/angular.md` for this project's design system.
+> Template examples use Angular Material. Check `.context/INDEX.md`, then `.context/engineering.md`, for this project's design system.
 >
 > | Design system | Field wrapper | Input | Error |
 > |---|---|---|---|

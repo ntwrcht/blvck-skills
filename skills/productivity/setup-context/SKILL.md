@@ -10,7 +10,7 @@ Scaffold the per-project context files that skills read before doing work — so
 
 ## When to Use
 
-Run once per project before first use of `angular-engineer`, `python-engineer`, `diagnose`, `tdd`, `security-audit`, `ga4-measurement`, `triage`, or `post-mortem`. Re-run only to add domains or reset from scratch.
+Run once per project before first use of `angular-engineer`, `python-engineer`, `strapi-engineer`, `diagnose`, `tdd`, `security-audit`, `ga4-measurement`, `triage`, `post-mortem`, `scrutinize`, or `stakeholder-update`. Re-run only to add domains or reset from scratch.
 
 Do not use to update domain content — edit `.context/*.md` files directly instead.
 

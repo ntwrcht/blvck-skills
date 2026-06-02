@@ -25,7 +25,7 @@ Track decisions, not clicks. Every event must answer a real question someone wil
 
 ## Workflow
 
-1. Load local context first. Check for `.context.md`, `.context/analytics.md`, analytics docs, tracking code, GTM snippets, dataLayer conventions, event constants, tests, or dashboards.
+1. Load local context first. Check `.context/INDEX.md`, then relevant domain files such as `.context/project.md`, `.context/analytics.md`, and `.context/engineering.md`, along with analytics docs, tracking code, GTM snippets, dataLayer conventions, event constants, tests, or dashboards.
 2. Define the decision. Write the business question, report audience, success metric, and action the team will take from the data.
 3. Identify the flow outcome. Prefer completion, abandonment, error, conversion, adoption, and performance signals over raw UI interactions.
 4. Draft the event taxonomy. Use stable `snake_case` names, past-tense actions, and parameters that explain who, what, where, and why without PII.
@@ -37,7 +37,7 @@ Track decisions, not clicks. Every event must answer a real question someone wil
 
 If project context exists, read it before designing or changing measurement. Treat `.context/analytics.md` or an existing measurement plan as the source of truth for activation definitions, funnels, event names, and reporting audiences.
 
-If context is missing and the task needs product goals, activation criteria, funnel steps, implementation stack, or reporting audiences, use `references/context-template.md` to guide the setup. Ask only for the missing inputs, then either document assumptions in the answer or create context files when the user asks for reusable project documentation.
+If context is missing and the task needs product goals, activation criteria, funnel steps, implementation stack, or reporting audiences, use `skills/productivity/setup-context/references/domains.md` to guide the setup. Ask only for the missing inputs, then either document assumptions in the answer or create context files when the user asks for reusable project documentation.
 
 ## Measurement Principles
 
@@ -82,4 +82,4 @@ Read only the file needed for the task:
 - `references/gtm-setup.md` - GTM container setup, dataLayer schema, triggers, variables, and tags.
 - `references/funnel-analysis.md` - funnel design, drop-off analysis, conversion reports, and exploration setup.
 - `references/debugging.md` - GA4 DebugView, GTM Preview, validation, and missing-event troubleshooting.
-- `references/context-template.md` - optional project context structure for bootstrapping reusable analytics context.
+- `references/context-template.md` - optional `.context/` domain structure for bootstrapping reusable analytics context.

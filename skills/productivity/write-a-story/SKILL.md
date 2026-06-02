@@ -26,7 +26,7 @@ Do not invent business facts, customer impact, deadlines, owners, priorities, es
 
 ## Workflow
 
-1. Ingest the input and choose the output shape: single item, feature breakdown, or review/rewrite.
+1. Ingest the input and choose the output shape: single item, feature breakdown, or review/rewrite. Read `.context/INDEX.md` and relevant domain files such as `.context/project.md`, `.context/engineering.md`, and `.context/triage.md` when present.
 2. Identify the decision that shapes the story: actor, outcome, scope boundary, value, readiness target, or tracker action.
 3. Answer from available context first. Ask one concise question only when that decision would materially change the draft.
 4. Choose the item format. Default to user stories for product-facing work; use job stories, WWA, or generic backlog items when requested or clearly better.

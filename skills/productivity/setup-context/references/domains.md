@@ -11,7 +11,7 @@ Each domain file uses these layers where applicable:
 
 ## project.md
 
-**Consumed by:** angular-engineer, python-engineer, ga4-measurement, security-audit, stakeholder-update
+**Consumed by:** angular-engineer, python-engineer, strapi-engineer, ga4-measurement, security-audit, stakeholder-update, write-a-prd, write-a-story
 
 **Explainer:** Stack, repo layout, environment setup, and core vocabulary. The broadest context file — most skills read it first.
 
@@ -41,7 +41,7 @@ Each domain file uses these layers where applicable:
 
 ## engineering.md
 
-**Consumed by:** angular-engineer, python-engineer, tdd, diagnose
+**Consumed by:** angular-engineer, python-engineer, strapi-engineer, tdd, diagnose
 
 **Explainer:** Code conventions, patterns, and testing strategy. Skills use this to match the project's existing style rather than applying generic defaults.
 
@@ -69,7 +69,7 @@ Each domain file uses these layers where applicable:
 
 ## git-workflow.md
 
-**Consumed by:** angular-engineer, python-engineer, triage
+**Consumed by:** angular-engineer, python-engineer, strapi-engineer, triage
 
 **Explainer:** Branch naming, commit conventions, PR process, and merge rules.
 
@@ -97,7 +97,7 @@ Each domain file uses these layers where applicable:
 
 ## security.md
 
-**Consumed by:** security-audit, angular-engineer, python-engineer
+**Consumed by:** security-audit, angular-engineer, python-engineer, strapi-engineer
 
 **Explainer:** Threat model, auth patterns, known risks, and controls. security-audit reads this before reviewing so it focuses on gaps rather than re-mapping known ground.
 

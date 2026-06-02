@@ -26,7 +26,7 @@ Synthesize without interviewing by default. Use the current conversation, reposi
 
 ## Workflow
 
-1. Gather context from the conversation and inspect the repository if needed. Prefer existing domain terms, product vocabulary, local architecture boundaries, and relevant ADRs.
+1. Gather context from the conversation and inspect the repository if needed. Read `.context/INDEX.md` when present, then relevant domain files such as `.context/project.md`, `.context/engineering.md`, and `.context/adr/`. Prefer existing domain terms, product vocabulary, local architecture boundaries, and relevant ADRs.
 2. Identify the product scope, actor set, user-facing value, implementation constraints, non-goals, dependencies, and open risks.
 3. Sketch testing seams at the highest practical behavior boundary. Prefer existing seams to new ones.
 4. Pause to confirm testing seams only when repo evidence is weak, the feature crosses multiple modules, or choosing the wrong seam would materially change the PRD.

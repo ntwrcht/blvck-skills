@@ -29,6 +29,10 @@ Confirm these before drafting. If any are missing, list the gap and stop.
 - Fix: a patch, PR, commit, branch, or concrete code change exists.
 - Validation: the fix was checked against the original repro or affected workload.
 
+## Project Context
+
+Read `.context/INDEX.md` when present, then load relevant domains such as `.context/project.md`, `.context/post-mortem.md`, `.context/learning.md`, and `.context/adr/` before drafting. Use them for known failure patterns, vocabulary, and past decisions; do not let context override the required evidence above.
+
 ## Output Structure
 
 Use these sections in order. Omit optional sections only when no facts exist.

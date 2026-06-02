@@ -28,13 +28,14 @@ Load `references/feedback-loops.md` when you need loop-construction tactics, non
 
 ## Workflow
 
-1. **Build the feedback loop.** Prefer a failing test, HTTP script, CLI fixture, browser script, trace replay, throwaway harness, fuzz loop, bisection harness, or differential loop. Use `scripts/hitl-loop.template.sh` only when a human action is unavoidable.
-2. **Reproduce.** Run the loop until the user's exact symptom appears. Capture the error, wrong output, timing, or failure rate so later runs can prove the fix.
-3. **Minimise.** Shrink the input, scenario, service graph, timing window, or data fixture while preserving the same failure mode.
-4. **Rank hypotheses.** Generate 3-5 falsifiable hypotheses before testing. State each prediction as: "If X is the cause, then changing Y will make the bug disappear or changing Z will make it worse." Show the ranked list to the user, then proceed if they are unavailable.
-5. **Instrument.** Map every probe to a hypothesis. Prefer debugger or REPL inspection, then targeted logs at distinguishing boundaries. Tag temporary logs with a unique prefix such as `[DEBUG-a4f2]`.
-6. **Fix with a regression test.** Write the regression test before the fix when a correct seam exists. The seam must exercise the real bug pattern as it occurs at the call site; if no correct seam exists, document that architectural gap.
-7. **Verify and clean up.** Re-run the original loop, run the regression test, remove all tagged instrumentation, delete throwaway prototypes, and state the hypothesis that proved correct in the commit, PR, or handoff note.
+1. **Load relevant context.** Read `.context/INDEX.md` when present, then load useful domains such as `.context/project.md`, `.context/engineering.md`, `.context/post-mortem.md`, `.context/learning.md`, and `.context/adr/`. Keep this quick; the feedback loop is still the priority.
+2. **Build the feedback loop.** Prefer a failing test, HTTP script, CLI fixture, browser script, trace replay, throwaway harness, fuzz loop, bisection harness, or differential loop. Use `scripts/hitl-loop.template.sh` only when a human action is unavoidable.
+3. **Reproduce.** Run the loop until the user's exact symptom appears. Capture the error, wrong output, timing, or failure rate so later runs can prove the fix.
+4. **Minimise.** Shrink the input, scenario, service graph, timing window, or data fixture while preserving the same failure mode.
+5. **Rank hypotheses.** Generate 3-5 falsifiable hypotheses before testing. State each prediction as: "If X is the cause, then changing Y will make the bug disappear or changing Z will make it worse." Show the ranked list to the user, then proceed if they are unavailable.
+6. **Instrument.** Map every probe to a hypothesis. Prefer debugger or REPL inspection, then targeted logs at distinguishing boundaries. Tag temporary logs with a unique prefix such as `[DEBUG-a4f2]`.
+7. **Fix with a regression test.** Write the regression test before the fix when a correct seam exists. The seam must exercise the real bug pattern as it occurs at the call site; if no correct seam exists, document that architectural gap.
+8. **Verify and clean up.** Re-run the original loop, run the regression test, remove all tagged instrumentation, delete throwaway prototypes, and state the hypothesis that proved correct in the commit, PR, or handoff note.
 
 ## Performance Branch
 

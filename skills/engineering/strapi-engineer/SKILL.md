@@ -19,10 +19,10 @@ Choose the Strapi layer that matches the responsibility, keep controllers thin, 
 
 ## Project Context
 
-1. Look for `.context.md` in the project root and read the Stack and Git sections when present.
+1. Look for `.context/INDEX.md` in the project root and read relevant domain files when present: `.context/project.md`, `.context/engineering.md`, `.context/git-workflow.md`, `.context/security.md`, `.context/learning.md`, and `.context/adr/`.
 2. If project context is missing and the task depends on it, infer what you can from `package.json`, `config/`, `src/`, and existing tests before asking questions.
 3. When context remains unclear, ask for only the missing decisions that affect implementation: Strapi version, draft/publish, i18n, auth method, main branch, and ticket prefix.
-4. If the user asks to create project context, load `references/context-template.md` and write `.context.md` using the local template.
+4. If the user asks to create project context, use the `setup-context` skill and write `.context/` domain files using `skills/productivity/setup-context/references/domains.md`.
 
 ## Workflow
 
@@ -54,7 +54,7 @@ Load only the reference needed for the current task:
 - `references/strapi-server.md`: middleware, policies, lifecycle hooks, custom routes, cron, or webhooks.
 - `references/strapi-graphql.md`: GraphQL setup, custom queries/mutations, resolvers, depth limits, or amount limits.
 - `references/git-workflow.md`: branch naming, commits, tags, releases, changelog, or PR descriptions.
-- `references/context-template.md`: `.context.md` creation.
+- `references/context-template.md`: `.context/` domain creation.
 
 ## Review Checklist
 

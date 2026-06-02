@@ -32,7 +32,7 @@ Recommended: [audience], because [evidence from the request].
 1. Determine the audience: internal team, management, cross-functional partners, external customers, or multiple audiences. Use `references/audience-rules.md` for fit and sanitization.
 2. Determine the purpose: inform status, summarize progress, announce launch, escalate risk, request a decision, document a pivot, or provide a customer progress note.
 3. Determine the channel: issue tracker, team chat, email, website, document, slides, or meeting notes. Use `references/channel-templates.md` for channel formatting.
-4. Gather context from supplied material or authorized tools: goal, progress, impact, metrics, timeline, blockers, decisions, owners, and next milestone.
+4. Gather context from supplied material, `.context/INDEX.md` and relevant domain files such as `.context/project.md`, or authorized tools: goal, progress, impact, metrics, timeline, blockers, decisions, owners, and next milestone.
 5. If context is missing, ask only for facts that change the message, decision, risk level, or required action.
 6. Draft the update using `references/update-templates.md` when a standard format fits.
 7. For risk-heavy updates, apply `references/risk-status.md`.
