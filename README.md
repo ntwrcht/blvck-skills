@@ -47,6 +47,21 @@ Drafts not yet ready to ship.
 
 Skills that are no longer used.
 
+## 🧭 Skill Selection Guide
+
+Use the full portable install by default. Link every shippable skill, then rely on concise descriptions and these boundaries to choose the right skill for the task.
+
+| Situation | Skill |
+| :--- | :--- |
+| The goal, plan, or decision is unclear and needs an interview before work starts. | [**Grill Me**](skills/productivity/grill-me/SKILL.md) |
+| A written plan, PR, diff, design doc, or implementation approach needs independent review. | [**Scrutinize**](skills/engineering/scrutinize/SKILL.md) |
+| A bug, crash, flaky test, hang, regression, or unexplained behavior has an unknown cause. | [**Debug Mantra**](skills/engineering/debug-mantra/SKILL.md) |
+| A behavior change should be driven through red-green-refactor tests. | [**TDD**](skills/engineering/tdd/SKILL.md) |
+| A fixed and validated bug needs an engineering RCA or post-mortem. | [**Post-mortem**](skills/engineering/post-mortem/SKILL.md) |
+| Technical material needs to be rewritten for leadership, Slack, Jira, email, standup, or meeting notes. | [**Management Talk**](skills/productivity/management-talk/SKILL.md) |
+| A status, launch, sprint, risk, decision, customer, or multi-audience update needs audience-aware framing. | [**Stakeholder Update**](skills/productivity/stakeholder-update/SKILL.md) |
+| Work is mainly inside a specific stack or domain. | Use the matching engineering skill, and combine it with a workflow skill only when the request also needs debugging, TDD, review, security, measurement, or communication structure. |
+
 ## 🚀 Getting Started
 
 This repository uses a symlinking strategy to "install" shippable skills into your AI assistant's configuration directories.
@@ -58,6 +73,18 @@ It also includes a Claude Code plugin manifest for loading the same shippable sk
 - A Unix-like environment (macOS or Linux).
 
 ### Installation
+
+For a new computer, clone this repository and link every shippable skill into the supported agent directories:
+
+```bash
+git clone <repo-url>
+cd agent-skills
+./scripts/link-skills.sh
+```
+
+The script installs skills from `engineering/`, `productivity/`, and `misc/`. It does not install skills from `personal/`, `in-progress/`, or `deprecated/`.
+
+Linked means the skill is available for the agent to discover. It should not mean every full `SKILL.md` is loaded into the model context at startup; agents should use the skill name and description to choose a relevant skill, then load that skill's detailed instructions only when needed.
 
 To list every `SKILL.md` in the repo:
 
