@@ -17,7 +17,7 @@ Use it for audiences such as managers, directors, VPs, PMs, TPMs, release manage
 ## When Not to Use
 
 - Use `stakeholder-update` when the request is broader program reporting, launch status, sprint summary, or multi-audience status planning rather than rewriting technical material.
-- Use `write-story` when the output is backlog-ready acceptance criteria, story text, or Jira issue structure.
+- Use `write-a-story` when the output is backlog-ready acceptance criteria, story text, or Jira issue structure.
 - Use `post-mortem` when the user needs the full incident or bug writeup first; use this skill afterward for the leadership-facing version.
 - Do not make the copy customer-facing, marketing-oriented, legal, finance, or true ELI5 unless the user asks for that audience explicitly.
 
