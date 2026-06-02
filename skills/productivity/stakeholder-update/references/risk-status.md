@@ -10,6 +10,8 @@ Use Green, Yellow, and Red honestly:
 
 Move to Yellow at the first meaningful risk. Move to Red when the current plan cannot meet the commitment without intervention.
 
+If the status changed since the last update, say why in the first paragraph or first bullet.
+
 ## Risk Communication
 
 For material risks, state:
@@ -22,6 +24,19 @@ For material risks, state:
 
 Avoid vague risk language. Replace "there may be delays" with what may slip, by how much, why, and what decision or mitigation is needed.
 
+## Escalation Shape
+
+Use this when the update is mostly about risk:
+
+```text
+Status: [Yellow / Red]
+Risk: [What may happen or is happening]
+Impact: [Customer, business, timeline, quality, or operational effect]
+Evidence: [Signal, metric, missed milestone, dependency, or incident]
+Mitigation: [Owner and plan]
+Ask: [Decision, resource, scope tradeoff, or deadline]
+```
+
 ## Risk Quality Bar
 
 - Lead with major risks instead of burying them after progress.
@@ -29,6 +44,7 @@ Avoid vague risk language. Replace "there may be delays" with what may slip, by 
 - Separate risk from issue: a risk may happen; an issue is already happening.
 - Make ownership explicit.
 - Make the ask actionable.
+- Include the deadline when inaction creates a new risk.
 
 ## ROAM Labels
 

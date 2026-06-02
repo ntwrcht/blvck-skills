@@ -1,60 +1,55 @@
 ---
 name: stakeholder-update
-description: Audience-aware workflow for stakeholder updates, status reports, sprint summaries, launch notes, risk escalations, executive updates, customer progress notes, and multi-audience variants.
+description: "Draft audience-aware stakeholder updates that clarify status, impact, risks, decisions, and next steps. Use when preparing status reports, sprint summaries, launch notes, risk escalations, executive updates, customer progress notes, or multi-audience variants."
 argument-hint: "<update type and audience>"
 ---
 
 # Stakeholder Update
 
-Generate stakeholder updates tailored to audience, cadence, and delivery channel.
+Draft stakeholder communication that makes current state, impact, risk, decision, and next action clear for the intended audience.
 
-Keep organization-specific names, customer names, internal project codes, and tool names out of this skill. If that context is needed to draft the update, ask the user for it directly.
+## When to Use
 
-## Relationship to Rewrite Skills
+Use this skill for cadence reporting, sprint summaries, launch notes, customer progress updates, risk escalations, and multi-audience versions of the same update.
 
-Use this skill when the work is a stakeholder update: cadence reporting, sprint summaries, launch notes, customer progress updates, risk escalations, or multi-audience versions of the same update.
+Use `management-talk` instead when the request is mainly rewriting engineering or team-internal material for leadership, Slack, Jira, email, standup notes, or meeting talking points without a broader status, risk, decision, or audience-routing problem.
 
-If a separate leadership rewrite skill is available, use it when the work is specifically rewriting technical or team-internal content for management. In this repo, that skill is `management-talk`.
-
-When both apply, use this skill to choose the audience, message, risk framing, and update structure. Then use the channel guidance here, or hand off to the rewrite skill for a management-specific rewrite.
-
-## Usage
-
-```text
-/stakeholder-update $ARGUMENTS
-```
+When both apply, use this skill first to decide the audience, message, risk framing, and update structure.
 
 ## Core Rule
 
-Always identify the audience before drafting. Ask: "Is this for the internal team, management, cross-functional partners, or external customers?"
+Identify the audience and the update's purpose before drafting. The same facts need different framing, detail, and risk language depending on who needs to act.
 
-Do not assume the audience. The same facts need different framing, detail, and risk language for each group.
+If either is unclear, ask the next decision-shaping question with a recommended answer:
+
+```text
+Is this for the internal team, management, cross-functional partners, or external customers?
+Recommended: [audience], because [evidence from the request].
+```
 
 ## Workflow
 
-1. Determine the audience. Use `references/audience-rules.md` if the audience is ambiguous or the output must be sanitized.
-2. Determine the update type: sprint summary, weekly or monthly status, launch announcement, escalation, risk flag, pivot, or decision update.
-3. Determine the delivery channel: issue tracker, team chat, email, website, document, slides, or meeting notes. Use `references/channel-templates.md` for channel formatting.
-4. Gather context from available connected tools if the user has authorized them.
-5. If required context is missing, ask the user for accomplishments, blockers or risks, key decisions, next steps, audience-specific names, and any required metrics.
-6. Draft the update. Use `references/update-templates.md` for sprint, executive, engineering, partner, and customer templates.
-7. For status or risk-heavy updates, use `references/risk-status.md`.
-8. For decision records or decision-needed updates, use `references/decision-notes.md`.
-9. Review the draft for audience fit, outcome-first language, channel fit, and sensitive internal references.
-10. Ask whether the user wants a different tone, detail level, emphasis, or delivery format.
+1. Determine the audience: internal team, management, cross-functional partners, external customers, or multiple audiences. Use `references/audience-rules.md` for fit and sanitization.
+2. Determine the purpose: inform status, summarize progress, announce launch, escalate risk, request a decision, document a pivot, or provide a customer progress note.
+3. Determine the channel: issue tracker, team chat, email, website, document, slides, or meeting notes. Use `references/channel-templates.md` for channel formatting.
+4. Gather context from supplied material or authorized tools: goal, progress, impact, metrics, timeline, blockers, decisions, owners, and next milestone.
+5. If context is missing, ask only for facts that change the message, decision, risk level, or required action.
+6. Draft the update using `references/update-templates.md` when a standard format fits.
+7. For risk-heavy updates, apply `references/risk-status.md`.
+8. For decision records or decision-needed updates, apply `references/decision-notes.md`.
+9. Review for audience fit, outcome-first language, channel fit, specific asks, and sensitive internal references.
 
-## Context Gathering
+## Decision-Shaping Questions
 
-When relevant tools are available, use them to collect:
+Ask at most one question at a time when the answer blocks a good draft. Prefer these questions:
 
-- Completed work since the last update
-- Items currently at risk or blocked
-- Decisions made or needed
-- Milestones, launch dates, or sprint progress
-- Metrics, customer impact, or operational impact
-- Follow-ups from recent discussions, meeting notes, or planning documents
+- Who is the audience, and what do they need to do after reading?
+- Is the goal to inform, reassure, escalate, request a decision, or create a record?
+- What changed since the last update, and why does it matter?
+- What is the current status: Green, Yellow, or Red?
+- What decision, owner, deadline, or action should be explicit?
 
-If connected tools are not available or do not include enough context, ask the user for the same facts directly.
+Use the available evidence to recommend an answer when possible, then ask the user to confirm or correct it.
 
 ## Output Rules
 
@@ -67,6 +62,7 @@ If connected tools are not available or do not include enough context, ask the u
 - Make asks specific: owner, decision, deadline, and recommendation when possible.
 - Default to draft-only output. Do not post to an issue tracker, chat tool, email system, website, or any external destination unless a suitable tool is available and the user explicitly asks to post.
 - Before posting through any connected tool, show the exact message and wait for explicit approval.
+- Do not include organization-specific names, customer names, internal project codes, or tool names unless the user supplies them for the draft.
 
 ## Reference Map
 

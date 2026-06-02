@@ -2,6 +2,8 @@
 
 Use decision notes for decisions that affect strategy, architecture, commitments, customer experience, or future options.
 
+Use a decision-needed update when stakeholders must choose before work can continue. Use a compact decision note after the choice is made and needs to be recorded.
+
 ## Compact Decision Format
 
 ```text
@@ -44,6 +46,22 @@ Recommendation:
 Needed by:
 - [Date] to avoid [impact]
 ```
+
+## Decision-Shaping Prompt
+
+If the user has not provided enough context, ask one question at a time:
+
+```text
+What decision must the stakeholder make?
+Recommended: frame it as [decision], because [evidence].
+```
+
+Then resolve, in order:
+
+- Deadline or consequence of delay
+- Available options
+- Recommended option
+- Owner of the final decision
 
 ## Decision Writing Rules
 

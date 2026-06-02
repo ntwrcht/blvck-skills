@@ -29,7 +29,7 @@ A collection of specialized expert agent skills for AI assistants (like Gemini C
 | [**Caveman**](skills/productivity/caveman/SKILL.md) | Ultra-compressed communication mode that drops filler, articles, and pleasantries while keeping technical accuracy. Use when the user says caveman mode, talk like caveman, use caveman, less tokens, be brief, terse mode, or invokes /caveman. |
 | [**Grill Me**](skills/productivity/grill-me/SKILL.md) | Pressure-test plans and designs through focused interview loops that resolve decisions, risks, dependencies, and tradeoffs. Use when the user asks to be grilled, stress-test a plan, or sharpen a design before implementation. |
 | [**Management Talk**](skills/productivity/management-talk/SKILL.md) | Rewrite engineering updates into clear leadership and cross-functional communication while preserving state, impact, ownership, risks, and next steps. Use when drafting Jira comments, Slack posts, standup notes, emails, meeting talking points, or executive summaries from technical source material. |
-| [**Stakeholder Update**](skills/productivity/stakeholder-update/SKILL.md) | Audience-aware status updates, sprint summaries, launch notes, and risk escalations. |
+| [**Stakeholder Update**](skills/productivity/stakeholder-update/SKILL.md) | Draft audience-aware stakeholder updates that clarify status, impact, risks, decisions, and next steps. Use when preparing status reports, sprint summaries, launch notes, risk escalations, executive updates, customer progress notes, or multi-audience variants. |
 
 ### Misc
 

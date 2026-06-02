@@ -2,6 +2,12 @@
 
 Ask for the channel if it is unclear. Format the same update differently by delivery channel.
 
+Keep the message's decision shape intact across channels:
+
+- First line: outcome, risk, or decision needed
+- Middle: only the evidence the audience needs
+- End: owner, action, date, or next milestone
+
 ## Issue Tracker
 
 Use this for Jira, Linear, GitHub Issues, Azure Boards, or similar tools. Use a structured status comment with bold labels. Keep enough tracking detail for internal readers.
@@ -12,6 +18,7 @@ Use this for Jira, Linear, GitHub Issues, Azure Boards, or similar tools. Use a 
 **Impact:** [Who is affected and how]
 **Progress:** [What changed since last update]
 **Risk / blocker:** [Risk, owner, mitigation]
+**Decision / ask:** [Decision needed, recommendation, deadline]
 **Next step:** [Concrete next action and date]
 ```
 
@@ -23,6 +30,7 @@ Use this for Slack, Microsoft Teams, Discord, Google Chat, or similar tools. Use
 **TL;DR:** [Most important outcome, risk, or ask]
 - Impact: [Who benefits or is affected]
 - Progress: [What changed]
+- Ask: [Decision/action needed, if any]
 - Next: [Owner/action/date]
 ```
 
@@ -50,7 +58,7 @@ Hi [audience],
 
 [Progress, risk, or launch detail.]
 
-Next: [What is coming and any action needed.]
+Next: [What is coming, owner, and any action needed.]
 ```
 
 ## Website or Public Changelog
@@ -77,7 +85,7 @@ Use section headings and scannable bullets. Put the decision or status on the fi
 For slides:
 
 - One message per slide.
-- Put status, decision, or ask in the title.
+- Put the status, decision, or ask in the title.
 - Use short bullets and avoid paragraphs.
 - Put technical detail in backup slides.
 

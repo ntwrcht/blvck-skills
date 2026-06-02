@@ -1,5 +1,19 @@
 # Update Templates
 
+## Message Frame
+
+Use this frame before choosing a template:
+
+```text
+Audience: [reader]
+Purpose: [inform / reassure / escalate / request decision / record decision]
+Status: [Green / Yellow / Red, if relevant]
+Main message: [one sentence]
+Ask or next action: [owner, action, date]
+```
+
+If the update has no ask, make the next milestone explicit.
+
 ## Sprint Summary
 
 Use this format for sprint summaries. Adjust detail by audience.
@@ -7,6 +21,7 @@ Use this format for sprint summaries. Adjust detail by audience.
 ```text
 Sprint [N] - [Start date] to [End date]
 Goal: [one sentence, outcome-focused]
+Status: [Green / Yellow / Red, if useful]
 
 Completed:
 - [Feature or fix] - [user or business impact]
@@ -46,6 +61,7 @@ Next milestones:
 ```
 
 Keep it concise. Only include risks that affect a decision, timeline, customer, or commitment.
+If the status is Yellow or Red, move `Risks` before `Progress`.
 
 ## Engineering Team Update
 
@@ -80,6 +96,9 @@ What's coming:
 What we need from you:
 - [Specific ask] - [Context]. By [date].
 
+Dependencies:
+- [Dependency] - [Owner]. [Impact if missed].
+
 Decisions made:
 - [Decision] - [How it affects your team].
 
@@ -106,3 +125,4 @@ Feedback:
 ```
 
 Do not include internal project names, ticket IDs, architecture details, tool names, or team process unless the customer explicitly needs that information.
+For customer risks, state only customer-visible impact, mitigation, timing, and workaround.

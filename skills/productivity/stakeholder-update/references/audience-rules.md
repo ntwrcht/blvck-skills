@@ -2,12 +2,22 @@
 
 ## Audience Tiers
 
-| Audience | What they want | Rules |
+| Audience | What they want | Decision shape |
 | --- | --- | --- |
-| Internal team / leads | Working detail, owners, decisions, blockers, ticket or artifact references | Internal refs are ok. Be direct about blockers and priority changes. |
-| Management / leadership | Outcomes, metrics, risks, decisions needed | Minimal jargon. Max 5 bullets. Lead with business impact. |
-| Cross-functional partners | What affects their team, dates, asks, input points | Explain impact by function. Make asks specific and time-bound. |
-| External customers | What changed for them, what is coming, any action needed | No internal tooling, internal process, ticket IDs, project codes, or unexplained acronyms. Use outcome language only. |
+| Internal team / leads | Working detail, owners, decisions, blockers, ticket or artifact references | What changed, who owns what, what is blocked, and what tradeoff must be resolved. |
+| Management / leadership | Outcomes, metrics, risks, decisions needed | What outcome changed, what commitment is at risk, and what decision or support is needed. |
+| Cross-functional partners | What affects their team, dates, asks, input points | What changes for their workflow, when input is needed, and what dependency they own. |
+| External customers | What changed for them, what is coming, any action needed | What they can do now, what will change, and whether they need to take action. |
+
+## Audience Selection
+
+If the user names several audiences, draft separate variants instead of flattening one message. Use the same facts but change:
+
+- Detail level
+- Sensitive references
+- Risk language
+- Ask or next action
+- Ownership and deadlines
 
 ## Audience-Specific Rules
 
@@ -23,12 +33,14 @@
 - Keep the update under 200 words and at most 5 bullets.
 - Avoid unexplained acronyms and implementation detail.
 - Include only risks that affect a decision, customer, timeline, commitment, or resourcing.
+- Recommend a decision when there is enough evidence.
 
 ### Cross-Functional Partners
 
 - Explain what changes for their workflow, timeline, launch readiness, customer conversation, support process, or decision-making.
 - Make asks concrete and time-bound.
 - Avoid engineering detail unless it changes what they need to do.
+- Name the dependency or input point before describing internal progress.
 
 ### External Customers
 
