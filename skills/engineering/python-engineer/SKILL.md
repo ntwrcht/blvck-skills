@@ -1,117 +1,87 @@
 ---
 name: python-engineer
-description: >
-  Python project guidance for architecture, design decisions, package structure,
-  typing, naming, linting, testing, packaging, async code, data access, and code
-  review.
+description: "Build, modify, review, and debug Python projects with architecture, packaging, typing, testing, linting, async, data access, and reliability guidance. Use when working on Python application code, libraries, CLIs, services, tooling, refactors, test strategy, or code review."
 ---
 
-# Senior Python Engineer
+# Python Engineer
 
-Act as a senior Python engineer: make design choices explicit, keep code
-idiomatic, and adapt to the project's existing tools before introducing new
-ones.
+Guide Python engineering work with senior judgment: read the project first,
+choose boring maintainable designs, preserve local conventions, and validate the
+changed behavior.
 
 ## When to Use
 
-Use this skill for Python code generation, refactoring, debugging, code review,
-project structure, API design, linting setup, type checking, tests, packaging,
-async/concurrency, CLIs, web services, data processing, and architecture
-decisions.
+Use this skill for Python application or library work: project structure, API
+design, implementation, refactoring, debugging, code review, type hints, tests,
+linting, packaging, async/concurrency, CLIs, web services, data processing,
+database access, and architecture decisions.
 
-Do not use this skill for pure product writing, non-Python repositories, or
-framework-specific work covered by a narrower skill unless Python design
-judgment is the main gap.
+Use a narrower skill when the request is mainly generic debugging, security
+audit, TDD process, stakeholder writing, or a framework-specific workflow where
+Python design judgment is only incidental.
+
+## Core Rule
+
+Prefer the repository's existing package manager, layout, formatter, linter,
+type checker, test runner, dependency style, logging approach, and error
+patterns over generic Python examples.
 
 ## Quick Path
 
-For small questions, simple bug fixes, and explanations, answer directly. Do not
-force a full design note when the task only needs a focused correction.
+Answer directly for conceptual questions, explanations, single-line fixes, or
+small snippets. Do not run the full project-context workflow unless you are
+generating, modifying, reviewing, or debugging project code.
 
-For code changes, first read the local project shape:
+## Workflow
 
-- `pyproject.toml`, `setup.cfg`, `setup.py`, `requirements*.txt`, `uv.lock`,
-  `poetry.lock`, or `Pipfile.lock`
-- Existing package layout under `src/`, app directories, and test directories
-- Linter, formatter, type checker, and test runner configuration
-- Nearby code that shows naming, dependency injection, errors, logging, and
-  boundary patterns
+1. Inspect local context before changing code: `pyproject.toml`, `setup.cfg`,
+   `setup.py`, `requirements*.txt`, lockfiles, source layout, tests, and nearby
+   implementation patterns.
+2. Load only the reference files needed for the task from the Reference Map.
+3. For structural or cross-module changes, state the problem shape, ownership
+   boundary, key tradeoff, and validation plan before editing.
+4. Make the smallest cohesive change that preserves existing behavior unless the
+   user requested a behavior change.
+5. Keep public interfaces typed, boring, and stable; narrow `Any` near the edge.
+6. Put domain logic outside framework, database, HTTP, CLI, and subprocess
+   boundaries where practical.
+7. Add or update tests at the same boundary callers use, with mocks only around
+   true external systems.
+8. Validate with the repo's focused test, lint, format, typecheck, build, or
+   runtime check when practical.
 
-Prefer the repo's current conventions when they are coherent. If conventions are
-missing or contradictory, choose a conservative default and state it briefly.
+## Engineering Defaults
 
-## Thinking Separation
-
-Separate design thinking from implementation when the work affects structure,
-public interfaces, cross-module behavior, persistence, async flow, or testing
-strategy.
-
-### Decision Pass
-
-Before editing substantial code, state:
-
-- **Problem shape:** what behavior or maintainability issue is being solved
-- **Boundary:** where the responsibility should live
-- **Tradeoff:** what is being optimized and what is being left out
-- **Validation:** what test, lint, type check, or runtime check will prove it
-
-Keep this short. The point is to make the choice reviewable, not to produce an
-architecture essay.
-
-### Implementation Pass
-
-After the decision is clear:
-
-- Make the smallest cohesive change that expresses the chosen design
-- Keep public interfaces boring and stable
-- Push complexity behind narrow functions, classes, or modules
-- Preserve existing behavior unless the user requested a behavior change
-- Add or update tests at the same boundary callers use
-
-## Standards
-
-Default to these standards unless the repository already has stronger local
-rules:
-
-- Keep domain logic independent from frameworks, databases, HTTP clients, and
-  CLIs.
-- Prefer explicit dependencies passed through constructors or functions over
-  hidden module-level coupling.
-- Type public interfaces and boundary models; keep `Any` at the edge and narrow
-  it quickly.
-- Use behavior tests at public boundaries, with mocks only around true external
-  systems.
-- Keep lint, format, type-check, and test commands aligned with existing project
-  tooling.
+- Prefer explicit dependencies through constructors or functions over hidden
+  module-level coupling.
+- Use functions for stateless transformations and classes for meaningful state,
+  resource lifecycle, protocols, domain concepts, or replaceable adapters.
+- Keep serialization, validation, SQL, filesystem paths, subprocess commands,
+  network calls, and secrets at clear boundaries.
 - Make resource ownership explicit for files, clients, pools, tasks, and
   background workers.
-- Treat user input, file paths, SQL, subprocess commands, and secrets as security
-  boundaries.
+- Add dependencies only when the standard library or current project stack would
+  make the code meaningfully worse.
 
-## Reference Files
+## Reference Map
 
 Load only the reference needed for the current decision:
 
-| File | Read when task involves |
-|---|---|
-| `references/design-and-structure.md` | Architecture, module boundaries, functions vs classes, data modeling, errors, dependency choices |
-| `references/typing-and-naming.md` | Type hints, Protocols, TypedDict, dataclasses, naming conventions, import hygiene |
-| `references/linting-tooling.md` | Ruff, Black, pyright, mypy, pytest config, packaging metadata, CI commands |
-| `references/testing.md` | Unit tests, integration tests, mocks/fakes, fixtures, regression tests, async tests |
-| `references/async-security-reliability.md` | asyncio, concurrency, resource cleanup, subprocesses, SQL, paths, secrets, retries, timeouts |
+- `references/design-and-structure.md`: architecture, module boundaries,
+  functions vs classes, data modeling, errors, or dependency choices.
+- `references/typing-and-naming.md`: type hints, Protocols, TypedDict,
+  dataclasses, naming conventions, or import hygiene.
+- `references/linting-tooling.md`: Ruff, Black, pyright, mypy, pytest config,
+  packaging metadata, or CI commands.
+- `references/testing.md`: unit tests, integration tests, mocks/fakes, fixtures,
+  regression tests, or async tests.
+- `references/async-security-reliability.md`: asyncio, concurrency, resource
+  cleanup, subprocesses, SQL, paths, secrets, retries, or timeouts.
 
-## Output Format
+## Output Shape
 
-Match the task:
-
-| Task | Format |
-|---|---|
-| Small fix | Changed code and one sentence explaining the issue |
-| New feature | Decision pass, tests, implementation, validation |
-| Refactor | Existing issue, new boundary, changed files, validation |
-| Code review | Findings first with file/line references, then test gaps |
-| Architecture question | Options, recommendation, tradeoffs, migration path |
-| Tooling setup | Chosen tools, config changes, commands to run |
-
-When editing files, run the narrowest useful validation command first. If no
-validation can run, say exactly what was not run and why.
+- Small fix: changed code plus one sentence explaining the issue.
+- New feature or refactor: decision note, tests, implementation, validation.
+- Code review: findings first with file and line references, then test gaps.
+- Architecture question: options, recommendation, tradeoffs, and migration path.
+- Tooling setup: chosen tools, config changes, and commands to run.
