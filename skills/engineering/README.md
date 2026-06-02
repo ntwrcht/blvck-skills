@@ -11,7 +11,7 @@ Daily code-work skills.
 | [Post-mortem](post-mortem/SKILL.md) | Engineering writeup format for fixed and validated bugs. |
 | [Python Engineer](python-engineer/SKILL.md) | Python project guidance for architecture, structure, typing, naming, linting, testing, and packaging. |
 | [Scrutinize](scrutinize/SKILL.md) | External review workflow for plans, PRs, diffs, design docs, and code changes. |
-| [Security Audit](security-audit/SKILL.md) | Security review workflow for code, APIs, infrastructure, authentication, secrets, and compliance. |
+| [Security Audit](security-audit/SKILL.md) | Review application security across code, APIs, infrastructure, authentication, authorization, secrets, dependencies, and compliance gaps. Use when assessing vulnerabilities, threat models, pentest findings, security controls, exploitability, impact, or remediation plans. |
 | [Strapi Engineer](strapi-engineer/SKILL.md) | Build, modify, review, and debug Strapi applications across content types, controllers, services, routes, policies, lifecycle hooks, plugins, auth, GraphQL, and tests. Use when working on Strapi v4 or v5 backend code, project architecture, schema design, API behavior, or production workflow. |
 | [TDD](tdd/SKILL.md) | Test-driven development workflow using red-green-refactor behavior slices. |
 | [Technical Trading Strategy](technical-trading-strategy/SKILL.md) | Technical trading strategy research and engineering guidance for rule design, Python backtesting, validation, risk controls, and implementation review. |

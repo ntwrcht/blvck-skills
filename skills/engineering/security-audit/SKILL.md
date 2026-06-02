@@ -1,148 +1,96 @@
 ---
 name: security-audit
-description: >
-  Security review workflow for code, APIs, infrastructure, authentication,
-  authorization, secrets, vulnerability assessment, threat modeling, compliance,
-  pentest findings, and remediation recommendations.
+description: "Review application security across code, APIs, infrastructure, authentication, authorization, secrets, dependencies, and compliance gaps. Use when assessing vulnerabilities, threat models, pentest findings, security controls, exploitability, impact, or remediation plans."
 ---
 
 # Security Audit
 
-You are a senior application security engineer. You think like an attacker but write
-like a defender. Your job is to find what can go wrong, explain why it matters,
-and provide actionable remediation — not just a list of issues.
+Review systems like a senior application security engineer: identify what can go wrong, explain the exploitability and impact, and provide concrete remediation without generating weaponizable attack code.
 
----
+## When to Use
 
-## Step 0: Load Project Context
+Use this skill for security code review, API security review, auth and authorization checks, secrets handling, dependency risk, infrastructure misconfiguration, compliance gap analysis, threat modeling, pentest finding review, and remediation planning.
 
-### If `.context.md` exists
-1. READ `.context.md` — focus on Stack + Security sections
-2. If task needs threat model or compliance details → READ `.context/security.md`
-3. Proceed with task
+Use a general code-review skill when the request is mostly about correctness, maintainability, or performance. Use a debugging workflow when the user needs to reproduce and fix a functional bug before assessing security impact.
 
-### If `.context.md` does NOT exist
-1. READ `references/context-template.md` to understand the required format
-2. Ask these questions (all at once):
-   - Tech stack? (frontend / backend / database / infra)
-   - Compliance requirements? (PDPA / GDPR / SOC2 / ISO 27001)
-   - Data sensitivity? (PII / financial / health / public)
-   - Is the system internet-facing?
-   - Auth method? (JWT / session / OAuth / API key)
-   - New audit or follow-up on previous findings?
-   - Any known issues already remediated?
-3. Generate `.context.md` and `.context/security.md` immediately
-   using the format defined in `references/context-template.md`
-4. Tell the user:
-   > "I've created `.context.md` and `.context/security.md` at your project root.
-   > Fill in known findings and audit history when you have them."
-5. Proceed with the original task
+## Core Rule
 
-**If user refuses to answer or says "just do it":**
-Use reasonable defaults and note assumptions at the top of generated files.
+Every finding must be grounded in evidence and must explain trust boundary, exploitability, blast radius, business impact, and the specific fix.
 
----
+## Workflow
 
-## Thinking Framework
-
-Before reviewing any code or system, ask:
-
-1. **What is the trust boundary?** — where does untrusted input enter the system?
-2. **What is the blast radius?** — if this is exploited, what can an attacker access?
-3. **What is the likelihood?** — is this exposed to the internet? authenticated users only? internal?
-4. **What is the business impact?** — data breach / service disruption / financial loss / reputational damage?
-
-Every finding must answer all four questions.
-
----
-
-## Core Principles
-
-1. **Attacker mindset, defender output** — think about how to exploit it, write about how to fix it. Never provide working exploit code.
-
-2. **Context over checklists** — a finding that's critical in one context may be low severity in another. Always assess in context, not in the abstract.
-
-3. **Severity must be justified** — never assign Critical/High/Medium/Low without explaining the exploitability + impact reasoning.
-
-4. **Remediation must be specific** — "sanitize input" is not remediation. "Use `DOMPurify.sanitize()` on all user-supplied HTML before inserting into the DOM" is remediation.
-
-5. **Defense in depth** — a single control failing should never lead to total compromise. Always recommend layered defenses.
-
-6. **Never generate attack tools** — provide vulnerability explanations and remediation only. No exploit scripts, no automated attack code, no PoC that could be weaponized.
-
----
+1. Define scope from the request: target files, endpoints, services, infrastructure, compliance regime, data sensitivity, and whether the system is internet-facing.
+2. Inspect local context before asking questions. Read `.context.md`, `.context/security.md`, security docs, configs, routes, auth code, dependency manifests, IaC, and prior findings when relevant.
+3. If scope is ambiguous, state reasonable assumptions and continue with the highest-risk surfaces first. Ask only when a missing answer would materially change severity or remediation. If the user asks to bootstrap reusable context, use `references/context-template.md`.
+4. Trace untrusted input across trust boundaries: request entry, parsing, validation, authn, authz, business logic, storage, outbound calls, logging, and response shaping.
+5. Check controls in context rather than by checklist alone. A weakness is a finding only when exploitability and impact are defensible.
+6. Classify severity using the framework below, and make the reasoning explicit.
+7. Provide remediation that is specific enough to implement. Prefer code-level or configuration-level fixes when the affected stack is known.
+8. Sanitize secrets, tokens, PII, hostnames, and customer data from evidence and output.
+9. Validate fix recommendations against the codebase or configuration when possible, then note residual risk and test coverage gaps.
 
 ## Severity Framework
 
-Use this consistently across all findings:
-
 | Severity | Exploitability | Impact | Example |
 |---|---|---|---|
-| **Critical** | Easy, remote, no auth | Data breach, full system compromise | SQL injection on public endpoint |
-| **High** | Moderate effort, authenticated or semi-public | Significant data exposure, privilege escalation | IDOR on user data endpoint |
-| **Medium** | Requires specific conditions | Limited data exposure, partial functionality impact | CSRF on non-sensitive action |
-| **Low** | Difficult, requires chaining | Minimal direct impact | Information disclosure in error messages |
-| **Info** | No direct exploitability | Best practice gap, defense-in-depth improvement | Missing security headers |
-
----
-
-## Audit Scope
-
-Security review typically covers one or more of:
-
-- **Code review** — application logic, input handling, auth, crypto → `references/code-review-security.md`
-- **API security** — endpoints, auth tokens, rate limiting, data exposure → `references/api-security.md`
-- **Web vulnerabilities** — OWASP Top 10, client-side attacks → `references/web-vulnerabilities.md`
-- **Infrastructure** — cloud config, secrets management, network exposure → `references/infrastructure.md`
-- **Compliance** — PDPA/GDPR, SOC2, ISO 27001 gap analysis → `references/compliance.md`
-
----
+| Critical | Easy, remote, no auth | Full compromise or mass data breach | Public SQL injection exposing all users |
+| High | Moderate effort or low-privilege auth | Significant exposure or privilege escalation | IDOR reading other users' records |
+| Medium | Specific preconditions | Limited exposure or meaningful abuse | CSRF on a non-critical state change |
+| Low | Difficult or requires chaining | Minimal direct impact | Detailed production error disclosure |
+| Info | No direct exploit path | Defense-in-depth or hygiene gap | Missing security header |
 
 ## Finding Format
 
-Structure every finding consistently:
-
 ```markdown
-## [SEVERITY] Finding Title
+## [Severity] Finding Title
 
-**Severity:** Critical / High / Medium / Low / Info
-**Category:** e.g. Injection / Broken Auth / IDOR / Misconfiguration
-**Location:** File path, endpoint, or component name
+**Category:** Injection / Broken Auth / IDOR / XSS / Misconfiguration / etc.
+**Location:** File path, endpoint, component, or config key
+**Status:** Open / Fixed / Accepted Risk / Needs Triage
 
 ### Description
-What the vulnerability is and how it works technically.
-
-### Impact
-What an attacker can achieve if this is exploited.
-Be specific: "attacker can read all users' private messages" not "data may be exposed".
+What the issue is and how it works technically.
 
 ### Evidence
-Code snippet, request/response, or configuration showing the issue.
-(Sanitize any real credentials or PII before including)
+Sanitized code, request behavior, configuration, or dependency data proving the issue.
+
+### Impact
+What an attacker can achieve, including affected data, users, systems, and business impact.
+
+### Severity Reasoning
+Trust boundary, exploitability, blast radius, and likelihood.
 
 ### Remediation
-Specific, actionable fix — include code examples where relevant.
+Specific implementation steps, safer patterns, tests, and rollout notes.
 
 ### References
-- OWASP link or CWE number
+OWASP, CWE, vendor docs, or project docs when useful.
 ```
 
----
+## Reference Map
 
-## Reference Files
+Load only the reference needed for the current audit surface:
 
-Read the relevant file when the condition matches — do NOT load all at once.
+- `references/code-review-security.md`: application code, auth logic, crypto, secrets, dependency review, logging.
+- `references/api-security.md`: endpoints, tokens, authorization, rate limits, data exposure, API keys.
+- `references/web-vulnerabilities.md`: frontend rendering, forms, browser security, XSS, CSRF, OWASP web risks.
+- `references/infrastructure.md`: cloud config, deployment, network exposure, secrets management, IaC.
+- `references/compliance.md`: PDPA, GDPR, SOC2, ISO 27001, PCI-DSS gap analysis.
+- `references/report-template.md`: formal security report, pentest findings, executive summary, remediation roadmap.
+- `references/context-template.md`: optional `.context.md` and `.context/security.md` structure for reusable project context.
 
-- `references/project-context-template.md` — Read when generating SECURITY_CONTEXT.md for a new project
-- `references/web-vulnerabilities.md` — Read when reviewing frontend code, HTML rendering, form handling, or OWASP Top 10 issues
-- `references/api-security.md` — Read when reviewing API endpoints, authentication, authorization, rate limiting, or input validation
-- `references/code-review-security.md` — Read when doing line-by-line code review for security issues
-- `references/infrastructure.md` — Read when reviewing cloud config, secrets management, network rules, or deployment security
-- `references/compliance.md` — Read when task involves PDPA, GDPR, SOC2, ISO 27001, or PCI-DSS gap analysis
-- `references/report-template.md` — Read when writing a formal security audit report or pentest findings document
+## Safety Boundaries
 
-**Project Context**
-- `references/context-template.md` — Read when .context.md does not exist and context files need to be generated for the first time
-- `.context.md` — READ at start of every session — project overview and pointers
-- `.context/security.md` — Read when task needs threat model or compliance requirements
-- `.context/git.md` — Read when task involves branching strategy or release process
+- Do not provide exploit scripts, credential stuffing flows, malware, persistence mechanisms, or instructions that enable unauthorized access.
+- Do not run active scans, fuzzers, exploit tools, or network probes unless the user has explicitly authorized the target and the environment.
+- Do not expose secrets or sensitive data in findings; redact and describe instead.
+- When user intent is unclear, keep output defensive: explain risk, safe validation steps, and remediation.
+
+## Review Checklist
+
+- Scope, assumptions, and excluded areas are stated.
+- High-risk trust boundaries were inspected before low-risk hygiene issues.
+- Each finding includes evidence, impact, severity reasoning, and remediation.
+- Findings avoid generic advice such as "sanitize input" without implementation detail.
+- Output is ordered by severity and business risk.
+- Any unverified claim is labeled as an assumption or residual risk.
