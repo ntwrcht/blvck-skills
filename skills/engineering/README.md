@@ -6,7 +6,7 @@ Daily code-work skills.
 | :--- | :--- |
 | [Angular Engineer](angular-engineer/SKILL.md) | Build, modify, review, and debug Angular applications using project conventions, modern Angular patterns, RxJS, Signals, testing, SSR, and Nx guidance. Use when working on Angular components, services, routing, forms, guards, migrations, performance, security, or frontend architecture. |
 | [Debug Mantra](debug-mantra/SKILL.md) | Structured debugging workflow for reproducing, tracing, and falsifying bugs. |
-| [GA4 Analytics](ga4-analytics/SKILL.md) | GA4 and GTM measurement planning, event taxonomy, funnels, and tracking implementation. |
+| [GA4 Measurement](ga4-measurement/SKILL.md) | Plan, implement, review, and validate GA4/GTM measurement for product flows, funnels, feature adoption, conversion, errors, and performance. Use when designing event taxonomies, dataLayer or gtag tracking, GA4 reports, GTM setup, analytics QA, or measurement plans. |
 | [Git Guardrails for Claude Code](git-guardrails-claude-code/SKILL.md) | Set up Claude Code hooks that block dangerous git commands before they execute. |
 | [Post-mortem](post-mortem/SKILL.md) | Engineering writeup format for fixed and validated bugs. |
 | [Python Engineer](python-engineer/SKILL.md) | Python project guidance for architecture, structure, typing, naming, linting, testing, and packaging. |

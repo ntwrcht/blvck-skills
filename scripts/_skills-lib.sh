@@ -59,7 +59,7 @@ get_shared_refs() {
   case "$skill_name" in
     angular-engineer) echo "context-template.md git-workflow.md" ;;
     strapi-engineer)  echo "context-template.md git-workflow.md" ;;
-    ga4-analytics)    echo "context-template.md" ;;
+    ga4-measurement)  echo "context-template.md" ;;
     security-audit)   echo "context-template.md" ;;
     *)                echo "" ;;
   esac
