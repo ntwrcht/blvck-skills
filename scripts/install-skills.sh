@@ -16,9 +16,6 @@ source "$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/_skills-lib.sh"
 INSTALLER_VERSION="1.0.0"
 MARKER_FILE=".agent-skills-install.json"
 PROJECT_MANIFEST=".agent-skills-install.json"
-COMMAND_NAME="blvck-skills"
-COMMAND_LINK_DIR="$HOME/.local/bin"
-COMMAND_LINK_PATH="$COMMAND_LINK_DIR/$COMMAND_NAME"
 
 CLI_NAMES=("Claude" "Codex" "Gemini")
 CLI_IDS=("claude" "codex" "gemini")
@@ -34,7 +31,6 @@ replaced=0
 skipped=0
 shared_copied=0
 shared_linked=0
-command_installed=0
 
 json_escape() {
   printf '%s' "$1" | sed 's/\\/\\\\/g; s/"/\\"/g'
@@ -67,20 +63,6 @@ confirm() {
   answer="$(prompt_line "$prompt")"
   case "$answer" in
     y|Y|yes|YES|Yes) return 0 ;;
-    *) return 1 ;;
-  esac
-}
-
-confirm_default_yes() {
-  local prompt="$1"
-  local answer
-  printf '%s' "$prompt" >&2
-  if ! IFS= read -r answer; then
-    echo "" >&2
-    return 1
-  fi
-  case "$answer" in
-    ""|y|Y|yes|YES|Yes) return 0 ;;
     *) return 1 ;;
   esac
 }
@@ -588,39 +570,6 @@ write_project_manifest() {
   } > "$manifest_path"
 }
 
-install_command_shortcut() {
-  local installer_path="$REPO_ROOT/scripts/install-skills.sh"
-
-  echo ""
-  log_section "Installer Command"
-
-  if ! confirm_default_yes "Create or update $COMMAND_NAME command at $COMMAND_LINK_PATH? [Y/n]: "; then
-    log_info "Skipped $COMMAND_NAME command setup"
-    return 0
-  fi
-
-  mkdir -p "$COMMAND_LINK_DIR"
-
-  if [ -L "$COMMAND_LINK_PATH" ]; then
-    rm "$COMMAND_LINK_PATH"
-  elif [ -e "$COMMAND_LINK_PATH" ]; then
-    log_warn "Skipping $COMMAND_LINK_PATH — exists and is not a symlink"
-    return 0
-  fi
-
-  ln -s "$installer_path" "$COMMAND_LINK_PATH"
-  command_installed=1
-  log_success "Command: $COMMAND_LINK_PATH"
-
-  case ":$PATH:" in
-    *":$COMMAND_LINK_DIR:"*) ;;
-    *)
-      log_warn "$COMMAND_LINK_DIR is not on PATH"
-      log_info "Add this to your shell profile: export PATH=\"\$HOME/.local/bin:\$PATH\""
-      ;;
-  esac
-}
-
 run_install() {
   local scope="$1"
   local cli_id skill_dir extension_dir
@@ -679,8 +628,6 @@ main() {
   [ "$scope" = "global" ] && log_info "Shared refs linked — $shared_linked"
   [ "$scope" = "project" ] && log_info "Shared refs copied — $shared_copied"
   [ "$scope" = "project" ] && log_info "Manifest: $PROJECT_ROOT/$PROJECT_MANIFEST"
-  install_command_shortcut
-  [ "$command_installed" -eq 1 ] && log_info "Next time, run: $COMMAND_NAME"
   echo ""
 }
 

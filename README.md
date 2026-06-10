@@ -90,7 +90,13 @@ cd agent-skills
 ./scripts/install-skills.sh
 ```
 
-The installer can also create a remembered command:
+To create a remembered command, run the command setup script:
+
+```bash
+./scripts/setup-command.sh
+```
+
+It creates:
 
 ```bash
 ~/.local/bin/blvck-skills -> <repo>/scripts/install-skills.sh
@@ -101,6 +107,12 @@ After that, install skills into any project with:
 ```bash
 cd /path/to/project
 blvck-skills
+```
+
+To remove the remembered command:
+
+```bash
+./scripts/unsetup-command.sh
 ```
 
 The installer lets you choose:
@@ -153,6 +165,8 @@ claude --plugin-dir .
 │   ├── install-skills.sh     # Interactive end-user installer
 │   ├── link-skills.sh        # Link shippable skills and shared references
 │   ├── list-skills.sh        # List every SKILL.md with bucket labels
+│   ├── setup-command.sh      # Create the blvck-skills shortcut command
+│   ├── unsetup-command.sh    # Remove the blvck-skills shortcut command
 │   └── un-link-skill.sh      # Remove provider symlinks for shippable skills
 └── skills/
     ├── _shared/              # Shared assets and references
