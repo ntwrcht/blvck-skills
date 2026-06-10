@@ -11,7 +11,18 @@
 
 set -euo pipefail
 
-source "$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/_skills-lib.sh"
+script_source="${BASH_SOURCE[0]}"
+while [ -L "$script_source" ]; do
+  script_dir="$(cd -P "$(dirname "$script_source")" && pwd)"
+  script_source="$(readlink "$script_source")"
+  case "$script_source" in
+    /*) ;;
+    *) script_source="$script_dir/$script_source" ;;
+  esac
+done
+script_dir="$(cd -P "$(dirname "$script_source")" && pwd)"
+
+source "$script_dir/_skills-lib.sh"
 
 INSTALLER_VERSION="1.0.0"
 MARKER_FILE=".agent-skills-install.json"
@@ -45,22 +56,27 @@ absolute_path() {
   (cd "$path" 2>/dev/null && pwd -P)
 }
 
-prompt_line() {
-  local prompt="$1"
-  local answer
+read_prompt() {
+  local var_name="$1"
+  local prompt
+  local prompt_answer
+  shift
+  prompt="$1"
+
   printf '%s' "$prompt" >&2
-  if ! IFS= read -r answer; then
+  if ! IFS= read -r prompt_answer; then
     echo "" >&2
-    log_warn "No input received; cancelling install."
+    printf '  No input received; cancelling install.\n' >&2
     exit 0
   fi
-  printf '%s\n' "$answer"
+
+  printf -v "$var_name" '%s' "$prompt_answer"
 }
 
 confirm() {
   local prompt="$1"
   local answer
-  answer="$(prompt_line "$prompt")"
+  read_prompt answer "$prompt"
   case "$answer" in
     y|Y|yes|YES|Yes) return 0 ;;
     *) return 1 ;;
@@ -187,7 +203,7 @@ select_clis() {
   echo ""
 
   while true; do
-    answer="$(prompt_line "Install for which CLIs? [all]: ")"
+    read_prompt answer "Install for which CLIs? [all]: "
     [ -n "$answer" ] || answer="all"
 
     SELECTED_CLI_IDS=()
@@ -215,7 +231,7 @@ select_scope() {
   echo ""
 
   while true; do
-    answer="$(prompt_line "Install scope? [1]: ")"
+    read_prompt answer "Install scope? [1]: "
     [ -n "$answer" ] || answer="1"
     case "$answer" in
       1|global)  SELECTED_SCOPE="global"; return 0 ;;
@@ -235,7 +251,7 @@ select_project_root() {
   echo ""
 
   while true; do
-    answer="$(prompt_line "Project path [current directory]: ")"
+    read_prompt answer "Project path [current directory]: "
     [ -n "$answer" ] || answer="$default_root"
 
     if [ ! -d "$answer" ]; then
@@ -291,7 +307,7 @@ select_skills() {
   echo ""
 
   while true; do
-    answer="$(prompt_line "Install which skills? [all]: ")"
+    read_prompt answer "Install which skills? [all]: "
     [ -n "$answer" ] || answer="all"
     answer="$(printf '%s' "$answer" | tr '[:upper:]' '[:lower:]' | tr ',' ' ')"
     SELECTED_SKILL_DIRS=()

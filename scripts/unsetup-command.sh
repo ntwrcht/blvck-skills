@@ -8,7 +8,18 @@
 
 set -euo pipefail
 
-source "$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/_skills-lib.sh"
+script_source="${BASH_SOURCE[0]}"
+while [ -L "$script_source" ]; do
+  script_dir="$(cd -P "$(dirname "$script_source")" && pwd)"
+  script_source="$(readlink "$script_source")"
+  case "$script_source" in
+    /*) ;;
+    *) script_source="$script_dir/$script_source" ;;
+  esac
+done
+script_dir="$(cd -P "$(dirname "$script_source")" && pwd)"
+
+source "$script_dir/_skills-lib.sh"
 
 COMMAND_NAME="blvck-skills"
 COMMAND_LINK_PATH="$HOME/.local/bin/$COMMAND_NAME"
