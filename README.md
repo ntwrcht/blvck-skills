@@ -25,7 +25,6 @@ A collection of specialized expert agent skills for AI assistants (like Gemini C
 
 | Skill Name | Description |
 | :--- | :--- |
-| [**AI OS Creator**](skills/productivity/ai-os-creator/SKILL.md) | Design and scaffold project-scoped AI operating systems with principles, agent roles, context files, workflows, tool boundaries, and validation loops. Use when creating a Claude-first project AI OS, agent collaboration system, or repo-local AI workflow scaffold. |
 | [**Write a Skill**](skills/productivity/write-a-skill/SKILL.md) | Create, write, review, and improve reusable agent skills. Use when working on skill structure, progressive disclosure, bundled resources, examples, or validation. |
 | [**Write a PRD**](skills/productivity/write-a-prd/SKILL.md) | Synthesize conversation context and repository understanding into a product requirements document, with tracker-neutral payload preparation and approval-gated publishing. |
 | [**Write a Story**](skills/productivity/write-a-story/SKILL.md) | Backlog story drafting, story splitting, plan-to-issue breakdowns, acceptance criteria, readiness review, and approved Jira payload preparation. |
@@ -68,7 +67,6 @@ Use the full portable install by default. Install every shippable skill, then re
 | Technical material needs to be rewritten for leadership, Slack, Jira, email, standup, or meeting notes. | [**Management Talk**](skills/productivity/management-talk/SKILL.md) |
 | A status, launch, sprint, risk, decision, customer, or multi-audience update needs audience-aware framing. | [**Stakeholder Update**](skills/productivity/stakeholder-update/SKILL.md) |
 | Work is mainly inside a specific stack or domain. | Use the matching engineering skill, and combine it with a workflow skill only when the request also needs debugging, TDD, review, security, measurement, or communication structure. |
-| A project needs a Claude-first AI operating system with agent roles, context files, workflows, tool boundaries, and validation loops. | [**AI OS Creator**](skills/productivity/ai-os-creator/SKILL.md) |
 
 ## 🚀 Getting Started
 

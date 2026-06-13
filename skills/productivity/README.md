@@ -4,7 +4,6 @@ Daily non-code workflow tools.
 
 | Skill Name | Description |
 | :--- | :--- |
-| [AI OS Creator](ai-os-creator/SKILL.md) | Design and scaffold project-scoped AI operating systems with principles, agent roles, context files, workflows, tool boundaries, and validation loops. Use when creating a Claude-first project AI OS, agent collaboration system, or repo-local AI workflow scaffold. |
 | [Write a Skill](write-a-skill/SKILL.md) | Create, write, review, and improve reusable agent skills. Use when working on skill structure, progressive disclosure, bundled resources, examples, or validation. |
 | [Write a PRD](write-a-prd/SKILL.md) | Synthesize conversation context and repository understanding into a product requirements document, with tracker-neutral payload preparation and approval-gated publishing. |
 | [Write a Story](write-a-story/SKILL.md) | Backlog story drafting, story splitting, plan-to-issue breakdowns, acceptance criteria, readiness review, and approved Jira payload preparation. |
