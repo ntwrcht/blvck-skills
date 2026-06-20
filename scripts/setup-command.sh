@@ -24,7 +24,7 @@ source "$script_dir/_skills-lib.sh"
 COMMAND_NAME="blvck-skills"
 COMMAND_LINK_DIR="$HOME/.local/bin"
 COMMAND_LINK_PATH="$COMMAND_LINK_DIR/$COMMAND_NAME"
-INSTALLER_PATH="$REPO_ROOT/scripts/install-skills.sh"
+INSTALLER_PATH="$REPO_ROOT/scripts/blvck-skills.sh"
 
 confirm() {
   local prompt="$1"
