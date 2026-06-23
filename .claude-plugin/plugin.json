@@ -23,6 +23,7 @@
     "./skills/productivity/grill-me",
     "./skills/productivity/management-talk",
     "./skills/productivity/stakeholder-update",
-    "./skills/productivity/setup-context"
+    "./skills/productivity/setup-context",
+    "./skills/productivity/handoff"
   ]
 }
