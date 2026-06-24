@@ -14,6 +14,8 @@ Work from the current conversation first. If the user provides an issue referenc
 
 Explore the codebase when needed to use the project's domain vocabulary, respect ADRs, and avoid issue titles that do not match the current system. Do not explore when the supplied context is already enough for a useful tracker-neutral draft.
 
+When exploring, look for prefactoring opportunities — changes that make the planned implementation easier without delivering the feature itself. "Make the change easy, then make the easy change." If prefactoring is warranted, propose it as its own slice, ordered first.
+
 ## Vertical Slice Rules
 
 Break the plan into tracer-bullet issues:
