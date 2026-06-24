@@ -1,6 +1,6 @@
 ---
 name: write-a-prd
-description: "Synthesize conversation context and repository understanding into a product requirements document. Covers PRD drafting, testing seam decisions, tracker-neutral issue payloads, and approval-gated publishing."
+description: "Synthesize conversation context and repository understanding into a product requirements document. Use when drafting, writing, or publishing a PRD from existing conversation, technical brief, design discussion, or approved scope."
 argument-hint: "<conversation context or PRD brief>"
 ---
 
