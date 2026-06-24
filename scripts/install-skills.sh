@@ -37,6 +37,7 @@ SELECTED_COMMAND_DIRS=()
 INSTALL_SKILLS=1
 INSTALL_COMMANDS=0
 SELECTED_SCOPE=""
+SELECTED_SCENARIO=""
 PROJECT_ROOT=""
 PROJECT_TARGETS=()
 
@@ -528,8 +529,9 @@ print_plan() {
 
   echo ""
   log_section "Install Plan"
-  echo "  Scope:  $scope"
-  [ "$scope" = "project" ] && echo "  Project: $PROJECT_ROOT"
+  echo "  Scope:    $scope"
+  [ -n "$SELECTED_SCENARIO" ] && [ "$SELECTED_SCENARIO" != "custom" ] && echo "  Preset:   $SELECTED_SCENARIO"
+  [ "$scope" = "project" ] && echo "  Project:  $PROJECT_ROOT"
   echo ""
 
   if [ "$INSTALL_SKILLS" -eq 1 ]; then
@@ -988,6 +990,162 @@ run_install() {
   fi
 }
 
+select_scenario() {
+  local answer index
+  local names=(
+    "Global — core skills, symlinked into every project"
+    "Project — PM / non-coder workspace (productivity skills only)"
+    "Project — Software development (all skills)"
+    "Custom — choose scope and skills manually"
+  )
+
+  echo ""
+  log_section "Choose Scenario"
+  index=1
+  while [ "$index" -le "${#names[@]}" ]; do
+    printf '  %s) %s\n' "$index" "${names[$((index - 1))]}"
+    index=$((index + 1))
+  done
+  echo ""
+
+  while true; do
+    read_prompt answer "Scenario? [1]: "
+    [ -n "$answer" ] || answer="1"
+    case "$answer" in
+      1) SELECTED_SCENARIO="global";      SELECTED_SCOPE="global";  return 0 ;;
+      2) SELECTED_SCENARIO="project-pm";  SELECTED_SCOPE="project"; return 0 ;;
+      3) SELECTED_SCENARIO="project-dev"; SELECTED_SCOPE="project"; return 0 ;;
+      4) SELECTED_SCENARIO="custom";                                  return 0 ;;
+      *) log_warn "Enter 1-4." ;;
+    esac
+  done
+}
+
+select_skills_fzf() {
+  local i=0 display_line selected_name fzf_output
+
+  load_skills
+
+  if [ "${#SKILL_NAMES[@]}" -eq 0 ]; then
+    log_warn "No shippable skills found."
+    return 0
+  fi
+
+  local display=()
+  while [ "$i" -lt "${#SKILL_NAMES[@]}" ]; do
+    display+=("$(printf '%-32s [%s]' "${SKILL_NAMES[$i]}" "${SKILL_BUCKETS[$i]}")")
+    i=$((i + 1))
+  done
+
+  echo ""
+  log_section "Choose Skills"
+  echo ""
+
+  fzf_output=$(printf '%s\n' "${display[@]}" | \
+    fzf --multi \
+        --header="Tab/Space=toggle  Ctrl-A=all  Ctrl-D=none  Enter=confirm" \
+        --bind="ctrl-a:select-all,ctrl-d:deselect-all" \
+        --height=60% \
+        --layout=reverse \
+        --prompt="Skills > " 2>/dev/null) || true
+
+  if [ -z "$fzf_output" ]; then
+    log_warn "No skills selected; cancelling."
+    exit 0
+  fi
+
+  SELECTED_SKILL_DIRS=()
+  while IFS= read -r display_line; do
+    [ -z "$display_line" ] && continue
+    selected_name="$(printf '%s' "$display_line" | awk '{print $1}')"
+    i=0
+    while [ "$i" -lt "${#SKILL_NAMES[@]}" ]; do
+      if [ "${SKILL_NAMES[$i]}" = "$selected_name" ]; then
+        append_unique "${SKILL_DIRS[$i]}" SELECTED_SKILL_DIRS
+        break
+      fi
+      i=$((i + 1))
+    done
+  done <<< "$fzf_output"
+
+  [ "${#SELECTED_SKILL_DIRS[@]}" -gt 0 ] && return 0
+  log_warn "No skills selected; cancelling."
+  exit 0
+}
+
+select_commands_fzf() {
+  local i=0 display_line selected_name fzf_output
+
+  load_commands
+
+  if [ "${#COMMAND_NAMES[@]}" -eq 0 ]; then
+    log_warn "No shippable slash commands found."
+    return 0
+  fi
+
+  local display=()
+  while [ "$i" -lt "${#COMMAND_NAMES[@]}" ]; do
+    display+=("$(printf '%-32s [%s]' "${COMMAND_NAMES[$i]}" "${COMMAND_BUCKETS[$i]}")")
+    i=$((i + 1))
+  done
+
+  echo ""
+  log_section "Choose Slash Commands"
+  echo ""
+
+  fzf_output=$(printf '%s\n' "${display[@]}" | \
+    fzf --multi \
+        --header="Tab/Space=toggle  Ctrl-A=all  Ctrl-D=none  Enter=confirm" \
+        --bind="ctrl-a:select-all,ctrl-d:deselect-all" \
+        --height=60% \
+        --layout=reverse \
+        --prompt="Commands > " 2>/dev/null) || true
+
+  if [ -z "$fzf_output" ]; then
+    log_warn "No commands selected; cancelling."
+    exit 0
+  fi
+
+  SELECTED_COMMAND_DIRS=()
+  while IFS= read -r display_line; do
+    [ -z "$display_line" ] && continue
+    selected_name="$(printf '%s' "$display_line" | awk '{print $1}')"
+    i=0
+    while [ "$i" -lt "${#COMMAND_NAMES[@]}" ]; do
+      if [ "${COMMAND_NAMES[$i]}" = "$selected_name" ]; then
+        append_unique "${COMMAND_DIRS[$i]}" SELECTED_COMMAND_DIRS
+        break
+      fi
+      i=$((i + 1))
+    done
+  done <<< "$fzf_output"
+
+  [ "${#SELECTED_COMMAND_DIRS[@]}" -gt 0 ] && return 0
+  log_warn "No commands selected; cancelling."
+  exit 0
+}
+
+populate_skills_from_preset() {
+  local preset="$1" skill_dir
+  load_skills
+  SELECTED_SKILL_DIRS=()
+  while IFS= read -r skill_dir; do
+    SELECTED_SKILL_DIRS+=("$skill_dir")
+  done < <(list_skills_for_preset "$preset")
+
+  if [ "${#SELECTED_SKILL_DIRS[@]}" -eq 0 ]; then
+    log_warn "No skills found for preset '$preset'."
+    exit 0
+  fi
+
+  log_info "Preset '$preset' — ${#SELECTED_SKILL_DIRS[@]} skill(s) selected."
+}
+
+populate_commands_from_preset() {
+  load_commands
+  SELECTED_COMMAND_DIRS=("${COMMAND_DIRS[@]:-}")
+}
+
 main() {
   local scope
 
@@ -999,14 +1157,36 @@ main() {
   echo "  Repo:     $REPO_ROOT"
   echo "  Skills:   $SKILLS_DIR"
   echo "  Commands: $COMMANDS_DIR"
+  [ "$FZF_AVAILABLE" -eq 1 ] && log_info "fzf detected — checkbox selection available in custom mode"
 
   select_content
   select_clis
-  select_scope
+  select_scenario
+
+  [ "$SELECTED_SCENARIO" = "custom" ] && select_scope
   scope="$SELECTED_SCOPE"
   [ "$scope" = "project" ] && select_project_root
-  [ "$INSTALL_SKILLS" -eq 1 ] && select_skills
-  [ "$INSTALL_COMMANDS" -eq 1 ] && select_commands
+
+  if [ "$SELECTED_SCENARIO" = "custom" ]; then
+    if [ "$INSTALL_SKILLS" -eq 1 ]; then
+      if [ "$FZF_AVAILABLE" -eq 1 ]; then
+        select_skills_fzf
+      else
+        select_skills
+      fi
+    fi
+    if [ "$INSTALL_COMMANDS" -eq 1 ]; then
+      if [ "$FZF_AVAILABLE" -eq 1 ]; then
+        select_commands_fzf
+      else
+        select_commands
+      fi
+    fi
+  else
+    [ "$INSTALL_SKILLS"   -eq 1 ] && populate_skills_from_preset "$SELECTED_SCENARIO"
+    [ "$INSTALL_COMMANDS" -eq 1 ] && populate_commands_from_preset
+  fi
+
   print_plan "$scope"
 
   if ! confirm "Proceed with install? [y/N]: "; then

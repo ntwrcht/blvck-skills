@@ -28,6 +28,15 @@ SHIPPABLE_BUCKETS=(
   "misc"
 )
 
+# Skills too stack/domain-specific for a global install
+GLOBAL_EXCLUDE_SKILLS=(
+  "angular-engineer"
+  "strapi-engineer"
+  "python-engineer"
+  "ga4-measurement"
+  "technical-trading-strategy"
+)
+
 DIRECT_INSTALL_TARGETS=(
   "$HOME/.claude/skills"
   "$HOME/.codex/skills"
@@ -37,6 +46,9 @@ GEMINI_LEGACY_SKILLS_DIR="$HOME/.gemini/skills"
 GEMINI_EXTENSION_NAME="agent-skills"
 GEMINI_EXTENSION_DIR="$HOME/.gemini/extensions/$GEMINI_EXTENSION_NAME"
 GEMINI_EXTENSION_SKILLS_DIR="$GEMINI_EXTENSION_DIR/skills"
+
+FZF_AVAILABLE=0
+command -v fzf >/dev/null 2>&1 && FZF_AVAILABLE=1
 
 # ── Logging ───────────────────────────────────────────────────────────────────
 
@@ -117,4 +129,34 @@ list_shippable_command_dirs() {
       printf '%s\n' "${command_dir%/}"
     done
   done
+}
+
+_is_in_list() {
+  local needle="$1"; shift
+  local item
+  for item in "$@"; do [ "$item" = "$needle" ] && return 0; done
+  return 1
+}
+
+# list_skills_for_preset <preset>
+#   preset: global | project-pm | project-dev
+# Prints skill dirs belonging to the named preset.
+list_skills_for_preset() {
+  local preset="$1" skill_dir skill_name
+
+  while IFS= read -r skill_dir; do
+    skill_name="$(skill_name_from_dir "$skill_dir")"
+    case "$preset" in
+      global)
+        _is_in_list "$skill_name" "${GLOBAL_EXCLUDE_SKILLS[@]}" && continue
+        printf '%s\n' "$skill_dir"
+        ;;
+      project-pm)
+        [[ "$skill_dir" == */productivity/* ]] && printf '%s\n' "$skill_dir"
+        ;;
+      project-dev)
+        printf '%s\n' "$skill_dir"
+        ;;
+    esac
+  done < <(list_shippable_skill_dirs)
 }

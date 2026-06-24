@@ -332,6 +332,27 @@ select_skills_to_remove() {
 
   echo ""
   log_section "Choose Skills to Remove"
+
+  if [ "$FZF_AVAILABLE" -eq 1 ]; then
+    local fzf_output
+    fzf_output=$(printf '%s\n' "${AVAIL_NAMES[@]}" | \
+      fzf --multi \
+          --header="Tab/Space=toggle  Ctrl-A=all  Ctrl-D=none  Enter=confirm" \
+          --bind="ctrl-a:select-all,ctrl-d:deselect-all" \
+          --height=60% \
+          --layout=reverse \
+          --prompt="Remove skills > " 2>/dev/null) || true
+
+    SELECTED_SKILL_NAMES=()
+    if [ -n "$fzf_output" ]; then
+      while IFS= read -r name; do
+        [ -z "$name" ] && continue
+        append_unique "$name" SELECTED_SKILL_NAMES
+      done <<< "$fzf_output"
+    fi
+    return 0
+  fi
+
   index=1
   while [ "$index" -le "${#AVAIL_NAMES[@]}" ]; do
     printf '  %2s) %s\n' "$index" "${AVAIL_NAMES[$((index - 1))]}"
@@ -377,6 +398,27 @@ select_commands_to_remove() {
 
   echo ""
   log_section "Choose Slash Commands to Remove"
+
+  if [ "$FZF_AVAILABLE" -eq 1 ]; then
+    local fzf_output
+    fzf_output=$(printf '%s\n' "${AVAIL_NAMES[@]}" | \
+      fzf --multi \
+          --header="Tab/Space=toggle  Ctrl-A=all  Ctrl-D=none  Enter=confirm" \
+          --bind="ctrl-a:select-all,ctrl-d:deselect-all" \
+          --height=60% \
+          --layout=reverse \
+          --prompt="Remove commands > " 2>/dev/null) || true
+
+    SELECTED_COMMAND_NAMES=()
+    if [ -n "$fzf_output" ]; then
+      while IFS= read -r name; do
+        [ -z "$name" ] && continue
+        append_unique "$name" SELECTED_COMMAND_NAMES
+      done <<< "$fzf_output"
+    fi
+    return 0
+  fi
+
   index=1
   while [ "$index" -le "${#AVAIL_NAMES[@]}" ]; do
     printf '  %2s) /%s\n' "$index" "${AVAIL_NAMES[$((index - 1))]}"
