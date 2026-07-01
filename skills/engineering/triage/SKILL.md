@@ -26,7 +26,7 @@ Use `write-a-story` when the user wants backlog drafting without tracker state m
 ## Artifacts
 
 - Produces: tracker state (labels, comments, status via connected tool)
-- Consumes: `tasks/stories.md` (if present), `.context/triage.md`, `.context/project.md`, `.context/git-workflow.md`
+- Consumes: stories at the `story` key path (if present) — see `references/artifact-paths.md` (default `docs/stories/<slug>.md`), `.context/triage.md`, `.context/project.md`, `.context/git-workflow.md`
 
 ## Core Rule
 
@@ -110,3 +110,8 @@ If prior triage notes exist on the issue or PR, read them, check whether the rep
 - Has the maintainer approved external tracker changes?
 - Do all posted tracker comments start with the AI triage disclaimer?
 - Are resolved facts preserved so future triage does not repeat work?
+
+## Next Step
+
+- **If the maintainer approves the mutation:** apply it; if the issue becomes `ready-for-agent`, hand off to `write-a-story` or the relevant implementation skill.
+- **If not approved:** wait for maintainer direction — do not mutate tracker state (this restates the Core Rule above).

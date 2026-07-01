@@ -16,7 +16,7 @@ Use `debug-mantra` first when the failure mechanism is unknown. Use `scrutinize`
 ## Artifacts
 
 - Produces: tests + implementation
-- Consumes: `tasks/stories.md` (if present), `.context/project.md`, `.context/engineering.md`, `.context/learning.md`, `.context/adr/`
+- Consumes: stories at the `story` key path (if present) — see `references/artifact-paths.md` (default `docs/stories/<slug>.md`), `.context/project.md`, `.context/engineering.md`, `.context/learning.md`, `.context/adr/`
 
 ## Philosophy
 
@@ -91,3 +91,10 @@ Load only the reference needed for the current decision:
 - [interface-design.md](interface-design.md): API shapes that make tests natural.
 - [deep-modules.md](deep-modules.md): small interfaces with deep implementations.
 - [refactoring.md](refactoring.md): cleanup candidates after green.
+
+## Next Step
+
+Get explicit approval on which behaviors matter most before writing any code (see Workflow step 2) — this is the approval gate for this skill.
+
+- **If approved and the planned slices are complete:** use `scrutinize` or `security-audit` for review, then hand off to shipping (`triage`, `post-mortem`, `management-talk`).
+- **If the plan isn't approved yet:** get explicit approval on which behaviors matter most before writing any code — do not start the tracer bullet until that approval is explicit.

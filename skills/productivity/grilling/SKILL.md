@@ -9,7 +9,7 @@ Walk down the decision tree relentlessly — one branch, one question, one resol
 
 ## Artifacts
 
-- Produces: `docs/goals.md` (on request)
+- Produces: goals doc at the `goals` key path (on request) — see `references/artifact-paths.md` (default `docs/goals/<slug>.md`)
 - Consumes: `.context/project.md`
 
 ## Core Rule
@@ -57,3 +57,10 @@ Recommendation: <provisional answer, or "No recommendation yet" with reason>
 - Keep recommendations provisional until the user confirms or corrects them.
 - Do not implement or write final artifacts until core decisions are resolved or the user redirects.
 - Do not create files by default. If asked to save the result, use a clear user-provided or inferred path.
+
+## Next Step
+
+This interview is done when every open decision branch is resolved.
+
+- **If approved (all branches resolved):** hand off to whichever skill triggered the interview — typically `write-a-prd`, `write-a-story`, `brainstorming`, or the relevant implementation skill.
+- **If not approved (an open branch remains):** continue interviewing that branch — do not hand off with an unresolved dependency.

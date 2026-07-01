@@ -16,7 +16,7 @@ Use a narrower skill when the request is mainly about generic debugging, securit
 ## Artifacts
 
 - Produces: code changes
-- Consumes: `tasks/stories.md` (if present), `.context/project.md`, `.context/engineering.md`, `.context/git-workflow.md`, `.context/security.md`, `.context/learning.md`, `.context/adr/`
+- Consumes: stories at the `story` key path (if present) — see `references/artifact-paths.md` (default `docs/stories/<slug>.md`), `.context/project.md`, `.context/engineering.md`, `.context/git-workflow.md`, `.context/security.md`, `.context/learning.md`, `.context/adr/`
 
 ## Core Rule
 
@@ -86,3 +86,7 @@ Ask before defaulting when the Angular version or module style is unclear and th
 - `references/build-tools.md`: `angular.json`, esbuild, CI, schematics, bundle analysis.
 - `references/error-handling.md`: global error handling, notifications, error logging.
 - `references/git-workflow.md`: branch names, commits, changelog, PR descriptions.
+
+## Next Step
+
+After implementation, use `tdd` to close test gaps, `security-audit` for a security pass, or `scrutinize` for review before shipping. If a review requests changes, apply them and re-review before proceeding.

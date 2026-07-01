@@ -15,7 +15,7 @@ Use `debug-mantra` instead for live bug investigation. Use `grill-me` when the u
 
 ## Artifacts
 
-- Produces: `.context/scrutiny.md` (on request)
+- Produces: review notes at the `scrutiny` key path — see `references/artifact-paths.md` (default `.context/scrutiny.md`, or `.context/scrutiny-<slug>.md` per topic, on request)
 - Consumes: artifact under review (plan, PR, diff, or design doc)
 
 ## Core Rule
@@ -53,4 +53,11 @@ Close with one verdict: `ship`, `fix then ship`, `rework`, or `reject`, plus the
 
 ## Optional Artifact
 
-Default to chat output. If the user asks to persist or hand off context, write `.context/scrutiny.md` or `.context/scrutiny-<pr-or-topic>.md` when a PR, design, or topic is clear. Ask before overwriting unrelated context.
+Default to chat output. If the user asks to persist or hand off context, write to the `scrutiny` key path — see `references/artifact-paths.md` (default `.context/scrutiny.md`, or `.context/scrutiny-<pr-or-topic>.md` when a PR, design, or topic is clear). Ask before overwriting unrelated context.
+
+## Next Step
+
+Route by the verdict closed out in the Finding Format section above.
+
+- **If `ship`:** return to whichever stage the reviewed artifact was headed toward — implementation, testing, or ship.
+- **If `fix then ship`, `rework`, or `reject`:** send the findings back to the artifact's owner skill (e.g. `write-a-prd`, `write-a-story`, `tdd`, or the relevant implementation skill) for revision, then re-run `scrutinize`.

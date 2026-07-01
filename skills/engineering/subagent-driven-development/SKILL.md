@@ -21,7 +21,7 @@ Use when the user has an approved plan, task list, or backlog (from `write-a-sto
 ## Artifacts
 
 - Consumes: the plan or task list file passed in as the argument
-- Produces: `.context/sdd-progress.md` (progress ledger), one commit per task
+- Produces: `.context/sdd-progress.md` (progress ledger) → at the `sdd-progress` key path, see `references/artifact-paths.md` (default `.context/sdd-progress/<slug>.md`, one ledger per plan), one commit per task
 - Bundled: `implementer-prompt.md`, `task-reviewer-prompt.md` — dispatch templates for steps 2 and 3
 
 ## Core Rule
@@ -55,3 +55,8 @@ Check `.context/sdd-progress.md` before dispatching anything — tasks already m
 - Never skip either review verdict, and never advance past unresolved Critical or Important findings.
 - Give the implementer only its own task's text, not the whole plan file.
 - If a task reports BLOCKED, resolve the specific blocker — more context, a stronger model, a smaller task — before retrying. Don't re-dispatch unchanged.
+
+## Next Step
+
+- **If all tasks are complete and the final broad review passes:** move to `tdd` for any remaining test gaps, or `security-audit`/`ga4-measurement` for a pre-ship review, then `triage`, `post-mortem`, or `management-talk` to close out.
+- **If blocked, or a review verdict fails:** resolve the specific blocker (more context, a stronger model, a smaller task) and retry — do not advance to the next task.

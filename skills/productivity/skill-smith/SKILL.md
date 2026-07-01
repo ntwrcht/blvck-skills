@@ -95,3 +95,10 @@ Before finalizing:
 - Are local indexes, manifests, or install metadata updated?
 - Have required validation scripts been run?
 - **Failure modes:** scan for sediment (stale lines that accumulate because removing feels risky), sprawl (length itself — every line live but still too many), duplication (same meaning in two places), no-ops (instructions the agent follows by default), and premature completion risk (steps with completion criteria too vague to resist early exit).
+
+## Next Step
+
+Do not register the new skill until the user has reviewed the draft SKILL.md.
+
+- **If approved:** run `./scripts/validate-skill-descriptions.sh` and `./scripts/list-skills.sh`, then add entries to the top-level `README.md`, the bucket `README.md`, and `.claude-plugin/plugin.json` (skip this step entirely for skills placed in `personal/`, `in-progress/`, or `deprecated/`, which must not appear in those files per this repo's `CLAUDE.md`).
+- **If not approved:** revise the draft per feedback before running the validation scripts.

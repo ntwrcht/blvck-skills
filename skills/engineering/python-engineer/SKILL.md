@@ -23,7 +23,7 @@ Python design judgment is only incidental.
 ## Artifacts
 
 - Produces: code changes
-- Consumes: `tasks/stories.md` (if present), `.context/project.md`, `.context/engineering.md`, `.context/git-workflow.md`, `.context/security.md`, `.context/learning.md`
+- Consumes: stories at the `story` key path (if present) — see `references/artifact-paths.md` (default `docs/stories/<slug>.md`), `.context/project.md`, `.context/engineering.md`, `.context/git-workflow.md`, `.context/security.md`, `.context/learning.md`
 
 ## Core Rule
 
@@ -93,3 +93,7 @@ Load only the reference needed for the current decision:
 - Code review: findings first with file and line references, then test gaps.
 - Architecture question: options, recommendation, tradeoffs, and migration path.
 - Tooling setup: chosen tools, config changes, and commands to run.
+
+## Next Step
+
+After implementation, use `tdd` to close test gaps, `security-audit` for a security pass, or `scrutinize` for review before shipping. If a review requests changes, apply them and re-review before proceeding.

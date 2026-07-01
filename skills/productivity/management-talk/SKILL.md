@@ -23,7 +23,7 @@ Use it for audiences such as managers, directors, VPs, PMs, TPMs, release manage
 
 ## Artifacts
 
-- Produces: communication artifact (chat or `.context/management-update.md` on request)
+- Produces: communication artifact (chat, or a doc at the `management-update` key path on request — see `references/artifact-paths.md`, default `.context/management-update/<slug>.md`)
 - Consumes: technical source material, `docs/postmortems/<topic>.md` (if present), `.context/project.md`
 
 ## Core Rule
@@ -90,7 +90,7 @@ Use short bullets in speaking order. Include only the keys, names, and numbers t
 4. Keep output print-only unless the user explicitly asks to post and a suitable tool is available.
 5. For Jira posting, show the exact comment body first and wait for explicit approval such as "post it" or "go ahead".
 6. Never post to Slack, email, or non-Jira channels from this skill; provide the draft for the user to send.
-7. If the user asks to persist the draft, write `.context/management-update.md` or `.context/management-update-<ticket-or-topic>.md` when the topic is specific.
+7. If the user asks to persist the draft, write it to the `management-update` key path (see `references/artifact-paths.md`).
 
 ## Review Checklist
 
@@ -100,3 +100,10 @@ Use short bullets in speaking order. Include only the keys, names, and numbers t
 - Is code-level detail removed or translated?
 - Are unknowns and uncertainty represented honestly?
 - Is the format appropriate for the selected channel?
+
+## Next Step
+
+For Jira posting, show the exact comment body first and wait for explicit approval.
+
+- **If approved:** post via the connected tool (already stated); if this was the leadership-facing follow-up to `post-mortem`, no further hand-off is needed.
+- **If not approved:** revise the rewrite per feedback — do not post to Jira or any other channel until approval is explicit.

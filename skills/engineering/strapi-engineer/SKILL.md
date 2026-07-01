@@ -16,7 +16,7 @@ Use a narrower skill instead when the request is mainly generic TypeScript, fron
 ## Artifacts
 
 - Produces: code changes
-- Consumes: `tasks/stories.md` (if present), `.context/project.md`, `.context/engineering.md`, `.context/git-workflow.md`, `.context/security.md`, `.context/learning.md`, `.context/adr/`
+- Consumes: stories at the `story` key path (if present) — see `references/artifact-paths.md` (default `docs/stories/<slug>.md`), `.context/project.md`, `.context/engineering.md`, `.context/git-workflow.md`, `.context/security.md`, `.context/learning.md`, `.context/adr/`
 
 ## Core Rule
 
@@ -69,3 +69,7 @@ Load only the reference needed for the current task:
 - Populate/select returns only fields the client needs.
 - Auth, RBAC, policies, and private fields are handled deliberately.
 - Tests or explicit checks cover the changed behavior.
+
+## Next Step
+
+After implementation, use `tdd` to close test gaps, `security-audit` for a security pass, or `scrutinize` for review before shipping. If a review requests changes, apply them and re-review before proceeding.

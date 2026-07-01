@@ -20,8 +20,8 @@ Do not use this skill for narrative fiction, brand storytelling, stakeholder upd
 
 ## Artifacts
 
-- Produces: `tasks/stories.md`
-- Consumes: `docs/prd.md` (if present), `.context/project.md`, `.context/triage.md`
+- Produces: stories at the `story` key path — see `references/artifact-paths.md` (default `docs/stories/<slug>.md`)
+- Consumes: PRD at the `prd` key path (if present, default `docs/prd/<slug>.md`), `.context/project.md`, `.context/triage.md`
 
 ## Core Rule
 
@@ -91,3 +91,10 @@ Before finalizing:
 - Are dependencies, risks, and unknowns visible?
 - Is tracker-specific language avoided unless requested?
 - Are invented facts labeled as assumptions or removed?
+
+## Next Step
+
+Never create or update Jira issues before the user approves the exact payload.
+
+- **If approved:** hand off to `subagent-driven-development` to execute the stories task-by-task, or directly to `tdd`/`angular-engineer`/`python-engineer`/`strapi-engineer` for small scope.
+- **If not approved:** revise the stories per feedback and recheck readiness before implementation starts.

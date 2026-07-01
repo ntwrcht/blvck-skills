@@ -21,7 +21,7 @@ Use `diagnose` for heavier investigations: hard bugs, performance regressions, f
 
 ## Artifacts
 
-- Produces: `.context/debug-ledger.md` (on request)
+- Produces: debug ledger at the `debug-ledger` key path — see `references/artifact-paths.md` (default `.context/debug-ledger.md`, on request)
 - Consumes: `.context/project.md`, `.context/engineering.md`
 
 ## Required Mantra
@@ -55,3 +55,10 @@ Recite once at the start of the first debugging response unless the user says to
 ## Optional Artifact
 
 Default to a chat ledger. If the user asks to persist or hand off context, write `.context/debug-ledger.md` or `.context/debug-ledger-<ticket-or-topic>.md` when a ticket, PR, incident, or topic is clear. Ask before overwriting unrelated context.
+
+## Next Step
+
+Do not close the debugging session until the user confirms the bug is fixed and the fix has been validated.
+
+- **If approved:** the bug is fixed and validated — recommend `post-mortem` for the writeup, especially when the bug was significant or user-facing.
+- **If not approved:** stay in this skill's own loop and keep gathering evidence, or escalate to `diagnose` if hypothesis-driven debugging isn't converging — do not proceed to `post-mortem` until approval is explicit.

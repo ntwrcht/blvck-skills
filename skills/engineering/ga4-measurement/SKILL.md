@@ -21,7 +21,7 @@ Do not invent business goals or activation definitions when the user or project 
 
 ## Artifacts
 
-- Produces: `.context/analytics.md` (on request)
+- Produces: measurement plan at the `analytics` key path — see `references/artifact-paths.md` (default `.context/analytics.md`, on request; same file as the `analytics.md` domain, read-then-update rather than one per feature)
 - Consumes: `.context/project.md`, `.context/analytics.md`, `.context/engineering.md`
 
 ## Core Rule
@@ -88,3 +88,10 @@ Read only the file needed for the task:
 - `references/funnel-analysis.md` - funnel design, drop-off analysis, conversion reports, and exploration setup.
 - `references/debugging.md` - GA4 DebugView, GTM Preview, validation, and missing-event troubleshooting.
 - `references/context-template.md` - optional `.context/` domain structure for bootstrapping reusable analytics context.
+
+## Next Step
+
+Do not treat instrumentation as done until the user confirms the event taxonomy and validation results are correct.
+
+- **If approved:** proceed to ship or stakeholder communication — hand off to `stakeholder-update`.
+- **If not approved:** return to the implementation skill (`angular-engineer`, `python-engineer`, `strapi-engineer`, or whichever owns the affected code) to close instrumentation gaps, then re-validate with this skill.

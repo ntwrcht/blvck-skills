@@ -11,8 +11,8 @@ Merely *reading* `CONTEXT.md` for vocabulary is not this skill — that is a one
 
 ## Artifacts
 
-- Produces: `CONTEXT.md` (domain glossary), `docs/adr/` (architectural decisions)
-- Consumes: `.context/project.md`, `CONTEXT.md`, `CONTEXT-MAP.md`
+- Produces: `CONTEXT.md` (domain glossary, fixed at repo root); ADRs at the `adr-dir` key path — see `references/artifact-paths.md` (default `.context/adr/`)
+- Consumes: `.context/project.md`, `CONTEXT.md`, `CONTEXT-MAP.md`, `.context/output-paths.md` (if present, for the `adr-dir` override)
 
 > `CONTEXT.md` is the domain glossary — terminology only, no implementation details. If your project also has `.context/project.md` (a broader onboarding brief), the two coexist: read `.context/project.md` for goals and tech stack; write `CONTEXT.md` for domain vocabulary.
 
@@ -23,7 +23,7 @@ Most repos have a single context:
 ```
 /
 ├── CONTEXT.md
-├── docs/
+├── .context/
 │   └── adr/
 │       ├── 0001-event-sourced-orders.md
 │       └── 0002-postgres-for-write-model.md
@@ -35,18 +35,18 @@ If a `CONTEXT-MAP.md` exists at the root, the repo has multiple contexts. The ma
 ```
 /
 ├── CONTEXT-MAP.md
-├── docs/
+├── .context/
 │   └── adr/
 ├── src/
 │   ├── ordering/
 │   │   ├── CONTEXT.md
-│   │   └── docs/adr/
+│   │   └── .context/adr/
 │   └── billing/
 │       ├── CONTEXT.md
-│       └── docs/adr/
+│       └── .context/adr/
 ```
 
-Create files lazily — only when you have something to write. If no `CONTEXT.md` exists, create one when the first term is resolved. If no `docs/adr/` exists, create it when the first ADR is needed.
+Create files lazily — only when you have something to write. If no `CONTEXT.md` exists, create one when the first term is resolved. If no `.context/adr/` exists (or whatever path `adr-dir` resolves to — see `references/artifact-paths.md`), create it when the first ADR is needed.
 
 ## During the Session
 
@@ -80,7 +80,7 @@ Only offer to create an ADR when all three are true:
 2. **Surprising without context** — a future reader will wonder "why did they do it this way?"
 3. **Result of a real trade-off** — there were genuine alternatives and you picked one for specific reasons
 
-If any of the three is missing, skip the ADR. Use the format in [references/ADR-FORMAT.md](./references/ADR-FORMAT.md).
+If any of the three is missing, skip the ADR. Use the format in [references/ADR-FORMAT.md](./references/ADR-FORMAT.md). Write it to the `adr-dir` key path (default `.context/adr/`) — see `references/artifact-paths.md`.
 
 ## Completion Criteria
 
@@ -97,3 +97,10 @@ When these are met, summarize: agreed terms, deferred terms, ADRs written, and t
 - Reading existing vocabulary to orient a task — any skill can read `CONTEXT.md` directly
 - Scaffolding the `.context/` folder for a new project — use `setup-context` instead
 - Reviewing or stress-testing a plan without changing the model — use `scrutinize` or `grilling` instead
+
+## Next Step
+
+Do not close the session until the user confirms the glossary and ADR updates are correct.
+
+- **If approved:** continue with whichever skill triggered this session — an implementation or planning skill. This skill is usually used as a subroutine of another skill, not run standalone.
+- **If not approved:** if a term is still contested, keep iterating with `grilling` before recording the decision — do not close the session until approval is explicit.

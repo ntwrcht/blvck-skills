@@ -20,7 +20,7 @@ Use this skill when the user has an idea, feature request, or product concept wi
 
 ## Artifacts
 
-- Produces: `docs/design.md`
+- Produces: design doc at the `design` key path — see `references/artifact-paths.md` (default `docs/design/<slug>.md`)
 - Consumes: `.context/project.md`, `CONTEXT.md`
 - Bundled: `spec-reviewer-prompt.md` — dispatch template for step 6
 
@@ -34,7 +34,7 @@ Propose options before asking the user to invent them. No implementation-shaped 
 2. Ask clarifying questions one at a time — purpose, constraints, success criteria. Prefer multiple-choice when it fits; open-ended is fine too.
 3. Once the goal is clear, propose 2-3 concrete approaches with tradeoffs. Lead with a recommendation and why.
 4. Present the design in sections scaled to its complexity; confirm each section before moving to the next.
-5. Write the approved design to `docs/design.md`.
+5. Write the approved design to the `design` key path (see `references/artifact-paths.md`).
 6. Dispatch an independent reviewer subagent using `spec-reviewer-prompt.md` against the written design. Resolve any issues it finds before moving on.
 7. Report the design as written and approved. Stop there — what happens next is the user's call.
 
@@ -45,3 +45,10 @@ Propose options before asking the user to invent them. No implementation-shaped 
 - Don't skip the reviewer dispatch, even for a short design.
 - If the idea spans multiple independent subsystems, say so before going deeper — help split it into separate designs instead of cramming everything into one.
 - Don't rewrite or refactor unrelated code or docs while shaping the design — stay scoped to what serves this idea.
+
+## Next Step
+
+No implementation-shaped step — code, scaffolding, config, or a plan — starts until the user has approved a written design.
+
+- **If approved:** hand off to `write-a-prd` for formal requirements, or directly to an implementation skill (`tdd`, `angular-engineer`, `python-engineer`, `strapi-engineer`, `subagent-driven-development`) for small scope.
+- **If not approved:** revise the design in place using this skill's own reviewer loop (the bundled `spec-reviewer-prompt.md`) — do not proceed to `write-a-prd` or any code until approval is explicit.

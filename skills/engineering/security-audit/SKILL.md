@@ -15,7 +15,7 @@ Use a general code-review skill when the request is mostly about correctness, ma
 
 ## Artifacts
 
-- Produces: `.context/security-findings.md` (on request)
+- Produces: findings at the `security-findings` key path — see `references/artifact-paths.md` (default `.context/security-findings/<slug>.md`, on request)
 - Consumes: `.context/project.md`, `.context/security.md`, `.context/engineering.md`, `.context/adr/`
 
 ## Core Rule
@@ -99,3 +99,10 @@ Load only the reference needed for the current audit surface:
 - Findings avoid generic advice such as "sanitize input" without implementation detail.
 - Output is ordered by severity and business risk.
 - Any unverified claim is labeled as an assumption or residual risk.
+
+## Next Step
+
+Do not treat the review as complete until the user confirms no blocking findings remain unaddressed.
+
+- **If approved:** no blocking findings remain, or all were fixed — proceed to ship, handing off to `triage`, `post-mortem` (if issues were found and fixed), or `management-talk`/`stakeholder-update` for the summary.
+- **If not approved:** hand blocking findings back to the implementation skill that owns the affected code, then re-run this skill.

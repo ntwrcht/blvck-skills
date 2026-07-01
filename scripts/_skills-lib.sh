@@ -90,10 +90,26 @@ log_section() { printf "\n  ${BOLD}${CYAN}%s${NC}\n\n" "$1"; }
 get_shared_refs() {
   local skill_name="$1"
   case "$skill_name" in
-    angular-engineer) echo "context-template.md git-workflow.md" ;;
-    strapi-engineer)  echo "context-template.md git-workflow.md" ;;
-    ga4-measurement)  echo "context-template.md" ;;
-    security-audit)   echo "context-template.md" ;;
+    angular-engineer)             echo "context-template.md git-workflow.md artifact-paths.md" ;;
+    strapi-engineer)              echo "context-template.md git-workflow.md artifact-paths.md" ;;
+    ga4-measurement)              echo "context-template.md artifact-paths.md" ;;
+    security-audit)               echo "context-template.md artifact-paths.md" ;;
+    python-engineer)              echo "artifact-paths.md" ;;
+    write-a-prd)                  echo "artifact-paths.md" ;;
+    write-a-story)                echo "artifact-paths.md" ;;
+    brainstorming)                echo "artifact-paths.md" ;;
+    grilling)                     echo "artifact-paths.md" ;;
+    debug-mantra)                 echo "artifact-paths.md" ;;
+    diagnose)                     echo "artifact-paths.md" ;;
+    domain-modeling)              echo "artifact-paths.md" ;;
+    post-mortem)                  echo "artifact-paths.md" ;;
+    scrutinize)                   echo "artifact-paths.md" ;;
+    subagent-driven-development)  echo "artifact-paths.md" ;;
+    management-talk)              echo "artifact-paths.md" ;;
+    stakeholder-update)           echo "artifact-paths.md" ;;
+    tdd)                          echo "artifact-paths.md" ;;
+    triage)                       echo "artifact-paths.md" ;;
+    setup-context)                echo "artifact-paths.md" ;;
     *)                echo "" ;;
   esac
 }

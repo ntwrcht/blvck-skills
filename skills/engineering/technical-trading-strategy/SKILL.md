@@ -78,7 +78,9 @@ Load `references/backtest-validation.md` for detailed review criteria, metrics, 
 - `references/market-assumptions.md`: load when market, venue, data source, or execution assumptions affect the answer.
 - `references/live-trading-readiness.md`: load for deployment, automation, exchange APIs, brokers, or real-capital requests.
 
-## Output Formats
+## Next Step
+
+This skill follows a design → review → implement → backtest lifecycle; the shape of the next output depends on which stage the request is in.
 
 For strategy design, include:
 - hypothesis

@@ -22,7 +22,7 @@ Use `debug-mantra` for lighter active debugging when the user needs a compact di
 
 ## Artifacts
 
-- Produces: `.context/debug-ledger.md`, fix + regression test
+- Produces: debug ledger at the `debug-ledger` key path (same file as `debug-mantra` — see `references/artifact-paths.md`, default `.context/debug-ledger.md`), fix + regression test
 - Consumes: `.context/debug-ledger.md` (if present), `.context/project.md`, `.context/engineering.md`, `.context/post-mortem.md`, `.context/learning.md`
 
 ## Core Rule
@@ -51,3 +51,10 @@ Load `references/feedback-loops.md` when you need loop-construction tactics, non
 ## Performance Branch
 
 For performance regressions, establish a baseline measurement before changing code: timing harness, profiler, query plan, trace, or benchmark. Prefer bisection and measurement over log-heavy inspection. Validate the fix against the original scenario and a focused regression guard when the project has an appropriate performance-test seam.
+
+## Next Step
+
+Do not close the investigation until the user confirms the fix and regression test are validated.
+
+- **If approved:** hand off to `post-mortem` for the writeup.
+- **If not approved:** keep iterating the feedback loop — don't hand off with an unvalidated fix.

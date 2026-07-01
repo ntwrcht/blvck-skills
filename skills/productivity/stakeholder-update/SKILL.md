@@ -18,7 +18,7 @@ When both apply, use this skill first to decide the audience, message, risk fram
 
 ## Artifacts
 
-- Produces: communication artifact (chat or doc, channel-dependent)
+- Produces: communication artifact (chat, or a doc at the `stakeholder-update` key path on request — see `references/artifact-paths.md`, default `.context/stakeholder-update/<slug>.md`)
 - Consumes: `docs/prd.md` (if present), `.context/project.md`, `.context/INDEX.md`
 
 ## Core Rule
@@ -87,3 +87,10 @@ Before delivering the update:
 - Are sensitive internal names and private references removed when needed?
 - Are asks specific and time-bound?
 - Does the update end with next steps?
+
+## Next Step
+
+Before posting through any connected tool, show the exact message and wait for explicit approval.
+
+- **If approved:** post through the connected tool (already stated), or hand to `management-talk` first if the audience turns out to be mainly internal/technical.
+- **If not approved:** revise per feedback — keep as draft-only until approval is explicit.

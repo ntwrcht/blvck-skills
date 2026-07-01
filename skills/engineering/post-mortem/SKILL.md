@@ -22,7 +22,7 @@ Use `debug-mantra` first when the cause is still uncertain. Use `management-talk
 
 ## Artifacts
 
-- Produces: `docs/postmortems/<topic>.md`
+- Produces: postmortem at the `postmortem-dir` key path — see `references/artifact-paths.md` (default `docs/postmortems/<slug>.md`, `<slug>` = topic)
 - Consumes: `.context/debug-ledger.md` (if present), `.context/project.md`, `.context/post-mortem.md`, `.context/learning.md`, `.context/adr/`
 
 ## Required Inputs
@@ -66,3 +66,10 @@ Use these sections in order. Omit optional sections only when no facts exist.
 Default to chat output. If the user asks to create a file, use their path or suggest `docs/postmortems/<ticket-or-topic>.md` when a durable record is appropriate. Ask before overwriting unrelated context.
 
 If the user asks to post externally, show the exact body first and wait for explicit approval before using any posting tool.
+
+## Next Step
+
+Do not treat the postmortem as final until the user confirms the root cause, fix, and validation sections are accurate.
+
+- **If approved:** use `management-talk` for the leadership-facing version, if one is needed.
+- **If not approved:** clarify the open root-cause or fix details before writing the final record.

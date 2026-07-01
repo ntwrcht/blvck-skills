@@ -22,8 +22,8 @@ Do not publish to any external issue tracker unless a compatible tool is availab
 
 ## Artifacts
 
-- Produces: `docs/prd.md`
-- Consumes: `docs/goals.md` (if present), `.context/project.md`, `.context/engineering.md`, `.context/adr/`
+- Produces: PRD at the `prd` key path — see `references/artifact-paths.md` (default `docs/prd/<slug>.md`)
+- Consumes: goals doc at the `goals` key path (if present, default `docs/goals/<slug>.md`), `.context/project.md`, `.context/engineering.md`, `.context/adr/`
 
 ## Core Rule
 
@@ -59,3 +59,10 @@ Synthesize without interviewing by default. Use the current conversation, reposi
 - Are implementation decisions stable enough to avoid brittle file-path details?
 - Are testing seams tied to external behavior and existing codebase prior art?
 - Has the user approved the exact tracker payload before publishing?
+
+## Next Step
+
+Publish only after explicit user approval.
+
+- **If approved:** hand off to `write-a-story` to break the PRD into implementation-ready backlog items.
+- **If not approved:** revise the PRD in place, or recommend `grilling` first if the feedback shows the underlying goals were never nailed down.
