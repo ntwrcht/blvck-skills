@@ -121,7 +121,7 @@ To create a remembered command, run the command setup script:
 It creates:
 
 ```bash
-~/.local/bin/blvck-skills -> <repo>/scripts/install-skills.sh
+~/.local/bin/blvck-skills -> <repo>/scripts/blvck-skills.sh
 ```
 
 After that, install skills into any project with:
@@ -140,10 +140,9 @@ To remove the remembered command:
 The installer lets you choose:
 
 - Claude, Codex, Gemini, or multiple CLIs in one run
-- Global installation or project-based installation
 - All shippable skills, bucket-level groups, or individual skills
 
-Global installs symlink selected skills from this repository into your CLI configuration. Project installs copy selected skills into the target project so the project can carry its own skill set.
+It always installs into the target project directory you point it at, so each project can carry its own skill set.
 
 The installer includes skills from `engineering/`, `productivity/`, and `misc/`. It does not install skills from `personal/`, `in-progress/`, or `deprecated/`.
 
@@ -209,21 +208,15 @@ Each skill is its own directory containing a `SKILL.md` file with YAML frontmatt
 
 ## 🛠️ How it Works
 
-The `scripts/install-skills.sh` script guides users through content type, CLI, scope, skill selection, and slash command selection.
+The `scripts/install-skills.sh` script guides users through content type, CLI, project path, skill selection, and slash command selection.
 
-For global installs, it symlinks selected skill folders into the chosen CLI configuration paths:
-
-- `$HOME/.claude/skills`
-- `$HOME/.codex/skills`
-- `$HOME/.gemini/extensions/agent-skills/skills`
-
-For project installs, it copies selected skill folders into the target project paths:
+It copies selected skill folders into the target project paths:
 
 - `PROJECT/.claude/skills`
 - `PROJECT/.codex/skills`
 - `PROJECT/.gemini/extensions/agent-skills/skills`
 
-Project installs write `.agent-skills-install.json` in each copied skill folder and a project-level `.agent-skills-install.json` manifest. Shared references from `_shared/references/` are materialized as real files inside copied project skills.
+It writes `.agent-skills-install.json` in each copied skill folder and a project-level `.agent-skills-install.json` manifest. Shared references from `_shared/references/` are materialized as real files inside copied project skills.
 
 Slash commands live under `commands/`. The canonical command prompt is Markdown for Claude Code and Codex. Gemini CLI uses generated TOML because Gemini custom commands cannot use markdown command files directly.
 

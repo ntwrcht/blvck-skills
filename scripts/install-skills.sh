@@ -2,8 +2,7 @@
 # =============================================================================
 # install-skills.sh — Interactive installer for shippable agent skills and commands
 #
-# Global installs symlink selected skills into CLI config directories.
-# Project installs copy selected skills and commands into project-local CLI directories.
+# Copies selected skills and commands into project-local CLI directories.
 #
 # Usage:
 #   ./scripts/install-skills.sh
@@ -24,6 +23,171 @@ script_dir="$(cd -P "$(dirname "$script_source")" && pwd)"
 
 source "$script_dir/_skills-lib.sh"
 
+# --- Boxed prompt styling for this installer's interactive flow ---
+ui_intro() {
+  printf "\n${CYAN}┌${NC}  ${BOLD}%s${NC}\n${CYAN}│${NC}\n" "$1"
+}
+
+ui_step() {
+  printf "${CYAN}│${NC}\n${CYAN}◇${NC}  ${BOLD}%s${NC}\n" "$1"
+}
+
+ui_line() {
+  printf "${CYAN}│${NC}  %b\n" "$1"
+}
+
+ui_answer() {
+  printf "${CYAN}│${NC}  ${GRAY}→${NC}  %b\n" "$1"
+}
+
+ui_outro() {
+  printf "${CYAN}│${NC}\n${CYAN}└${NC}  %s\n\n" "$1"
+}
+
+# Always leave the terminal in a sane state, even on Ctrl-C or a mid-menu error.
+trap 'stty sane < /dev/tty 2>/dev/null; tput cnorm 2>/dev/null' EXIT
+
+ui_tty_available() {
+  { : < /dev/tty; } 2>/dev/null
+}
+
+ui_read_key() {
+  local key rest
+  IFS= read -rsn1 key < /dev/tty
+  if [ "$key" = "$(printf '\033')" ]; then
+    IFS= read -rsn2 -t 1 rest < /dev/tty 2>/dev/null || rest=""
+    key="${key}${rest}"
+  fi
+  printf '%s' "$key"
+}
+
+# Radio-button style single-select. Usage: ui_radio_select "Title" "opt 1" "opt 2" ...
+# Sets UI_RADIO_INDEX (1-based) to the chosen option.
+ui_radio_select() {
+  local title="$1"
+  shift
+  local -a options
+  options=("$@")
+  local count="${#options[@]}"
+  local cur=0 i key opt
+
+  ui_step "$title"
+  printf "${CYAN}│${NC}  ${GRAY}↑/↓ move · enter confirm${NC}\n"
+
+  stty -echo -icanon time 0 min 1 < /dev/tty 2>/dev/null
+  tput civis 2>/dev/null
+
+  while true; do
+    i=0
+    for opt in "${options[@]}"; do
+      if [ "$i" -eq "$cur" ]; then
+        printf "${CYAN}│${NC}  ${CYAN}●${NC}  ${BOLD}%s${NC}\n" "$opt"
+      else
+        printf "${CYAN}│${NC}  ${GRAY}○${NC}  %s\n" "$opt"
+      fi
+      i=$((i + 1))
+    done
+
+    key="$(ui_read_key)"
+    case "$key" in
+      $'\x1b[A') cur=$(( (cur - 1 + count) % count )) ;;
+      $'\x1b[B') cur=$(( (cur + 1) % count )) ;;
+      "") break ;;
+    esac
+    tput cuu "$count" 2>/dev/null
+  done
+
+  tput cnorm 2>/dev/null
+  stty sane < /dev/tty 2>/dev/null
+
+  UI_RADIO_INDEX=$((cur + 1))
+  ui_answer "${options[$cur]}"
+}
+
+# Checkbox style multi-select. Usage: ui_checkbox_select "Title" "opt 1" "opt 2" ...
+# Sets UI_CHECK_RESULT (array of 1-based indices) to the chosen options.
+ui_checkbox_select() {
+  local title="$1"
+  shift
+  local -a options
+  options=("$@")
+  local count="${#options[@]}"
+  local cur=0 i key opt box any_unchecked
+  local -a checked
+  i=0
+  while [ "$i" -lt "$count" ]; do
+    checked[$i]=0
+    i=$((i + 1))
+  done
+
+  ui_step "$title"
+  printf "${CYAN}│${NC}  ${GRAY}↑/↓ move · space toggle · a select all · enter confirm${NC}\n"
+
+  stty -echo -icanon time 0 min 1 < /dev/tty 2>/dev/null
+  tput civis 2>/dev/null
+
+  while true; do
+    i=0
+    for opt in "${options[@]}"; do
+      if [ "${checked[$i]}" -eq 1 ]; then
+        box="${CYAN}◼${NC}"
+      else
+        box="${GRAY}◻${NC}"
+      fi
+      if [ "$i" -eq "$cur" ]; then
+        printf "${CYAN}│${NC}  %b  ${BOLD}%s${NC}\n" "$box" "$opt"
+      else
+        printf "${CYAN}│${NC}  %b  %s\n" "$box" "$opt"
+      fi
+      i=$((i + 1))
+    done
+
+    key="$(ui_read_key)"
+    case "$key" in
+      $'\x1b[A') cur=$(( (cur - 1 + count) % count )) ;;
+      $'\x1b[B') cur=$(( (cur + 1) % count )) ;;
+      " ")
+        if [ "${checked[$cur]}" -eq 1 ]; then
+          checked[$cur]=0
+        else
+          checked[$cur]=1
+        fi
+        ;;
+      a|A)
+        any_unchecked=0
+        i=0
+        while [ "$i" -lt "$count" ]; do
+          [ "${checked[$i]}" -eq 0 ] && any_unchecked=1
+          i=$((i + 1))
+        done
+        i=0
+        while [ "$i" -lt "$count" ]; do
+          checked[$i]=$any_unchecked
+          i=$((i + 1))
+        done
+        ;;
+      "") break ;;
+    esac
+    tput cuu "$count" 2>/dev/null
+  done
+
+  tput cnorm 2>/dev/null
+  stty sane < /dev/tty 2>/dev/null
+
+  UI_CHECK_RESULT=()
+  i=0
+  for opt in "${options[@]}"; do
+    [ "${checked[$i]}" -eq 1 ] && UI_CHECK_RESULT+=("$((i + 1))")
+    i=$((i + 1))
+  done
+
+  if [ "${#UI_CHECK_RESULT[@]}" -eq 0 ]; then
+    ui_answer "none selected"
+  else
+    ui_answer "${#UI_CHECK_RESULT[@]} selected"
+  fi
+}
+
 INSTALLER_VERSION="1.0.0"
 MARKER_FILE=".agent-skills-install.json"
 PROJECT_MANIFEST=".agent-skills-install.json"
@@ -36,7 +200,6 @@ SELECTED_SKILL_DIRS=()
 SELECTED_COMMAND_DIRS=()
 INSTALL_SKILLS=1
 INSTALL_COMMANDS=0
-SELECTED_SCOPE=""
 SELECTED_SCENARIO=""
 PROJECT_ROOT=""
 PROJECT_TARGETS=()
@@ -45,7 +208,6 @@ created=0
 replaced=0
 skipped=0
 shared_copied=0
-shared_linked=0
 
 json_escape() {
   printf '%s' "$1" | sed 's/\\/\\\\/g; s/"/\\"/g'
@@ -67,7 +229,7 @@ read_prompt() {
   shift
   prompt="$1"
 
-  printf '%s' "$prompt" >&2
+  printf '%b' "$prompt" >&2
   if ! IFS= read -r prompt_answer; then
     echo "" >&2
     printf '  No input received; cancelling install.\n' >&2
@@ -78,9 +240,16 @@ read_prompt() {
 }
 
 confirm() {
-  local prompt="$1"
+  local title="$1"
   local answer
-  read_prompt answer "$prompt"
+
+  if ui_tty_available; then
+    ui_radio_select "$title" "Yes" "No"
+    [ "$UI_RADIO_INDEX" -eq 1 ]
+    return
+  fi
+
+  read_prompt answer "${CYAN}│${NC}  ${title} [y/N]: "
   case "$answer" in
     y|Y|yes|YES|Yes) return 0 ;;
     *) return 1 ;;
@@ -151,71 +320,54 @@ expand_selection_tokens() {
 
 cli_target_dir() {
   local cli_id="$1"
-  local scope="$2"
-  local root="$3"
+  local root="$2"
 
-  if [ "$scope" = "global" ]; then
-    case "$cli_id" in
-      claude) printf '%s\n' "$HOME/.claude/skills" ;;
-      codex)  printf '%s\n' "$HOME/.codex/skills" ;;
-      gemini) printf '%s\n' "$GEMINI_EXTENSION_SKILLS_DIR" ;;
-    esac
-  else
-    case "$cli_id" in
-      claude) printf '%s\n' "$root/.claude/skills" ;;
-      codex)  printf '%s\n' "$root/.codex/skills" ;;
-      gemini) printf '%s\n' "$root/.gemini/extensions/$GEMINI_EXTENSION_NAME/skills" ;;
-    esac
-  fi
+  case "$cli_id" in
+    claude) printf '%s\n' "$root/.claude/skills" ;;
+    codex)  printf '%s\n' "$root/.codex/skills" ;;
+    gemini) printf '%s\n' "$root/.gemini/extensions/$GEMINI_EXTENSION_NAME/skills" ;;
+  esac
 }
 
 command_target_dir() {
   local cli_id="$1"
-  local scope="$2"
-  local root="$3"
+  local root="$2"
 
-  if [ "$scope" = "global" ]; then
-    case "$cli_id" in
-      claude) printf '%s\n' "$HOME/.claude/commands" ;;
-      codex)  printf '%s\n' "$HOME/.codex/commands" ;;
-      gemini) printf '%s\n' "$HOME/.gemini/commands" ;;
-    esac
-  else
-    case "$cli_id" in
-      claude) printf '%s\n' "$root/.claude/commands" ;;
-      codex)  printf '%s\n' "$root/.codex/commands" ;;
-      gemini) printf '%s\n' "$root/.gemini/commands" ;;
-    esac
-  fi
+  case "$cli_id" in
+    claude) printf '%s\n' "$root/.claude/commands" ;;
+    codex)  printf '%s\n' "$root/.codex/commands" ;;
+    gemini) printf '%s\n' "$root/.gemini/commands" ;;
+  esac
 }
 
 select_content() {
   local answer
 
-  echo ""
-  log_section "Choose Content"
-  echo "  1) Skills"
-  echo "  2) Slash commands"
-  echo "  3) Both"
-  echo ""
+  ui_step "Choose Content"
+  ui_line "1) Skills"
+  ui_line "2) Slash commands"
+  ui_line "3) Both"
 
   while true; do
-    read_prompt answer "Install what? [3]: "
+    read_prompt answer "${CYAN}│${NC}  Install what? [3]: "
     [ -n "$answer" ] || answer="3"
     case "$answer" in
       1|skills)
         INSTALL_SKILLS=1
         INSTALL_COMMANDS=0
+        ui_answer "Skills"
         return 0
         ;;
       2|commands|slash|slash-commands)
         INSTALL_SKILLS=0
         INSTALL_COMMANDS=1
+        ui_answer "Slash commands"
         return 0
         ;;
       3|both|all)
         INSTALL_SKILLS=1
         INSTALL_COMMANDS=1
+        ui_answer "Both"
         return 0
         ;;
       *) log_warn "Enter 1 for skills, 2 for commands, or 3 for both." ;;
@@ -223,15 +375,9 @@ select_content() {
   done
 }
 
-gemini_extension_dir_for_scope() {
-  local scope="$1"
-  local root="$2"
-
-  if [ "$scope" = "global" ]; then
-    printf '%s\n' "$GEMINI_EXTENSION_DIR"
-  else
-    printf '%s\n' "$root/.gemini/extensions/$GEMINI_EXTENSION_NAME"
-  fi
+gemini_extension_dir() {
+  local root="$1"
+  printf '%s\n' "$root/.gemini/extensions/$GEMINI_EXTENSION_NAME"
 }
 
 write_gemini_extension_json() {
@@ -250,16 +396,29 @@ JSON
 
 select_clis() {
   local answer index
-  echo ""
-  log_section "Choose CLIs"
-  printf "  ${BOLD}1)${NC}  Claude\n"
-  printf "  ${BOLD}2)${NC}  Codex\n"
-  printf "  ${BOLD}3)${NC}  Gemini\n"
-  printf "  ${BOLD}all)${NC} Claude, Codex, and Gemini\n"
-  echo ""
+
+  if ui_tty_available; then
+    ui_checkbox_select "Choose CLIs" "Claude" "Codex" "Gemini"
+    SELECTED_CLI_IDS=()
+    if [ "${#UI_CHECK_RESULT[@]}" -gt 0 ]; then
+      for index in "${UI_CHECK_RESULT[@]}"; do
+        append_unique "${CLI_IDS[$((index - 1))]}" SELECTED_CLI_IDS
+      done
+    fi
+    if [ "${#SELECTED_CLI_IDS[@]}" -eq 0 ]; then
+      SELECTED_CLI_IDS=("claude")
+    fi
+    return 0
+  fi
+
+  ui_step "Choose CLIs"
+  ui_line "${BOLD}1)${NC}  Claude"
+  ui_line "${BOLD}2)${NC}  Codex"
+  ui_line "${BOLD}3)${NC}  Gemini"
+  ui_line "${BOLD}all)${NC} Claude, Codex, and Gemini"
 
   while true; do
-    read_prompt answer "  CLIs [1]: "
+    read_prompt answer "${CYAN}│${NC}  CLIs [1]: "
     [ -n "$answer" ] || answer="1"
 
     SELECTED_CLI_IDS=()
@@ -270,30 +429,13 @@ select_clis() {
       done <<EOF
 $indexes
 EOF
-      [ "${#SELECTED_CLI_IDS[@]}" -gt 0 ] && return 0
+      if [ "${#SELECTED_CLI_IDS[@]}" -gt 0 ]; then
+        ui_answer "${SELECTED_CLI_IDS[*]}"
+        return 0
+      fi
     fi
 
     log_warn "Enter numbers, ranges, comma-separated values, or all."
-  done
-}
-
-select_scope() {
-  local answer
-
-  echo ""
-  log_section "Choose Scope"
-  echo "  1) Global config symlinks"
-  echo "  2) Project-local copies"
-  echo ""
-
-  while true; do
-    read_prompt answer "Install scope? [1]: "
-    [ -n "$answer" ] || answer="1"
-    case "$answer" in
-      1|global)  SELECTED_SCOPE="global"; return 0 ;;
-      2|project) SELECTED_SCOPE="project"; return 0 ;;
-      *) log_warn "Enter 1 for global or 2 for project." ;;
-    esac
   done
 }
 
@@ -301,15 +443,15 @@ select_project_root() {
   local default_root answer
 
   default_root="$(pwd -P)"
-  log_section "Project Path"
+  ui_step "Project Path"
 
   while true; do
-    read_prompt answer "  Path [${default_root}]: "
+    read_prompt answer "${CYAN}│${NC}  Path [${default_root}]: "
     [ -n "$answer" ] || answer="$default_root"
 
     if [ -d "$answer" ]; then
       PROJECT_ROOT="$(absolute_path "$answer")"
-      log_info "Project → $PROJECT_ROOT"
+      ui_answer "$PROJECT_ROOT"
       return 0
     fi
 
@@ -346,30 +488,51 @@ load_commands() {
 select_skills() {
   local answer token bucket_token bucket_number bucket index indexes skill_name
   local bucket_names=("engineering" "productivity" "misc")
+  local -a display
+  local n
 
   load_skills
 
-  echo ""
-  log_section "Choose Skills"
-  echo "  Bucket shortcuts:"
+  if ui_tty_available; then
+    display=()
+    n=0
+    while [ "$n" -lt "${#SKILL_NAMES[@]}" ]; do
+      display+=("$(printf '%-32s [%s]' "${SKILL_NAMES[$n]}" "${SKILL_BUCKETS[$n]}")")
+      n=$((n + 1))
+    done
+    ui_checkbox_select "Choose Skills" "${display[@]}"
+    SELECTED_SKILL_DIRS=()
+    if [ "${#UI_CHECK_RESULT[@]}" -gt 0 ]; then
+      for index in "${UI_CHECK_RESULT[@]}"; do
+        SELECTED_SKILL_DIRS+=("${SKILL_DIRS[$((index - 1))]}")
+      done
+    fi
+    if [ "${#SELECTED_SKILL_DIRS[@]}" -eq 0 ]; then
+      log_warn "No skills selected; cancelling."
+      exit 0
+    fi
+    return 0
+  fi
+
+  ui_step "Choose Skills"
+  ui_line "Bucket shortcuts:"
   index=1
   for bucket in "${bucket_names[@]}"; do
-    printf '  b%s) %s\n' "$index" "$bucket"
+    ui_line "$(printf 'b%s) %s' "$index" "$bucket")"
     index=$((index + 1))
   done
-  echo ""
-  echo "  Skills:"
+  ui_line ""
+  ui_line "Skills:"
   index=1
   while [ "$index" -le "${#SKILL_NAMES[@]}" ]; do
-    printf '  %2s) %-32s [%s]\n' "$index" "${SKILL_NAMES[$((index - 1))]}" "${SKILL_BUCKETS[$((index - 1))]}"
+    ui_line "$(printf '%2s) %-32s [%s]' "$index" "${SKILL_NAMES[$((index - 1))]}" "${SKILL_BUCKETS[$((index - 1))]}")"
     index=$((index + 1))
   done
-  echo ""
-  echo "  Examples: all, b1, b1,12,14-16"
-  echo ""
+  ui_line ""
+  ui_line "Examples: all, b1, b1,12,14-16"
 
   while true; do
-    read_prompt answer "Install which skills? [all]: "
+    read_prompt answer "${CYAN}│${NC}  Install which skills? [all]: "
     [ -n "$answer" ] || answer="all"
     answer="$(printf '%s' "$answer" | tr '[:upper:]' '[:lower:]' | tr ',' ' ')"
     SELECTED_SKILL_DIRS=()
@@ -419,7 +582,10 @@ select_skills() {
       done <<EOF
 $indexes
 EOF
-      [ "${#SELECTED_SKILL_DIRS[@]}" -gt 0 ] && return 0
+      if [ "${#SELECTED_SKILL_DIRS[@]}" -gt 0 ]; then
+        ui_answer "${#SELECTED_SKILL_DIRS[@]} skill(s) selected"
+        return 0
+      fi
     fi
 
     log_warn "Enter all, bucket shortcuts like b1, skill numbers, or ranges."
@@ -429,6 +595,8 @@ EOF
 select_commands() {
   local answer token bucket_number bucket index indexes command_name
   local bucket_names=("engineering" "productivity" "misc")
+  local -a display
+  local n
 
   load_commands
 
@@ -437,30 +605,50 @@ select_commands() {
     return 0
   fi
 
-  echo ""
-  log_section "Choose Slash Commands"
-  echo "  Bucket shortcuts:"
+  if ui_tty_available; then
+    display=()
+    n=0
+    while [ "$n" -lt "${#COMMAND_NAMES[@]}" ]; do
+      display+=("$(printf '%-32s [%s]' "${COMMAND_NAMES[$n]}" "${COMMAND_BUCKETS[$n]}")")
+      n=$((n + 1))
+    done
+    ui_checkbox_select "Choose Slash Commands" "${display[@]}"
+    SELECTED_COMMAND_DIRS=()
+    if [ "${#UI_CHECK_RESULT[@]}" -gt 0 ]; then
+      for index in "${UI_CHECK_RESULT[@]}"; do
+        SELECTED_COMMAND_DIRS+=("${COMMAND_DIRS[$((index - 1))]}")
+      done
+    fi
+    return 0
+  fi
+
+  ui_step "Choose Slash Commands"
+  ui_line "Bucket shortcuts:"
   index=1
   for bucket in "${bucket_names[@]}"; do
-    printf '  b%s) %s\n' "$index" "$bucket"
+    ui_line "$(printf 'b%s) %s' "$index" "$bucket")"
     index=$((index + 1))
   done
-  echo ""
-  echo "  Commands:"
+  ui_line ""
+  ui_line "Commands:"
   index=1
   while [ "$index" -le "${#COMMAND_NAMES[@]}" ]; do
-    printf '  %2s) %-32s [%s]\n' "$index" "${COMMAND_NAMES[$((index - 1))]}" "${COMMAND_BUCKETS[$((index - 1))]}"
+    ui_line "$(printf '%2s) %-32s [%s]' "$index" "${COMMAND_NAMES[$((index - 1))]}" "${COMMAND_BUCKETS[$((index - 1))]}")"
     index=$((index + 1))
   done
-  echo ""
-  echo "  Examples: all, b2, 1"
-  echo ""
+  ui_line ""
+  ui_line "Examples: all, none, b2, 1"
 
   while true; do
-    read_prompt answer "Install which slash commands? [all]: "
+    read_prompt answer "${CYAN}│${NC}  Install which slash commands? [all]: "
     [ -n "$answer" ] || answer="all"
     answer="$(printf '%s' "$answer" | tr '[:upper:]' '[:lower:]' | tr ',' ' ')"
     SELECTED_COMMAND_DIRS=()
+
+    if [ "$answer" = "none" ]; then
+      ui_answer "0 command(s) selected"
+      return 0
+    fi
     indexes=""
 
     if [ "$answer" = "all" ]; then
@@ -507,7 +695,10 @@ select_commands() {
       done <<EOF
 $indexes
 EOF
-      [ "${#SELECTED_COMMAND_DIRS[@]}" -gt 0 ] && return 0
+      if [ "${#SELECTED_COMMAND_DIRS[@]}" -gt 0 ]; then
+        ui_answer "${#SELECTED_COMMAND_DIRS[@]} command(s) selected"
+        return 0
+      fi
     fi
 
     log_warn "Enter all, bucket shortcuts like b2, command numbers, or ranges."
@@ -515,68 +706,29 @@ EOF
 }
 
 print_plan() {
-  local scope="$1"
   local cli_id target skill_dir command_dir
 
-  log_section "Plan"
-  printf "  ${GRAY}scope${NC}    %s\n" "$scope"
+  ui_step "Plan"
   [ -n "$SELECTED_SCENARIO" ] && [ "$SELECTED_SCENARIO" != "custom" ] && \
-    printf "  ${GRAY}preset${NC}   %s\n" "$SELECTED_SCENARIO"
-  [ "$scope" = "project" ] && printf "  ${GRAY}project${NC}  %s\n" "$PROJECT_ROOT"
-  printf "  ${GRAY}cli${NC}      %s\n" "${SELECTED_CLI_IDS[*]}"
-  echo ""
+    ui_line "$(printf "${GRAY}preset${NC}   %s" "$SELECTED_SCENARIO")"
+  ui_line "$(printf "${GRAY}project${NC}  %s" "$PROJECT_ROOT")"
+  ui_line "$(printf "${GRAY}cli${NC}      %s" "${SELECTED_CLI_IDS[*]}")"
 
   if [ "$INSTALL_SKILLS" -eq 1 ] && [ "${#SELECTED_SKILL_DIRS[@]}" -gt 0 ]; then
-    printf "  ${BOLD}skills${NC}  (${#SELECTED_SKILL_DIRS[@]})\n"
+    ui_line ""
+    ui_line "$(printf "${BOLD}skills${NC}  (%s)" "${#SELECTED_SKILL_DIRS[@]}")"
     for skill_dir in "${SELECTED_SKILL_DIRS[@]}"; do
-      printf "  ${GRAY}·${NC}  %s\n" "$(skill_name_from_dir "$skill_dir")"
+      ui_line "$(printf "${GRAY}·${NC}  %s" "$(skill_name_from_dir "$skill_dir")")"
     done
-    echo ""
   fi
 
   if [ "$INSTALL_COMMANDS" -eq 1 ] && [ "${#SELECTED_COMMAND_DIRS[@]}" -gt 0 ]; then
-    printf "  ${BOLD}commands${NC}  (${#SELECTED_COMMAND_DIRS[@]})\n"
+    ui_line ""
+    ui_line "$(printf "${BOLD}commands${NC}  (%s)" "${#SELECTED_COMMAND_DIRS[@]}")"
     for command_dir in "${SELECTED_COMMAND_DIRS[@]}"; do
-      printf "  ${GRAY}·${NC}  /%s\n" "$(command_name_from_dir "$command_dir")"
+      ui_line "$(printf "${GRAY}·${NC}  /%s" "$(command_name_from_dir "$command_dir")")"
     done
-    echo ""
   fi
-}
-
-inject_global_shared_refs() {
-  local skill_dir="$1"
-  local skill_name shared_files filename src link
-
-  skill_name="$(skill_name_from_dir "$skill_dir")"
-  shared_files="$(get_shared_refs "$skill_name")"
-  [ -n "$shared_files" ] || return 0
-
-  if [ ! -d "$SHARED_DIR" ]; then
-    log_warn "_shared/references/ not found — skipping shared refs"
-    return 0
-  fi
-
-  mkdir -p "$skill_dir/references"
-
-  for filename in $shared_files; do
-    src="$SHARED_DIR/$filename"
-    link="$skill_dir/references/$filename"
-
-    if [ ! -f "$src" ]; then
-      log_warn "Shared file not found, skipping: _shared/references/$filename"
-      continue
-    fi
-
-    if [ -L "$link" ]; then
-      rm "$link"
-    elif [ -e "$link" ]; then
-      log_warn "Skipping references/$filename — exists and is not a symlink"
-      continue
-    fi
-
-    ln -s "$src" "$link"
-    shared_linked=$((shared_linked + 1))
-  done
 }
 
 materialize_project_shared_refs() {
@@ -617,9 +769,8 @@ write_skill_marker() {
   local marker_path="$1"
   local skill_name="$2"
   local cli_id="$3"
-  local scope="$4"
-  local source_path="$5"
-  local target_path="$6"
+  local source_path="$4"
+  local target_path="$5"
   local installed_at
 
   installed_at="$(timestamp_utc)"
@@ -631,7 +782,7 @@ write_skill_marker() {
   "source_skill": "$(json_escape "$source_path")",
   "skill": "$(json_escape "$skill_name")",
   "cli": "$(json_escape "$cli_id")",
-  "scope": "$scope",
+  "scope": "project",
   "target": "$(json_escape "$target_path")",
   "installed_at": "$installed_at"
 }
@@ -658,9 +809,8 @@ write_command_marker() {
   local marker_path="$1"
   local command_name="$2"
   local cli_id="$3"
-  local scope="$4"
-  local source_path="$5"
-  local target_path="$6"
+  local source_path="$4"
+  local target_path="$5"
   local installed_at
 
   installed_at="$(timestamp_utc)"
@@ -672,7 +822,7 @@ write_command_marker() {
   "source_command": "$(json_escape "$source_path")",
   "command": "$(json_escape "$command_name")",
   "cli": "$(json_escape "$cli_id")",
-  "scope": "$scope",
+  "scope": "project",
   "target": "$(json_escape "$target_path")",
   "installed_at": "$installed_at"
 }
@@ -702,33 +852,6 @@ write_gemini_command_toml() {
   } > "$target"
 }
 
-install_global_skill() {
-  local cli_id="$1"
-  local skill_dir="$2"
-  local target_dir target skill_name
-
-  skill_name="$(skill_name_from_dir "$skill_dir")"
-  target_dir="$(cli_target_dir "$cli_id" "global" "")"
-  target="$target_dir/$skill_name"
-
-  mkdir -p "$target_dir"
-  chmod 700 "$target_dir"
-
-  if [ -L "$target" ]; then
-    rm "$target"
-    replaced=$((replaced + 1))
-  elif [ -e "$target" ]; then
-    log_warn "Skipping $target — exists and is not a symlink"
-    skipped=$((skipped + 1))
-    return 0
-  fi
-
-  ln -s "$skill_dir" "$target"
-  created=$((created + 1))
-  inject_global_shared_refs "$skill_dir"
-  log_success "Linked $cli_id: $target"
-}
-
 installer_owned_project_target() {
   local target="$1"
   [ -f "$target/$MARKER_FILE" ]
@@ -740,7 +863,7 @@ install_project_skill() {
   local target_dir target skill_name
 
   skill_name="$(skill_name_from_dir "$skill_dir")"
-  target_dir="$(cli_target_dir "$cli_id" "project" "$PROJECT_ROOT")"
+  target_dir="$(cli_target_dir "$cli_id" "$PROJECT_ROOT")"
   target="$target_dir/$skill_name"
 
   mkdir -p "$target_dir"
@@ -750,7 +873,7 @@ install_project_skill() {
     replaced=$((replaced + 1))
   elif [ -e "$target" ]; then
     if installer_owned_project_target "$target"; then
-      if confirm "Replace existing installer-owned copy $target? [y/N]: "; then
+      if confirm "Replace existing installer-owned copy $target?"; then
         rm -rf "$target"
         replaced=$((replaced + 1))
       else
@@ -767,61 +890,10 @@ install_project_skill() {
 
   cp -R "$skill_dir" "$target"
   materialize_project_shared_refs "$skill_dir" "$target"
-  write_skill_marker "$target/$MARKER_FILE" "$skill_name" "$cli_id" "project" "$skill_dir" "$target"
+  write_skill_marker "$target/$MARKER_FILE" "$skill_name" "$cli_id" "$skill_dir" "$target"
   created=$((created + 1))
   PROJECT_TARGETS+=("$cli_id|$skill_name|$target")
   log_success "Copied $cli_id: $target"
-}
-
-install_global_command() {
-  local cli_id="$1"
-  local command_dir="$2"
-  local command_name command_file target_dir target marker_path description
-
-  command_name="$(command_name_from_dir "$command_dir")"
-  command_file="$command_dir/command.md"
-  target_dir="$(command_target_dir "$cli_id" "global" "")"
-  target="$target_dir/$command_name"
-  description="$(extract_command_description "$command_file")"
-  [ -n "$description" ] || description="Run /$command_name."
-
-  mkdir -p "$target_dir"
-  chmod 700 "$target_dir"
-
-  case "$cli_id" in
-    gemini)
-      target="$target.toml"
-      marker_path="${target%.*}$MARKER_FILE"
-      if [ -L "$target" ]; then
-        rm "$target"
-        replaced=$((replaced + 1))
-      elif [ -e "$target" ] && [ -f "$marker_path" ]; then
-        rm -f "$target" "$marker_path"
-        replaced=$((replaced + 1))
-      elif [ -e "$target" ]; then
-        log_warn "Skipping $target — exists and is not a symlink"
-        skipped=$((skipped + 1))
-        return 0
-      fi
-      write_gemini_command_toml "$command_file" "$target" "$description" || return 0
-      write_command_marker "$marker_path" "$command_name" "$cli_id" "global" "$command_file" "$target"
-      ;;
-    *)
-      target="$target.md"
-      if [ -L "$target" ]; then
-        rm "$target"
-        replaced=$((replaced + 1))
-      elif [ -e "$target" ]; then
-        log_warn "Skipping $target — exists and is not a symlink"
-        skipped=$((skipped + 1))
-        return 0
-      fi
-      ln -s "$command_file" "$target"
-      ;;
-  esac
-
-  created=$((created + 1))
-  log_success "Installed $cli_id command: $target"
 }
 
 project_command_target_owned() {
@@ -843,7 +915,7 @@ install_project_command() {
 
   command_name="$(command_name_from_dir "$command_dir")"
   command_file="$command_dir/command.md"
-  target_dir="$(command_target_dir "$cli_id" "project" "$PROJECT_ROOT")"
+  target_dir="$(command_target_dir "$cli_id" "$PROJECT_ROOT")"
   target="$target_dir/$command_name"
   description="$(extract_command_description "$command_file")"
   [ -n "$description" ] || description="Run /$command_name."
@@ -862,7 +934,7 @@ install_project_command() {
     replaced=$((replaced + 1))
   elif [ -e "$target" ]; then
     if project_command_target_owned "$target"; then
-      if confirm "Replace existing installer-owned command $target? [y/N]: "; then
+      if confirm "Replace existing installer-owned command $target?"; then
         rm -f "$target" "$marker_path"
         replaced=$((replaced + 1))
       else
@@ -883,7 +955,7 @@ install_project_command() {
     cp "$command_file" "$target"
   fi
 
-  write_command_marker "$marker_path" "$command_name" "$cli_id" "project" "$command_file" "$target"
+  write_command_marker "$marker_path" "$command_name" "$cli_id" "$command_file" "$target"
   created=$((created + 1))
   PROJECT_TARGETS+=("$cli_id|command:$command_name|$target")
   log_success "Copied $cli_id command: $target"
@@ -931,157 +1003,67 @@ write_project_manifest() {
 }
 
 run_install() {
-  local scope="$1"
   local cli_id skill_dir command_dir extension_dir
 
   if [ "$INSTALL_SKILLS" -eq 1 ]; then
     for cli_id in "${SELECTED_CLI_IDS[@]}"; do
       if [ "$cli_id" = "gemini" ]; then
-        extension_dir="$(gemini_extension_dir_for_scope "$scope" "$PROJECT_ROOT")"
+        extension_dir="$(gemini_extension_dir "$PROJECT_ROOT")"
         write_gemini_extension_json "$extension_dir"
       fi
     done
 
-    for cli_id in "${SELECTED_CLI_IDS[@]}"; do
-      for skill_dir in "${SELECTED_SKILL_DIRS[@]}"; do
-        if [ "$scope" = "global" ]; then
-          install_global_skill "$cli_id" "$skill_dir"
-        else
+    if [ "${#SELECTED_SKILL_DIRS[@]}" -gt 0 ]; then
+      for cli_id in "${SELECTED_CLI_IDS[@]}"; do
+        for skill_dir in "${SELECTED_SKILL_DIRS[@]}"; do
           install_project_skill "$cli_id" "$skill_dir"
-        fi
+        done
       done
-    done
+    fi
   fi
 
-  if [ "$INSTALL_COMMANDS" -eq 1 ]; then
+  if [ "$INSTALL_COMMANDS" -eq 1 ] && [ "${#SELECTED_COMMAND_DIRS[@]}" -gt 0 ]; then
     for cli_id in "${SELECTED_CLI_IDS[@]}"; do
       for command_dir in "${SELECTED_COMMAND_DIRS[@]}"; do
-        if [ "$scope" = "global" ]; then
-          install_global_command "$cli_id" "$command_dir"
-        else
-          install_project_command "$cli_id" "$command_dir"
-        fi
+        install_project_command "$cli_id" "$command_dir"
       done
     done
   fi
 
-  if [ "$scope" = "project" ]; then
-    write_project_manifest
-  fi
+  write_project_manifest
 }
 
 select_scenario() {
   local answer
-  log_section "Choose Scenario"
-  printf "  ${BOLD}1)${NC}  Global      — 10 core skills, symlinked system-wide\n"
-  printf "  ${BOLD}2)${NC}  Project PM  — 8 productivity skills (PM / non-coder)\n"
-  printf "  ${BOLD}3)${NC}  Project Dev — 12 engineering essentials\n"
-  printf "  ${BOLD}4)${NC}  Custom      — pick from all available skills\n"
-  echo ""
+
+  if ui_tty_available; then
+    ui_radio_select "Choose Scenario" \
+      "Project PM  — 8 productivity skills (PM / non-coder)" \
+      "Project Dev — 12 engineering essentials" \
+      "Custom      — pick from all available skills"
+    case "$UI_RADIO_INDEX" in
+      1) SELECTED_SCENARIO="project-pm" ;;
+      2) SELECTED_SCENARIO="project-dev" ;;
+      3) SELECTED_SCENARIO="custom" ;;
+    esac
+    return 0
+  fi
+
+  ui_step "Choose Scenario"
+  ui_line "${BOLD}1)${NC}  Project PM  — 8 productivity skills (PM / non-coder)"
+  ui_line "${BOLD}2)${NC}  Project Dev — 12 engineering essentials"
+  ui_line "${BOLD}3)${NC}  Custom      — pick from all available skills"
 
   while true; do
-    read_prompt answer "  Scenario [1]: "
+    read_prompt answer "${CYAN}│${NC}  Scenario [1]: "
     [ -n "$answer" ] || answer="1"
     case "$answer" in
-      1) SELECTED_SCENARIO="global";      SELECTED_SCOPE="global";  return 0 ;;
-      2) SELECTED_SCENARIO="project-pm";  SELECTED_SCOPE="project"; return 0 ;;
-      3) SELECTED_SCENARIO="project-dev"; SELECTED_SCOPE="project"; return 0 ;;
-      4) SELECTED_SCENARIO="custom";                                  return 0 ;;
-      *) log_warn "Enter 1–4." ;;
+      1) SELECTED_SCENARIO="project-pm";  ui_answer "Project PM"; return 0 ;;
+      2) SELECTED_SCENARIO="project-dev"; ui_answer "Project Dev"; return 0 ;;
+      3) SELECTED_SCENARIO="custom";      ui_answer "Custom"; return 0 ;;
+      *) log_warn "Enter 1–3." ;;
     esac
   done
-}
-
-select_skills_fzf() {
-  local i=0 display_line selected_name fzf_output
-
-  load_skills
-
-  if [ "${#SKILL_NAMES[@]}" -eq 0 ]; then
-    log_warn "No shippable skills found."
-    return 0
-  fi
-
-  local display=()
-  while [ "$i" -lt "${#SKILL_NAMES[@]}" ]; do
-    display+=("$(printf '%-32s %s' "${SKILL_NAMES[$i]}" "${SKILL_BUCKETS[$i]}")")
-    i=$((i + 1))
-  done
-
-  fzf_output=$(printf '%s\n' "${display[@]}" | \
-    fzf --multi \
-        "${FZF_COMMON_ARGS[@]}" \
-        --header="Space=toggle  Ctrl-A=all  Ctrl-D=none  Enter=confirm" \
-        --prompt="  skills › " 2>/dev/null) || true
-
-  if [ -z "$fzf_output" ]; then
-    log_warn "No skills selected; cancelling."
-    exit 0
-  fi
-
-  SELECTED_SKILL_DIRS=()
-  while IFS= read -r display_line; do
-    [ -z "$display_line" ] && continue
-    selected_name="$(printf '%s' "$display_line" | awk '{print $1}')"
-    i=0
-    while [ "$i" -lt "${#SKILL_NAMES[@]}" ]; do
-      if [ "${SKILL_NAMES[$i]}" = "$selected_name" ]; then
-        append_unique "${SKILL_DIRS[$i]}" SELECTED_SKILL_DIRS
-        break
-      fi
-      i=$((i + 1))
-    done
-  done <<< "$fzf_output"
-
-  [ "${#SELECTED_SKILL_DIRS[@]}" -gt 0 ] && return 0
-  log_warn "No skills selected; cancelling."
-  exit 0
-}
-
-select_commands_fzf() {
-  local i=0 display_line selected_name fzf_output
-
-  load_commands
-
-  if [ "${#COMMAND_NAMES[@]}" -eq 0 ]; then
-    log_warn "No shippable slash commands found."
-    return 0
-  fi
-
-  local display=()
-  while [ "$i" -lt "${#COMMAND_NAMES[@]}" ]; do
-    display+=("$(printf '%-32s %s' "${COMMAND_NAMES[$i]}" "${COMMAND_BUCKETS[$i]}")")
-    i=$((i + 1))
-  done
-
-  fzf_output=$(printf '%s\n' "${display[@]}" | \
-    fzf --multi \
-        "${FZF_COMMON_ARGS[@]}" \
-        --header="Space=toggle  Ctrl-A=all  Ctrl-D=none  Enter=confirm" \
-        --prompt="  commands › " 2>/dev/null) || true
-
-  if [ -z "$fzf_output" ]; then
-    log_warn "No commands selected; cancelling."
-    exit 0
-  fi
-
-  SELECTED_COMMAND_DIRS=()
-  while IFS= read -r display_line; do
-    [ -z "$display_line" ] && continue
-    selected_name="$(printf '%s' "$display_line" | awk '{print $1}')"
-    i=0
-    while [ "$i" -lt "${#COMMAND_NAMES[@]}" ]; do
-      if [ "${COMMAND_NAMES[$i]}" = "$selected_name" ]; then
-        append_unique "${COMMAND_DIRS[$i]}" SELECTED_COMMAND_DIRS
-        break
-      fi
-      i=$((i + 1))
-    done
-  done <<< "$fzf_output"
-
-  [ "${#SELECTED_COMMAND_DIRS[@]}" -gt 0 ] && return 0
-  log_warn "No commands selected; cancelling."
-  exit 0
 }
 
 populate_skills_from_preset() {
@@ -1099,59 +1081,48 @@ populate_skills_from_preset() {
 }
 
 populate_commands_from_preset() {
+  local preset="$1" command_dir
   load_commands
-  SELECTED_COMMAND_DIRS=("${COMMAND_DIRS[@]:-}")
+  SELECTED_COMMAND_DIRS=()
+  while IFS= read -r command_dir; do
+    SELECTED_COMMAND_DIRS+=("$command_dir")
+  done < <(list_commands_for_preset "$preset")
 }
 
 main() {
-  local scope
-
-  printf "\n${BOLD}${CYAN}  blvck-skills${NC}${GRAY}  ·  install${NC}\n"
-  printf "  ${GRAY}%s${NC}\n\n" "$REPO_ROOT"
+  ui_intro "blvck-skills · install"
+  ui_line "${GRAY}${REPO_ROOT}${NC}"
 
   INSTALL_SKILLS=1
   INSTALL_COMMANDS=1
 
   select_scenario
   select_clis
+  select_project_root
 
   if [ "$SELECTED_SCENARIO" = "custom" ]; then
-    select_scope
-  fi
-
-  scope="$SELECTED_SCOPE"
-  [ "$scope" = "project" ] && select_project_root
-
-  if [ "$SELECTED_SCENARIO" = "custom" ]; then
-    if [ "$FZF_AVAILABLE" -eq 1 ]; then
-      select_skills_fzf
-      select_commands_fzf
-    else
-      select_skills
-      select_commands
-    fi
+    select_skills
+    select_commands
   else
     populate_skills_from_preset "$SELECTED_SCENARIO"
-    populate_commands_from_preset
+    populate_commands_from_preset "$SELECTED_SCENARIO"
   fi
 
-  print_plan "$scope"
+  print_plan
 
-  if ! confirm "  Install? [y/N]: "; then
-    log_warn "Cancelled."
+  if ! confirm "Install?"; then
+    ui_outro "Cancelled."
     exit 0
   fi
 
-  echo ""
-  run_install "$scope"
+  ui_step "Installing"
+  run_install
 
-  echo ""
-  printf "  ${GRAY}────────────────────────────────────${NC}\n"
-  log_success "Done  $created installed  $replaced replaced  $skipped skipped"
-  [ "$scope" = "global" ] && [ "$INSTALL_SKILLS" -eq 1 ] && log_info "Shared refs linked — $shared_linked"
-  [ "$scope" = "project" ] && [ "$INSTALL_SKILLS" -eq 1 ] && log_info "Shared refs copied — $shared_copied"
-  [ "$scope" = "project" ] && log_info "Manifest → $PROJECT_ROOT/$PROJECT_MANIFEST"
-  echo ""
+  ui_line "$(printf "${GREEN}✓${NC}  Done — %s installed, %s replaced, %s skipped" "$created" "$replaced" "$skipped")"
+  [ "$INSTALL_SKILLS" -eq 1 ] && ui_line "Shared refs copied — $shared_copied"
+  ui_line "Manifest → $PROJECT_ROOT/$PROJECT_MANIFEST"
+
+  ui_outro "All set."
 }
 
 main "$@"

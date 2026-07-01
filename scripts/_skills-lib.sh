@@ -29,11 +29,6 @@ SHIPPABLE_BUCKETS=(
 )
 
 # Curated minimal bundles — custom mode exposes all 25+ skills
-BUNDLE_GLOBAL_SKILLS=(
-  "grill-me" "grilling" "write-a-prd" "write-a-story" "handoff"
-  "debug-mantra" "diagnose" "triage" "tdd" "scrutinize"
-)
-
 BUNDLE_PROJECT_PM_SKILLS=(
   "grill-me" "grilling" "write-a-prd" "write-a-story"
   "stakeholder-update" "management-talk" "handoff" "caveman"
@@ -45,6 +40,11 @@ BUNDLE_PROJECT_DEV_SKILLS=(
   "domain-modeling" "scrutinize" "security-audit" "git-guardrails-claude-code"
 )
 
+# Curated command bundles per preset — pm-os-bootstrap is PM-workflow specific,
+# so it only belongs in the Project PM preset, not Project Dev.
+BUNDLE_PROJECT_PM_COMMANDS=("pm-os-bootstrap")
+BUNDLE_PROJECT_DEV_COMMANDS=()
+
 DIRECT_INSTALL_TARGETS=(
   "$HOME/.claude/skills"
   "$HOME/.codex/skills"
@@ -54,19 +54,6 @@ GEMINI_LEGACY_SKILLS_DIR="$HOME/.gemini/skills"
 GEMINI_EXTENSION_NAME="agent-skills"
 GEMINI_EXTENSION_DIR="$HOME/.gemini/extensions/$GEMINI_EXTENSION_NAME"
 GEMINI_EXTENSION_SKILLS_DIR="$GEMINI_EXTENSION_DIR/skills"
-
-FZF_AVAILABLE=0
-command -v fzf >/dev/null 2>&1 && FZF_AVAILABLE=1
-
-# Shared fzf flags used by every picker
-FZF_COMMON_ARGS=(
-  --height=50%
-  --layout=reverse
-  --border=rounded
-  --info=inline
-  --bind='space:toggle,tab:toggle+down,ctrl-a:select-all,ctrl-d:deselect-all'
-  --color='dark,bg:#0f0f0f,bg+:#1a1a1a,fg:#c8c8c8,fg+:#ffffff,hl:#00e676,hl+:#00e676,info:#555555,prompt:#00e676,pointer:#00e676,marker:#00e676,header:#666666,border:#2d2d2d'
-)
 
 # ── Logging ───────────────────────────────────────────────────────────────────
 
@@ -175,13 +162,12 @@ _is_in_list() {
 }
 
 # list_skills_for_preset <preset>
-#   preset: global | project-pm | project-dev
+#   preset: project-pm | project-dev
 # Prints skill dirs that belong to the curated bundle for that preset.
 list_skills_for_preset() {
   local preset="$1" skill_dir skill_name bundle=()
 
   case "$preset" in
-    global)      bundle=("${BUNDLE_GLOBAL_SKILLS[@]}") ;;
     project-pm)  bundle=("${BUNDLE_PROJECT_PM_SKILLS[@]}") ;;
     project-dev) bundle=("${BUNDLE_PROJECT_DEV_SKILLS[@]}") ;;
     *) return 1 ;;
@@ -191,4 +177,23 @@ list_skills_for_preset() {
     skill_name="$(skill_name_from_dir "$skill_dir")"
     _is_in_list "$skill_name" "${bundle[@]}" && printf '%s\n' "$skill_dir"
   done < <(list_shippable_skill_dirs)
+}
+
+# list_commands_for_preset <preset>
+#   preset: project-pm | project-dev
+# Prints command dirs that belong to the curated bundle for that preset.
+# A preset with an empty bundle (e.g. project-dev) yields no commands.
+list_commands_for_preset() {
+  local preset="$1" command_dir command_name bundle=()
+
+  case "$preset" in
+    project-pm)  bundle=("${BUNDLE_PROJECT_PM_COMMANDS[@]:-}") ;;
+    project-dev) bundle=("${BUNDLE_PROJECT_DEV_COMMANDS[@]:-}") ;;
+    *) return 1 ;;
+  esac
+
+  while IFS= read -r command_dir; do
+    command_name="$(command_name_from_dir "$command_dir")"
+    _is_in_list "$command_name" "${bundle[@]}" && printf '%s\n' "$command_dir"
+  done < <(list_shippable_command_dirs)
 }
