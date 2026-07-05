@@ -1,6 +1,8 @@
-# Agent Skills 🛠️
+# Blvck Skills 🛠️
 
-A collection of specialized expert agent skills for AI assistants (like Gemini CLI and Claude). These skills provide deep domain knowledge, architectural guidance, and standardized workflows to help agents perform complex engineering tasks with high precision.
+A general-purpose library of agent skills for AI coding assistants — Claude Code, Codex, and Gemini CLI. Each skill packages deep domain knowledge, architectural guidance, and standardized workflows that an agent loads on demand to perform complex engineering and product tasks with high precision.
+
+Install skills per project with the bundled installer, pull them with `npx skills add`, or load the whole library as a Claude Code plugin.
 
 ## 🌟 Available Skills
 
@@ -43,11 +45,11 @@ A collection of specialized expert agent skills for AI assistants (like Gemini C
 
 ### Misc
 
-Skills kept around but rarely used.
+Situational skills kept around but rarely used.
 
 ### Personal
 
-Skills tied to my own setup, not promoted.
+Skills tied to the maintainer's local setup; not shipped or indexed.
 
 ### In Progress
 
@@ -91,7 +93,7 @@ It also includes a Claude Code plugin manifest for loading the same shippable sk
 For a single skill or a fast, no-clone setup, use the community [`skills`](https://github.com/vercel-labs/skills) CLI via `npx`. It reads this repo's `.claude-plugin/plugin.json` directly, so no setup is required on this end:
 
 ```bash
-npx skills add github:Canvas-xxx/agent-skills
+npx skills add github:Canvas-xxx/blvck-skills
 ```
 
 Add `-g` for a global (user-level) install, `--agent <agents>` to target specific CLIs (e.g. `claude-code`, `codex`, `gemini-cli`), or `--skill <names>` to install specific skills instead of choosing interactively.
@@ -103,8 +105,8 @@ This path doesn't support the bucket-level ("all of engineering/") selection or 
 For the full installer — preset bundles and bucket-level selection — clone this repository and run the interactive installer:
 
 ```bash
-git clone <repo-url>
-cd agent-skills
+git clone git@github.com:Canvas-xxx/blvck-skills.git
+cd blvck-skills
 ./scripts/install-skills.sh
 ```
 
@@ -156,16 +158,10 @@ To check that public skill descriptions avoid overly forceful activation wording
 ./scripts/validate-skill-descriptions.sh
 ```
 
-For a maintainer development loop, symlink every shippable skill into Claude, Codex, and a local Gemini extension, and inject shared references:
+To uninstall skills from a project:
 
 ```bash
-./scripts/link-skills.sh
-```
-
-To unlink every shippable skill from those providers:
-
-```bash
-./scripts/un-link-skill.sh
+./scripts/uninstall-skills.sh
 ```
 
 To test the Claude Code plugin locally:
@@ -178,13 +174,17 @@ claude --plugin-dir .
 
 ```text
 .
+├── .claude-plugin/           # Claude Code plugin manifest
 ├── scripts/                  # Skill management scripts
+│   ├── _skills-lib.sh        # Shared helpers, buckets, and preset bundles
+│   ├── blvck-skills.sh       # Entry point for the blvck-skills shortcut command
 │   ├── install-skills.sh     # Interactive end-user installer
-│   ├── link-skills.sh        # Link shippable skills and shared references
+│   ├── uninstall-skills.sh   # Interactive uninstaller
 │   ├── list-skills.sh        # List every SKILL.md with bucket labels
+│   ├── validate-skill-descriptions.sh  # Lint public skill descriptions
 │   ├── setup-command.sh      # Create the blvck-skills shortcut command
 │   ├── unsetup-command.sh    # Remove the blvck-skills shortcut command
-│   └── un-link-skill.sh      # Remove provider symlinks for shippable skills
+│   └── deprecated/           # Retired maintainer symlink scripts
 └── skills/
     ├── _shared/              # Shared assets and references
     │   └── references/       # Common documentation (e.g., commit conventions)
@@ -210,26 +210,15 @@ It copies selected skill folders into the target project paths:
 
 - `PROJECT/.claude/skills`
 - `PROJECT/.codex/skills`
-- `PROJECT/.gemini/extensions/agent-skills/skills`
+- `PROJECT/.gemini/extensions/blvck-skills/skills`
 
-It writes `.agent-skills-install.json` in each copied skill folder and a project-level `.agent-skills-install.json` manifest. Shared references from `_shared/references/` are materialized as real files inside copied project skills.
+It writes `.blvck-skills-install.json` in each copied skill folder and a project-level `.blvck-skills-install.json` manifest, so the uninstaller only ever removes installer-owned copies. Markers written before the repo rename (`.agent-skills-install.json`) are still recognized. Shared references from `_shared/references/` are materialized as real files inside copied project skills.
 
-The `scripts/link-skills.sh` maintainer shortcut performs two main actions:
+Gemini CLI discovers skills bundled inside extensions, so skills are installed as a local extension at `PROJECT/.gemini/extensions/blvck-skills` with a generated `gemini-extension.json`.
 
-1.  **Skill Linking**: It symlinks each grouped skill folder from this repo into `$HOME/.claude/skills` and `$HOME/.codex/skills` using the skill directory name. For Gemini, it creates a local extension at `$HOME/.gemini/extensions/agent-skills` and symlinks skills into that extension's `skills/` directory.
-2.  **Reference Injection**: It symlinks shared references (from `_shared/references/`) into the specific skill's `references/` folder, ensuring consistency across different agents.
+The Claude plugin manifest follows the same shippable-skill rule as the installer, so plugin installs do not include personal, draft, or deprecated skills.
 
-The dev-loop scripts use these provider targets:
-
-- `$HOME/.claude/skills`
-- `$HOME/.codex/skills`
-- `$HOME/.gemini/extensions/agent-skills/skills`
-
-Gemini CLI discovers skills bundled inside extensions, so the script also writes `$HOME/.gemini/extensions/agent-skills/gemini-extension.json`.
-Any old symlinks in `$HOME/.gemini/skills` are removed when they are safe symlinks; non-symlink entries are skipped.
-
-For those scripts, shippable skills are skills in `engineering/`, `productivity/`, and `misc/`. Skills in `personal/`, `in-progress/`, and `deprecated/` are listed but not linked.
-The Claude plugin manifest follows the same shippable-skill rule, so plugin installs do not include personal, draft, or deprecated skills.
+The retired maintainer symlink scripts (`link-skills.sh`, `un-link-skill.sh`) are kept in `scripts/deprecated/` for reference.
 
 ## 🛡️ Security & Trust
 

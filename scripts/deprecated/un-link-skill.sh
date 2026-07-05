@@ -10,7 +10,7 @@
 # Targets:
 #   ~/.claude/skills
 #   ~/.codex/skills
-#   ~/.gemini/extensions/agent-skills
+#   ~/.gemini/extensions/blvck-skills
 #
 # Usage:
 #   ./scripts/un-link-skill.sh

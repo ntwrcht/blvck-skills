@@ -10,7 +10,7 @@
 # Targets:
 #   ~/.claude/skills
 #   ~/.codex/skills
-#   ~/.gemini/extensions/agent-skills
+#   ~/.gemini/extensions/blvck-skills
 #
 # Usage:
 #   ./scripts/link-skills.sh
@@ -45,7 +45,7 @@ cat > "$GEMINI_EXTENSION_DIR/gemini-extension.json" <<JSON
 {
   "name": "$GEMINI_EXTENSION_NAME",
   "version": "1.0.0",
-  "description": "Local agent skills from agent-skills."
+  "description": "Local agent skills from blvck-skills."
 }
 JSON
 

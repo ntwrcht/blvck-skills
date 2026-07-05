@@ -189,8 +189,10 @@ ui_checkbox_select() {
 }
 
 INSTALLER_VERSION="1.0.0"
-MARKER_FILE=".agent-skills-install.json"
-PROJECT_MANIFEST=".agent-skills-install.json"
+MARKER_FILE=".blvck-skills-install.json"
+PROJECT_MANIFEST=".blvck-skills-install.json"
+# Marker name used by installs made before the blvck-skills rename.
+LEGACY_MARKER_FILE=".agent-skills-install.json"
 
 CLI_NAMES=("Claude" "Codex" "Gemini")
 CLI_IDS=("claude" "codex" "gemini")
@@ -340,7 +342,7 @@ write_gemini_extension_json() {
 {
   "name": "$GEMINI_EXTENSION_NAME",
   "version": "1.0.0",
-  "description": "Local agent skills from agent-skills."
+  "description": "Local agent skills from blvck-skills."
 }
 JSON
 }
@@ -593,7 +595,7 @@ write_skill_marker() {
   installed_at="$(timestamp_utc)"
   cat > "$marker_path" <<JSON
 {
-  "installer": "agent-skills",
+  "installer": "blvck-skills",
   "installer_version": "$INSTALLER_VERSION",
   "source_repo": "$(json_escape "$REPO_ROOT")",
   "source_skill": "$(json_escape "$source_path")",
@@ -608,7 +610,7 @@ JSON
 
 installer_owned_project_target() {
   local target="$1"
-  [ -f "$target/$MARKER_FILE" ]
+  [ -f "$target/$MARKER_FILE" ] || [ -f "$target/$LEGACY_MARKER_FILE" ]
 }
 
 install_project_skill() {
@@ -659,7 +661,7 @@ write_project_manifest() {
 
   {
     echo "{"
-    echo "  \"installer\": \"agent-skills\","
+    echo "  \"installer\": \"blvck-skills\","
     echo "  \"installer_version\": \"$INSTALLER_VERSION\","
     echo "  \"source_repo\": \"$(json_escape "$REPO_ROOT")\","
     echo "  \"scope\": \"project\","

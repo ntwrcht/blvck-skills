@@ -2,8 +2,8 @@ Skills are organized into bucket folders under `skills/`:
 
 - `engineering/` — daily code work
 - `productivity/` — daily non-code workflow tools
-- `misc/` — kept around but rarely used
-- `personal/` — tied to my own setup, not promoted
+- `misc/` — situational, kept around but rarely used
+- `personal/` — tied to the maintainer's local setup, not shipped
 - `in-progress/` — drafts not yet ready to ship
 - `deprecated/` — no longer used
 

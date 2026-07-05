@@ -188,8 +188,11 @@ ui_checkbox_select() {
   fi
 }
 
-MARKER_FILE=".agent-skills-install.json"
-PROJECT_MANIFEST=".agent-skills-install.json"
+MARKER_FILE=".blvck-skills-install.json"
+PROJECT_MANIFEST=".blvck-skills-install.json"
+# Marker name used by installs made before the blvck-skills rename.
+LEGACY_MARKER_FILE=".agent-skills-install.json"
+LEGACY_PROJECT_MANIFEST=".agent-skills-install.json"
 
 CLI_NAMES=("Claude" "Codex" "Gemini")
 CLI_IDS=("claude" "codex" "gemini")
@@ -496,7 +499,7 @@ remove_project_skill() {
     return 0
   fi
 
-  if [ ! -f "$target/$MARKER_FILE" ]; then
+  if [ ! -f "$target/$MARKER_FILE" ] && [ ! -f "$target/$LEGACY_MARKER_FILE" ]; then
     log_warn "Skipping $target — not installer-owned (no marker file)"
     skipped=$((skipped + 1))
     return 0
@@ -509,7 +512,8 @@ remove_project_skill() {
 
 update_project_manifest() {
   local manifest_path="$PROJECT_ROOT/$PROJECT_MANIFEST"
-  [ -f "$manifest_path" ] || return 0
+  local legacy_manifest_path="$PROJECT_ROOT/$LEGACY_PROJECT_MANIFEST"
+  [ -f "$manifest_path" ] || [ -f "$legacy_manifest_path" ] || return 0
 
   local cli_id target_dir has_items=0
 
@@ -522,7 +526,7 @@ update_project_manifest() {
   done
 
   if [ "$has_items" -eq 0 ]; then
-    rm -f "$manifest_path"
+    rm -f "$manifest_path" "$legacy_manifest_path"
     log_info "Removed project manifest (nothing left installed): $manifest_path"
   else
     log_info "Project manifest retained (other installed items remain): $manifest_path"
