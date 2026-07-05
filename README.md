@@ -1,10 +1,48 @@
-# Blvck Skills 🛠️
+<div align="center">
 
-A general-purpose library of agent skills for AI coding assistants — Claude Code, Codex, and Gemini CLI. Each skill packages deep domain knowledge, architectural guidance, and standardized workflows that an agent loads on demand to perform complex engineering and product tasks with high precision.
+# 🛠️ Blvck Skills
 
-Install skills per project with the bundled installer, pull them with `npx skills add`, or load the whole library as a Claude Code plugin.
+**A general-purpose library of agent skills for AI coding assistants — Claude Code, Codex, and Gemini CLI.**
 
-## 🌟 Available Skills
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![Version](https://img.shields.io/badge/version-1.0.0-informational)](.claude-plugin/plugin.json)
+[![Skills](https://img.shields.io/badge/skills-27-success)](#skill-catalog)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](#contributing)
+
+</div>
+
+---
+
+## Introduction
+
+AI coding assistants are powerful generalists, but real work demands specialists: an agent that debugs with discipline, reviews with skepticism, or writes a PRD your stakeholders can actually read. Re-typing long prompts every session does not scale to that level of quality.
+
+**Blvck Skills** packages that expertise into **skills** — versioned, installable instruction sets that an agent discovers by name and description, then loads in full only when the task calls for it. Each skill carries deep domain knowledge, architectural guidance, and standardized workflows, so every project you work in gets the same expert behavior with zero prompt repetition.
+
+Install skills per project with the bundled installer, pull them with `npx skills add`, or load the whole library as a **Claude Code plugin**.
+
+## Table of Contents
+
+- [Key Features](#key-features)
+- [Skill Catalog](#skill-catalog)
+- [Architecture Overview](#architecture-overview)
+- [Getting Started](#getting-started)
+- [Usage](#usage)
+- [Security & Trust](#security--trust)
+- [Contributing](#contributing)
+- [License](#license)
+
+## Key Features
+
+- **27 production-ready skills** spanning daily engineering work (debugging, TDD, review, security) and product workflows (PRDs, stories, stakeholder updates, plan interviews).
+- **Multi-CLI support** — one library installs into Claude Code, Codex, and Gemini CLI, each in its native format.
+- **Interactive installer with preset bundles** — curated *Project PM* and *Project Dev* scenarios for one-keystroke setup, or a custom picker across the full catalog.
+- **Safe, reversible installs** — every copied skill carries an ownership marker; the uninstaller only ever removes what the installer created.
+- **Progressive disclosure by design** — agents read a skill's name and two-sentence description first, and load the detailed instructions only when relevant, keeping context lean.
+- **Shared reference injection** — common conventions (artifact paths, git workflow, context templates) materialize into each skill that needs them, so behavior stays consistent across skills.
+- **Quality gates for the library itself** — bundled scripts lint every public skill description against overly forceful activation wording.
+
+## Skill Catalog
 
 ### Engineering
 
@@ -43,27 +81,9 @@ Install skills per project with the bundled installer, pull them with `npx skill
 | [**Setup Context**](skills/productivity/setup-context/SKILL.md) | Scaffold shared project context files in .context/ and configure the output locations pipeline skills write artifacts to (PRDs, stories, designs, ADRs, and more). Use when onboarding skills to a new or existing repo, when skills lack shared project context, or to relocate where a skill's output gets saved. |
 | [**Handoff**](skills/productivity/handoff/SKILL.md) | Compact the current conversation into a handoff document so a fresh agent can continue the work without losing context. Use when switching sessions, handing off to another agent, ending a long conversation, or preparing a context brief for a follow-up run. |
 
-### Misc
+### Choosing the Right Skill
 
-Situational skills kept around but rarely used.
-
-### Personal
-
-Skills tied to the maintainer's local setup; not shipped or indexed.
-
-### In Progress
-
-Drafts not yet ready to ship.
-
-### Deprecated
-
-Skills that are no longer used.
-
-> **Looking for the PM OS?** The `pm-os-bootstrap` slash command moved to the separate `ai-system` plugin marketplace repo as the `pm-os` plugin (`/pm-os:setup`, `/pm-os:validate`, `/pm-os:score`).
-
-## 🧭 Skill Selection Guide
-
-Use the full portable install by default. Install every shippable skill, then rely on concise descriptions and these boundaries to choose the right skill for the task.
+Install the full portable set by default, then rely on concise descriptions and these boundaries to choose the right skill for the task.
 
 | Situation | Skill |
 | :--- | :--- |
@@ -78,99 +98,13 @@ Use the full portable install by default. Install every shippable skill, then re
 | A status, launch, sprint, risk, decision, customer, or multi-audience update needs audience-aware framing. | [**Stakeholder Update**](skills/productivity/stakeholder-update/SKILL.md) |
 | Work is mainly inside a specific stack or domain. | Use the matching engineering skill, and combine it with a workflow skill only when the request also needs debugging, TDD, review, security, measurement, or communication structure. |
 
-## 🚀 Getting Started
+> **Looking for the PM OS?** The `pm-os-bootstrap` slash command moved to the separate `ai-system` plugin marketplace repo as the `pm-os` plugin (`/pm-os:setup`, `/pm-os:validate`, `/pm-os:score`).
 
-This repository includes an interactive installer for adding shippable skills to your AI assistant's configuration directories.
-It also includes a Claude Code plugin manifest for loading the same shippable skills as a namespaced plugin.
+## Architecture Overview
 
-### Prerequisites
+The library rests on three ideas: **skills as self-contained folders**, **buckets as a shipping boundary**, and **installers that never touch what they don't own**.
 
-- A supported AI assistant (Gemini CLI or Claude).
-- A Unix-like environment (macOS or Linux).
-
-### Quick Install (skills only)
-
-For a single skill or a fast, no-clone setup, use the community [`skills`](https://github.com/vercel-labs/skills) CLI via `npx`. It reads this repo's `.claude-plugin/plugin.json` directly, so no setup is required on this end:
-
-```bash
-npx skills add github:Canvas-xxx/blvck-skills
-```
-
-Add `-g` for a global (user-level) install, `--agent <agents>` to target specific CLIs (e.g. `claude-code`, `codex`, `gemini-cli`), or `--skill <names>` to install specific skills instead of choosing interactively.
-
-This path doesn't support the bucket-level ("all of engineering/") selection or the preset bundles the installer below does. For those, use the full installer.
-
-### Installation
-
-For the full installer — preset bundles and bucket-level selection — clone this repository and run the interactive installer:
-
-```bash
-git clone git@github.com:Canvas-xxx/blvck-skills.git
-cd blvck-skills
-./scripts/install-skills.sh
-```
-
-To create a remembered command, run the command setup script:
-
-```bash
-./scripts/setup-command.sh
-```
-
-It creates:
-
-```bash
-~/.local/bin/blvck-skills -> <repo>/scripts/blvck-skills.sh
-```
-
-After that, install skills into any project with:
-
-```bash
-cd /path/to/project
-blvck-skills
-```
-
-To remove the remembered command:
-
-```bash
-./scripts/unsetup-command.sh
-```
-
-The installer lets you choose:
-
-- Claude, Codex, Gemini, or multiple CLIs in one run
-- All shippable skills, bucket-level groups, or individual skills
-
-It always installs into the target project directory you point it at, so each project can carry its own skill set.
-
-The installer includes skills from `engineering/`, `productivity/`, and `misc/`. It does not install skills from `personal/`, `in-progress/`, or `deprecated/`.
-
-Installed means the skill is available for the agent to discover. It should not mean every full `SKILL.md` is loaded into the model context at startup; agents should use the skill name and description to choose a relevant skill, then load that skill's detailed instructions only when needed.
-
-To list every `SKILL.md` in the repo:
-
-```bash
-./scripts/list-skills.sh
-```
-
-To check that public skill descriptions avoid overly forceful activation wording:
-
-```bash
-./scripts/validate-skill-descriptions.sh
-```
-
-To uninstall skills from a project:
-
-```bash
-./scripts/uninstall-skills.sh
-```
-
-To test the Claude Code plugin locally:
-
-```bash
-claude --plugin-dir .
-```
-
-## 📂 Project Structure
+### Repository Layout
 
 ```text
 .
@@ -193,51 +127,124 @@ claude --plugin-dir .
     │       ├── SKILL.md      # Core instruction set with YAML frontmatter
     │       └── references/   # Domain-specific deep-dive documents
     ├── productivity/         # Daily non-code workflow tools
-    ├── misc/                 # Kept around but rarely used
-    ├── personal/             # Tied to my own setup, not promoted
+    ├── misc/                 # Situational, kept around but rarely used
+    ├── personal/             # Tied to the maintainer's local setup, not shipped
     ├── in-progress/          # Drafts not yet ready to ship
-    ├── deprecated/           # No longer used
-    └── ...
+    └── deprecated/           # No longer used
 ```
 
-Each skill is its own directory containing a `SKILL.md` file with YAML frontmatter for `name` and `description`, plus any bundled scripts or reference files.
+### Core Components
 
-## 🛠️ How it Works
+- **Skills** — each skill is a directory holding a `SKILL.md` (YAML frontmatter for `name` and `description`, followed by the instruction body) plus optional `references/` deep-dives and scripts. Agents discover skills by description and load the body on demand.
+- **Buckets** — `engineering/`, `productivity/`, and `misc/` are *shippable*; `personal/`, `in-progress/`, and `deprecated/` never leave the repo. The installer, the plugin manifest, and the catalog above all follow this same rule.
+- **Installer** — copies selected skill folders into `PROJECT/.claude/skills`, `PROJECT/.codex/skills`, and `PROJECT/.gemini/extensions/blvck-skills/skills` (Gemini CLI discovers skills bundled inside extensions, so a `gemini-extension.json` is generated alongside). It writes a `.blvck-skills-install.json` ownership marker into each copy and a project-level manifest, so the uninstaller only ever removes installer-owned copies. Markers written before the repo rename (`.agent-skills-install.json`) are still recognized.
+- **Shared references** — files in `skills/_shared/references/` materialize into each installed skill that declares a need for them, keeping conventions identical across skills.
+- **Claude Code plugin manifest** — `.claude-plugin/plugin.json` exposes the same shippable skills as a namespaced plugin.
 
-The `scripts/install-skills.sh` script guides users through scenario, CLI, project path, and skill selection.
+## Getting Started
 
-It copies selected skill folders into the target project paths:
+### Prerequisites
 
-- `PROJECT/.claude/skills`
-- `PROJECT/.codex/skills`
-- `PROJECT/.gemini/extensions/blvck-skills/skills`
+- A supported AI assistant: **Claude Code**, **Codex**, or **Gemini CLI**.
+- A Unix-like environment (macOS or Linux) with `bash` and `git`.
 
-It writes `.blvck-skills-install.json` in each copied skill folder and a project-level `.blvck-skills-install.json` manifest, so the uninstaller only ever removes installer-owned copies. Markers written before the repo rename (`.agent-skills-install.json`) are still recognized. Shared references from `_shared/references/` are materialized as real files inside copied project skills.
+### Installation
 
-Gemini CLI discovers skills bundled inside extensions, so skills are installed as a local extension at `PROJECT/.gemini/extensions/blvck-skills` with a generated `gemini-extension.json`.
+**Option 1 — Quick install (no clone).** The community [`skills`](https://github.com/vercel-labs/skills) CLI reads this repo's plugin manifest directly:
 
-The Claude plugin manifest follows the same shippable-skill rule as the installer, so plugin installs do not include personal, draft, or deprecated skills.
+```bash
+npx skills add github:Canvas-xxx/blvck-skills
+```
 
-The retired maintainer symlink scripts (`link-skills.sh`, `un-link-skill.sh`) are kept in `scripts/deprecated/` for reference.
+Add `-g` for a global (user-level) install, `--agent <agents>` to target specific CLIs (e.g. `claude-code`, `codex`, `gemini-cli`), or `--skill <names>` to install specific skills non-interactively. This path doesn't support bucket-level selection or preset bundles — use the full installer for those.
 
-## 🛡️ Security & Trust
+**Option 2 — Full installer (presets and bucket selection).** Clone the repo and run the interactive installer:
 
-To maintain a secure environment, this project adheres to the following standards:
+```bash
+git clone git@github.com:Canvas-xxx/blvck-skills.git
+cd blvck-skills
+./scripts/install-skills.sh
+```
 
--   **No Secrets**: Never commit API keys, passwords, or PII to this repository. Use environment variables or local `.env` files (which are ignored by git).
--   **Input Validation**: The management scripts use known bucket lists and skip non-symlink provider entries to avoid accidental overwrites.
--   **Prompt Injection Awareness**: Skills are powerful instructions. Always peer-review changes to `SKILL.md` files to ensure they don't contain instructions that could exfiltrate data or perform unauthorized actions.
--   **Least Privilege**: Skills should only be granted the minimum context necessary to perform their tasks.
--   **Context Isolation**: Files matching `*_CONTEXT.md` are ignored by git to prevent accidental exposure of project-specific or sensitive metadata.
+The installer walks you through **scenario** (*Project PM*, *Project Dev*, or *Custom*), **CLIs**, **project path**, and **skill selection**, then copies everything into the target project so each project carries its own skill set.
 
-## 📝 Contributing
+**Option 3 — Claude Code plugin.** Load the whole shippable library without copying files:
 
-1.  Create a new folder in the appropriate bucket under `skills/`.
-2.  Add a `SKILL.md` file following the established template.
-3.  Write the YAML `description` and README entry with enough signal for agent selection. Prefer two sentences: capability first, then `Use when` with specific trigger keywords, contexts, file types, tools, or outcomes. Avoid phrases such as `ALWAYS use`, `MUST use`, `Trigger when`, `Trigger on`, `proactively whenever`, `no exceptions`, and `Do NOT attempt`.
-4.  Put detailed activation boundaries inside the `SKILL.md` body under a `When to Use` or `When Not to Use` section, with clear boundaries against overlapping skills.
-5.  Add supporting documentation in the `references/` subfolder.
-6.  Update the `get_shared_refs` function in `scripts/_skills-lib.sh` if your skill needs shared assets.
-7.  For skills in `engineering/`, `productivity/`, or `misc/`, add a linked entry to the top-level `README.md`, the bucket `README.md`, and `.claude-plugin/plugin.json`. Do not add `personal/`, `in-progress/`, or `deprecated/` skills to those shippable indexes.
-8.  Run `./scripts/list-skills.sh` and `./scripts/validate-skill-descriptions.sh`.
-9.  Submit a Pull Request!
+```bash
+claude --plugin-dir /path/to/blvck-skills
+```
+
+**Optional — shortcut command.** Register `blvck-skills` as a global command so you can install from any project directory:
+
+```bash
+./scripts/setup-command.sh     # creates ~/.local/bin/blvck-skills
+cd /path/to/project
+blvck-skills                   # run the installer from anywhere
+./scripts/unsetup-command.sh   # remove the shortcut later
+```
+
+## Usage
+
+Once installed, skills activate through your assistant's normal flow — the agent matches your request against each skill's description and loads the best fit. You can also invoke a skill explicitly:
+
+```text
+> /tdd
+> Use the diagnose skill to investigate this flaky integration test.
+> Grill me on this migration plan before I start.
+```
+
+A typical day with the *Project Dev* bundle:
+
+```text
+> /grill-with-docs            # stress-test the plan, capture decisions as ADRs
+> /tdd                        # build the change through red-green-refactor slices
+> /scrutinize                 # independent review of the resulting diff
+> /handoff                    # compact the session for the next agent
+```
+
+To remove skills from a project:
+
+```bash
+./scripts/uninstall-skills.sh
+```
+
+To audit the library itself:
+
+```bash
+./scripts/list-skills.sh                    # every SKILL.md with bucket labels
+./scripts/validate-skill-descriptions.sh    # lint public descriptions
+```
+
+> **Note on context cost:** installed means *discoverable*, not *loaded*. Agents read only the name and description at startup and pull in the full instruction set when the task warrants it.
+
+## Security & Trust
+
+- **No secrets** — never commit API keys, passwords, or PII. Use environment variables or local `.env` files (git-ignored).
+- **Prompt injection awareness** — skills are powerful instructions. Peer-review every change to a `SKILL.md` to ensure it cannot exfiltrate data or perform unauthorized actions.
+- **Least privilege** — skills receive only the minimum context necessary for their task.
+- **Input validation** — the management scripts operate on known bucket lists and skip non-symlink provider entries to avoid accidental overwrites.
+- **Context isolation** — files matching `*_CONTEXT.md` are git-ignored to prevent accidental exposure of project-specific metadata.
+
+## Contributing
+
+Contributions are welcome — new skills, sharper descriptions, and better references all improve the library.
+
+1. Create a new folder in the appropriate bucket under `skills/`.
+2. Add a `SKILL.md` following the established template (YAML frontmatter with `name` and `description`).
+3. Write the description with enough signal for agent selection: capability first, then a `Use when` sentence with specific trigger keywords, contexts, file types, tools, or outcomes. Avoid forceful activation phrases such as `ALWAYS use`, `MUST use`, `Trigger when`, `Trigger on`, `proactively whenever`, `no exceptions`, and `Do NOT attempt`.
+4. Put detailed activation boundaries inside the `SKILL.md` body under a `When to Use` or `When Not to Use` section, with clear boundaries against overlapping skills.
+5. Add supporting documentation in the skill's `references/` subfolder.
+6. Update `get_shared_refs` in `scripts/_skills-lib.sh` if your skill needs shared assets.
+7. For shippable skills, add a linked entry to this `README.md`, the bucket `README.md`, and `.claude-plugin/plugin.json`. Never index `personal/`, `in-progress/`, or `deprecated/` skills.
+8. Run the validation pair before opening a PR:
+
+   ```bash
+   ./scripts/list-skills.sh
+   ./scripts/validate-skill-descriptions.sh
+   ```
+
+9. Submit a pull request — or [open an issue](https://github.com/Canvas-xxx/blvck-skills/issues) to report bugs and propose ideas.
+
+## License
+
+Distributed under the **MIT License**. See [`LICENSE`](LICENSE) for the full text.
