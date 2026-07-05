@@ -153,7 +153,7 @@ The library rests on three ideas: **skills as self-contained folders**, **bucket
 **Option 1 — Quick install (no clone).** The community [`skills`](https://github.com/vercel-labs/skills) CLI reads this repo's plugin manifest directly:
 
 ```bash
-npx skills add github:Canvas-xxx/blvck-skills
+npx skills add github:ntwrcht/blvck-skills
 ```
 
 Add `-g` for a global (user-level) install, `--agent <agents>` to target specific CLIs (e.g. `claude-code`, `codex`, `gemini-cli`), or `--skill <names>` to install specific skills non-interactively. This path doesn't support bucket-level selection or preset bundles — use the full installer for those.
@@ -161,7 +161,7 @@ Add `-g` for a global (user-level) install, `--agent <agents>` to target specifi
 **Option 2 — Full installer (presets and bucket selection).** Clone the repo and run the interactive installer:
 
 ```bash
-git clone git@github.com:Canvas-xxx/blvck-skills.git
+git clone git@github.com:ntwrcht/blvck-skills.git
 cd blvck-skills
 ./scripts/install-skills.sh
 ```
@@ -243,7 +243,7 @@ Contributions are welcome — new skills, sharper descriptions, and better refer
    ./scripts/validate-skill-descriptions.sh
    ```
 
-9. Submit a pull request — or [open an issue](https://github.com/Canvas-xxx/blvck-skills/issues) to report bugs and propose ideas.
+9. Submit a pull request — or [open an issue](https://github.com/ntwrcht/blvck-skills/issues) to report bugs and propose ideas.
 
 ## License
 
