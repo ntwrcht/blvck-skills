@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 # =============================================================================
-# install-skills.sh — Interactive installer for shippable agent skills and commands
+# install-skills.sh — Interactive installer for shippable agent skills
 #
-# Copies selected skills and commands into project-local CLI directories.
+# Copies selected skills into project-local CLI directories.
 #
 # Usage:
 #   ./scripts/install-skills.sh
@@ -197,9 +197,6 @@ CLI_IDS=("claude" "codex" "gemini")
 
 SELECTED_CLI_IDS=()
 SELECTED_SKILL_DIRS=()
-SELECTED_COMMAND_DIRS=()
-INSTALL_SKILLS=1
-INSTALL_COMMANDS=0
 SELECTED_SCENARIO=""
 PROJECT_ROOT=""
 PROJECT_TARGETS=()
@@ -329,52 +326,6 @@ cli_target_dir() {
   esac
 }
 
-command_target_dir() {
-  local cli_id="$1"
-  local root="$2"
-
-  case "$cli_id" in
-    claude) printf '%s\n' "$root/.claude/commands" ;;
-    codex)  printf '%s\n' "$root/.codex/commands" ;;
-    gemini) printf '%s\n' "$root/.gemini/commands" ;;
-  esac
-}
-
-select_content() {
-  local answer
-
-  ui_step "Choose Content"
-  ui_line "1) Skills"
-  ui_line "2) Slash commands"
-  ui_line "3) Both"
-
-  while true; do
-    read_prompt answer "${CYAN}│${NC}  Install what? [3]: "
-    [ -n "$answer" ] || answer="3"
-    case "$answer" in
-      1|skills)
-        INSTALL_SKILLS=1
-        INSTALL_COMMANDS=0
-        ui_answer "Skills"
-        return 0
-        ;;
-      2|commands|slash|slash-commands)
-        INSTALL_SKILLS=0
-        INSTALL_COMMANDS=1
-        ui_answer "Slash commands"
-        return 0
-        ;;
-      3|both|all)
-        INSTALL_SKILLS=1
-        INSTALL_COMMANDS=1
-        ui_answer "Both"
-        return 0
-        ;;
-      *) log_warn "Enter 1 for skills, 2 for commands, or 3 for both." ;;
-    esac
-  done
-}
-
 gemini_extension_dir() {
   local root="$1"
   printf '%s\n' "$root/.gemini/extensions/$GEMINI_EXTENSION_NAME"
@@ -470,19 +421,6 @@ load_skills() {
     SKILL_NAMES+=("$(skill_name_from_dir "$skill_dir")")
     SKILL_BUCKETS+=("${skill_path%%/*}")
   done < <(list_shippable_skill_dirs)
-}
-
-load_commands() {
-  COMMAND_DIRS=()
-  COMMAND_NAMES=()
-  COMMAND_BUCKETS=()
-
-  while IFS= read -r command_dir; do
-    command_path="${command_dir#$COMMANDS_DIR/}"
-    COMMAND_DIRS+=("$command_dir")
-    COMMAND_NAMES+=("$(command_name_from_dir "$command_dir")")
-    COMMAND_BUCKETS+=("${command_path%%/*}")
-  done < <(list_shippable_command_dirs)
 }
 
 select_skills() {
@@ -592,121 +530,8 @@ EOF
   done
 }
 
-select_commands() {
-  local answer token bucket_number bucket index indexes command_name
-  local bucket_names=("engineering" "productivity" "misc")
-  local -a display
-  local n
-
-  load_commands
-
-  if [ "${#COMMAND_NAMES[@]}" -eq 0 ]; then
-    log_warn "No shippable slash commands found."
-    return 0
-  fi
-
-  if ui_tty_available; then
-    display=()
-    n=0
-    while [ "$n" -lt "${#COMMAND_NAMES[@]}" ]; do
-      display+=("$(printf '%-32s [%s]' "${COMMAND_NAMES[$n]}" "${COMMAND_BUCKETS[$n]}")")
-      n=$((n + 1))
-    done
-    ui_checkbox_select "Choose Slash Commands" "${display[@]}"
-    SELECTED_COMMAND_DIRS=()
-    if [ "${#UI_CHECK_RESULT[@]}" -gt 0 ]; then
-      for index in "${UI_CHECK_RESULT[@]}"; do
-        SELECTED_COMMAND_DIRS+=("${COMMAND_DIRS[$((index - 1))]}")
-      done
-    fi
-    return 0
-  fi
-
-  ui_step "Choose Slash Commands"
-  ui_line "Bucket shortcuts:"
-  index=1
-  for bucket in "${bucket_names[@]}"; do
-    ui_line "$(printf 'b%s) %s' "$index" "$bucket")"
-    index=$((index + 1))
-  done
-  ui_line ""
-  ui_line "Commands:"
-  index=1
-  while [ "$index" -le "${#COMMAND_NAMES[@]}" ]; do
-    ui_line "$(printf '%2s) %-32s [%s]' "$index" "${COMMAND_NAMES[$((index - 1))]}" "${COMMAND_BUCKETS[$((index - 1))]}")"
-    index=$((index + 1))
-  done
-  ui_line ""
-  ui_line "Examples: all, none, b2, 1"
-
-  while true; do
-    read_prompt answer "${CYAN}│${NC}  Install which slash commands? [all]: "
-    [ -n "$answer" ] || answer="all"
-    answer="$(printf '%s' "$answer" | tr '[:upper:]' '[:lower:]' | tr ',' ' ')"
-    SELECTED_COMMAND_DIRS=()
-
-    if [ "$answer" = "none" ]; then
-      ui_answer "0 command(s) selected"
-      return 0
-    fi
-    indexes=""
-
-    if [ "$answer" = "all" ]; then
-      indexes="$(expand_selection_tokens "all" "${#COMMAND_NAMES[@]}")"
-    else
-      for token in $answer; do
-        case "$token" in
-          b[0-9]*)
-            bucket_number="${token#b}"
-            case "$bucket_number" in
-              *[!0-9]*|"") indexes="__invalid__"; break ;;
-            esac
-            [ "$bucket_number" -ge 1 ] && [ "$bucket_number" -le "${#bucket_names[@]}" ] || {
-              indexes="__invalid__"
-              break
-            }
-            bucket="${bucket_names[$((bucket_number - 1))]}"
-            index=1
-            for command_name in "${COMMAND_NAMES[@]}"; do
-              if [ "${COMMAND_BUCKETS[$((index - 1))]}" = "$bucket" ]; then
-                indexes="${indexes}${index}
-"
-              fi
-              index=$((index + 1))
-            done
-            ;;
-          *)
-            if selected="$(expand_selection_tokens "$token" "${#COMMAND_NAMES[@]}")"; then
-              indexes="${indexes}${selected}
-"
-            else
-              indexes="__invalid__"
-              break
-            fi
-            ;;
-        esac
-      done
-    fi
-
-    if [ "$indexes" != "__invalid__" ]; then
-      while IFS= read -r index; do
-        [ -n "$index" ] || continue
-        append_unique "${COMMAND_DIRS[$((index - 1))]}" SELECTED_COMMAND_DIRS
-      done <<EOF
-$indexes
-EOF
-      if [ "${#SELECTED_COMMAND_DIRS[@]}" -gt 0 ]; then
-        ui_answer "${#SELECTED_COMMAND_DIRS[@]} command(s) selected"
-        return 0
-      fi
-    fi
-
-    log_warn "Enter all, bucket shortcuts like b2, command numbers, or ranges."
-  done
-}
-
 print_plan() {
-  local cli_id target skill_dir command_dir
+  local skill_dir
 
   ui_step "Plan"
   [ -n "$SELECTED_SCENARIO" ] && [ "$SELECTED_SCENARIO" != "custom" ] && \
@@ -714,19 +539,11 @@ print_plan() {
   ui_line "$(printf "${GRAY}project${NC}  %s" "$PROJECT_ROOT")"
   ui_line "$(printf "${GRAY}cli${NC}      %s" "${SELECTED_CLI_IDS[*]}")"
 
-  if [ "$INSTALL_SKILLS" -eq 1 ] && [ "${#SELECTED_SKILL_DIRS[@]}" -gt 0 ]; then
+  if [ "${#SELECTED_SKILL_DIRS[@]}" -gt 0 ]; then
     ui_line ""
     ui_line "$(printf "${BOLD}skills${NC}  (%s)" "${#SELECTED_SKILL_DIRS[@]}")"
     for skill_dir in "${SELECTED_SKILL_DIRS[@]}"; do
       ui_line "$(printf "${GRAY}·${NC}  %s" "$(skill_name_from_dir "$skill_dir")")"
-    done
-  fi
-
-  if [ "$INSTALL_COMMANDS" -eq 1 ] && [ "${#SELECTED_COMMAND_DIRS[@]}" -gt 0 ]; then
-    ui_line ""
-    ui_line "$(printf "${BOLD}commands${NC}  (%s)" "${#SELECTED_COMMAND_DIRS[@]}")"
-    for command_dir in "${SELECTED_COMMAND_DIRS[@]}"; do
-      ui_line "$(printf "${GRAY}·${NC}  /%s" "$(command_name_from_dir "$command_dir")")"
     done
   fi
 }
@@ -789,69 +606,6 @@ write_skill_marker() {
 JSON
 }
 
-extract_command_description() {
-  local command_file="$1"
-
-  awk '
-    NR == 1 && $0 == "---" { in_fm = 1; next }
-    in_fm && $0 == "---" { exit }
-    in_fm && $0 ~ /^description:[[:space:]]*/ {
-      sub(/^description:[[:space:]]*/, "")
-      gsub(/^"/, "")
-      gsub(/"$/, "")
-      print
-      exit
-    }
-  ' "$command_file"
-}
-
-write_command_marker() {
-  local marker_path="$1"
-  local command_name="$2"
-  local cli_id="$3"
-  local source_path="$4"
-  local target_path="$5"
-  local installed_at
-
-  installed_at="$(timestamp_utc)"
-  cat > "$marker_path" <<JSON
-{
-  "installer": "agent-skills",
-  "installer_version": "$INSTALLER_VERSION",
-  "source_repo": "$(json_escape "$REPO_ROOT")",
-  "source_command": "$(json_escape "$source_path")",
-  "command": "$(json_escape "$command_name")",
-  "cli": "$(json_escape "$cli_id")",
-  "scope": "project",
-  "target": "$(json_escape "$target_path")",
-  "installed_at": "$installed_at"
-}
-JSON
-}
-
-write_gemini_command_toml() {
-  local command_file="$1"
-  local target="$2"
-  local description="$3"
-
-  if grep -q "'''" "$command_file"; then
-    log_warn "Skipping Gemini command with unsupported TOML literal delimiter: $command_file"
-    skipped=$((skipped + 1))
-    return 1
-  fi
-
-  {
-    printf 'description = "%s"\n' "$(json_escape "$description")"
-    printf "prompt = '''\n"
-    awk '
-      NR == 1 && $0 == "---" { in_fm = 1; next }
-      in_fm && $0 == "---" { in_fm = 0; next }
-      !in_fm { print }
-    ' "$command_file"
-    printf "\n'''\n"
-  } > "$target"
-}
-
 installer_owned_project_target() {
   local target="$1"
   [ -f "$target/$MARKER_FILE" ]
@@ -896,74 +650,9 @@ install_project_skill() {
   log_success "Copied $cli_id: $target"
 }
 
-project_command_target_owned() {
-  local target="$1"
-  local marker_path
-
-  if [ -d "$target" ]; then
-    [ -f "$target/$MARKER_FILE" ] && return 0
-  fi
-
-  marker_path="${target%.*}$MARKER_FILE"
-  [ -f "$marker_path" ]
-}
-
-install_project_command() {
-  local cli_id="$1"
-  local command_dir="$2"
-  local command_name command_file target_dir target marker_path description
-
-  command_name="$(command_name_from_dir "$command_dir")"
-  command_file="$command_dir/command.md"
-  target_dir="$(command_target_dir "$cli_id" "$PROJECT_ROOT")"
-  target="$target_dir/$command_name"
-  description="$(extract_command_description "$command_file")"
-  [ -n "$description" ] || description="Run /$command_name."
-
-  mkdir -p "$target_dir"
-
-  case "$cli_id" in
-    gemini) target="$target.toml" ;;
-    *)      target="$target.md" ;;
-  esac
-
-  marker_path="${target%.*}$MARKER_FILE"
-
-  if [ -L "$target" ]; then
-    rm "$target"
-    replaced=$((replaced + 1))
-  elif [ -e "$target" ]; then
-    if project_command_target_owned "$target"; then
-      if confirm "Replace existing installer-owned command $target?"; then
-        rm -f "$target" "$marker_path"
-        replaced=$((replaced + 1))
-      else
-        log_warn "Skipping $target"
-        skipped=$((skipped + 1))
-        return 0
-      fi
-    else
-      log_warn "Skipping $target — exists and is not installer-owned"
-      skipped=$((skipped + 1))
-      return 0
-    fi
-  fi
-
-  if [ "$cli_id" = "gemini" ]; then
-    write_gemini_command_toml "$command_file" "$target" "$description" || return 0
-  else
-    cp "$command_file" "$target"
-  fi
-
-  write_command_marker "$marker_path" "$command_name" "$cli_id" "$command_file" "$target"
-  created=$((created + 1))
-  PROJECT_TARGETS+=("$cli_id|command:$command_name|$target")
-  log_success "Copied $cli_id command: $target"
-}
-
 write_project_manifest() {
   local manifest_path="$PROJECT_ROOT/$PROJECT_MANIFEST"
-  local installed_at target_count index cli_id item_name target comma item_type
+  local installed_at target_count index cli_id item_name target comma
 
   installed_at="$(timestamp_utc)"
   target_count="${#PROJECT_TARGETS[@]}"
@@ -984,16 +673,9 @@ write_project_manifest() {
       item_name="${entry#*|}"
       item_name="${item_name%%|*}"
       target="${entry##*|}"
-      item_type="skill"
-      case "$item_name" in
-        command:*)
-          item_type="command"
-          item_name="${item_name#command:}"
-          ;;
-      esac
       comma=","
       [ "$index" -eq $((target_count - 1)) ] && comma=""
-      echo "    {\"cli\": \"$(json_escape "$cli_id")\", \"type\": \"$(json_escape "$item_type")\", \"name\": \"$(json_escape "$item_name")\", \"target\": \"$(json_escape "$target")\"}$comma"
+      echo "    {\"cli\": \"$(json_escape "$cli_id")\", \"type\": \"skill\", \"name\": \"$(json_escape "$item_name")\", \"target\": \"$(json_escape "$target")\"}$comma"
       index=$((index + 1))
     done
 
@@ -1003,32 +685,20 @@ write_project_manifest() {
 }
 
 run_install() {
-  local cli_id skill_dir command_dir extension_dir
+  local cli_id skill_dir extension_dir
 
-  if [ "$INSTALL_SKILLS" -eq 1 ]; then
-    for cli_id in "${SELECTED_CLI_IDS[@]}"; do
-      if [ "$cli_id" = "gemini" ]; then
-        extension_dir="$(gemini_extension_dir "$PROJECT_ROOT")"
-        write_gemini_extension_json "$extension_dir"
-      fi
-    done
-
-    if [ "${#SELECTED_SKILL_DIRS[@]}" -gt 0 ]; then
-      for cli_id in "${SELECTED_CLI_IDS[@]}"; do
-        for skill_dir in "${SELECTED_SKILL_DIRS[@]}"; do
-          install_project_skill "$cli_id" "$skill_dir"
-        done
-      done
+  for cli_id in "${SELECTED_CLI_IDS[@]}"; do
+    if [ "$cli_id" = "gemini" ]; then
+      extension_dir="$(gemini_extension_dir "$PROJECT_ROOT")"
+      write_gemini_extension_json "$extension_dir"
     fi
-  fi
+  done
 
-  if [ "$INSTALL_COMMANDS" -eq 1 ] && [ "${#SELECTED_COMMAND_DIRS[@]}" -gt 0 ]; then
-    for cli_id in "${SELECTED_CLI_IDS[@]}"; do
-      for command_dir in "${SELECTED_COMMAND_DIRS[@]}"; do
-        install_project_command "$cli_id" "$command_dir"
-      done
+  for cli_id in "${SELECTED_CLI_IDS[@]}"; do
+    for skill_dir in "${SELECTED_SKILL_DIRS[@]}"; do
+      install_project_skill "$cli_id" "$skill_dir"
     done
-  fi
+  done
 
   write_project_manifest
 }
@@ -1080,21 +750,9 @@ populate_skills_from_preset() {
   fi
 }
 
-populate_commands_from_preset() {
-  local preset="$1" command_dir
-  load_commands
-  SELECTED_COMMAND_DIRS=()
-  while IFS= read -r command_dir; do
-    SELECTED_COMMAND_DIRS+=("$command_dir")
-  done < <(list_commands_for_preset "$preset")
-}
-
 main() {
   ui_intro "blvck-skills · install"
   ui_line "${GRAY}${REPO_ROOT}${NC}"
-
-  INSTALL_SKILLS=1
-  INSTALL_COMMANDS=1
 
   select_scenario
   select_clis
@@ -1102,10 +760,8 @@ main() {
 
   if [ "$SELECTED_SCENARIO" = "custom" ]; then
     select_skills
-    select_commands
   else
     populate_skills_from_preset "$SELECTED_SCENARIO"
-    populate_commands_from_preset "$SELECTED_SCENARIO"
   fi
 
   print_plan
@@ -1119,7 +775,7 @@ main() {
   run_install
 
   ui_line "$(printf "${GREEN}✓${NC}  Done — %s installed, %s replaced, %s skipped" "$created" "$replaced" "$skipped")"
-  [ "$INSTALL_SKILLS" -eq 1 ] && ui_line "Shared refs copied — $shared_copied"
+  ui_line "Shared refs copied — $shared_copied"
   ui_line "Manifest → $PROJECT_ROOT/$PROJECT_MANIFEST"
 
   ui_outro "All set."

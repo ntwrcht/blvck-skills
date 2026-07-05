@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # =============================================================================
-# uninstall-skills.sh — Interactive uninstaller for agent skills and commands
+# uninstall-skills.sh — Interactive uninstaller for agent skills
 #
 # Removes copies from project-local CLI directories.
 #
@@ -196,10 +196,7 @@ CLI_IDS=("claude" "codex" "gemini")
 
 SELECTED_CLI_IDS=()
 PROJECT_ROOT=""
-UNINSTALL_SKILLS=1
-UNINSTALL_COMMANDS=0
 SELECTED_SKILL_NAMES=()
-SELECTED_COMMAND_NAMES=()
 
 removed=0
 skipped=0
@@ -310,17 +307,6 @@ cli_target_dir() {
   esac
 }
 
-command_target_dir() {
-  local cli_id="$1"
-  local root="$2"
-
-  case "$cli_id" in
-    claude) printf '%s\n' "$root/.claude/commands" ;;
-    codex)  printf '%s\n' "$root/.codex/commands" ;;
-    gemini) printf '%s\n' "$root/.gemini/commands" ;;
-  esac
-}
-
 # ── Discover installed items ──────────────────────────────────────────────────
 
 list_installed_skills() {
@@ -342,48 +328,7 @@ list_installed_skills() {
   done
 }
 
-list_installed_commands() {
-  local root="$1"
-  local cli_id target_dir cmd_path cmd_name
-  local seen=()
-
-  for cli_id in "${SELECTED_CLI_IDS[@]}"; do
-    target_dir="$(command_target_dir "$cli_id" "$root")"
-    [ -d "$target_dir" ] || continue
-
-    for cmd_path in "$target_dir"/*.md "$target_dir"/*.toml; do
-      [ -e "$cmd_path" ] || [ -L "$cmd_path" ] || continue
-      cmd_name="$(basename "$cmd_path")"
-      cmd_name="${cmd_name%.md}"
-      cmd_name="${cmd_name%.toml}"
-      contains_value "$cmd_name" "${seen[@]:-}" && continue
-      seen+=("$cmd_name")
-      printf '%s\n' "$cmd_name"
-    done
-  done
-}
-
 # ── UI steps ──────────────────────────────────────────────────────────────────
-
-select_content() {
-  local answer
-
-  ui_step "Choose Content"
-  ui_line "1) Skills"
-  ui_line "2) Slash commands"
-  ui_line "3) Both"
-
-  while true; do
-    read_prompt answer "${CYAN}│${NC}  Uninstall what? [3]: "
-    [ -n "$answer" ] || answer="3"
-    case "$answer" in
-      1|skills)                    UNINSTALL_SKILLS=1; UNINSTALL_COMMANDS=0; ui_answer "Skills"; return 0 ;;
-      2|commands|slash|slash-commands) UNINSTALL_SKILLS=0; UNINSTALL_COMMANDS=1; ui_answer "Slash commands"; return 0 ;;
-      3|both|all)                  UNINSTALL_SKILLS=1; UNINSTALL_COMMANDS=1; ui_answer "Both"; return 0 ;;
-      *) log_warn "Enter 1 for skills, 2 for commands, or 3 for both." ;;
-    esac
-  done
-}
 
 select_clis() {
   local answer index
@@ -508,81 +453,17 @@ EOF
   done
 }
 
-select_commands_to_remove() {
-  local root="$1"
-  local answer indexes index
-  local AVAIL_NAMES=()
-
-  while IFS= read -r name; do
-    AVAIL_NAMES+=("$name")
-  done < <(list_installed_commands "$root")
-
-  if [ "${#AVAIL_NAMES[@]}" -eq 0 ]; then
-    log_warn "No installed slash commands found for the selected CLIs in this project."
-    return 0
-  fi
-
-  if ui_tty_available; then
-    ui_checkbox_select "Choose Slash Commands to Remove" "${AVAIL_NAMES[@]}"
-    SELECTED_COMMAND_NAMES=()
-    if [ "${#UI_CHECK_RESULT[@]}" -gt 0 ]; then
-      for index in "${UI_CHECK_RESULT[@]}"; do
-        SELECTED_COMMAND_NAMES+=("${AVAIL_NAMES[$((index - 1))]}")
-      done
-    fi
-    return 0
-  fi
-
-  ui_step "Choose Slash Commands to Remove"
-  index=1
-  while [ "$index" -le "${#AVAIL_NAMES[@]}" ]; do
-    ui_line "$(printf '%2s) /%s' "$index" "${AVAIL_NAMES[$((index - 1))]}")"
-    index=$((index + 1))
-  done
-  ui_line ""
-  ui_line "Examples: all, 1, 2-4, 1,3"
-
-  while true; do
-    read_prompt answer "${CYAN}│${NC}  Remove which slash commands? [all]: "
-    [ -n "$answer" ] || answer="all"
-    SELECTED_COMMAND_NAMES=()
-
-    if indexes="$(expand_selection_tokens "$answer" "${#AVAIL_NAMES[@]}")"; then
-      while IFS= read -r index; do
-        [ -n "$index" ] || continue
-        append_unique "${AVAIL_NAMES[$((index - 1))]}" SELECTED_COMMAND_NAMES
-      done <<EOF
-$indexes
-EOF
-      if [ "${#SELECTED_COMMAND_NAMES[@]}" -gt 0 ]; then
-        ui_answer "${#SELECTED_COMMAND_NAMES[@]} command(s) selected"
-        return 0
-      fi
-    fi
-
-    log_warn "Enter all, command numbers, or ranges."
-  done
-}
-
 print_plan() {
-  local cli_id target
+  local name
 
   ui_step "Plan"
   ui_line "$(printf "${GRAY}project${NC} %s" "$PROJECT_ROOT")"
 
-  if [ "$UNINSTALL_SKILLS" -eq 1 ] && [ "${#SELECTED_SKILL_NAMES[@]}" -gt 0 ]; then
+  if [ "${#SELECTED_SKILL_NAMES[@]}" -gt 0 ]; then
     ui_line ""
     ui_line "$(printf "${BOLD}skills${NC}  (%s)" "${#SELECTED_SKILL_NAMES[@]}")"
     for name in "${SELECTED_SKILL_NAMES[@]}"; do
       ui_line "$(printf "${GRAY}·${NC}  %s" "$name")"
-    done
-  fi
-
-  if [ "$UNINSTALL_COMMANDS" -eq 1 ] && [ "${#SELECTED_COMMAND_NAMES[@]}" -gt 0 ]; then
-    ui_line ""
-    ui_line "$(printf "${BOLD}commands${NC}  (%s)" "${#SELECTED_COMMAND_NAMES[@]}")"
-    for name in "${SELECTED_COMMAND_NAMES[@]}"; do
-      ui_line "$(printf "${GRAY}·${NC}  /%s" "$name")"
     done
   fi
 }
@@ -626,42 +507,6 @@ remove_project_skill() {
   removed=$((removed + 1))
 }
 
-remove_project_command() {
-  local cli_id="$1"
-  local command_name="$2"
-  local target_dir target marker_path
-
-  target_dir="$(command_target_dir "$cli_id" "$PROJECT_ROOT")"
-  case "$cli_id" in
-    gemini) target="$target_dir/$command_name.toml" ;;
-    *)      target="$target_dir/$command_name.md" ;;
-  esac
-  marker_path="${target%.*}$MARKER_FILE"
-
-  if [ ! -e "$target" ] && [ ! -L "$target" ]; then
-    not_found=$((not_found + 1))
-    return 0
-  fi
-
-  if [ -L "$target" ]; then
-    rm "$target"
-    rm -f "$marker_path"
-    log_success "Removed $cli_id command: $target"
-    removed=$((removed + 1))
-    return 0
-  fi
-
-  if [ ! -f "$marker_path" ]; then
-    log_warn "Skipping $target — not installer-owned (no marker file)"
-    skipped=$((skipped + 1))
-    return 0
-  fi
-
-  rm -f "$target" "$marker_path"
-  log_success "Removed $cli_id command: $target"
-  removed=$((removed + 1))
-}
-
 update_project_manifest() {
   local manifest_path="$PROJECT_ROOT/$PROJECT_MANIFEST"
   [ -f "$manifest_path" ] || return 0
@@ -670,11 +515,6 @@ update_project_manifest() {
 
   for cli_id in claude codex gemini; do
     target_dir="$(cli_target_dir "$cli_id" "$PROJECT_ROOT")"
-    if [ -d "$target_dir" ] && [ -n "$(ls -A "$target_dir" 2>/dev/null)" ]; then
-      has_items=1
-      break
-    fi
-    target_dir="$(command_target_dir "$cli_id" "$PROJECT_ROOT")"
     if [ -d "$target_dir" ] && [ -n "$(ls -A "$target_dir" 2>/dev/null)" ]; then
       has_items=1
       break
@@ -692,23 +532,12 @@ update_project_manifest() {
 run_uninstall() {
   local cli_id name
 
-  if [ "$UNINSTALL_SKILLS" -eq 1 ]; then
-    for name in "${SELECTED_SKILL_NAMES[@]:-}"; do
-      [ -n "$name" ] || continue
-      for cli_id in "${SELECTED_CLI_IDS[@]}"; do
-        remove_project_skill "$cli_id" "$name"
-      done
+  for name in "${SELECTED_SKILL_NAMES[@]:-}"; do
+    [ -n "$name" ] || continue
+    for cli_id in "${SELECTED_CLI_IDS[@]}"; do
+      remove_project_skill "$cli_id" "$name"
     done
-  fi
-
-  if [ "$UNINSTALL_COMMANDS" -eq 1 ]; then
-    for name in "${SELECTED_COMMAND_NAMES[@]:-}"; do
-      [ -n "$name" ] || continue
-      for cli_id in "${SELECTED_CLI_IDS[@]}"; do
-        remove_project_command "$cli_id" "$name"
-      done
-    done
-  fi
+  done
 
   update_project_manifest
 }
@@ -717,17 +546,14 @@ main() {
   ui_intro "blvck-skills · uninstall"
   ui_line "${GRAY}${REPO_ROOT}${NC}"
 
-  # Default: all CLIs, both content types
+  # Default: all CLIs
   SELECTED_CLI_IDS=("claude" "codex" "gemini")
-  UNINSTALL_SKILLS=1
-  UNINSTALL_COMMANDS=1
 
   select_project_root
 
-  select_skills_to_remove   "$PROJECT_ROOT"
-  select_commands_to_remove "$PROJECT_ROOT"
+  select_skills_to_remove "$PROJECT_ROOT"
 
-  if [ "${#SELECTED_SKILL_NAMES[@]}" -eq 0 ] && [ "${#SELECTED_COMMAND_NAMES[@]}" -eq 0 ]; then
+  if [ "${#SELECTED_SKILL_NAMES[@]}" -eq 0 ]; then
     log_warn "Nothing selected for removal."
     exit 0
   fi

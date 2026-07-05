@@ -10,7 +10,6 @@ set -euo pipefail
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 REPO_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
 SKILLS_DIR="$REPO_ROOT/skills"
-COMMANDS_DIR="$REPO_ROOT/commands"
 SHARED_DIR="$SKILLS_DIR/_shared/references"
 
 ALL_BUCKETS=(
@@ -39,11 +38,6 @@ BUNDLE_PROJECT_DEV_SKILLS=(
   "triage" "tdd" "debug-mantra" "diagnose"
   "domain-modeling" "scrutinize" "security-audit" "git-guardrails-claude-code"
 )
-
-# Curated command bundles per preset — pm-os-bootstrap is PM-workflow specific,
-# so it only belongs in the Project PM preset, not Project Dev.
-BUNDLE_PROJECT_PM_COMMANDS=("pm-os-bootstrap")
-BUNDLE_PROJECT_DEV_COMMANDS=()
 
 DIRECT_INSTALL_TARGETS=(
   "$HOME/.claude/skills"
@@ -135,25 +129,6 @@ list_shippable_skill_dirs() {
   done
 }
 
-command_name_from_dir() {
-  basename "$1"
-}
-
-list_shippable_command_dirs() {
-  local bucket
-  local command_dir
-
-  for bucket in "${SHIPPABLE_BUCKETS[@]}"; do
-    [ -d "$COMMANDS_DIR/$bucket" ] || continue
-
-    for command_dir in "$COMMANDS_DIR/$bucket"/*/; do
-      [ -d "$command_dir" ] || continue
-      [ -f "$command_dir/command.md" ] || continue
-      printf '%s\n' "${command_dir%/}"
-    done
-  done
-}
-
 _is_in_list() {
   local needle="$1"; shift
   local item
@@ -177,23 +152,4 @@ list_skills_for_preset() {
     skill_name="$(skill_name_from_dir "$skill_dir")"
     _is_in_list "$skill_name" "${bundle[@]}" && printf '%s\n' "$skill_dir"
   done < <(list_shippable_skill_dirs)
-}
-
-# list_commands_for_preset <preset>
-#   preset: project-pm | project-dev
-# Prints command dirs that belong to the curated bundle for that preset.
-# A preset with an empty bundle (e.g. project-dev) yields no commands.
-list_commands_for_preset() {
-  local preset="$1" command_dir command_name bundle=()
-
-  case "$preset" in
-    project-pm)  bundle=("${BUNDLE_PROJECT_PM_COMMANDS[@]:-}") ;;
-    project-dev) bundle=("${BUNDLE_PROJECT_DEV_COMMANDS[@]:-}") ;;
-    *) return 1 ;;
-  esac
-
-  while IFS= read -r command_dir; do
-    command_name="$(command_name_from_dir "$command_dir")"
-    _is_in_list "$command_name" "${bundle[@]}" && printf '%s\n' "$command_dir"
-  done < <(list_shippable_command_dirs)
 }

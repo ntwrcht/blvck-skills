@@ -41,12 +41,6 @@ A collection of specialized expert agent skills for AI assistants (like Gemini C
 | [**Setup Context**](skills/productivity/setup-context/SKILL.md) | Scaffold shared project context files in .context/ and configure the output locations pipeline skills write artifacts to (PRDs, stories, designs, ADRs, and more). Use when onboarding skills to a new or existing repo, when skills lack shared project context, or to relocate where a skill's output gets saved. |
 | [**Handoff**](skills/productivity/handoff/SKILL.md) | Compact the current conversation into a handoff document so a fresh agent can continue the work without losing context. Use when switching sessions, handing off to another agent, ending a long conversation, or preparing a context brief for a follow-up run. |
 
-## ⚡ Available Slash Commands
-
-| Command | Description |
-| :--- | :--- |
-| [**pm-os-bootstrap**](commands/productivity/pm-os-bootstrap/command.md) | Bootstrap a complete PM OS in a project through an interview-driven setup workflow. Use when setting up PM identity, product context, stakeholder rules, output folders, and recurring PM workflow commands. |
-
 ### Misc
 
 Skills kept around but rarely used.
@@ -62,6 +56,8 @@ Drafts not yet ready to ship.
 ### Deprecated
 
 Skills that are no longer used.
+
+> **Looking for the PM OS?** The `pm-os-bootstrap` slash command moved to the separate `ai-system` plugin marketplace repo as the `pm-os` plugin (`/pm-os:setup`, `/pm-os:validate`, `/pm-os:score`).
 
 ## 🧭 Skill Selection Guide
 
@@ -100,11 +96,11 @@ npx skills add github:Canvas-xxx/agent-skills
 
 Add `-g` for a global (user-level) install, `--agent <agents>` to target specific CLIs (e.g. `claude-code`, `codex`, `gemini-cli`), or `--skill <names>` to install specific skills instead of choosing interactively.
 
-This path only installs skills — it does not install this repo's `commands/` slash commands, and it doesn't support the bucket-level ("all of engineering/") selection the installer below does. For those, use the full installer.
+This path doesn't support the bucket-level ("all of engineering/") selection or the preset bundles the installer below does. For those, use the full installer.
 
 ### Installation
 
-For the full installer — skills, slash commands, and bucket-level selection — clone this repository and run the interactive installer:
+For the full installer — preset bundles and bucket-level selection — clone this repository and run the interactive installer:
 
 ```bash
 git clone <repo-url>
@@ -208,7 +204,7 @@ Each skill is its own directory containing a `SKILL.md` file with YAML frontmatt
 
 ## 🛠️ How it Works
 
-The `scripts/install-skills.sh` script guides users through content type, CLI, project path, skill selection, and slash command selection.
+The `scripts/install-skills.sh` script guides users through scenario, CLI, project path, and skill selection.
 
 It copies selected skill folders into the target project paths:
 
@@ -217,8 +213,6 @@ It copies selected skill folders into the target project paths:
 - `PROJECT/.gemini/extensions/agent-skills/skills`
 
 It writes `.agent-skills-install.json` in each copied skill folder and a project-level `.agent-skills-install.json` manifest. Shared references from `_shared/references/` are materialized as real files inside copied project skills.
-
-Slash commands live under `commands/`. The canonical command prompt is Markdown for Claude Code and Codex. Gemini CLI uses generated TOML because Gemini custom commands cannot use markdown command files directly.
 
 The `scripts/link-skills.sh` maintainer shortcut performs two main actions:
 
