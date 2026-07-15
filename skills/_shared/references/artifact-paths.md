@@ -44,7 +44,7 @@ Before writing or reading a keyed artifact:
 
 ## Out of scope
 
-Not part of this registry, with reasons: `handoff` (always the OS temp directory, deliberately never the repo), `git-guardrails-claude-code` (target is inherent to the tool — `.claude/settings.json`), `skill-smith` (its output path — `skills/<bucket>/<name>/SKILL.md` — is structural, not a workspace preference), `caveman` (produces nothing), `triage` (produces tracker state via a connected tool, not a file), `technical-trading-strategy` (no single fixed artifact path).
+Not part of this registry, with reasons: `handoff` (always the OS temp directory, deliberately never the repo), `git-guardrails` (target is inherent to the tool — `.claude/settings.json`), `skill-smith` (its output path — `skills/<bucket>/<name>/SKILL.md` — is structural, not a workspace preference), `caveman` (produces nothing), `triage` (produces tracker state via a connected tool, not a file), `technical-trading-strategy` (no single fixed artifact path).
 
 ## Migration (pre-existing projects only)
 

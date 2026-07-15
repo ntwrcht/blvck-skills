@@ -56,7 +56,7 @@ Default loading:
 - For feature decomposition, also load `item-types-and-splitting.md`.
 - For readiness, Jira-ready, refinement, or Definition of Done requests, load `readiness.md`.
 - For Jira creation, update, or sync requests, load `jira-integration.md` after drafting the items.
-- For plan-to-issue conversion, implementation ticket creation, or tracer-bullet slicing, load `to-issues.md`; if the source plan is too vague to slice, use `grill-me` first.
+- For plan-to-issue conversion, implementation ticket creation, or tracer-bullet slicing, load `to-issues.md`; if the source plan is too vague to slice, use `grilling` first.
 
 ## Output Rules
 

@@ -6,7 +6,7 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Version](https://img.shields.io/badge/version-1.0.0-informational)](.claude-plugin/plugin.json)
-[![Skills](https://img.shields.io/badge/skills-27-success)](#skill-catalog)
+[![Skills](https://img.shields.io/badge/skills-28-success)](#skill-catalog)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](#contributing)
 
 </div>
@@ -34,7 +34,7 @@ Install skills per project with the bundled installer, pull them with `npx skill
 
 ## Key Features
 
-- **27 production-ready skills** spanning daily engineering work (debugging, TDD, review, security) and product workflows (PRDs, stories, stakeholder updates, plan interviews).
+- **28 production-ready skills** spanning daily engineering work (debugging, TDD, review, security) and product workflows (PRDs, stories, stakeholder updates, plan interviews).
 - **Multi-CLI support** — one library installs into Claude Code, Codex, and Gemini CLI, each in its native format.
 - **Interactive installer with preset bundles** — curated *Project PM* and *Project Dev* scenarios for one-keystroke setup, or a custom picker across the full catalog.
 - **Safe, reversible installs** — every copied skill carries an ownership marker; the uninstaller only ever removes what the installer created.
@@ -48,39 +48,42 @@ Install skills per project with the bundled installer, pull them with `npx skill
 
 | Skill Name | Description |
 | :--- | :--- |
-| [**Angular Engineer**](skills/engineering/angular-engineer/SKILL.md) | Build, modify, review, and debug Angular applications using project conventions, modern Angular patterns, RxJS, Signals, testing, SSR, and Nx guidance. Use when working on Angular components, services, routing, forms, guards, migrations, performance, security, or frontend architecture. |
-| [**Domain Modeling**](skills/engineering/domain-modeling/SKILL.md) | Build and sharpen a project's domain model by challenging fuzzy language, updating the shared glossary inline, and recording hard architectural decisions as ADRs. Use when pinning down domain terminology, resolving contested terms, recording an architectural decision, or when another skill needs to maintain the domain vocabulary. |
-| [**Debug Mantra**](skills/engineering/debug-mantra/SKILL.md) | Debug failures with a compact repro, fail-path trace, hypothesis falsification, and breadcrumb ledger. Use when investigating a bug or failure needs lightweight structure before proposing a fix. |
-| [**Diagnose**](skills/engineering/diagnose/SKILL.md) | Diagnose hard bugs and performance regressions through a disciplined feedback-loop investigation. Use when a bug, flaky failure, crash, hang, data issue, or slowdown needs reproduction, minimisation, hypotheses, instrumentation, a fix, and a regression test. |
-| [**GA4 Measurement**](skills/engineering/ga4-measurement/SKILL.md) | Plan, implement, review, and validate GA4/GTM measurement for product flows, funnels, feature adoption, conversion, errors, and performance. Use when designing event taxonomies, dataLayer or gtag tracking, GA4 reports, GTM setup, analytics QA, or measurement plans. |
-| [**Git Guardrails for Claude Code**](skills/engineering/git-guardrails-claude-code/SKILL.md) | Install Claude Code PreToolUse hooks that block dangerous git commands before execution. Use when setting up local or global guardrails for git push, force push, reset --hard, clean, branch deletion, checkout ., or restore .. |
-| [**Post-mortem**](skills/engineering/post-mortem/SKILL.md) | Write engineering post-mortems for fixed and validated bugs with symptom, root cause, mechanism, fix, validation, and follow-ups. Use when closing a bug, drafting an RCA, documenting a fix, or converting a debug ledger into a maintainer-readable record. |
-| [**Prototype**](skills/engineering/prototype/SKILL.md) | Build a throwaway prototype to answer one design question — a hand-driven terminal app to feel out a state model, or several switchable UI variants to explore a look. Use when sanity-checking whether logic or a state model feels right, exploring what a page or component should look like, or feeling out an API shape before committing. |
-| [**Python Engineer**](skills/engineering/python-engineer/SKILL.md) | Build, modify, review, and debug Python projects with architecture, packaging, typing, testing, linting, async, data access, and reliability guidance. Use when working on Python application code, libraries, CLIs, services, tooling, refactors, test strategy, or code review. |
-| [**Scrutinize**](skills/engineering/scrutinize/SKILL.md) | Review plans, PRs, diffs, design docs, and code changes from an external verification stance. Use when pressure-testing intent, simpler alternatives, traced code paths, behavioral claims, edge cases, tests, or rollout risk. |
-| [**Security Audit**](skills/engineering/security-audit/SKILL.md) | Review application security across code, APIs, infrastructure, authentication, authorization, secrets, dependencies, and compliance gaps. Use when assessing vulnerabilities, threat models, pentest findings, security controls, exploitability, impact, or remediation plans. |
-| [**Strapi Engineer**](skills/engineering/strapi-engineer/SKILL.md) | Build, modify, review, and debug Strapi applications across content types, controllers, services, routes, policies, lifecycle hooks, plugins, auth, GraphQL, and tests. Use when working on Strapi v4 or v5 backend code, project architecture, schema design, API behavior, or production workflow. |
+| [**Angular Engineer**](skills/engineering/angular-engineer/SKILL.md) | Builds, modifies, reviews, and debugs Angular applications using project conventions, modern Angular patterns, RxJS, Signals, testing, SSR, and Nx guidance. Use when working on Angular components, services, routing, forms, guards, migrations, performance, security, or frontend architecture. |
+| [**Domain Modeling**](skills/engineering/domain-modeling/SKILL.md) | Builds and sharpens a project's domain model by challenging fuzzy language, updating the shared glossary inline, and recording hard architectural decisions as ADRs. Use when pinning down domain terminology, resolving contested terms, recording an architectural decision, or when another skill needs to maintain the domain vocabulary. |
+| [**Debug Mantra**](skills/engineering/debug-mantra/SKILL.md) | Debugs failures with a compact repro, fail-path trace, hypothesis falsification, and breadcrumb ledger. Use when investigating a bug or failure needs lightweight structure before proposing a fix. |
+| [**Diagnose**](skills/engineering/diagnose/SKILL.md) | Diagnoses hard bugs and performance regressions through a disciplined feedback-loop investigation. Use when a bug, flaky failure, crash, hang, data issue, or slowdown needs reproduction, minimisation, hypotheses, instrumentation, a fix, and a regression test. |
+| [**GA4 Measurement**](skills/engineering/ga4-measurement/SKILL.md) | Plans, implements, reviews, and validates GA4/GTM measurement for product flows, funnels, feature adoption, conversion, errors, and performance. Use when designing event taxonomies, dataLayer or gtag tracking, GA4 reports, GTM setup, analytics QA, or measurement plans. |
+| [**Git Guardrails**](skills/engineering/git-guardrails/SKILL.md) | Installs Claude Code PreToolUse hooks that block dangerous git commands before execution. Use when setting up local or global guardrails for git push, force push, reset --hard, clean, branch deletion, checkout ., or restore . |
+| [**Post-mortem**](skills/engineering/post-mortem/SKILL.md) | Writes engineering post-mortems for fixed and validated bugs with symptom, root cause, mechanism, fix, validation, and follow-ups. Use when closing a bug, drafting an RCA, documenting a fix, or converting a debug ledger into a maintainer-readable record. |
+| [**Prototype**](skills/engineering/prototype/SKILL.md) | Builds a throwaway prototype to answer one design question — a hand-driven terminal app to feel out a state model, or several switchable UI variants to explore a look. Use when sanity-checking whether logic or a state model feels right, exploring what a page or component should look like, or feeling out an API shape before committing. |
+| [**Python Engineer**](skills/engineering/python-engineer/SKILL.md) | Builds, modifies, reviews, and debugs Python projects with architecture, packaging, typing, testing, linting, async, data access, and reliability guidance. Use when working on Python application code, libraries, CLIs, services, tooling, refactors, test strategy, or code review. |
+| [**Scrutinize**](skills/engineering/scrutinize/SKILL.md) | Reviews plans, PRs, diffs, design docs, and code changes from an external verification stance. Use when pressure-testing intent, simpler alternatives, traced code paths, behavioral claims, edge cases, tests, or rollout risk. |
+| [**Security Audit**](skills/engineering/security-audit/SKILL.md) | Reviews application security across code, APIs, infrastructure, authentication, authorization, secrets, dependencies, and compliance gaps. Use when assessing vulnerabilities, threat models, pentest findings, security controls, exploitability, impact, or remediation plans. |
+| [**Strapi Engineer**](skills/engineering/strapi-engineer/SKILL.md) | Builds, modifies, reviews, and debugs Strapi applications across content types, controllers, services, routes, policies, lifecycle hooks, plugins, auth, GraphQL, and tests. Use when working on Strapi v4 or v5 backend code, project architecture, schema design, API behavior, or production workflow. |
 | [**Subagent-Driven Development**](skills/engineering/subagent-driven-development/SKILL.md) | User entry point for executing an approved implementation plan task-by-task, each task built by a fresh subagent and checked by an independent reviewer before the next one starts. Use when the user wants to build out an approved plan, task list, or backlog of engineering work with per-task review and a durable progress record. |
-| [**TDD**](skills/engineering/tdd/SKILL.md) | Develop behavior through red-green-refactor test slices that exercise public interfaces and real code paths. Use when adding features, fixing bugs with regression tests, shaping APIs through examples, or refactoring while preserving observable behavior. |
-| [**Technical Trading Strategy**](skills/engineering/technical-trading-strategy/SKILL.md) | Design, review, and implement rule-based technical trading strategies with disciplined backtesting, validation, risk controls, and Python engineering guidance. Use when working on indicator rules, strategy specs, backtest code, execution assumptions, market data, or live-trading readiness. |
-| [**Triage**](skills/engineering/triage/SKILL.md) | Triage tracker issues through canonical category and state roles, maintainer review, and durable handoff notes. Use when classifying bugs or enhancements, reviewing incoming issues, preparing AFK-agent briefs, requesting reporter info, or managing issue workflow. |
+| [**TDD**](skills/engineering/tdd/SKILL.md) | Develops behavior through red-green-refactor test slices that exercise public interfaces and real code paths. Use when adding features, fixing bugs with regression tests, shaping APIs through examples, or refactoring while preserving observable behavior. |
+| [**Technical Trading Strategy**](skills/engineering/technical-trading-strategy/SKILL.md) | Designs, reviews, and implements rule-based technical trading strategies with disciplined backtesting, validation, risk controls, and Python engineering guidance. Use when working on indicator rules, strategy specs, backtest code, execution assumptions, market data, or live-trading readiness. |
+| [**Triage**](skills/engineering/triage/SKILL.md) | Triages tracker issues through canonical category and state roles, maintainer review, and durable handoff notes. Use when classifying bugs or enhancements, reviewing incoming issues, preparing AFK-agent briefs, requesting reporter info, or managing issue workflow. |
 
 ### Productivity
 
 | Skill Name | Description |
 | :--- | :--- |
-| [**Skill Smith**](skills/productivity/skill-smith/SKILL.md) | Craft reusable agent skills with invocation design, progressive disclosure, leading words, and bundled resources. Use when working on skill structure, invocation type, leading words, failure modes, bundled references, examples, or validation. |
-| [**Write a PRD**](skills/productivity/write-a-prd/SKILL.md) | Synthesize conversation context and repository understanding into a product requirements document, with tracker-neutral payload preparation and approval-gated publishing. |
-| [**Write a Story**](skills/productivity/write-a-story/SKILL.md) | Backlog story drafting, story splitting, plan-to-issue breakdowns, acceptance criteria, readiness review, and approved Jira payload preparation. |
+| [**Skill Smith**](skills/productivity/skill-smith/SKILL.md) | Crafts reusable agent skills with invocation design, progressive disclosure, leading words, and bundled resources. Use when the user asks to create a skill, write a skill, build an agent skill, review a SKILL.md, or package skill references, scripts, or examples. |
+argument-hint: "<skill idea or draft> |
+| [**Write a PRD**](skills/productivity/write-a-prd/SKILL.md) | Synthesizes conversation context and repository understanding into a product requirements document. Use when drafting, writing, or publishing a PRD from existing conversation, technical brief, design discussion, or approved scope. |
+argument-hint: "<conversation context or PRD brief> |
+| [**Write a Story**](skills/productivity/write-a-story/SKILL.md) | Backlog workflow for drafting, rewriting, splitting, reviewing, and converting plans into implementation-ready work items. Covers user stories, job stories, WWA items, issue breakdowns, acceptance criteria, readiness checks, and approved Jira payloads. |
+argument-hint: "<backlog item brief> |
 | [**Caveman**](skills/productivity/caveman/SKILL.md) | Ultra-compressed communication mode that drops filler, articles, and pleasantries while keeping technical accuracy. Use when the user says caveman mode, talk like caveman, use caveman, less tokens, be brief, terse mode, or invokes /caveman. |
 | [**Grill Me**](skills/productivity/grill-me/SKILL.md) | User entry point for a relentless plan interview. Use when the user asks to be grilled, stress-test a plan, prepare for review, or decide before building. |
-| [**Grilling**](skills/productivity/grilling/SKILL.md) | Interview the user relentlessly about a plan or design, walking down each branch of the decision tree one dependency at a time. Use when grilling a plan, stress-testing a proposal, clarifying vague intent, or resolving decisions before implementation. |
+| [**Grilling**](skills/productivity/grilling/SKILL.md) | Interviews the user relentlessly about a plan or design, walking down each branch of the decision tree one dependency at a time. Use when grilling a plan, stress-testing a proposal, clarifying vague intent, or resolving decisions before implementation. |
 | [**Grill With Docs**](skills/productivity/grill-with-docs/SKILL.md) | User entry point for a grilling session that builds living documentation as decisions crystallize. Use when the user wants to stress-test a plan and simultaneously capture domain vocabulary and architectural decisions. |
 | [**Brainstorming**](skills/productivity/brainstorming/SKILL.md) | User entry point for shaping a rough idea into an approved design. Use when the user wants to brainstorm a new feature, component, or product idea before writing a plan or touching code. |
-| [**Management Talk**](skills/productivity/management-talk/SKILL.md) | Rewrite engineering updates into clear leadership and cross-functional communication while preserving state, impact, ownership, risks, and next steps. Use when drafting Jira comments, Slack posts, standup notes, emails, meeting talking points, or executive summaries from technical source material. |
-| [**Stakeholder Update**](skills/productivity/stakeholder-update/SKILL.md) | Draft audience-aware stakeholder updates that clarify status, impact, risks, decisions, and next steps. Use when preparing status reports, sprint summaries, launch notes, risk escalations, executive updates, customer progress notes, or multi-audience variants. |
-| [**Setup Context**](skills/productivity/setup-context/SKILL.md) | Scaffold shared project context files in .context/ and configure the output locations pipeline skills write artifacts to (PRDs, stories, designs, ADRs, and more). Use when onboarding skills to a new or existing repo, when skills lack shared project context, or to relocate where a skill's output gets saved. |
-| [**Handoff**](skills/productivity/handoff/SKILL.md) | Compact the current conversation into a handoff document so a fresh agent can continue the work without losing context. Use when switching sessions, handing off to another agent, ending a long conversation, or preparing a context brief for a follow-up run. |
+| [**Management Talk**](skills/productivity/management-talk/SKILL.md) | Rewrites engineering updates into clear leadership and cross-functional communication while preserving state, impact, ownership, risks, and next steps. Use when drafting Jira comments, Slack posts, standup notes, emails, meeting talking points, or executive summaries from technical source material. |
+| [**Stakeholder Update**](skills/productivity/stakeholder-update/SKILL.md) | Drafts audience-aware stakeholder updates that clarify status, impact, risks, decisions, and next steps. Use when preparing status reports, sprint summaries, launch notes, risk escalations, executive updates, customer progress notes, or multi-audience variants. |
+| [**Setup Context**](skills/productivity/setup-context/SKILL.md) | Scaffolds shared project context files in .context/ and configure the output locations pipeline skills write artifacts to (PRDs, stories, designs, ADRs, and more). Use when onboarding skills to a new or existing repo, when skills lack shared project context, or to relocate where a skill's output gets saved. |
+| [**Handoff**](skills/productivity/handoff/SKILL.md) | Compacts the current conversation into a handoff document so a fresh agent can continue the work without losing context. Use when switching sessions, handing off to another agent, ending a long conversation, or preparing a context brief for a follow-up run. |
 
 ### Choosing the Right Skill
 
@@ -116,7 +119,9 @@ The library rests on three ideas: **skills as self-contained folders**, **bucket
 │   ├── install-skills.sh     # Interactive end-user installer
 │   ├── uninstall-skills.sh   # Interactive uninstaller
 │   ├── list-skills.sh        # List every SKILL.md with bucket labels
-│   ├── validate-skill-descriptions.sh  # Lint public skill descriptions
+│   ├── sync-shared-refs.sh   # Materialize skills/_shared/ into each skill
+│   ├── validate-skills.sh    # Validate frontmatter, links, and catalog sync
+│   ├── test-validate-skills.sh # Prove validate-skills.sh rejects what it should
 │   ├── setup-command.sh      # Create the blvck-skills shortcut command
 │   ├── unsetup-command.sh    # Remove the blvck-skills shortcut command
 │   └── deprecated/           # Retired maintainer symlink scripts
@@ -213,7 +218,8 @@ To audit the library itself:
 
 ```bash
 ./scripts/list-skills.sh                    # every SKILL.md with bucket labels
-./scripts/validate-skill-descriptions.sh    # lint public descriptions
+./scripts/validate-skills.sh                # frontmatter, links, catalog sync
+./scripts/sync-shared-refs.sh --check       # shared references in sync
 ```
 
 > **Note on context cost:** installed means *discoverable*, not *loaded*. Agents read only the name and description at startup and pull in the full instruction set when the task warrants it.
@@ -241,7 +247,7 @@ Contributions are welcome — new skills, sharper descriptions, and better refer
 
    ```bash
    ./scripts/list-skills.sh
-   ./scripts/validate-skill-descriptions.sh
+   ./scripts/validate-skills.sh
    ```
 
 9. Submit a pull request — or [open an issue](https://github.com/ntwrcht/blvck-skills/issues) to report bugs and propose ideas.

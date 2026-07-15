@@ -1,0 +1,65 @@
+name: Validate skills
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+
+      # Every reference a skill links must exist in the skill folder. This is the
+      # check that would have caught 26 dangling symlinks shipping to users.
+      - name: Shared references are in sync
+        run: ./scripts/sync-shared-refs.sh --check
+
+      - name: Skills are valid
+        run: ./scripts/validate-skills.sh
+
+      # A validator nobody has watched fail is indistinguishable from a no-op.
+      - name: Validator rejects what it should
+        run: ./scripts/test-validate-skills.sh
+
+      - name: Skills conform to the Agent Skills spec
+        run: ./scripts/validate-spec.sh
+
+      - name: Catalog
+        run: ./scripts/list-skills.sh
+
+  # Guards the two install paths that consume the repo as-is, with no installer
+  # step to repair anything.
+  portability:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: A fresh clone has no dangling references
+        run: |
+          broken=0
+          while IFS= read -r f; do
+            if [ ! -e "$f" ]; then echo "DANGLING: $f"; broken=1; fi
+          done < <(find skills -path '*/references/*' -name '*.md')
+          [ "$broken" -eq 0 ] || { echo "::error::Skills reference files that do not exist in a clean checkout"; exit 1; }
+
+      - name: References are real files, not symlinks
+        run: |
+          if git ls-files -s skills | awk '$1 == "120000"' | grep .; then
+            echo "::error::Symlinked references do not survive being copied out of this repo"
+            exit 1
+          fi
+
+      - name: Every plugin.json entry resolves
+        run: |
+          rc=0
+          while IFS= read -r entry; do
+            entry_path="${entry#./}"
+            [ -f "$entry_path/SKILL.md" ] || { echo "::error::plugin.json lists $entry with no SKILL.md"; rc=1; }
+          done < <(grep -oE '"\./skills/[^"]+"' .claude-plugin/plugin.json | tr -d '"')
+          exit $rc

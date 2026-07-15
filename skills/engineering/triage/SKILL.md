@@ -1,6 +1,6 @@
 ---
 name: triage
-description: "Triage tracker issues through canonical category and state roles, maintainer review, and durable handoff notes. Use when classifying bugs or enhancements, reviewing incoming issues, preparing AFK-agent briefs, requesting reporter info, or managing issue workflow."
+description: "Triages tracker issues through canonical category and state roles, maintainer review, and durable handoff notes. Use when classifying bugs or enhancements, reviewing incoming issues, preparing AFK-agent briefs, requesting reporter info, or managing issue workflow."
 disable-model-invocation: true
 argument-hint: "<issue, tracker query, or triage request>"
 ---

@@ -1,6 +1,6 @@
 ---
 name: write-a-prd
-description: "Synthesize conversation context and repository understanding into a product requirements document. Use when drafting, writing, or publishing a PRD from existing conversation, technical brief, design discussion, or approved scope."
+description: "Synthesizes conversation context and repository understanding into a product requirements document. Use when drafting, writing, or publishing a PRD from existing conversation, technical brief, design discussion, or approved scope."
 argument-hint: "<conversation context or PRD brief>"
 ---
 

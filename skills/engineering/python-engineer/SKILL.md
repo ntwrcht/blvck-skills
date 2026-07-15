@@ -1,6 +1,6 @@
 ---
 name: python-engineer
-description: "Build, modify, review, and debug Python projects with architecture, packaging, typing, testing, linting, async, data access, and reliability guidance. Use when working on Python application code, libraries, CLIs, services, tooling, refactors, test strategy, or code review."
+description: "Builds, modifies, reviews, and debugs Python projects with architecture, packaging, typing, testing, linting, async, data access, and reliability guidance. Use when working on Python application code, libraries, CLIs, services, tooling, refactors, test strategy, or code review."
 ---
 
 # Python Engineer
@@ -96,4 +96,7 @@ Load only the reference needed for the current decision:
 
 ## Next Step
 
-After implementation, use `tdd` to close test gaps, `security-audit` for a security pass, or `scrutinize` for review before shipping. If a review requests changes, apply them and re-review before proceeding.
+Do not treat a change as done until the project's formatter, linter, type checker, and test suite pass on it.
+
+- **If approved:** hand off to `tdd` when the change needs behavior tests it does not have, to `scrutinize` for an independent review of the diff, or to `security-audit` when it touches auth, secrets, subprocess calls, deserialization, or user input.
+- **If not approved:** revise in place. When a failure's cause is not obvious from the traceback, escalate to `diagnose` rather than guessing at fixes.

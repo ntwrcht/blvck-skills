@@ -1,6 +1,6 @@
 ---
 name: management-talk
-description: "Rewrite engineering updates into clear leadership and cross-functional communication while preserving state, impact, ownership, risks, and next steps. Use when drafting Jira comments, Slack posts, standup notes, emails, meeting talking points, or executive summaries from technical source material."
+description: "Rewrites engineering updates into clear leadership and cross-functional communication while preserving state, impact, ownership, risks, and next steps. Use when drafting Jira comments, Slack posts, standup notes, emails, meeting talking points, or executive summaries from technical source material."
 argument-hint: "<technical update, draft, ticket context, or target channel>"
 ---
 

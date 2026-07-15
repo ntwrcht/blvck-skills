@@ -1,11 +1,21 @@
 ---
 name: grilling
-description: "Interview the user relentlessly about a plan or design, walking down each branch of the decision tree one dependency at a time. Use when grilling a plan, stress-testing a proposal, clarifying vague intent, or resolving decisions before implementation."
+description: "Interviews the user relentlessly about a plan or design, walking down each branch of the decision tree one dependency at a time. Use when grilling a plan, stress-testing a proposal, clarifying vague intent, or resolving decisions before implementation."
 ---
 
 # Grilling
 
 Walk down the decision tree relentlessly — one branch, one question, one resolved dependency at a time.
+
+## When to Use
+
+Use this skill when a plan, design, or proposal has open decisions that should be resolved before work starts: stress-testing a proposal, sharpening a design, choosing among tradeoffs, pinning down dependencies, or turning vague intent into a clear goal and next action.
+
+## When Not to Use
+
+- **A written plan, PR, or design doc needs findings rather than an interview** — use `scrutinize`. Scrutinize reviews an artifact from the outside; grilling questions its author from the inside.
+- **The idea is still rough and has no shape yet** — use `brainstorming`. Brainstorming generates the options; grilling resolves them. If there is nothing to interrogate, there is nothing to grill.
+- **The user asked for a direct change, a quick answer, or a small well-understood edit** — make the change. Interviewing here is theater.
 
 ## Artifacts
 

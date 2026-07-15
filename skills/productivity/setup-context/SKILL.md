@@ -1,6 +1,6 @@
 ---
 name: setup-context
-description: "Scaffold shared project context files in .context/ and configure the output locations pipeline skills write artifacts to (PRDs, stories, designs, ADRs, and more). Use when onboarding skills to a new or existing repo, when skills lack shared project context, or to relocate where a skill's output gets saved."
+description: "Scaffolds shared project context files in .context/ and configure the output locations pipeline skills write artifacts to (PRDs, stories, designs, ADRs, and more). Use when onboarding skills to a new or existing repo, when skills lack shared project context, or to relocate where a skill's output gets saved."
 disable-model-invocation: true
 ---
 
@@ -48,7 +48,7 @@ Load `references/domains.md` for domain descriptions, consuming skills, and seed
 
 ### 4. Interview — output locations
 
-A different shape from step 3: one table, one turn, not sequential questions. Load `../../_shared/references/artifact-paths.md` (or the copy under this skill's own `references/` if bundled) and present:
+A different shape from step 3: one table, one turn, not sequential questions. Load `references/artifact-paths.md` and present:
 
 1. The two roots with a one-line explainer each: `docs_root` (default `docs/`) for durable, human-facing artifacts; `context_root` (default `.context/`) for ephemeral, session-scoped working state.
 2. The full key → producer → default-path table, noting that most keys are directories with a per-topic slug'd filename (e.g. `docs/prd/<slug>.md`), not a single file — this lets a project accumulate more than one PRD, story set, or design doc over its life without overwriting the last one.
@@ -58,7 +58,7 @@ Ask the user to confirm the roots and name any per-key overrides. Anything unmen
 
 ### 5. Migrate existing artifacts (pre-existing projects only)
 
-Load the "Migration" table in `../../_shared/references/artifact-paths.md`. It lists keys whose default location changed shape when this registry was introduced (e.g. `prd` moved from the single file `docs/prd.md` to `docs/prd/<slug>.md`), plus one outright bug fix (`adr-dir` moved from `docs/adr/` to `.context/adr/`).
+Load the "Migration" table in `references/artifact-paths.md`. It lists keys whose default location changed shape when this registry was introduced (e.g. `prd` moved from the single file `docs/prd.md` to `docs/prd/<slug>.md`), plus one outright bug fix (`adr-dir` moved from `docs/adr/` to `.context/adr/`).
 
 For each key in that table, check whether a file already exists at the **old** default path (or the old path resolved against any root override from step 4). If none do — the common case for any project that hasn't used these skills before — skip this step silently; don't ask about it.
 
@@ -85,9 +85,8 @@ Show draft content for each selected domain file, `INDEX.md`, and `output-paths.
 
 Project context lives in `.context/`. Read `.context/INDEX.md` first to see which domains
 are available, then load the ones relevant to your task. Proceed silently if a domain file
-does not exist. Output locations for pipeline skills are in `.context/output-paths.md`
-(see `skills/_shared/references/artifact-paths.md` for defaults) — proceed silently if it
-does not exist.
+does not exist. Output locations for pipeline skills are in `.context/output-paths.md` —
+proceed silently if it does not exist, and each skill will use its documented default.
 ```
 
 If `CLAUDE.md` does not exist, ask whether to create it before writing.
@@ -99,7 +98,7 @@ Tell the user which skills will now read from `.context/`, which output paths we
 ## Reference Map
 
 - `references/domains.md`: domain list, consuming skills, and seed content templates.
-- `../../_shared/references/artifact-paths.md`: output-location registry (roots, keys, defaults, resolution rule).
+- `references/artifact-paths.md`: output-location registry (roots, keys, defaults, resolution rule).
 
 ## Next Step
 

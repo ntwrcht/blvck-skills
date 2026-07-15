@@ -1,6 +1,6 @@
 ---
 name: strapi-engineer
-description: "Build, modify, review, and debug Strapi applications across content types, controllers, services, routes, policies, lifecycle hooks, plugins, auth, GraphQL, and tests. Use when working on Strapi v4 or v5 backend code, project architecture, schema design, API behavior, or production workflow."
+description: "Builds, modifies, reviews, and debugs Strapi applications across content types, controllers, services, routes, policies, lifecycle hooks, plugins, auth, GraphQL, and tests. Use when working on Strapi v4 or v5 backend code, project architecture, schema design, API behavior, or production workflow."
 ---
 
 # Strapi Engineer
@@ -27,7 +27,7 @@ Choose the Strapi layer that matches the responsibility, keep controllers thin, 
 1. Look for `.context/INDEX.md` in the project root and read relevant domain files when present: `.context/project.md`, `.context/engineering.md`, `.context/git-workflow.md`, `.context/security.md`, `.context/learning.md`, and `.context/adr/`.
 2. If project context is missing and the task depends on it, infer what you can from `package.json`, `config/`, `src/`, and existing tests before asking questions.
 3. When context remains unclear, ask for only the missing decisions that affect implementation: Strapi version, draft/publish, i18n, auth method, main branch, and ticket prefix.
-4. If the user asks to create project context, use the `setup-context` skill and write `.context/` domain files using `skills/productivity/setup-context/references/domains.md`.
+4. If the user asks to create project context, point them at the `setup-context` skill (`/setup-context`), which scaffolds the `.context/` domain files.
 
 ## Workflow
 
@@ -72,4 +72,7 @@ Load only the reference needed for the current task:
 
 ## Next Step
 
-After implementation, use `tdd` to close test gaps, `security-audit` for a security pass, or `scrutinize` for review before shipping. If a review requests changes, apply them and re-review before proceeding.
+Do not treat a change as done until the server restarts cleanly and the affected endpoints have been exercised — a content-type or schema edit has no real effect until the restart, so an untested schema change is an unverified one.
+
+- **If approved:** hand off to `tdd` when the change needs behavior tests it does not have, to `scrutinize` for an independent review of the diff, or to `security-audit` when it touches policies, permissions, auth, lifecycle hooks, or the public API surface.
+- **If not approved:** revise in place. When a failure's cause is not obvious from the server logs, escalate to `diagnose` rather than guessing at fixes.

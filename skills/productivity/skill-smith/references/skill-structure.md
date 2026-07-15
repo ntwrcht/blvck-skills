@@ -18,6 +18,27 @@ skill-name/
 
 Keep the folder name stable, lowercase, and easy to type. Prefer hyphenated names such as `skill-smith`.
 
+The spec requires the `name` field to match this folder name exactly: 1-64 characters, lowercase letters, digits, and single internal hyphens, and it must not contain the reserved words `anthropic` or `claude`.
+
+## Everything a Skill Needs, It Carries
+
+A skill folder is copied out of this repo on its own — by `install-skills.sh`, by `claude --plugin-dir`, or by `npx skills add`. Only that folder travels. So every path a `SKILL.md` names must resolve inside the folder:
+
+- **Good:** `references/artifact-paths.md`, `scripts/helper.sh`
+- **Broken once installed:** `../../_shared/references/artifact-paths.md`, `skills/productivity/setup-context/references/domains.md`, or any absolute path
+
+To reference another skill, name it (`` `setup-context` ``) rather than reaching into its folder. `./scripts/validate-skills.sh` fails on any path that escapes the skill root.
+
+## Sharing a Reference Across Skills
+
+Common material lives in `skills/_shared/references/`. Do not symlink it and do not hand-copy it:
+
+1. Add the file to `skills/_shared/references/`.
+2. Map the skill to it in `get_shared_refs()` in `scripts/_skills-lib.sh`.
+3. Run `./scripts/sync-shared-refs.sh`, which writes a real copy into the skill's own `references/` and commits it.
+
+Edit only the canonical file in `_shared/`; the copies carry a generated header and are overwritten. `./scripts/sync-shared-refs.sh --check` fails if a copy drifts.
+
 ## SKILL.md Template
 
 ```md
@@ -35,10 +56,15 @@ One short paragraph describing the reusable capability.
 
 Describe activation boundaries, common user phrases, related contexts, and exclusions.
 
-## Invocation Design
+## When Not to Use
 
-Decide: model-invoked (keep description) or user-invoked (disable-model-invocation: true)?
-State the reason — context load vs. cognitive load tradeoff.
+Name the neighbouring skills and contrast them. Prefer a contrast over a redirect:
+"X answers <question>; this skill answers <different question>."
+
+## Artifacts
+
+- Produces: <what this skill writes, and at which key path — see `references/artifact-paths.md`>
+- Consumes: <the context files and upstream artifacts it reads>
 
 ## Core Rule
 
@@ -60,7 +86,30 @@ State the main judgment the agent should optimize for.
 - Check the behavior the skill is meant to improve.
 - Check the output format.
 - Check local repository conventions.
+
+## Next Step
+
+<One sentence naming the approval gate — an observable event, not a vibe.>
+
+- **If approved:** hand off to `<named skill>` and say why.
+- **If not approved:** revise in place, escalate to `<named skill>`, or pause on a specific question.
 ```
+
+Sections in this template are the repo's de facto convention, not spec requirements. `Artifacts` and `Next Step` are the two that `CLAUDE.md` actually enforces.
+
+## Artifacts and Next Step
+
+**Artifacts** records what the skill reads and writes, so a pipeline of skills can hand work along without re-deriving where things live. Name the key path from `references/artifact-paths.md` and its default, rather than hardcoding a path.
+
+**Next Step** is required of any skill that produces a reviewable artifact and hands off. It needs an approval gate plus both branches:
+
+- The gate should be an **observable event**, not a feeling. `prototype` is the model: "the user has driven it and stated the answer." Compare a gate that cannot be checked: "when the design feels right."
+- **If approved** names the next skill and why it follows.
+- **If not approved** says which: revise in place, escalate to a named skill, or pause on a specific question.
+
+A thin wrapper may point at the skill it wraps ("See `grilling`'s Next Step"). A skill with no natural next stage — a one-shot installer, a tone modifier, a session-boundary tool — does not need one, but should say why not if it is not obvious.
+
+Only name a skill the agent can actually reach: a `disable-model-invocation: true` skill cannot be invoked by the model, so route the model to the engine (`grilling`), not the user entry point (`grill-me`). Telling the user to run `/grill-me` is fine; telling the model to use it is a dead end.
 
 ## Progressive Disclosure
 
@@ -70,7 +119,9 @@ Skills should load in layers:
 2. `SKILL.md`: loaded after the skill is selected.
 3. Bundled resources: loaded only when the current task needs them.
 
-Keep the main file focused on the common workflow. Target under 80 lines, keep it under 100 lines by default, and split into `references/` when it grows past 100 lines. Move uncommon detail out of `SKILL.md` when it would make the skill harder to scan.
+Keep the main file focused on the common workflow. The spec's limit is 500 lines (roughly 5k tokens) for the `SKILL.md` body — that is the hard ceiling. Well before it, length stops being a budget problem and becomes a scanning problem: past roughly 150 lines, move uncommon detail into `references/`.
+
+Split on **what the agent needs when**, not to hit a number. A 120-line skill whose every line is load-bearing beats a 70-line one that hides the workflow in a reference file the agent never opens.
 
 ## Description Guidance
 
@@ -127,5 +178,8 @@ Add `assets/` files when the skill needs static templates, fixtures, visual refe
 - Examples cover realistic user prompts.
 - Required README, manifest, or install metadata entries are updated.
 - Required validation commands pass.
-- Main `SKILL.md` is under 80 lines when practical and under 100 lines by default.
+- Main `SKILL.md` is under the spec's 500-line ceiling, and split where length hurts scanning.
+- `Artifacts` and `Next Step` are present, or their absence is explained.
+- Every path resolves inside the skill folder — no `../`, no sibling-skill path, no symlink.
+- Every skill named in a handoff exists and is reachable by whoever is being told to reach it.
 - Failure modes checked: sediment, sprawl, duplication, no-ops, premature completion risk.

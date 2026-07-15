@@ -1,6 +1,6 @@
 ---
 name: skill-smith
-description: "Craft reusable agent skills with invocation design, progressive disclosure, leading words, and bundled resources. Use when the user asks to create a skill, write a skill, build an agent skill, review a SKILL.md, or package skill references, scripts, or examples."
+description: "Crafts reusable agent skills with invocation design, progressive disclosure, leading words, and bundled resources. Use when the user asks to create a skill, write a skill, build an agent skill, review a SKILL.md, or package skill references, scripts, or examples."
 argument-hint: "<skill idea or draft>"
 ---
 
@@ -70,7 +70,8 @@ Load `references/principles.md` when a design decision doesn't follow obviously 
 
 ## Drafting Rules
 
-- Keep `SKILL.md` focused on the common path. Target under 80 lines, keep it under 100 lines by default, and split into `references/` when it grows past 100 lines.
+- Keep `SKILL.md` focused on the common path. The spec's ceiling is 500 lines; move uncommon detail into `references/` well before that, around 150, when length starts hurting scanning.
+- Keep every path a skill names inside its own folder — only that folder is copied on install. Share a reference via `_shared/` and `./scripts/sync-shared-refs.sh`, never a symlink or a path into a sibling skill.
 - Write YAML descriptions with enough task keywords to support skill selection.
 - Prefer `Use when` as the second sentence unless local instructions ban it.
 - Put detailed activation boundaries in the body even when the description includes trigger context.
@@ -87,8 +88,12 @@ Before finalizing:
 - Is the skill name stable, lowercase, and directory-friendly?
 - Is invocation type decided — model-invoked (keep `description`) or user-invoked (`disable-model-invocation: true`)?
 - Does the description identify the capability without violating local public-description rules?
-- Are activation boundaries clear in `When to Use` and, if needed, `When Not to Use`?
-- Is `SKILL.md` under 80 lines when practical and under 100 lines by default?
+- Are activation boundaries clear in `When to Use` and, if needed, `When Not to Use`, naming the neighbouring skills they contrast against?
+- Does `Artifacts` record what the skill produces and consumes, by key path rather than a hardcoded location?
+- Does `Next Step` state an observable approval gate plus both branches — or is its absence explained?
+- Does every skill it routes to actually exist, and can the agent reach it? A `disable-model-invocation: true` skill is a dead end for the model.
+- Does every path resolve inside the skill folder, with no `../`, no sibling-skill path, and no symlink?
+- Is `SKILL.md` under the spec's 500-line ceiling, and split where length hurts scanning?
 - Are detailed materials split into clearly named bundled resources?
 - Are scripts included only where deterministic execution beats generated instructions?
 - Are examples concrete and representative?
@@ -100,5 +105,5 @@ Before finalizing:
 
 Do not register the new skill until the user has reviewed the draft SKILL.md.
 
-- **If approved:** run `./scripts/validate-skill-descriptions.sh` and `./scripts/list-skills.sh`, then add entries to the top-level `README.md`, the bucket `README.md`, and `.claude-plugin/plugin.json` (skip this step entirely for skills placed in `personal/`, `in-progress/`, or `deprecated/`, which must not appear in those files per this repo's `CLAUDE.md`).
+- **If approved:** add entries to the top-level `README.md`, the bucket `README.md`, and `.claude-plugin/plugin.json` (skip this entirely for skills placed in `personal/`, `in-progress/`, or `deprecated/`, which must not appear in those files per this repo's `CLAUDE.md`). Then run `./scripts/sync-shared-refs.sh` if the skill declares a shared reference, and `./scripts/validate-skills.sh` to check frontmatter, links, and catalog sync.
 - **If not approved:** revise the draft per feedback before running the validation scripts.

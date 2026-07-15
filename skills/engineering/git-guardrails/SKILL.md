@@ -1,6 +1,7 @@
 ---
-name: git-guardrails-claude-code
-description: "Install Claude Code PreToolUse hooks that block dangerous git commands before execution. Use when setting up local or global guardrails for git push, force push, reset --hard, clean, branch deletion, checkout ., or restore ."
+name: git-guardrails
+description: "Installs Claude Code PreToolUse hooks that block dangerous git commands before execution. Use when setting up local or global guardrails for git push, force push, reset --hard, clean, branch deletion, checkout ., or restore ."
+compatibility: Designed for Claude Code
 ---
 
 # Git Guardrails for Claude Code
