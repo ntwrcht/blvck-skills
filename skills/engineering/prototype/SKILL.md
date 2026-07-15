@@ -1,6 +1,6 @@
 ---
 name: prototype
-description: "Build a throwaway prototype to answer one design question — a hand-driven terminal app to feel out a state model, or several switchable UI variants to explore a look. Use when sanity-checking whether logic or a state model feels right, exploring what a page or component should look like, or feeling out an API shape before committing."
+description: "Builds a throwaway prototype to answer one design question — a hand-driven terminal app to feel out a state model, or several switchable UI variants to explore a look. Use when sanity-checking whether logic or a state model feels right, exploring what a page or component should look like, or feeling out an API shape before committing."
 ---
 
 # Prototype

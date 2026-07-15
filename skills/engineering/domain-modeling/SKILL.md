@@ -1,6 +1,6 @@
 ---
 name: domain-modeling
-description: "Build and sharpen a project's domain model by challenging fuzzy language, updating the shared glossary inline, and recording hard architectural decisions as ADRs. Use when pinning down domain terminology, resolving contested terms, recording an architectural decision, or when another skill needs to maintain the domain vocabulary."
+description: "Builds and sharpens a project's domain model by challenging fuzzy language, updating the shared glossary inline, and recording hard architectural decisions as ADRs. Use when pinning down domain terminology, resolving contested terms, recording an architectural decision, or when another skill needs to maintain the domain vocabulary."
 ---
 
 # Domain Modeling
@@ -8,6 +8,16 @@ description: "Build and sharpen a project's domain model by challenging fuzzy la
 Actively build and sharpen the project's domain model as you design. Challenge terms, invent edge-case scenarios, and write the glossary and decisions down the moment they crystallize.
 
 Merely *reading* `CONTEXT.md` for vocabulary is not this skill — that is a one-line habit any skill can do. This skill is for when you are *changing* the model, not consuming it.
+
+## When to Use
+
+Use this skill when the domain model itself is in play: pinning down terminology, resolving a contested or overloaded term, naming a new concept, recording a hard architectural decision as an ADR, or when another skill needs the shared glossary maintained as it works.
+
+## When Not to Use
+
+- Reading existing vocabulary to orient a task — any skill can read `CONTEXT.md` directly
+- Scaffolding the `.context/` folder for a new project — use `setup-context` instead
+- Reviewing or stress-testing a plan without changing the model — use `scrutinize` or `grilling` instead
 
 ## Artifacts
 
@@ -91,12 +101,6 @@ Offer to close the session when:
 - Any decisions that met the ADR gate are recorded
 
 When these are met, summarize: agreed terms, deferred terms, ADRs written, and the next open question if one remains.
-
-## When Not to Use
-
-- Reading existing vocabulary to orient a task — any skill can read `CONTEXT.md` directly
-- Scaffolding the `.context/` folder for a new project — use `setup-context` instead
-- Reviewing or stress-testing a plan without changing the model — use `scrutinize` or `grilling` instead
 
 ## Next Step
 

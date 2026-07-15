@@ -1,6 +1,6 @@
 ---
 name: debug-mantra
-description: "Debug failures with a compact repro, fail-path trace, hypothesis falsification, and breadcrumb ledger. Use when investigating a bug or failure needs lightweight structure before proposing a fix."
+description: "Debugs failures with a compact repro, fail-path trace, hypothesis falsification, and breadcrumb ledger. Use when investigating a bug or failure needs lightweight structure before proposing a fix."
 ---
 
 # Debug Mantra

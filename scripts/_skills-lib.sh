@@ -36,7 +36,7 @@ BUNDLE_PROJECT_PM_SKILLS=(
 BUNDLE_PROJECT_DEV_SKILLS=(
   "grill-with-docs" "grilling" "write-a-story" "handoff"
   "triage" "tdd" "debug-mantra" "diagnose"
-  "domain-modeling" "prototype" "scrutinize" "security-audit" "git-guardrails-claude-code"
+  "domain-modeling" "prototype" "scrutinize" "security-audit" "git-guardrails"
 )
 
 DIRECT_INSTALL_TARGETS=(
@@ -71,7 +71,7 @@ log_section() { printf "\n  ${BOLD}${CYAN}%s${NC}\n\n" "$1"; }
 get_shared_refs() {
   local skill_name="$1"
   case "$skill_name" in
-    angular-engineer)             echo "context-template.md git-workflow.md artifact-paths.md" ;;
+    angular-engineer)             echo "git-workflow.md artifact-paths.md" ;;
     strapi-engineer)              echo "context-template.md git-workflow.md artifact-paths.md" ;;
     ga4-measurement)              echo "context-template.md artifact-paths.md" ;;
     security-audit)               echo "context-template.md artifact-paths.md" ;;

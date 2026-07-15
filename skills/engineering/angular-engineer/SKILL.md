@@ -1,6 +1,6 @@
 ---
 name: angular-engineer
-description: "Build, modify, review, and debug Angular applications using project conventions, modern Angular patterns, RxJS, Signals, testing, SSR, and Nx guidance. Use when working on Angular components, services, routing, forms, guards, migrations, performance, security, or frontend architecture."
+description: "Builds, modifies, reviews, and debugs Angular applications using project conventions, modern Angular patterns, RxJS, Signals, testing, SSR, and Nx guidance. Use when working on Angular components, services, routing, forms, guards, migrations, performance, security, or frontend architecture."
 ---
 
 # Angular Engineer
@@ -89,4 +89,7 @@ Ask before defaulting when the Angular version or module style is unclear and th
 
 ## Next Step
 
-After implementation, use `tdd` to close test gaps, `security-audit` for a security pass, or `scrutinize` for review before shipping. If a review requests changes, apply them and re-review before proceeding.
+Do not treat a change as done until the app builds and the project's test suite passes on it; for a visible UI change, until the user has seen it running.
+
+- **If approved:** hand off to `tdd` when the change needs behavior tests it does not have, to `scrutinize` for an independent review of the diff, or to `security-audit` when it touches route guards, auth, template rendering of user input, or HTTP boundaries. For a full PR review of Angular code, load `references/code-review.md` here instead of switching skills.
+- **If not approved:** revise in place. When a failure's cause is not obvious from the build or test output, escalate to `diagnose` rather than guessing at fixes.

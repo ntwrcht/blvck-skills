@@ -1,6 +1,6 @@
 ---
 name: technical-trading-strategy
-description: "Design, review, and implement rule-based technical trading strategies with disciplined backtesting, validation, risk controls, and Python engineering guidance. Use when working on indicator rules, strategy specs, backtest code, execution assumptions, market data, or live-trading readiness."
+description: "Designs, reviews, and implements rule-based technical trading strategies with disciplined backtesting, validation, risk controls, and Python engineering guidance. Use when working on indicator rules, strategy specs, backtest code, execution assumptions, market data, or live-trading readiness."
 ---
 
 # Technical Trading Strategy
@@ -78,9 +78,9 @@ Load `references/backtest-validation.md` for detailed review criteria, metrics, 
 - `references/market-assumptions.md`: load when market, venue, data source, or execution assumptions affect the answer.
 - `references/live-trading-readiness.md`: load for deployment, automation, exchange APIs, brokers, or real-capital requests.
 
-## Next Step
+## Output Shape
 
-This skill follows a design → review → implement → backtest lifecycle; the shape of the next output depends on which stage the request is in.
+This skill follows a design → review → implement → backtest lifecycle; the shape of the output depends on which stage the request is in.
 
 For strategy design, include:
 - hypothesis
@@ -103,3 +103,10 @@ For backtest implementation, include:
 For review or debugging, lead with findings ordered by severity, with file and line references when code exists.
 
 For results reports, include metrics, benchmark comparison, drawdown and risk summary, caveats, and next validation steps.
+
+## Next Step
+
+Do not present a strategy as validated until every item in Validation Checks has been examined and the user has seen the assumptions and caveats behind the numbers.
+
+- **If approved:** hand off to `python-engineer` for backtest implementation quality, or to `tdd` when entry and exit rules need regression tests that pin their behavior against known bars. For deployment, automation, or real-capital questions, load `references/live-trading-readiness.md` and keep the work to readiness assessment.
+- **If not approved:** revise in place when the gap is a missing spec field or a cost, data, or execution assumption. When the methodology itself is unsound — lookahead, no out-of-sample separation, or parameters tuned until the equity curve improved — say so plainly and return to the Minimum Strategy Spec instead of tuning further.

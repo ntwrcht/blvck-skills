@@ -706,13 +706,15 @@ run_install() {
 }
 
 select_scenario() {
-  local answer
+  local answer pm_label dev_label custom_label
+
+  # Counted, not hardcoded: these labels drifted out of step with the bundles.
+  pm_label="Project PM  — $(list_skills_for_preset project-pm | wc -l | tr -d ' ') productivity skills (PM / non-coder)"
+  dev_label="Project Dev — $(list_skills_for_preset project-dev | wc -l | tr -d ' ') engineering essentials"
+  custom_label="Custom      — pick from all available skills"
 
   if ui_tty_available; then
-    ui_radio_select "Choose Scenario" \
-      "Project PM  — 8 productivity skills (PM / non-coder)" \
-      "Project Dev — 12 engineering essentials" \
-      "Custom      — pick from all available skills"
+    ui_radio_select "Choose Scenario" "$pm_label" "$dev_label" "$custom_label"
     case "$UI_RADIO_INDEX" in
       1) SELECTED_SCENARIO="project-pm" ;;
       2) SELECTED_SCENARIO="project-dev" ;;
@@ -722,9 +724,9 @@ select_scenario() {
   fi
 
   ui_step "Choose Scenario"
-  ui_line "${BOLD}1)${NC}  Project PM  — 8 productivity skills (PM / non-coder)"
-  ui_line "${BOLD}2)${NC}  Project Dev — 12 engineering essentials"
-  ui_line "${BOLD}3)${NC}  Custom      — pick from all available skills"
+  ui_line "${BOLD}1)${NC}  $pm_label"
+  ui_line "${BOLD}2)${NC}  $dev_label"
+  ui_line "${BOLD}3)${NC}  $custom_label"
 
   while true; do
     read_prompt answer "${CYAN}│${NC}  Scenario [1]: "

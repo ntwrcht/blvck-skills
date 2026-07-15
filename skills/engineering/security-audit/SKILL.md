@@ -1,6 +1,6 @@
 ---
 name: security-audit
-description: "Review application security across code, APIs, infrastructure, authentication, authorization, secrets, dependencies, and compliance gaps. Use when assessing vulnerabilities, threat models, pentest findings, security controls, exploitability, impact, or remediation plans."
+description: "Reviews application security across code, APIs, infrastructure, authentication, authorization, secrets, dependencies, and compliance gaps. Use when assessing vulnerabilities, threat models, pentest findings, security controls, exploitability, impact, or remediation plans."
 ---
 
 # Security Audit
@@ -11,7 +11,7 @@ Review systems like a senior application security engineer: identify what can go
 
 Use this skill for security code review, API security review, auth and authorization checks, secrets handling, dependency risk, infrastructure misconfiguration, compliance gap analysis, threat modeling, pentest finding review, and remediation planning.
 
-Use a general code-review skill when the request is mostly about correctness, maintainability, or performance. Use a debugging workflow when the user needs to reproduce and fix a functional bug before assessing security impact.
+Use `scrutinize` when the request is mostly about correctness, maintainability, or performance — it reviews a diff or plan on those terms, while this skill asks what an attacker could do with it. Use `debug-mantra` or `diagnose` when the user needs to reproduce and fix a functional bug before assessing security impact.
 
 ## Artifacts
 
@@ -26,7 +26,7 @@ Every finding must be grounded in evidence and must explain trust boundary, expl
 
 1. Define scope from the request: target files, endpoints, services, infrastructure, compliance regime, data sensitivity, and whether the system is internet-facing.
 2. Inspect local context before asking questions. Read `.context/INDEX.md`, then relevant domain files such as `.context/project.md`, `.context/security.md`, `.context/engineering.md`, `.context/learning.md`, and `.context/adr/`, plus security docs, configs, routes, auth code, dependency manifests, IaC, and prior findings when relevant.
-3. If scope is ambiguous, state reasonable assumptions and continue with the highest-risk surfaces first. Ask only when a missing answer would materially change severity or remediation. If the user asks to bootstrap reusable context, use `skills/productivity/setup-context/references/domains.md`.
+3. If scope is ambiguous, state reasonable assumptions and continue with the highest-risk surfaces first. Ask only when a missing answer would materially change severity or remediation. If the user asks to bootstrap reusable context, point them at the `setup-context` skill (`/setup-context`).
 4. Trace untrusted input across trust boundaries: request entry, parsing, validation, authn, authz, business logic, storage, outbound calls, logging, and response shaping.
 5. Check controls in context rather than by checklist alone. A weakness is a finding only when exploitability and impact are defensible.
 6. Classify severity using the framework below, and make the reasoning explicit.

@@ -1,6 +1,6 @@
 ---
 name: ga4-measurement
-description: "Plan, implement, review, and validate GA4/GTM measurement for product flows, funnels, feature adoption, conversion, errors, and performance. Use when designing event taxonomies, dataLayer or gtag tracking, GA4 reports, GTM setup, analytics QA, or measurement plans."
+description: "Plans, implements, reviews, and validates GA4/GTM measurement for product flows, funnels, feature adoption, conversion, errors, and performance. Use when designing event taxonomies, dataLayer or gtag tracking, GA4 reports, GTM setup, analytics QA, or measurement plans."
 ---
 
 # GA4 Measurement
@@ -42,7 +42,7 @@ Track decisions, not clicks. Every event must answer a real question someone wil
 
 If project context exists, read it before designing or changing measurement. Treat `.context/analytics.md` or an existing measurement plan as the source of truth for activation definitions, funnels, event names, and reporting audiences.
 
-If context is missing and the task needs product goals, activation criteria, funnel steps, implementation stack, or reporting audiences, use `skills/productivity/setup-context/references/domains.md` to guide the setup. Ask only for the missing inputs, then either document assumptions in the answer or create context files when the user asks for reusable project documentation.
+If context is missing and the task needs product goals, activation criteria, funnel steps, implementation stack, or reporting audiences, ask only for the missing inputs, then either document assumptions in the answer or point the user at the `setup-context` skill (`/setup-context`) when they want reusable project documentation.
 
 ## Measurement Principles
 

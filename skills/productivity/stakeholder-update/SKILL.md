@@ -1,6 +1,6 @@
 ---
 name: stakeholder-update
-description: "Draft audience-aware stakeholder updates that clarify status, impact, risks, decisions, and next steps. Use when preparing status reports, sprint summaries, launch notes, risk escalations, executive updates, customer progress notes, or multi-audience variants."
+description: "Drafts audience-aware stakeholder updates that clarify status, impact, risks, decisions, and next steps. Use when preparing status reports, sprint summaries, launch notes, risk escalations, executive updates, customer progress notes, or multi-audience variants."
 argument-hint: "<update type and audience>"
 ---
 
