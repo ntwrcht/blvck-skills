@@ -39,6 +39,13 @@ BUNDLE_PROJECT_DEV_SKILLS=(
   "domain-modeling" "prototype" "scrutinize" "security-audit" "git-guardrails"
 )
 
+# Personal-bucket skills the local installer offers even though they stay out
+# of the shipped catalog (README + plugin.json). Kept local on purpose, e.g.
+# release-rollup pairs with the shipped release-scan but isn't promoted.
+LOCAL_EXTRA_SKILLS=(
+  "release-rollup"
+)
+
 DIRECT_INSTALL_TARGETS=(
   "$HOME/.claude/skills"
   "$HOME/.codex/skills"
@@ -134,6 +141,29 @@ _is_in_list() {
   local item
   for item in "$@"; do [ "$item" = "$needle" ] && return 0; done
   return 1
+}
+
+# list_installable_skill_dirs
+#   Every shippable skill, plus any non-shippable skill whitelisted in
+#   LOCAL_EXTRA_SKILLS. Used by the local installer so hand-picked personal
+#   skills can be installed without entering the public catalog.
+list_installable_skill_dirs() {
+  local bucket skill_dir skill_name
+
+  list_shippable_skill_dirs
+
+  for bucket in "${ALL_BUCKETS[@]}"; do
+    _is_in_list "$bucket" "${SHIPPABLE_BUCKETS[@]}" && continue
+    [ -d "$SKILLS_DIR/$bucket" ] || continue
+
+    for skill_dir in "$SKILLS_DIR/$bucket"/*/; do
+      [ -d "$skill_dir" ] || continue
+      [ -f "$skill_dir/SKILL.md" ] || continue
+      skill_name="$(skill_name_from_dir "${skill_dir%/}")"
+      _is_in_list "$skill_name" "${LOCAL_EXTRA_SKILLS[@]}" &&
+        printf '%s\n' "${skill_dir%/}"
+    done
+  done
 }
 
 # list_skills_for_preset <preset>

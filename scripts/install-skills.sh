@@ -422,7 +422,7 @@ load_skills() {
     SKILL_DIRS+=("$skill_dir")
     SKILL_NAMES+=("$(skill_name_from_dir "$skill_dir")")
     SKILL_BUCKETS+=("${skill_path%%/*}")
-  done < <(list_shippable_skill_dirs)
+  done < <(list_installable_skill_dirs)
 }
 
 select_skills() {
