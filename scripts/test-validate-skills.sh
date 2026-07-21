@@ -130,6 +130,33 @@ EOF"
 expect_reject "README lists no skills at all" "lists no skills" \
   "sed -i.bak '/SKILL.md)/d' README.md"
 
+# Six catalog rows once carried the skill's argument-hint on a second physical
+# line, which renders as a broken table while leaving the description cell intact.
+expect_reject "catalog row split across two lines" "well-formed row" \
+  "python3 - <<'EOF'
+import pathlib
+p = pathlib.Path('README.md')
+lines = p.read_text().split('\n')
+for i, ln in enumerate(lines):
+    if 'skills/engineering/tdd/SKILL.md)' in ln and ln.startswith('|'):
+        lines.insert(i + 1, 'argument-hint: \"<hint> |')
+        break
+p.write_text('\n'.join(lines))
+EOF"
+
+# The same bug in a bucket README must be caught too, not just the top-level one.
+expect_reject "malformed row in a bucket README" "well-formed row" \
+  "python3 - <<'EOF'
+import pathlib
+p = pathlib.Path('skills/productivity/README.md')
+lines = p.read_text().split('\n')
+for i, ln in enumerate(lines):
+    if 'handoff/SKILL.md)' in ln and ln.startswith('|'):
+        lines.insert(i + 1, 'argument-hint: \"<hint> |')
+        break
+p.write_text('\n'.join(lines))
+EOF"
+
 # The badge said 27 while 28 shipped.
 expect_reject "README skill count out of date" "claims" \
   "sed -i.bak 's|badge/skills-[0-9]*-|badge/skills-99-|' README.md"

@@ -160,7 +160,23 @@ log_section "Checking catalog sync"
 # Public description rows are identified by content (a link to a SKILL.md), not
 # by heading position — a renamed heading must never silently skip this check.
 check_catalog_rows() {
-  local file="$1" rows
+  local file="$1" rows malformed
+
+  # A row must be one physical line. Pasting a skill's `argument-hint` in beneath
+  # its description once split six rows across two lines each: the table rendered
+  # broken, but the description cell above the orphan stayed intact, so every
+  # other check here still passed.
+  malformed="$(awk '
+    /^[[:space:]]*$/ { in_table = 0; next }
+    /^\|/            { in_table = 1 }
+    in_table && !/^\|.*\|[[:space:]]*$/ { printf "%d:%s\n", NR, $0 }
+  ' "$file")"
+
+  if [ -n "$malformed" ]; then
+    fail "${file#"$REPO_ROOT"/} has a table line that is not a well-formed row"
+    printf '%s\n' "$malformed"
+  fi
+
   rows="$(grep -E '\]\([^)]*SKILL\.md\)' "$file" || true)"
 
   if [ -z "$rows" ]; then
