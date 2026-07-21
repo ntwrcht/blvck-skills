@@ -5,11 +5,8 @@ Daily non-code workflow tools.
 | Skill Name | Description |
 | :--- | :--- |
 | [Skill Smith](skill-smith/SKILL.md) | Crafts reusable agent skills with invocation design, progressive disclosure, leading words, and bundled resources. Use when the user asks to create a skill, write a skill, build an agent skill, review a SKILL.md, or package skill references, scripts, or examples. |
-argument-hint: "<skill idea or draft> |
 | [Write a PRD](write-a-prd/SKILL.md) | Synthesizes conversation context and repository understanding into a product requirements document. Use when drafting, writing, or publishing a PRD from existing conversation, technical brief, design discussion, or approved scope. |
-argument-hint: "<conversation context or PRD brief> |
 | [Write a Story](write-a-story/SKILL.md) | Backlog workflow for drafting, rewriting, splitting, reviewing, and converting plans into implementation-ready work items. Covers user stories, job stories, WWA items, issue breakdowns, acceptance criteria, readiness checks, and approved Jira payloads. |
-argument-hint: "<backlog item brief> |
 | [Caveman](caveman/SKILL.md) | Ultra-compressed communication mode that drops filler, articles, and pleasantries while keeping technical accuracy. Use when the user says caveman mode, talk like caveman, use caveman, less tokens, be brief, terse mode, or invokes /caveman. |
 | [Grill Me](grill-me/SKILL.md) | User entry point for a relentless plan interview. Use when the user asks to be grilled, stress-test a plan, prepare for review, or decide before building. |
 | [Grilling](grilling/SKILL.md) | Interviews the user relentlessly about a plan or design, walking down each branch of the decision tree one dependency at a time. Use when grilling a plan, stress-testing a proposal, clarifying vague intent, or resolving decisions before implementation. |
@@ -20,3 +17,4 @@ argument-hint: "<backlog item brief> |
 | [Setup Context](setup-context/SKILL.md) | Scaffolds shared project context files in .context/ and configure the output locations pipeline skills write artifacts to (PRDs, stories, designs, ADRs, and more). Use when onboarding skills to a new or existing repo, when skills lack shared project context, or to relocate where a skill's output gets saved. |
 | [Release Scan](release-scan/SKILL.md) | Scans one service repository between two tags and produces a standardized Service Release Report used to assemble a customer-facing release note. Use when diffing two tags or versions, working out what shipped between releases, assessing deployment impact or breaking changes, or preparing a release for a dedicated or on-prem customer environment. |
 | [Handoff](handoff/SKILL.md) | Compacts the current conversation into a handoff document so a fresh agent can continue the work without losing context. Use when switching sessions, handing off to another agent, ending a long conversation, or preparing a context brief for a follow-up run. |
+| [Doc Co-Authoring](doc-coauthoring/SKILL.md) | Co-authors a document with the user section by section — gathering their context, brainstorming and curating each section, then testing the draft against a fresh reader with no context. Use when writing a proposal, technical spec, decision doc, RFC, design doc, or similar long-form content where the user holds the context. |
