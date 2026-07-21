@@ -39,11 +39,14 @@ BUNDLE_PROJECT_DEV_SKILLS=(
   "domain-modeling" "prototype" "scrutinize" "security-audit" "git-guardrails"
 )
 
-# Personal-bucket skills the local installer offers even though they stay out
-# of the shipped catalog (README + plugin.json). Kept local on purpose, e.g.
-# release-rollup pairs with the shipped release-scan but isn't promoted.
+# Non-shippable skills the local installer offers even though they stay out of
+# the shipped catalog (README + plugin.json). Two reasons land a skill here:
+# kept local on purpose (release-rollup pairs with the shipped release-scan but
+# isn't promoted), or an in-progress draft that needs real use before it can
+# graduate (wayfinder — see its graduation notes in references/tracker-mapping.md).
 LOCAL_EXTRA_SKILLS=(
   "release-rollup"
+  "wayfinder"
 )
 
 DIRECT_INSTALL_TARGETS=(
