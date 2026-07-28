@@ -6,7 +6,7 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Version](https://img.shields.io/badge/version-1.0.0-informational)](.claude-plugin/plugin.json)
-[![Skills](https://img.shields.io/badge/skills-31-success)](#skill-catalog)
+[![Skills](https://img.shields.io/badge/skills-32-success)](#skill-catalog)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](#contributing)
 
 </div>
@@ -34,7 +34,7 @@ Install skills per project with the bundled installer, pull them with `npx skill
 
 ## Key Features
 
-- **31 production-ready skills** spanning daily engineering work (debugging, TDD, review, security) and product workflows (PRDs, stories, stakeholder updates, plan interviews).
+- **32 production-ready skills** spanning daily engineering work (debugging, TDD, review, security) and product workflows (PRDs, stories, stakeholder updates, plan interviews).
 - **Multi-CLI support** — one library installs into Claude Code, Codex, and Gemini CLI, each in its native format.
 - **Interactive installer with preset bundles** — curated *Project PM* and *Project Dev* scenarios for one-keystroke setup, or a custom picker across the full catalog.
 - **Safe, reversible installs** — every copied skill carries an ownership marker; the uninstaller only ever removes what the installer created.
@@ -61,6 +61,7 @@ Install skills per project with the bundled installer, pull them with `npx skill
 | [**Scrutinize**](skills/engineering/scrutinize/SKILL.md) | Reviews plans, PRs, diffs, design docs, and code changes from an external verification stance. Use when pressure-testing intent, simpler alternatives, traced code paths, behavioral claims, edge cases, tests, or rollout risk. |
 | [**Security Audit**](skills/engineering/security-audit/SKILL.md) | Reviews application security across code, APIs, infrastructure, authentication, authorization, secrets, dependencies, and compliance gaps. Use when assessing vulnerabilities, threat models, pentest findings, security controls, exploitability, impact, or remediation plans. |
 | [**Strapi Engineer**](skills/engineering/strapi-engineer/SKILL.md) | Builds, modifies, reviews, and debugs Strapi applications across content types, controllers, services, routes, policies, lifecycle hooks, plugins, auth, GraphQL, and tests. Use when working on Strapi v4 or v5 backend code, project architecture, schema design, API behavior, or production workflow. |
+| [**Supabase Engineer**](skills/engineering/supabase-engineer/SKILL.md) | Builds, modifies, reviews, and debugs Supabase applications across Postgres schema, Row Level Security, auth, the data API, storage, realtime, Edge Functions, migrations, and type generation. Use when working on Supabase database design, RLS policies, session handling, client setup, SQL functions and triggers, local development, performance, security, or backend architecture. |
 | [**Subagent-Driven Development**](skills/engineering/subagent-driven-development/SKILL.md) | User entry point for executing an approved implementation plan task-by-task, each task built by a fresh subagent and checked by an independent reviewer before the next one starts. Use when the user wants to build out an approved plan, task list, or backlog of engineering work with per-task review and a durable progress record. |
 | [**TDD**](skills/engineering/tdd/SKILL.md) | Develops behavior through red-green-refactor test slices that exercise public interfaces and real code paths. Use when adding features, fixing bugs with regression tests, shaping APIs through examples, or refactoring while preserving observable behavior. |
 | [**Technical Trading Strategy**](skills/engineering/technical-trading-strategy/SKILL.md) | Designs, reviews, and implements rule-based technical trading strategies with disciplined backtesting, validation, risk controls, and Python engineering guidance. Use when working on indicator rules, strategy specs, backtest code, execution assumptions, market data, or live-trading readiness. |
