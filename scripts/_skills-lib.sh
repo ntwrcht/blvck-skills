@@ -79,6 +79,7 @@ get_shared_refs() {
   local skill_name="$1"
   case "$skill_name" in
     angular-engineer)             echo "git-workflow.md artifact-paths.md" ;;
+    next-engineer)                echo "git-workflow.md artifact-paths.md" ;;
     strapi-engineer)              echo "context-template.md git-workflow.md artifact-paths.md" ;;
     ga4-measurement)              echo "context-template.md artifact-paths.md" ;;
     security-audit)               echo "context-template.md artifact-paths.md" ;;

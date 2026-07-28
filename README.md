@@ -6,7 +6,7 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Version](https://img.shields.io/badge/version-1.0.0-informational)](.claude-plugin/plugin.json)
-[![Skills](https://img.shields.io/badge/skills-30-success)](#skill-catalog)
+[![Skills](https://img.shields.io/badge/skills-31-success)](#skill-catalog)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](#contributing)
 
 </div>
@@ -34,7 +34,7 @@ Install skills per project with the bundled installer, pull them with `npx skill
 
 ## Key Features
 
-- **30 production-ready skills** spanning daily engineering work (debugging, TDD, review, security) and product workflows (PRDs, stories, stakeholder updates, plan interviews).
+- **31 production-ready skills** spanning daily engineering work (debugging, TDD, review, security) and product workflows (PRDs, stories, stakeholder updates, plan interviews).
 - **Multi-CLI support** — one library installs into Claude Code, Codex, and Gemini CLI, each in its native format.
 - **Interactive installer with preset bundles** — curated *Project PM* and *Project Dev* scenarios for one-keystroke setup, or a custom picker across the full catalog.
 - **Safe, reversible installs** — every copied skill carries an ownership marker; the uninstaller only ever removes what the installer created.
@@ -54,6 +54,7 @@ Install skills per project with the bundled installer, pull them with `npx skill
 | [**Diagnose**](skills/engineering/diagnose/SKILL.md) | Diagnoses hard bugs and performance regressions through a disciplined feedback-loop investigation. Use when a bug, flaky failure, crash, hang, data issue, or slowdown needs reproduction, minimisation, hypotheses, instrumentation, a fix, and a regression test. |
 | [**GA4 Measurement**](skills/engineering/ga4-measurement/SKILL.md) | Plans, implements, reviews, and validates GA4/GTM measurement for product flows, funnels, feature adoption, conversion, errors, and performance. Use when designing event taxonomies, dataLayer or gtag tracking, GA4 reports, GTM setup, analytics QA, or measurement plans. |
 | [**Git Guardrails**](skills/engineering/git-guardrails/SKILL.md) | Installs Claude Code PreToolUse hooks that block dangerous git commands before execution. Use when setting up local or global guardrails for git push, force push, reset --hard, clean, branch deletion, checkout ., or restore . |
+| [**Next Engineer**](skills/engineering/next-engineer/SKILL.md) | Builds, modifies, reviews, and debugs Next.js applications using project conventions, App Router patterns, Server Components, caching and rendering strategies, Server Actions, testing, and deployment guidance. Use when working on Next.js routes, layouts, data fetching, forms, auth, proxy or middleware, route handlers, migrations, performance, security, or full-stack React architecture. |
 | [**Post-mortem**](skills/engineering/post-mortem/SKILL.md) | Writes engineering post-mortems for fixed and validated bugs with symptom, root cause, mechanism, fix, validation, and follow-ups. Use when closing a bug, drafting an RCA, documenting a fix, or converting a debug ledger into a maintainer-readable record. |
 | [**Prototype**](skills/engineering/prototype/SKILL.md) | Builds a throwaway prototype to answer one design question — a hand-driven terminal app to feel out a state model, or several switchable UI variants to explore a look. Use when sanity-checking whether logic or a state model feels right, exploring what a page or component should look like, or feeling out an API shape before committing. |
 | [**Python Engineer**](skills/engineering/python-engineer/SKILL.md) | Builds, modifies, reviews, and debugs Python projects with architecture, packaging, typing, testing, linting, async, data access, and reliability guidance. Use when working on Python application code, libraries, CLIs, services, tooling, refactors, test strategy, or code review. |
