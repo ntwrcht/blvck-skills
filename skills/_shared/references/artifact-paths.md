@@ -27,8 +27,16 @@ A project can override either root, or override an individual key, in `.context/
 | `management-update` | management-talk | `.context/management-update/<slug>.md` | context_root | slug'd |
 | `stakeholder-update` | stakeholder-update | `.context/stakeholder-update/<slug>.md` | context_root | slug'd |
 | `domain-glossary` | domain-modeling | `CONTEXT.md` | none — fixed at repo root | singular (one evolving glossary, not per-feature) |
+| `architecture` | code-to-docs | `docs/architecture/<slug>.md` | docs_root | slug'd (one per documented service or subsystem) |
+| `openapi` | code-to-docs | `docs/api/<slug>.yaml` | docs_root | slug'd |
+| `diagrams-dir` | code-to-docs | `docs/diagrams/` (one file per diagram inside) | docs_root | already slug'd |
+| `runbook` | code-to-docs | `docs/runbooks/<slug>.md` | docs_root | slug'd (one per procedure) |
+| `doc-audit` | code-to-docs | `.context/doc-audit/<slug>.md` | context_root | slug'd |
+| `user-docs` | write-user-docs | `docs/user/<slug>.md` | docs_root | slug'd (one per manual, guide, or tutorial) |
 
 `debug-ledger` is singular because it tracks the *current* investigation and is expected to be reused or cleared once the bug is resolved (see `post-mortem` for the durable writeup). `analytics` is singular for the same reason `domain-glossary` is: it's the same file as `setup-context`'s `analytics.md` domain (one evolving measurement plan, read as input and updated as output — not one file per feature). `domain-glossary` is singular because it is one evolving document, not one per feature — it deliberately lives at the repo root rather than under either root, while its companion ADRs live under `context_root` (`adr-dir` above), matching the `adr/` domain already scaffolded by `setup-context`.
+
+`architecture` is deliberately separate from `design`: `design` holds the forward-looking design doc `brainstorming` produces before code exists, while `architecture` holds the description of a system as it is actually built, extracted from the code. `doc-audit` uses `context_root` because an audit report is a work list consumed once and then acted on, not a durable artifact — the same reasoning as `scrutiny` and `security-findings`. `diagrams-dir` is directory-shaped rather than slug'd because one documented system normally yields several diagrams at different C4 levels.
 
 `adr-dir` uses `context_root`, not `docs_root`, even though ADRs are durable/reviewable — this matches the existing `adr/` domain in `setup-context`'s own domain reference (same `NNNN-short-title.md` numbering `domain-modeling` uses) and the majority of skills that already read `.context/adr/`.
 

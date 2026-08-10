@@ -5,6 +5,7 @@
   "skills": [
     "./skills/engineering/domain-modeling",
     "./skills/engineering/angular-engineer",
+    "./skills/engineering/code-to-docs",
     "./skills/engineering/debug-mantra",
     "./skills/engineering/diagnose",
     "./skills/engineering/ga4-measurement",
@@ -34,6 +35,7 @@
     "./skills/productivity/setup-context",
     "./skills/productivity/release-scan",
     "./skills/productivity/handoff",
-    "./skills/productivity/doc-coauthoring"
+    "./skills/productivity/doc-coauthoring",
+    "./skills/productivity/write-user-docs"
   ]
 }

@@ -6,7 +6,7 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Version](https://img.shields.io/badge/version-1.0.0-informational)](.claude-plugin/plugin.json)
-[![Skills](https://img.shields.io/badge/skills-32-success)](#skill-catalog)
+[![Skills](https://img.shields.io/badge/skills-34-success)](#skill-catalog)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](#contributing)
 
 </div>
@@ -34,7 +34,7 @@ Install skills per project with the bundled installer, pull them with `npx skill
 
 ## Key Features
 
-- **32 production-ready skills** spanning daily engineering work (debugging, TDD, review, security) and product workflows (PRDs, stories, stakeholder updates, plan interviews).
+- **34 production-ready skills** spanning daily engineering work (debugging, TDD, review, security) and product workflows (PRDs, stories, stakeholder updates, plan interviews).
 - **Multi-CLI support** — one library installs into Claude Code, Codex, and Gemini CLI, each in its native format.
 - **Interactive installer with preset bundles** — curated *Project PM* and *Project Dev* scenarios for one-keystroke setup, or a custom picker across the full catalog.
 - **Safe, reversible installs** — every copied skill carries an ownership marker; the uninstaller only ever removes what the installer created.
@@ -49,6 +49,7 @@ Install skills per project with the bundled installer, pull them with `npx skill
 | Skill Name | Description |
 | :--- | :--- |
 | [**Angular Engineer**](skills/engineering/angular-engineer/SKILL.md) | Builds, modifies, reviews, and debugs Angular applications using project conventions, modern Angular patterns, RxJS, Signals, testing, SSR, and Nx guidance. Use when working on Angular components, services, routing, forms, guards, migrations, performance, security, or frontend architecture. |
+| [**Code to Docs**](skills/engineering/code-to-docs/SKILL.md) | Reverse-engineers technical documentation from an existing codebase — architecture overviews, OpenAPI specs, C4 and sequence diagrams, and operational runbooks — and audits technical docs that already exist. Use when documenting an inherited or undocumented service, extracting an API spec from route handlers, drawing system diagrams from code, writing a deployment or incident runbook, or reviewing existing technical docs for gaps. |
 | [**Domain Modeling**](skills/engineering/domain-modeling/SKILL.md) | Builds and sharpens a project's domain model by challenging fuzzy language, updating the shared glossary inline, and recording hard architectural decisions as ADRs. Use when pinning down domain terminology, resolving contested terms, recording an architectural decision, or when another skill needs to maintain the domain vocabulary. |
 | [**Debug Mantra**](skills/engineering/debug-mantra/SKILL.md) | Debugs failures with a compact repro, fail-path trace, hypothesis falsification, and breadcrumb ledger. Use when investigating a bug or failure needs lightweight structure before proposing a fix. |
 | [**Diagnose**](skills/engineering/diagnose/SKILL.md) | Diagnoses hard bugs and performance regressions through a disciplined feedback-loop investigation. Use when a bug, flaky failure, crash, hang, data issue, or slowdown needs reproduction, minimisation, hypotheses, instrumentation, a fix, and a regression test. |
@@ -84,6 +85,7 @@ Install skills per project with the bundled installer, pull them with `npx skill
 | [**Setup Context**](skills/productivity/setup-context/SKILL.md) | Scaffolds shared project context files in .context/ and configure the output locations pipeline skills write artifacts to (PRDs, stories, designs, ADRs, and more). Use when onboarding skills to a new or existing repo, when skills lack shared project context, or to relocate where a skill's output gets saved. |
 | [**Release Scan**](skills/productivity/release-scan/SKILL.md) | Scans one service repository between two tags and produces a standardized Service Release Report used to assemble a customer-facing release note. Use when diffing two tags or versions, working out what shipped between releases, assessing deployment impact or breaking changes, or preparing a release for a dedicated or on-prem customer environment. |
 | [**Handoff**](skills/productivity/handoff/SKILL.md) | Compacts the current conversation into a handoff document so a fresh agent can continue the work without losing context. Use when switching sessions, handing off to another agent, ending a long conversation, or preparing a context brief for a follow-up run. |
+| [**Write User Docs**](skills/productivity/write-user-docs/SKILL.md) | Writes learning-oriented documentation for people outside the team — user manuals, how-to guides, getting-started pages, CLI references, and developer tutorials — with goal-shaped titles, numbered steps, and verification checkpoints. Use when producing a product user guide, help-center or knowledge-base article, quickstart, command reference, or step-by-step tutorial. |
 | [**Doc Co-Authoring**](skills/productivity/doc-coauthoring/SKILL.md) | Co-authors a document with the user section by section — gathering their context, brainstorming and curating each section, then testing the draft against a fresh reader with no context. Use when writing a proposal, technical spec, decision doc, RFC, design doc, or similar long-form content where the user holds the context. |
 
 ### Choosing the Right Skill
@@ -100,6 +102,8 @@ Install the full portable set by default, then rely on concise descriptions and 
 | A fixed and validated bug needs an engineering RCA or post-mortem. | [**Post-mortem**](skills/engineering/post-mortem/SKILL.md) |
 | Incoming tracker issues need classification, state movement, reporter follow-up, or AFK-agent handoff. | [**Triage**](skills/engineering/triage/SKILL.md) |
 | A proposal, spec, decision doc, or RFC needs to be written from context only the user holds. | [**Doc Co-Authoring**](skills/productivity/doc-coauthoring/SKILL.md) |
+| An undocumented codebase needs an architecture doc, API spec, diagrams, or a runbook derived from the code. | [**Code to Docs**](skills/engineering/code-to-docs/SKILL.md) |
+| A user manual, quickstart, help-center article, CLI reference, or tutorial is needed for readers outside the team. | [**Write User Docs**](skills/productivity/write-user-docs/SKILL.md) |
 | Technical material needs to be rewritten for leadership, Slack, Jira, email, standup, or meeting notes. | [**Management Talk**](skills/productivity/management-talk/SKILL.md) |
 | A status, launch, sprint, risk, decision, customer, or multi-audience update needs audience-aware framing. | [**Stakeholder Update**](skills/productivity/stakeholder-update/SKILL.md) |
 | Work is mainly inside a specific stack or domain. | Use the matching engineering skill, and combine it with a workflow skill only when the request also needs debugging, TDD, review, security, measurement, or communication structure. |
