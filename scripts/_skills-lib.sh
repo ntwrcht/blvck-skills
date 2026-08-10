@@ -85,6 +85,8 @@ get_shared_refs() {
     ga4-measurement)              echo "context-template.md artifact-paths.md" ;;
     security-audit)               echo "context-template.md artifact-paths.md" ;;
     python-engineer)              echo "artifact-paths.md" ;;
+    code-to-docs)                 echo "artifact-paths.md" ;;
+    write-user-docs)              echo "artifact-paths.md" ;;
     write-a-prd)                  echo "artifact-paths.md" ;;
     write-a-story)                echo "artifact-paths.md" ;;
     brainstorming)                echo "artifact-paths.md" ;;
