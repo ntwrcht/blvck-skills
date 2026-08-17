@@ -6,7 +6,7 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Version](https://img.shields.io/badge/version-1.0.0-informational)](.claude-plugin/plugin.json)
-[![Skills](https://img.shields.io/badge/skills-34-success)](#skill-catalog)
+[![Skills](https://img.shields.io/badge/skills-36-success)](#skill-catalog)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](#contributing)
 
 </div>
@@ -34,7 +34,7 @@ Install skills per project with the bundled installer, pull them with `npx skill
 
 ## Key Features
 
-- **34 production-ready skills** spanning daily engineering work (debugging, TDD, review, security) and product workflows (PRDs, stories, stakeholder updates, plan interviews).
+- **36 production-ready skills** spanning daily engineering work (debugging, TDD, review, security) and product workflows (PRDs, stories, stakeholder updates, plan interviews, Thai-language writing).
 - **Multi-CLI support** — one library installs into Claude Code, Codex, and Gemini CLI, each in its native format.
 - **Interactive installer with preset bundles** — curated *Project PM* and *Project Dev* scenarios for one-keystroke setup, or a custom picker across the full catalog.
 - **Safe, reversible installs** — every copied skill carries an ownership marker; the uninstaller only ever removes what the installer created.
@@ -87,6 +87,8 @@ Install skills per project with the bundled installer, pull them with `npx skill
 | [**Handoff**](skills/productivity/handoff/SKILL.md) | Compacts the current conversation into a handoff document so a fresh agent can continue the work without losing context. Use when switching sessions, handing off to another agent, ending a long conversation, or preparing a context brief for a follow-up run. |
 | [**Write User Docs**](skills/productivity/write-user-docs/SKILL.md) | Writes learning-oriented documentation for people outside the team — user manuals, how-to guides, getting-started pages, CLI references, and developer tutorials — with goal-shaped titles, numbered steps, and verification checkpoints. Use when producing a product user guide, help-center or knowledge-base article, quickstart, command reference, or step-by-step tutorial. |
 | [**Doc Co-Authoring**](skills/productivity/doc-coauthoring/SKILL.md) | Co-authors a document with the user section by section — gathering their context, brainstorming and curating each section, then testing the draft against a fresh reader with no context. Use when writing a proposal, technical spec, decision doc, RFC, design doc, or similar long-form content where the user holds the context. |
+| [**Kien Thai**](skills/productivity/kien-thai/SKILL.md) | Writes, edits, and translates Thai-language prose that reads like a native Thai writer rather than generic AI output, countering training-data skew toward over-formal, over-polite, calqued Thai. Use when producing a Thai paragraph or longer — blog post, landing page, doc page, Thai README, email, announcement — translating English into Thai, or reviewing and rewriting existing Thai prose. |
+| [**Kode Thai**](skills/productivity/kode-thai/SKILL.md) | Runs an iterative audit-and-fix loop over Thai prose against the kien-thai rule set, repeating passes until one produces zero new edits. Use when the user invokes /kode-thai, asks for an audit loop or repeated review passes on Thai writing, or says variants of "ตรวจวนๆ", "วน audit", "ขัดภาษาไทยให้สุด", or "แก้ไปเรื่อยๆ จนกว่าจะไม่เจอที่ผิด". |
 
 ### Choosing the Right Skill
 
@@ -106,6 +108,7 @@ Install the full portable set by default, then rely on concise descriptions and 
 | A user manual, quickstart, help-center article, CLI reference, or tutorial is needed for readers outside the team. | [**Write User Docs**](skills/productivity/write-user-docs/SKILL.md) |
 | Technical material needs to be rewritten for leadership, Slack, Jira, email, standup, or meeting notes. | [**Management Talk**](skills/productivity/management-talk/SKILL.md) |
 | A status, launch, sprint, risk, decision, customer, or multi-audience update needs audience-aware framing. | [**Stakeholder Update**](skills/productivity/stakeholder-update/SKILL.md) |
+| A Thai-language deliverable needs to read like native prose instead of translated AI output. | [**Kien Thai**](skills/productivity/kien-thai/SKILL.md), then [**Kode Thai**](skills/productivity/kode-thai/SKILL.md) to polish to convergence |
 | Work is mainly inside a specific stack or domain. | Use the matching engineering skill, and combine it with a workflow skill only when the request also needs debugging, TDD, review, security, measurement, or communication structure. |
 
 > **Looking for the PM OS?** The `pm-os-bootstrap` slash command moved to the separate `ai-system` plugin marketplace repo as the `pm-os` plugin (`/pm-os:setup`, `/pm-os:validate`, `/pm-os:score`).
