@@ -1,8 +1,8 @@
 # ADR Format
 
-ADRs live in `docs/adr/` and use sequential numbering: `0001-slug.md`, `0002-slug.md`, etc.
+ADRs live at the `adr-dir` key path — see [artifact-paths.md](./artifact-paths.md), default `.context/adr/` — and use sequential numbering: `0001-slug.md`, `0002-slug.md`, etc.
 
-Create the `docs/adr/` directory lazily — only when the first ADR is needed.
+Create that directory lazily — only when the first ADR is needed.
 
 ## Template
 
@@ -24,7 +24,7 @@ Only include these when they add genuine value. Most ADRs won't need them.
 
 ## Numbering
 
-Scan `docs/adr/` for the highest existing number and increment by one.
+Scan the resolved `adr-dir` for the highest existing number and increment by one. If a project still has ADRs under the old `docs/adr/` default, follow the Migration section of [artifact-paths.md](./artifact-paths.md) before numbering.
 
 ## When to offer an ADR
 

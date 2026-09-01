@@ -66,7 +66,7 @@ If a local repository bans activation phrasing in public descriptions, rewrite t
 
 Load `references/skill-structure.md` when drafting or reviewing a full skill. It contains the folder layout, `SKILL.md` template, progressive disclosure rules, split-file guidance, script guidance, and review checklist.
 
-Load `references/principles.md` when a design decision doesn't follow obviously from the rules — it explains the reasoning behind progressive disclosure, leading words, and completion criteria.
+Load `references/principles.md` when a design decision doesn't follow obviously from the rules — it explains the reasoning behind progressive disclosure, leading words, completion criteria, single source of truth and caching, steering by the positive, and the four failure modes (sediment, sprawl, duplication, no-ops).
 
 ## Drafting Rules
 
@@ -80,6 +80,10 @@ Load `references/principles.md` when a design decision doesn't follow obviously 
 - Avoid time-sensitive claims unless the skill includes a verification step.
 - Do not bundle secrets, private data, or unrelated files.
 - Hunt for **leading words** — compact pretrained concepts (e.g. _legwork_, _fog of war_, _tracer bullets_) that collapse a behavioural principle into a single token. A restatement spread across two or three sentences is a candidate. Coin your own only if no pretrained word fits; a made-up word recruits no priors and costs definition tokens.
+- Steer by the **positive**. State the target behaviour so the banned one is never spoken — a prohibition drags the forbidden behaviour into context and makes it more available, not less. Keep a prohibition only as a hard guardrail you cannot phrase positively, and pair it with the positive target.
+- Keep each meaning in a **single source of truth**, so changing the behaviour is a one-place edit. Duplication costs maintenance and inflates a meaning's rank past what it deserves.
+- Treat the environment as a source of truth too. A skill that restates `package.json` scripts, config files, the directory layout, or `--help` output is a **cache** of a lookup, and earns its load only when that lookup is expensive. Cache what the agent cannot find by looking — the unwritten convention, the reason behind a choice, the gotcha no config confesses.
+- Co-locate a concept's definition, rules, and caveats under one heading, so reading one part brings its neighbours with it.
 
 ## Review Checklist
 
@@ -99,7 +103,20 @@ Before finalizing:
 - Are examples concrete and representative?
 - Are local indexes, manifests, or install metadata updated?
 - Have required validation scripts been run?
-- **Failure modes:** scan for sediment (stale lines that accumulate because removing feels risky), sprawl (length itself — every line live but still too many), duplication (same meaning in two places), no-ops (instructions the agent follows by default), and premature completion risk (steps with completion criteria too vague to resist early exit).
+- Does the draft steer by the positive, and is every remaining prohibition a guardrail that cannot be phrased positively?
+- Does anything here restate what `package.json`, a config file, the directory layout, or `--help` already says?
+- Read the draft for its **silences**: every decision it declines to make is delegated to the agent's priors, so each omission should be deliberate — filled, or left open as a real branch.
+
+**Failure modes.** Four distinct degradations, each with its own cure — see `references/principles.md` for the full diagnostics.
+
+| Mode | Diagnostic | Cure |
+|---|---|---|
+| Sediment | A line no longer bears on what the skill does — the behaviour or world it described changed | Prune on a schedule, not on suspicion |
+| Sprawl | Nothing stale, nothing duplicated, still exhausting to read | Disclose reference behind pointers; split by branch or sequence |
+| Duplication | Changing the behaviour would mean editing two spots | Pick the authoritative home, point at it from the other |
+| No-ops | The line does not change behaviour versus the model's default | Delete the whole sentence, not a few words from it |
+
+Also check for premature-completion risk: a step whose completion criterion is too vague to resist early exit. Sharpen the criterion first; split the sequence only if it is irreducibly fuzzy and you observe the rush.
 
 ## Next Step
 

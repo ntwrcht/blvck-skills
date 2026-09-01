@@ -123,6 +123,14 @@ Keep the main file focused on the common workflow. The spec's limit is 500 lines
 
 Split on **what the agent needs when**, not to hit a number. A 120-line skill whose every line is load-bearing beats a 70-line one that hides the workflow in a reference file the agent never opens.
 
+## Co-location
+
+Progressive disclosure decides *how far down* a piece of content sits. Co-location decides *what sits beside it* once there.
+
+Keep a concept's definition, rules, and caveats under one heading rather than scattered across the file, so reading one part brings its neighbours with it. The test: the skill should read like documentation written for the agent. Grouped material reads that way; scattered material does not.
+
+Scattering is not duplication. Duplication repeats one meaning in two places; scattering fragments one meaning across many. The cure for duplication is deletion, the cure for scattering is grouping.
+
 ## Description Guidance
 
 Respect local repository rules first. Prefer enough trigger context for the agent to select the skill, unless the repository requires neutral public descriptions.

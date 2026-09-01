@@ -33,8 +33,12 @@ A project can override either root, or override an individual key, in `.context/
 | `runbook` | code-to-docs | `docs/runbooks/<slug>.md` | docs_root | slug'd (one per procedure) |
 | `doc-audit` | code-to-docs | `.context/doc-audit/<slug>.md` | context_root | slug'd |
 | `user-docs` | write-user-docs | `docs/user/<slug>.md` | docs_root | slug'd (one per manual, guide, or tutorial) |
+| `research` | research | `docs/research/<slug>.md` | docs_root | slug'd (one per question investigated) |
+| `questionnaire` | to-questionnaire | `docs/questionnaires/<slug>.md` | docs_root | slug'd (one per recipient and topic) |
 
 `debug-ledger` is singular because it tracks the *current* investigation and is expected to be reused or cleared once the bug is resolved (see `post-mortem` for the durable writeup). `analytics` is singular for the same reason `domain-glossary` is: it's the same file as `setup-context`'s `analytics.md` domain (one evolving measurement plan, read as input and updated as output — not one file per feature). `domain-glossary` is singular because it is one evolving document, not one per feature — it deliberately lives at the repo root rather than under either root, while its companion ADRs live under `context_root` (`adr-dir` above), matching the `adr/` domain already scaffolded by `setup-context`.
+
+`research` uses `docs_root` because a cited findings file stays valuable long after the question that prompted it — it is the kind of thing a future reader wants, unlike a one-shot work list. `questionnaire` likewise: the answers that come back are a primary source worth keeping beside the decision they informed.
 
 `architecture` is deliberately separate from `design`: `design` holds the forward-looking design doc `brainstorming` produces before code exists, while `architecture` holds the description of a system as it is actually built, extracted from the code. `doc-audit` uses `context_root` because an audit report is a work list consumed once and then acted on, not a durable artifact — the same reasoning as `scrutiny` and `security-findings`. `diagrams-dir` is directory-shaped rather than slug'd because one documented system normally yields several diagrams at different C4 levels.
 
@@ -52,7 +56,7 @@ Before writing or reading a keyed artifact:
 
 ## Out of scope
 
-Not part of this registry, with reasons: `handoff` (always the OS temp directory, deliberately never the repo), `git-guardrails` (target is inherent to the tool — `.claude/settings.json`), `skill-smith` (its output path — `skills/<bucket>/<name>/SKILL.md` — is structural, not a workspace preference), `caveman` (produces nothing), `triage` (produces tracker state via a connected tool, not a file), `technical-trading-strategy` (no single fixed artifact path).
+Not part of this registry, with reasons: `handoff` (always the OS temp directory, deliberately never the repo), `codebase-design` (produces vocabulary and a recommendation, not a file), `wait-what` (rewrites a message, produces nothing), `git-guardrails` (target is inherent to the tool — `.claude/settings.json`), `skill-smith` (its output path — `skills/<bucket>/<name>/SKILL.md` — is structural, not a workspace preference), `caveman` (produces nothing), `triage` (produces tracker state via a connected tool, not a file), `technical-trading-strategy` (no single fixed artifact path).
 
 ## Migration (pre-existing projects only)
 
