@@ -38,6 +38,10 @@
     "./skills/productivity/doc-coauthoring",
     "./skills/productivity/write-user-docs",
     "./skills/productivity/kien-thai",
-    "./skills/productivity/kode-thai"
+    "./skills/productivity/kode-thai",
+    "./skills/engineering/codebase-design",
+    "./skills/engineering/research",
+    "./skills/productivity/wait-what",
+    "./skills/productivity/to-questionnaire"
   ]
 }

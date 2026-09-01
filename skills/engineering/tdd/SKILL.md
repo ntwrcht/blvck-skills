@@ -34,7 +34,7 @@ A **seam** is the public boundary you test at — the interface where you observ
 
 You can't test everything. Agreeing the seams up front is how testing effort lands on the critical paths and complex logic instead of spreading evenly across every edge case. Ask: "What's the public interface, and which seams should we test?"
 
-When the shape of that interface is itself in question — how deep the module is, where the seam belongs, what the interface should expose — load [deep-modules.md](deep-modules.md) and [interface-design.md](interface-design.md) for the vocabulary. That is reference to consult mid-slice, not a design session to run.
+When the shape of that interface is itself in question — how deep the module is, where the seam belongs, what the interface should expose — use the `codebase-design` skill for the vocabulary. It is the shared source of the module, interface, depth, seam, adapter, leverage and locality terms, and it is reference to consult mid-slice, not a design session to run.
 
 ## Anti-Patterns
 
@@ -94,7 +94,7 @@ Before moving to the next slice, confirm:
 3. **Tracer bullet.** Write one test that confirms one thing about the system end-to-end. Run it and confirm it fails for the expected reason. This proves the path works before you commit to the rest.
 4. **Green.** Make the smallest production change that passes the current test. Avoid speculative branches, abstractions, configuration, or future behavior.
 5. **Repeat vertically.** Add the next test only after the previous slice is green. Let each cycle respond to what the last one revealed.
-6. **Refactor while green.** Simplify names, structure, duplication, and boundaries. Look for: extract duplication, deepen modules (move complexity behind simple interfaces), apply SOLID principles where natural, consider what new code reveals about existing code. Rerun focused tests after each meaningful refactor, then broaden the test run.
+6. **Refactor while green.** Simplify names, structure, duplication, and seams. Look for: extract duplication, deepen modules (move complexity behind simple interfaces — the `codebase-design` skill carries that vocabulary), apply SOLID principles where natural, consider what new code reveals about existing code. Rerun focused tests after each meaningful refactor, then broaden the test run.
 7. **Report the loop.** Summarize behaviors added, tests written, implementation changed, and validation run.
 
 ## Testing Rules
@@ -114,8 +114,6 @@ Load only the reference needed for the current decision:
 
 - [tests.md](tests.md): behavior test examples and anti-patterns.
 - [mocking.md](mocking.md): boundary mocking guidance.
-- [interface-design.md](interface-design.md): API shapes that make tests natural.
-- [deep-modules.md](deep-modules.md): small interfaces with deep implementations.
 - [refactoring.md](refactoring.md): cleanup candidates after green.
 
 ## Next Step

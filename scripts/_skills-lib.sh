@@ -102,6 +102,8 @@ get_shared_refs() {
     tdd)                          echo "artifact-paths.md" ;;
     triage)                       echo "artifact-paths.md" ;;
     setup-context)                echo "artifact-paths.md" ;;
+    research)                     echo "artifact-paths.md" ;;
+    to-questionnaire)             echo "artifact-paths.md" ;;
     *)                echo "" ;;
   esac
 }
