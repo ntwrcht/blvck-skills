@@ -111,6 +111,8 @@ A thin wrapper may point at the skill it wraps ("See `grilling`'s Next Step"). A
 
 Only name a skill the agent can actually reach: a `disable-model-invocation: true` skill cannot be invoked by the model, so route the model to the engine (`grilling`), not the user entry point (`grill-me`). Telling the user to run `/grill-me` is fine; telling the model to use it is a dead end.
 
+The two cases are distinguished by form. A bare `` `name` `` is a route the model takes itself and must land on a model-invocable skill; `/name` addresses the human and may name any skill. Repos that validate this key off exactly that difference.
+
 ## Progressive Disclosure
 
 Skills should load in layers:

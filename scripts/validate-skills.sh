@@ -8,6 +8,9 @@
 #                description present and within the 1024-char spec limit
 #   Body         no overly forceful activation wording; every bundled
 #                references/ and scripts/ link resolves on disk
+#   Next Step    every skill this section routes the model to is one the model
+#                can actually invoke (a `disable-model-invocation: true` skill
+#                is a dead end). Write `/name` to address the human instead.
 #   Catalog      shippable skills appear in plugin.json + both README surfaces;
 #                unshippable buckets appear in neither
 #
@@ -27,6 +30,14 @@ DESC_MAX=1024
 
 PLUGIN_JSON="$REPO_ROOT/.claude-plugin/plugin.json"
 FAILED=0
+
+# Skills the model cannot invoke. A Next Step that routes the model to one of
+# these is a dead end, so the set is needed before the per-skill loop runs.
+USER_ONLY_SKILLS=""
+while IFS= read -r d; do
+  grep -q '^disable-model-invocation: true[[:space:]]*$' "$d/SKILL.md" 2>/dev/null &&
+    USER_ONLY_SKILLS="$USER_ONLY_SKILLS $(skill_name_from_dir "$d")"
+done < <(list_skill_dirs)
 
 fail() { log_error "$1"; FAILED=1; }
 
@@ -149,6 +160,19 @@ while IFS= read -r skill_dir; do
     case "$target" in *'<'*|*'>'*) continue ;; esac
     fail "$rel references '$target', which reaches outside the skill folder and breaks once the skill is installed"
   done <<< "$escaping"
+
+  # A Next Step names where the work goes after this skill. A bare `name` there
+  # is a route the model takes itself, so it must land on a skill the model can
+  # invoke. Addressing the human instead is fine, and written `/name`.
+  next_step="$(printf '%s\n' "$body" | awk '/^## Next Step[[:space:]]*$/ { f = 1; next } /^## / { f = 0 } f')"
+  if [ -n "$next_step" ]; then
+    while IFS= read -r routed; do
+      [ -n "$routed" ] || continue
+      [ "$routed" != "$dir_name" ] || continue
+      _is_in_list "$routed" $USER_ONLY_SKILLS &&
+        fail "$rel Next Step routes the model to '$routed', which sets disable-model-invocation and cannot be invoked by the model — route to its engine, or write '/$routed' to address the user"
+    done < <(printf '%s\n' "$next_step" | grep -oE '`[a-z][a-z0-9-]+`' | tr -d '`' | sort -u || true)
+  fi
 done < <(list_skill_dirs)
 
 log_info "Checked $skill_count skill(s)"

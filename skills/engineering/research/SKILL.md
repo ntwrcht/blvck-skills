@@ -52,7 +52,7 @@ Note the version, date, or commit a claim is true of. A fact with no version att
 
 The findings file is the deliverable. The user reading it and confirming it answers the question is the approval gate.
 
-- **If approved:** hand off to whichever skill raised the question — `grilling` or `brainstorming` when the fact unblocks a decision, an implementation skill when it unblocks code. If the finding settles a hard, surprising trade-off, hand off to `domain-modeling` to record an ADR.
+- **If approved:** hand off to whichever skill raised the question — `grilling` when the fact unblocks a decision, an implementation skill when it unblocks code (tell the user to run `/brainstorming` if the fact reopens the option space). If the finding settles a hard, surprising trade-off, hand off to `domain-modeling` to record an ADR.
 - **If not approved:** ask which claim is thin or which question went unanswered, then run another pass narrowed to that gap — do not broaden the topic.
 
 ---

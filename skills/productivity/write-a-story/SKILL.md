@@ -96,5 +96,5 @@ Before finalizing:
 
 Never create or update Jira issues before the user approves the exact payload.
 
-- **If approved:** hand off to `subagent-driven-development` to execute the stories task-by-task, or directly to `tdd`/`angular-engineer`/`python-engineer`/`strapi-engineer` for small scope.
+- **If approved:** hand off directly to `tdd`/`angular-engineer`/`python-engineer`/`strapi-engineer` for small scope. To execute the stories task-by-task, tell the user to run `/subagent-driven-development`.
 - **If not approved:** revise the stories per feedback and recheck readiness before implementation starts.

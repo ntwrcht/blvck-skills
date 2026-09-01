@@ -169,6 +169,12 @@ expect_reject "path into a sibling skill's folder" "reaches outside" \
 expect_reject "../.. path escaping the skill root" "reaches outside" \
   "sed -i.bak 's|\`references/artifact-paths.md\`: output-location|\`../../_shared/references/artifact-paths.md\`: output-location|' skills/productivity/setup-context/SKILL.md"
 
+# A Next Step routing the model to a user-invoked skill is a dead end: the model
+# cannot call a `disable-model-invocation: true` skill. Eight of these shipped
+# here before the check existed.
+expect_reject "Next Step routes the model to a user-invoked skill" "cannot be invoked by the model" \
+  "sed -i.bak 's|then hand off to shipping (\`post-mortem\`, \`management-talk\`)|then hand off to shipping (\`triage\`, \`post-mortem\`)|' skills/engineering/tdd/SKILL.md"
+
 log_section "Changes that must not trip it"
 
 # The original bug: the catalog check keyed off a heading name, so renaming the
@@ -179,6 +185,11 @@ expect_accept "renaming the README catalog heading" \
 # skill-smith documents where skills live; a placeholder path is not a reference.
 expect_accept "a templated path with <placeholders>" \
   "printf 'See \`skills/<bucket>/<name>/SKILL.md\` for the shape.\n' >> skills/engineering/tdd/SKILL.md"
+
+# Addressing the human is the sanctioned way to reach a user-invoked skill, and
+# is written `/name`. The check must read that as prose, not as a model route.
+expect_accept "Next Step telling the user to run a user-invoked skill" \
+  "sed -i.bak 's|then hand off to shipping (\`post-mortem\`, \`management-talk\`)|then tell the user to run \`/triage\`|' skills/engineering/tdd/SKILL.md"
 
 log_section "Result"
 

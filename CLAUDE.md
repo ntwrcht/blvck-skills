@@ -33,6 +33,8 @@ To share a reference across skills, add it to `skills/_shared/references/`, map 
 
 When routing to another skill, check the agent can reach it: a `disable-model-invocation: true` skill cannot be invoked by the model, so route the model to the engine (`grilling`), not the user entry point (`grill-me`).
 
+In a `## Next Step` section this is enforced. A bare `` `name` `` there reads as a route the model takes itself, so it must name a model-invocable skill. To send the work to a user-invoked skill, address the human instead and write the slash form: "tell the user to run `/triage`". `scripts/validate-skills.sh` fails on the first shape and accepts the second.
+
 Before finishing a new skill or changing public skill descriptions, run:
 
 ```bash

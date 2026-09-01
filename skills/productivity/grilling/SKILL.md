@@ -97,5 +97,5 @@ Number the questions and separate them with a horizontal rule. One round per tur
 
 The session is done when the frontier is empty: every branch of the decision tree visited, nothing left silently assumed. Do not act on the plan until the user confirms you have reached a shared understanding.
 
-- **If approved (frontier empty, understanding confirmed):** hand off to whichever skill triggered the interview — typically `write-a-prd`, `write-a-story`, `brainstorming`, or the relevant implementation skill.
+- **If approved (frontier empty, understanding confirmed):** hand off to whichever skill triggered the interview — typically `write-a-prd`, `write-a-story`, or the relevant implementation skill. If the plan needs options generated rather than resolved, tell the user to run `/brainstorming`.
 - **If not approved (the frontier still has entries):** run the next round — do not hand off with an unresolved dependency.

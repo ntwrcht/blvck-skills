@@ -50,5 +50,5 @@ Propose options before asking the user to invent them. No implementation-shaped 
 
 No implementation-shaped step — code, scaffolding, config, or a plan — starts until the user has approved a written design.
 
-- **If approved:** hand off to `write-a-prd` for formal requirements, or directly to an implementation skill (`tdd`, `angular-engineer`, `python-engineer`, `strapi-engineer`, `subagent-driven-development`) for small scope.
+- **If approved:** hand off to `write-a-prd` for formal requirements, or directly to an implementation skill (`tdd`, `angular-engineer`, `python-engineer`, `strapi-engineer`) for small scope. For a multi-task build, tell the user to run `/subagent-driven-development`.
 - **If not approved:** revise the design in place using this skill's own reviewer loop (the bundled `spec-reviewer-prompt.md`) — do not proceed to `write-a-prd` or any code until approval is explicit.

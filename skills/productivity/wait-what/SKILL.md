@@ -33,7 +33,7 @@ Naming the *output* (`/tldr`, `/no-fluff`) makes the model clip words and lose t
 
 ## Next Step
 
-This skill repairs one message; it has no pipeline stage after it, so it needs no handoff. If messages keep failing to land, the cure is a shared vocabulary built up front — run `grill-with-docs` to establish one in `CONTEXT.md`.
+This skill repairs one message; it has no pipeline stage after it, so it needs no handoff. If messages keep failing to land, the cure is a shared vocabulary built up front — tell the user to run `/grill-with-docs` to establish one in `CONTEXT.md`.
 
 ---
 

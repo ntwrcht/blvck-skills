@@ -95,7 +95,7 @@ Before finalizing:
 - Are activation boundaries clear in `When to Use` and, if needed, `When Not to Use`, naming the neighbouring skills they contrast against?
 - Does `Artifacts` record what the skill produces and consumes, by key path rather than a hardcoded location?
 - Does `Next Step` state an observable approval gate plus both branches — or is its absence explained?
-- Does every skill it routes to actually exist, and can the agent reach it? A `disable-model-invocation: true` skill is a dead end for the model.
+- Does every skill it routes to actually exist, and can the agent reach it? A `disable-model-invocation: true` skill is a dead end for the model. In `Next Step`, a bare `` `name` `` is a route the model takes and must be model-invocable; write `/name` when you mean "tell the user to run it".
 - Does every path resolve inside the skill folder, with no `../`, no sibling-skill path, and no symlink?
 - Is `SKILL.md` under the spec's 500-line ceiling, and split where length hurts scanning?
 - Are detailed materials split into clearly named bundled resources?
