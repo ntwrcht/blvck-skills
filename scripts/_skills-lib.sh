@@ -27,16 +27,18 @@ SHIPPABLE_BUCKETS=(
   "misc"
 )
 
-# Curated minimal bundles — custom mode exposes all 25+ skills
+# Curated minimal bundles — custom mode exposes the full shippable catalog.
 BUNDLE_PROJECT_PM_SKILLS=(
   "grill-me" "grilling" "write-a-prd" "write-a-story"
   "prototype" "stakeholder-update" "management-talk" "handoff" "caveman"
+  "to-questionnaire" "wait-what"
 )
 
 BUNDLE_PROJECT_DEV_SKILLS=(
   "grill-with-docs" "grilling" "write-a-story" "handoff"
   "triage" "tdd" "debug-mantra" "diagnose"
   "domain-modeling" "prototype" "scrutinize" "security-audit" "git-guardrails"
+  "codebase-design" "research"
 )
 
 # Personal-bucket skills the local installer offers even though they stay out
