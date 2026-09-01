@@ -32,7 +32,8 @@ Optimize for a skill another agent can load quickly and apply correctly. Keep tr
 5. Draft the skill using local repository conventions. Use the description format below, and put detailed activation guidance under `When to Use` or `When Not to Use`.
 6. Apply progressive disclosure. Put core behavior in `SKILL.md`; point to specific bundled files for deeper rules, examples, templates, or deterministic helpers.
 7. Review the draft against the checklist. Confirm the skill covers intended use cases without overlapping unrelated skills.
-8. Run any repository validation scripts requested by local instructions before finishing.
+8. Test the skill if it enforces a discipline. Watch an agent fail the scenario without it, then verify compliance with it — see **Testing the Skill** below.
+9. Run any repository validation scripts requested by local instructions before finishing.
 
 ## Invocation Design
 
@@ -66,7 +67,19 @@ If a local repository bans activation phrasing in public descriptions, rewrite t
 
 Load `references/skill-structure.md` when drafting or reviewing a full skill. It contains the folder layout, `SKILL.md` template, progressive disclosure rules, split-file guidance, script guidance, and review checklist.
 
+Load `references/testing-skills.md` when the skill enforces a discipline and needs a baseline before it ships.
+
 Load `references/principles.md` when a design decision doesn't follow obviously from the rules — it explains the reasoning behind progressive disclosure, leading words, completion criteria, single source of truth and caching, steering by the positive, and the four failure modes (sediment, sprawl, duplication, no-ops).
+
+## Testing the Skill
+
+A skill that reads well is not a skill that works. For any skill that enforces a discipline — a rule with a compliance cost that an agent under pressure would skip — the evidence that it works is having watched an agent fail without it.
+
+The cycle is TDD applied to process documentation: run a pressure scenario **without** the skill and record the agent's excuses verbatim (RED), write the skill against those specific excuses (GREEN), then close each new loophole the agent finds and re-run (REFACTOR).
+
+Skipping the baseline is the same mistake as writing a test you never watched fail — you end up countering imagined failures instead of real ones.
+
+Load `references/testing-skills.md` for the pressure-scenario formats, the pressure types, and the four edits that close a loophole. Skip testing for pure reference skills: with no rule to violate, a baseline reveals nothing.
 
 ## Drafting Rules
 
@@ -103,6 +116,7 @@ Before finalizing:
 - Are examples concrete and representative?
 - Are local indexes, manifests, or install metadata updated?
 - Have required validation scripts been run?
+- If the skill enforces a discipline, was it run against a pressure scenario without it first — and does every rationalization it counters come from an observed failure rather than an imagined one?
 - Does the draft steer by the positive, and is every remaining prohibition a guardrail that cannot be phrased positively?
 - Does anything here restate what `package.json`, a config file, the directory layout, or `--help` already says?
 - Read the draft for its **silences**: every decision it declines to make is delegated to the agent's priors, so each omission should be deliberate — filled, or left open as a real branch.

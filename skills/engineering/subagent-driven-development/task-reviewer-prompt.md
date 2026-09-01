@@ -35,6 +35,13 @@ Subagent:
     fix before moving on), Minor (worth noting, doesn't block). Only Critical
     and Important findings block advancing to the next task.
 
+    ## What you cannot see
+
+    The diff is your evidence. If a requirement lives in code this diff doesn't
+    touch, or spans several tasks, don't guess and don't pass it — list it under
+    "Cannot verify from diff" and say what you'd need. Whoever dispatched you
+    holds the plan and will resolve it.
+
     ## Output format
 
     ## Task Review: [TASK_NAME]
@@ -45,7 +52,12 @@ Subagent:
     **Findings (if any):**
     - [Critical|Important|Minor] [what] - [why it matters]
 
+    **Cannot verify from diff (if any):**
+    - [requirement] - [what you'd need to check it]
+
     **Verdict:** Advance | Fix required
 ```
 
-**Reviewer returns:** both verdicts, findings by severity, and a single advance/fix-required call. On "Fix required," dispatch a fix using `implementer-prompt.md` with the findings appended to the task text, then re-review.
+**Reviewer returns:** both verdicts, findings by severity, any items it couldn't verify, and a single advance/fix-required call.
+
+On "Fix required," route the findings by severity and run the bounded fix loop — Critical and Important enter the loop, Minor is deferred to the ledger, and each "Cannot verify" item is resolved by the controller before the task is marked complete. See `references/task-loop.md`.

@@ -45,8 +45,42 @@ Load `references/feedback-loops.md` when you need loop-construction tactics, non
 4. **Minimise.** Shrink the input, scenario, service graph, timing window, or data fixture while preserving the same failure mode. Done when every remaining element is load-bearing — removing any one makes the loop go green.
 5. **Rank hypotheses.** Generate 3-5 falsifiable hypotheses before testing. State each prediction as: "If X is the cause, then changing Y will make the bug disappear or changing Z will make it worse." Show the ranked list to the user before testing — they often have domain knowledge that re-ranks instantly or have already ruled some out. Proceed if unavailable.
 6. **Instrument.** Map every probe to a hypothesis. Prefer debugger or REPL inspection, then targeted logs at distinguishing boundaries. Tag temporary logs with a unique prefix such as `[DEBUG-a4f2]`.
-7. **Fix with a regression test.** Write the regression test before the fix when a correct seam exists. The seam must exercise the real bug pattern as it occurs at the call site; if no correct seam exists, document that architectural gap.
+7. **Fix with a regression test.** Write the regression test before the fix when a correct seam exists. If the fix does not hold, do not stack another on top — see **When Fixes Keep Failing**. The seam must exercise the real bug pattern as it occurs at the call site; if no correct seam exists, document that architectural gap.
 8. **Verify and clean up.** Re-run the original loop, run the regression test, remove all tagged instrumentation, delete throwaway prototypes, and state the hypothesis that proved correct in the commit, PR, or handoff note. Then ask: what would have prevented this bug? If the answer points to an architectural gap — no good test seam, tangled callers, hidden coupling — surface it in the handoff note or as a follow-up task.
+
+## When Fixes Keep Failing
+
+Count the fix attempts. The count is the signal, not the frustration.
+
+- **Under 3 failed fixes:** return to step 5. Re-rank hypotheses with what the failed fix taught you — a fix that failed is evidence, and it usually eliminates a hypothesis.
+- **At 3 failed fixes:** stop fixing and question the architecture. Three failures is rarely three wrong guesses; it usually means the bug is a property of the design rather than a defect in one place.
+
+The tell is what each fix produces: if every attempt reveals new shared state, new coupling, or a new symptom somewhere else, the pattern itself is the problem. Say so, show the three attempts and what each revealed, and put the architectural question to the user before attempting a fourth fix. That is not a failed hypothesis — it is a wrong structure, and another fix will not find it.
+
+## Red Flags
+
+These thoughts mean the loop has been abandoned. Stop and return to the step named.
+
+- "Quick fix now, investigate later" → step 2
+- "Just try changing X and see" → step 5, with a written hypothesis
+- "It's probably X, let me fix that" → step 5; a guess is not a ranked hypothesis
+- "I'll change these three things and run the tests" → step 6, one variable at a time
+- "I don't fully understand it, but this might work" → step 3
+- Proposing a fix before the loop reproduces the symptom → step 2
+- Listing fixes before tracing where the bad value originates → step 5
+- "One more fix attempt" after two have failed → **When Fixes Keep Failing**
+
+## Common Rationalizations
+
+| Excuse | Reality |
+|---|---|
+| "This bug is simple, the loop is overkill" | Simple bugs have root causes too, and the loop is fastest on them. |
+| "It's an emergency, there's no time" | Guess-and-check thrashing is slower than the loop, and it is what emergencies actually cost. |
+| "I'll build the loop after I confirm the fix" | Without the loop there is nothing to confirm against. A fix with no red-capable signal is a hope. |
+| "The test passed once, that proves it" | A regression test that has never been watched fail proves nothing about the bug. |
+| "Fix several things at once to save time" | You cannot tell which change worked, and you have added new suspects. |
+| "I can see the problem in the stack trace" | Seeing the symptom's location is not knowing what put the bad value there. |
+| "It's environmental, there is no root cause" | Most of the time this is an incomplete investigation. Reach it by elimination, not assumption. |
 
 ## Performance Branch
 

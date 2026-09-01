@@ -28,6 +28,12 @@ Subagent:
        and only the task text? Remove anything speculative or unrequested.
     5. Commit with a message describing this task only.
 
+    ## Dispatch no subagents
+
+    Do all of this work yourself. Don't dispatch helpers, and don't dispatch a
+    reviewer — an independent review runs after your report, and a review you
+    arrange duplicates it at the cost of a full extra seat.
+
     ## If you get stuck
 
     Don't guess past a genuine blocker or push code you're not confident in.
