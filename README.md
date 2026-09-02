@@ -6,7 +6,7 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Version](https://img.shields.io/badge/version-1.0.0-informational)](.claude-plugin/plugin.json)
-[![Skills](https://img.shields.io/badge/skills-40-success)](#skill-catalog)
+[![Skills](https://img.shields.io/badge/skills-41-success)](#skill-catalog)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](#contributing)
 
 </div>
@@ -34,7 +34,7 @@ Install skills per project with the bundled installer, pull them with `npx skill
 
 ## Key Features
 
-- **40 production-ready skills** spanning daily engineering work (debugging, TDD, review, security) and product workflows (PRDs, stories, stakeholder updates, plan interviews, Thai-language writing).
+- **41 production-ready skills** spanning daily engineering work (debugging, TDD, review, security) and product workflows (PRDs, stories, stakeholder updates, plan interviews, Thai-language writing).
 - **Multi-CLI support** — one library installs into Claude Code, Codex, and Gemini CLI, each in its native format.
 - **Interactive installer with preset bundles** — curated *Project PM* and *Project Dev* scenarios for one-keystroke setup, or a custom picker across the full catalog.
 - **Safe, reversible installs** — every copied skill carries an ownership marker; the uninstaller only ever removes what the installer created.
@@ -74,6 +74,7 @@ Install skills per project with the bundled installer, pull them with `npx skill
 
 | Skill Name | Description |
 | :--- | :--- |
+| [**Agent Smith**](skills/productivity/agent-smith/SKILL.md) | Designs specialized subagents as a persona-and-operations definition with an explicit tool and model budget, boundaries against sibling agents, and a delegation test run before the agent ships. Use when creating an agent, writing a subagent, defining an agent persona, reviewing an agent definition file, or planning a roster of specialized agents. |
 | [**Brainstorming**](skills/productivity/brainstorming/SKILL.md) | User entry point for shaping a rough idea into an approved design. Use when the user wants to brainstorm a new feature, component, or product idea before writing a plan or touching code. |
 | [**Caveman**](skills/productivity/caveman/SKILL.md) | Ultra-compressed communication mode that drops filler, articles, and pleasantries while keeping technical accuracy. Use when the user says caveman mode, talk like caveman, use caveman, less tokens, be brief, terse mode, or invokes /caveman. |
 | [**Doc Co-Authoring**](skills/productivity/doc-coauthoring/SKILL.md) | Co-authors a document with the user section by section — gathering their context, brainstorming and curating each section, then testing the draft against a fresh reader with no context. Use when writing a proposal, technical spec, decision doc, RFC, design doc, or similar long-form content where the user holds the context. |

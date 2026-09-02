@@ -4,6 +4,7 @@ Daily non-code workflow tools.
 
 | Skill Name | Description |
 | :--- | :--- |
+| [Agent Smith](agent-smith/SKILL.md) | Designs specialized subagents as a persona-and-operations definition with an explicit tool and model budget, boundaries against sibling agents, and a delegation test run before the agent ships. Use when creating an agent, writing a subagent, defining an agent persona, reviewing an agent definition file, or planning a roster of specialized agents. |
 | [Brainstorming](brainstorming/SKILL.md) | User entry point for shaping a rough idea into an approved design. Use when the user wants to brainstorm a new feature, component, or product idea before writing a plan or touching code. |
 | [Caveman](caveman/SKILL.md) | Ultra-compressed communication mode that drops filler, articles, and pleasantries while keeping technical accuracy. Use when the user says caveman mode, talk like caveman, use caveman, less tokens, be brief, terse mode, or invokes /caveman. |
 | [Doc Co-Authoring](doc-coauthoring/SKILL.md) | Co-authors a document with the user section by section — gathering their context, brainstorming and curating each section, then testing the draft against a fresh reader with no context. Use when writing a proposal, technical spec, decision doc, RFC, design doc, or similar long-form content where the user holds the context. |
