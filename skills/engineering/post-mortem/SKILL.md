@@ -36,7 +36,7 @@ Confirm these before drafting. If any are missing, list the gap and stop.
 
 ## Project Context
 
-Read `.context/INDEX.md` when present, then load relevant domains such as `.context/project.md`, `.context/post-mortem.md`, `.context/learning.md`, and `.context/adr/` before drafting. Use them for known failure patterns, vocabulary, and past decisions; do not let context override the required evidence above.
+Read `.context/INDEX.md` when present, then load relevant domain files such as `.context/project.md`, `.context/post-mortem.md`, `.context/learning.md`, and `.context/adr/` before drafting. Use them for known failure patterns, vocabulary, and past decisions; do not let context override the required evidence above.
 
 ## Output Structure
 

@@ -175,6 +175,44 @@ expect_reject "../.. path escaping the skill root" "reaches outside" \
 expect_reject "Next Step routes the model to a user-invoked skill" "cannot be invoked by the model" \
   "sed -i.bak 's|then hand off to shipping (\`post-mortem\`, \`management-talk\`)|then hand off to shipping (\`triage\`, \`post-mortem\`)|' skills/engineering/tdd/SKILL.md"
 
+# Every skill records what it produces and consumes. Eight skills shipped without
+# an Artifacts section before anything checked for one.
+expect_reject "skill with no Artifacts section" "no '## Artifacts' section" \
+  "sed -i.bak '/^## Artifacts$/d' skills/engineering/tdd/SKILL.md"
+
+# A missing Next Step must be deliberate and labelled, never merely absent.
+expect_reject "skill with no Next Step and no explanation" "no '## Next Step' section" \
+  "sed -i.bak '/^## Next Step$/d' skills/engineering/tdd/SKILL.md"
+
+# Thirteen skills bundled references behind no map, under three different heading
+# names. A reference the model cannot find is a reference it will not load.
+expect_reject "bundled references with no Reference Map" "no '## Reference Map' section" \
+  "sed -i.bak '/^## Reference Map$/d' skills/engineering/tdd/SKILL.md"
+
+# Eleven bundled files sat at skill roots in three naming conventions, so
+# "does this skill bundle anything" could not be answered by looking.
+expect_reject "loose .md at the skill root" "loose" \
+  "printf '# stray\n' > skills/engineering/tdd/deepening.md"
+
+# Only SKILL.md was scanned for escaping paths, so six bundled references shipped
+# pointing into setup-context's folder — dead the moment a skill is installed.
+expect_reject "bundled reference reaching into a sibling skill" "reaches outside" \
+  "printf 'See \`skills/productivity/setup-context/references/domains.md\`.\n' >> skills/engineering/tdd/references/mocking.md"
+
+expect_reject "bundled reference escaping with ../.." "reaches outside" \
+  "printf 'See \`../../_shared/references/artifact-paths.md\`.\n' >> skills/engineering/tdd/references/tests.md"
+
+expect_reject "bundled script escaping the skill root" "reaches outside" \
+  "printf '# see \`skills/_shared/references/git-workflow.md\`\n' >> skills/engineering/diagnose/scripts/hitl-loop.template.sh"
+
+# The marker is only honoured near the top, so it cannot be buried in prose.
+expect_reject "portability-exempt marker buried below the header" "reaches outside" \
+  "python3 - <<'EOF'
+import pathlib
+p = pathlib.Path('skills/engineering/tdd/references/mocking.md')
+p.write_text('# Title\n\n' + 'filler\n' * 8 + '<!-- portability-exempt: too late -->\n\nSee \`skills/productivity/setup-context/references/domains.md\`.\n')
+EOF"
+
 log_section "Changes that must not trip it"
 
 # The original bug: the catalog check keyed off a heading name, so renaming the
@@ -190,6 +228,27 @@ expect_accept "a templated path with <placeholders>" \
 # is written `/name`. The check must read that as prose, not as a model route.
 expect_accept "Next Step telling the user to run a user-invoked skill" \
   "sed -i.bak 's|then hand off to shipping (\`post-mortem\`, \`management-talk\`)|then tell the user to run \`/triage\`|' skills/engineering/tdd/SKILL.md"
+
+# A skill with no next stage says so, and that label is what excuses the section.
+# The check must read the label, not just the heading.
+expect_accept "no Next Step section, but labelled as deliberate" \
+  "sed -i.bak '/^## Next Step\$/d' skills/engineering/tdd/SKILL.md
+   printf '\n_No **Next Step**: test fixture._\n' >> skills/engineering/tdd/SKILL.md"
+
+# artifact-paths.md is generated and pointed at inline, so a references/ dir
+# holding only it must not demand a Reference Map.
+expect_accept "references/ holding only the generated artifact-paths.md" \
+  "mkdir -p skills/productivity/grill-me/references
+   cp skills/_shared/references/artifact-paths.md skills/productivity/grill-me/references/"
+
+# Upstream licence notices keep their conventional name at the skill root.
+expect_accept "NOTICE.md at the skill root" \
+  "printf '# notice\n' > skills/engineering/tdd/NOTICE.md"
+
+# A file that teaches the path rule has to quote the broken shapes. It opts out
+# explicitly, and the opt-out must actually work.
+expect_accept "portability-exempt file quoting a broken path" \
+  "printf '<!-- portability-exempt: test fixture -->\n\nSee \`skills/productivity/setup-context/references/domains.md\`.\n' > skills/engineering/tdd/references/mocking.md"
 
 log_section "Result"
 

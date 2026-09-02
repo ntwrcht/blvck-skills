@@ -39,12 +39,13 @@ generating, modifying, reviewing, or debugging project code.
 
 ## Workflow
 
-1. Inspect local context before changing code: `.context/INDEX.md` when present,
-   relevant domain files such as `.context/project.md`, `.context/engineering.md`,
+1. Inspect local context before changing code. Read `.context/INDEX.md` when
+   present, then load relevant domain files such as `.context/project.md`, `.context/engineering.md`,
    `.context/git-workflow.md`, `.context/security.md`, `.context/learning.md`,
    and `.context/adr/`, plus `pyproject.toml`, `setup.cfg`, `setup.py`,
    `requirements*.txt`, lockfiles, source layout, tests, and nearby
-   implementation patterns.
+   implementation patterns. If context is missing and project code changes are
+   needed, follow `references/project-context.md`.
 2. Load only the reference files needed for the task from the Reference Map.
 3. For structural or cross-module changes, state the problem shape, ownership
    boundary, key tradeoff, and validation plan before editing.
@@ -71,6 +72,25 @@ generating, modifying, reviewing, or debugging project code.
 - Add dependencies only when the standard library or current project stack would
   make the code meaningfully worse.
 
+## Version Guide
+
+| Version | Default shape | Common APIs |
+|---|---|---|
+| 3.9 | `typing` generics | `Dict`/`List` from `typing`, no `match`, no `X \| Y` in annotations |
+| 3.10-3.11 | builtin generics | `match`, `X \| Y` unions, `dataclass(slots=True)`, `ExceptionGroup` and `tomllib` from 3.11 |
+| 3.12 | inline type params | `type` aliases, PEP 695 generics, `@override`, `itertools.batched` |
+| 3.13+ | same model, refined | free-threaded builds as an option, improved REPL and error messages |
+
+Read `requires-python` before choosing any of these. Ask before defaulting when the floor is unclear and the choice affects generated code — the failure otherwise appears in CI, not at the keyboard.
+
+## Output Shape
+
+- Small fix: changed code plus one sentence explaining the issue.
+- New feature or refactor: decision note, tests, implementation, validation.
+- Code review: findings first with file and line references, then test gaps.
+- Architecture question: options, recommendation, tradeoffs, and migration path.
+- Tooling setup: chosen tools, config changes, and commands to run.
+
 ## Reference Map
 
 Load only the reference needed for the current decision:
@@ -85,14 +105,10 @@ Load only the reference needed for the current decision:
   regression tests, or async tests.
 - `references/async-security-reliability.md`: asyncio, concurrency, resource
   cleanup, subprocesses, SQL, paths, secrets, retries, or timeouts.
-
-## Output Shape
-
-- Small fix: changed code plus one sentence explaining the issue.
-- New feature or refactor: decision note, tests, implementation, validation.
-- Code review: findings first with file and line references, then test gaps.
-- Architecture question: options, recommendation, tradeoffs, and migration path.
-- Tooling setup: chosen tools, config changes, and commands to run.
+- `references/project-context.md`: what to read when `.context/` is missing or
+  stale, the four facts that change generated code, and the detector.
+- `scripts/detect-project.sh`: inspects the repo and prints draft `.context/`
+  domain files. Run it rather than interviewing the user.
 
 ## Next Step
 

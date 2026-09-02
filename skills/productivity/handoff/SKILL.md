@@ -15,6 +15,11 @@ Use when the user wants to end a session and continue later, switch to a new age
 
 Do not reproduce content already captured in durable artifacts — PRDs, ADRs, plans, issues, commits, diffs. Reference those by path or URL. Use `triage` when the goal is to classify or move tracker issues. Use `write-a-prd` or `write-a-story` when the goal is to produce a new product artifact, not summarise a session.
 
+## Artifacts
+
+- Produces: `handoff-<YYYY-MM-DD>.md` in the OS temp directory — see **Output**. Deliberately outside the shared artifact-paths registry: a session brief is not a project artifact and must not land in the repo.
+- Consumes: the current conversation, plus the durable artifacts it references by path
+
 ## Output
 
 Save the document to the OS temp directory, never to the working directory or repository. Use `$TMPDIR` on macOS/Linux or `%TEMP%` on Windows. Name the file `handoff-<YYYY-MM-DD>.md`.
@@ -52,3 +57,5 @@ Tell the user the full file path when done.
 - **Redact.** Remove API keys, passwords, tokens, secrets, and personally identifiable information before writing. Replace with `[REDACTED]`.
 - **Be brief.** The document is a briefing, not a transcript. Cut anything the next agent can re-derive by reading the codebase or referenced artifacts.
 - **Suggest skills concretely.** In Suggested Skills, name the exact skill and explain in one sentence why it applies to the next session's focus.
+
+_No **Next Step**: this skill closes a session rather than advancing a pipeline. The next agent picks its own starting point from the document's **Suggested Skills** section._

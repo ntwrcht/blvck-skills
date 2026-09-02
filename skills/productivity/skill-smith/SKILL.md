@@ -63,7 +63,7 @@ Use a concise two-sentence YAML description when possible. Target 150–300 char
 
 If a local repository bans activation phrasing in public descriptions, rewrite the second sentence as neutral scope text with the same keywords. Still keep detailed activation boundaries in `When to Use` and `When Not to Use`.
 
-## Structure Guide
+## Reference Map
 
 Load `references/skill-structure.md` when drafting or reviewing a full skill. It contains the folder layout, `SKILL.md` template, progressive disclosure rules, split-file guidance, script guidance, and review checklist.
 

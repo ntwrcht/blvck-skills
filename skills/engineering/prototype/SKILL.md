@@ -28,8 +28,8 @@ Two questions route to two branches — see **Pick a branch**.
 
 Identify which question is being answered — from the user's prompt, the surrounding code, or by asking if the user is around:
 
-- **"Does this logic / state model feel right?"** → [LOGIC.md](LOGIC.md). Build a single shareable HTML file — free-play buttons plus tabbed guided walkthroughs — that pushes the state machine through cases that are hard to reason about on paper, and that a non-developer can drive.
-- **"What should this look like?"** → [UI.md](UI.md). Generate several radically different UI variations on a single route, switchable via a URL search param and a floating bottom bar.
+- **"Does this logic / state model feel right?"** → `references/logic.md`. Build a single shareable HTML file — free-play buttons plus tabbed guided walkthroughs — that pushes the state machine through cases that are hard to reason about on paper, and that a non-developer can drive.
+- **"What should this look like?"** → `references/ui.md`. Generate several radically different UI variations on a single route, switchable via a URL search param and a floating bottom bar.
 
 The two branches produce very different artifacts — getting this wrong wastes the whole prototype. If the question is genuinely ambiguous and the user isn't reachable, default to whichever branch better matches the surrounding code (a backend module → logic; a page or component → UI) and state the assumption at the top of the prototype.
 
@@ -49,6 +49,11 @@ Two things get captured, and they go to different places.
 The **answer** is the durable artifact: the verdict plus the question it settled. Write it to a commit message, an ADR, or the implementation issue. If the user is around, that capture is a quick conversation; if not, leave the placeholder so they (or you, on the next pass) can fill in the verdict.
 
 The **prototype** is a primary source, not rubbish. Throwaway means out of main, not deleted: commit it to a `prototype/<name>` branch and leave a context pointer to that branch on the implementation issue. A written-up verdict flattens what the prototype showed; the branch keeps the thing itself re-runnable when someone later asks "why did we decide that?" Main stays clean, because variant components and prototype shells left in main rot fast and confuse the next reader.
+
+## Reference Map
+
+- `references/logic.md`: the logic/state branch — single shareable HTML file, free-play buttons, tabbed guided walkthroughs.
+- `references/ui.md`: the look-and-feel branch — several radically different variants on one route, switchable from a floating bar.
 
 ## Next Step
 

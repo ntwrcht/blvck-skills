@@ -11,6 +11,14 @@
 #   Next Step    every skill this section routes the model to is one the model
 #                can actually invoke (a `disable-model-invocation: true` skill
 #                is a dead end). Write `/name` to address the human instead.
+#   Sections     every skill has `## Artifacts`; and `## Next Step` or an
+#                explicit line saying why it has no next stage; and a
+#                `## Reference Map` whenever it bundles real references
+#   Layout       bundled material lives in references/ (kebab-case), never as a
+#                loose .md at the skill root
+#   Portability  no path in a SKILL.md *or a bundled file* reaches outside the
+#                skill folder; a file teaching the rule opts out with a
+#                `portability-exempt:` comment in its first 5 lines
 #   Catalog      shippable skills appear in plugin.json + both README surfaces;
 #                unshippable buckets appear in neither
 #
@@ -89,6 +97,7 @@ while IFS= read -r skill_dir; do
   skill_count=$((skill_count + 1))
   skill_file="$skill_dir/SKILL.md"
   rel="${skill_file#"$REPO_ROOT"/}"
+  rel_dir="${skill_dir#"$REPO_ROOT"/}"
   dir_name="$(skill_name_from_dir "$skill_dir")"
 
   if [ "$(head -1 "$skill_file")" != "---" ]; then
@@ -173,6 +182,55 @@ while IFS= read -r skill_dir; do
         fail "$rel Next Step routes the model to '$routed', which sets disable-model-invocation and cannot be invoked by the model — route to its engine, or write '/$routed' to address the user"
     done < <(printf '%s\n' "$next_step" | grep -oE '`[a-z][a-z0-9-]+`' | tr -d '`' | sort -u || true)
   fi
+  # Every skill records what it produces and consumes, so a pipeline stage can be
+  # traced without opening the workflow.
+  grep -qE '^## Artifacts[[:space:]]*$' "$skill_file" ||
+    fail "$rel has no '## Artifacts' section — record what the skill produces and consumes"
+
+  # A skill that hands work onward states the gate and both branches. One with no
+  # next stage — a one-shot installer, a tone modifier, a session-boundary tool —
+  # says so instead, so a missing section is never ambiguous.
+  if ! grep -qE '^## Next Step[[:space:]]*$' "$skill_file" &&
+     ! grep -qE '^_No \*\*Next Step\*\*:' "$skill_file"; then
+    fail "$rel has no '## Next Step' section and no line explaining its absence — add the section, or a line starting '_No **Next Step**:' saying why there is no next stage"
+  fi
+
+  # References the model cannot find are references it will not load. artifact-paths.md
+  # is generated and pointed at inline, so it alone does not require a map.
+  if [ -d "$skill_dir/references" ]; then
+    real_refs="$(ls "$skill_dir/references" 2>/dev/null | grep -vc '^artifact-paths\.md$' || true)"
+    if [ "${real_refs:-0}" -gt 0 ] && ! grep -qE '^## Reference Map[[:space:]]*$' "$skill_file"; then
+      fail "$rel bundles $real_refs reference file(s) but has no '## Reference Map' section listing them"
+    fi
+  fi
+
+  # The same portability rule applies inside bundled files: a reference that reaches
+  # into a sibling skill is dead once installed, and six shipped that way because
+  # only SKILL.md was ever scanned. A file that must quote such paths — one teaching
+  # the rule itself — opts out with a `portability-exempt:` comment giving a reason.
+  while IFS= read -r bundled; do
+    [ -n "$bundled" ] || continue
+    head -5 "$bundled" | grep -q 'portability-exempt:' && continue
+    while IFS= read -r target; do
+      [ -n "$target" ] || continue
+      case "$target" in *'<'*|*'>'*) continue ;; esac
+      fail "${bundled#"$REPO_ROOT"/} references '$target', which reaches outside the skill folder and breaks once the skill is installed"
+    done < <(
+      grep -oE '`(\.\./|skills/)[^`]+`|\]\((\.\./|skills/)[^)]+\)' "$bundled" 2>/dev/null |
+        sed 's/^`//; s/`$//; s/^](//; s/)$//' | sort -u || true
+    )
+  done < <(find "$skill_dir" -mindepth 2 -type f \( -name '*.md' -o -name '*.sh' \) 2>/dev/null)
+
+  # Bundled material lives in references/, scripts/, or assets/. A loose .md at the
+  # skill root makes "does this skill bundle anything" unanswerable by looking.
+  while IFS= read -r loose; do
+    [ -n "$loose" ] || continue
+    fail "$rel_dir has a loose '$loose' at its root — move bundled material into references/ (kebab-case)"
+  done < <(
+    find "$skill_dir" -maxdepth 1 -name '*.md' -exec basename {} \; 2>/dev/null |
+      grep -vxE 'SKILL\.md|NOTICE\.md' || true
+  )
+
 done < <(list_skill_dirs)
 
 log_info "Checked $skill_count skill(s)"

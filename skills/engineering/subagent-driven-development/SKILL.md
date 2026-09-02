@@ -22,7 +22,7 @@ Use when the user has an approved plan, task list, or backlog (from `write-a-sto
 
 - Consumes: the plan or task list file passed in as the argument
 - Produces: progress ledger at the `sdd-progress` key path — see `references/artifact-paths.md` (default `.context/sdd-progress/<slug>.md`, one ledger per plan); one commit per task
-- Bundled: `implementer-prompt.md`, `task-reviewer-prompt.md` — dispatch templates for steps 2 and 4; `references/task-loop.md` — the loop's mechanics
+- Bundled: `references/implementer-prompt.md`, `references/task-reviewer-prompt.md` — dispatch templates for steps 2 and 4; `references/task-loop.md` — the loop's mechanics
 
 ## Core Rule
 
@@ -31,9 +31,9 @@ Give each task a fresh subagent with only what it needs, gate it with two separa
 ## Workflow
 
 1. Read the plan, list every task, and write the ledger file with all tasks marked pending.
-2. Record BASE (`git rev-parse HEAD`), then dispatch an implementer using `implementer-prompt.md` with only that task's text plus the interfaces or decisions from earlier tasks it needs — not the whole plan. Hand work over as file paths, not pasted text.
+2. Record BASE (`git rev-parse HEAD`), then dispatch an implementer using `references/implementer-prompt.md` with only that task's text plus the interfaces or decisions from earlier tasks it needs — not the whole plan. Hand work over as file paths, not pasted text.
 3. Handle the report by its status — `DONE`, `DONE_WITH_CONCERNS`, `NEEDS_CONTEXT`, or `BLOCKED`. Each has a different move; see `references/task-loop.md`.
-4. On DONE (or once concerns are resolved), dispatch a reviewer using `task-reviewer-prompt.md` with the diff from BASE to HEAD — never `HEAD~1`, which drops all but the last commit of a multi-commit task.
+4. On DONE (or once concerns are resolved), dispatch a reviewer using `references/task-reviewer-prompt.md` with the diff from BASE to HEAD — never `HEAD~1`, which drops all but the last commit of a multi-commit task.
 5. Route the findings by severity: Critical and Important enter the fix loop; Minor is recorded in the ledger as deferred and triaged at the final review. The fix loop runs at most five rounds — rounds 1–3 resume the original implementer, rounds 4–5 go to a fresh one on a more capable model.
 6. Mark the task complete in the ledger with its commit range, then continue to the next pending task without stopping to check in. Only stop for a blocker you can't resolve or genuine ambiguity.
 7. After all tasks are complete, run one broader review across the full diff — pointed at the deferred-Minor list — before calling the plan done.
@@ -61,6 +61,12 @@ Check the ledger at the `sdd-progress` key path (see `references/artifact-paths.
 - Never pre-judge findings for a reviewer. Telling it to ignore an issue, or capping a severity in advance, buys one skipped round and costs the review its point.
 - If a task reports BLOCKED, change something — more context, a stronger model, a smaller task, a ruling on a wrong plan step — before retrying. Don't re-dispatch unchanged.
 - Batch small same-shape edits into one dispatch and review them as one diff. One dispatch per task is for work that needs its own judgment, tests, or review surface.
+
+## Reference Map
+
+- `references/task-loop.md`: the loop's mechanics — BASE tracking, review verdicts, and recovery when a task fails review.
+- `references/implementer-prompt.md`: dispatch template for step 2.
+- `references/task-reviewer-prompt.md`: dispatch template for step 4.
 
 ## Next Step
 

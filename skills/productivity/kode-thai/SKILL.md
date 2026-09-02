@@ -13,6 +13,22 @@ Single-pass review misses issues that only surface after earlier fixes shift
 sentence shape. A connective collapses, the next sentence's framing changes, a
 new awkward seam appears. Loop until clean.
 
+## When to Use
+
+Use when Thai prose needs passes repeated to convergence rather than one review: `/kode-thai`,
+"ตรวจวนๆ", "วน audit", "ขัดภาษาไทยให้สุด", "แก้ไปเรื่อยๆ จนกว่าจะไม่เจอที่ผิด".
+
+Use `kien-thai` on its own for a single pass. That skill is the rule set; this one only drives
+it to a fixed point — see **Relationship to kien-thai**. `kien-thai`'s scope limits apply here
+unchanged, so prose shorter than a paragraph, UI strings, and non-Thai content stay out of the
+loop. Check **Token cost** before starting on anything over ~1000 words.
+
+## Artifacts
+
+- Produces: the target Thai prose file, edited in place until an audit pass finds nothing. No
+  separate artifact, so it is outside the shared artifact-paths registry.
+- Consumes: the target file, plus `kien-thai`'s `SKILL.md` and all eight of its references
+
 ## Protocol
 
 1. Invoke the `kien-thai` skill and load it in full — its `SKILL.md` plus all

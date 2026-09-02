@@ -155,7 +155,7 @@ Each domain file uses these layers where applicable:
 
 ## adr/ (directory)
 
-**Consumed by:** diagnose, tdd, scrutinize, and (as the `adr-dir` key) every skill listed in `../../_shared/references/artifact-paths.md`
+**Consumed by:** diagnose, tdd, scrutinize, and (as the `adr-dir` key) every skill listed in `references/artifact-paths.md`
 
 **Explainer:** Architectural decisions with rationale, produced by the `domain-modeling` skill. Skills check this before proposing changes that might contradict past decisions. This is the same directory as the `adr-dir` key in `artifact-paths.md` — don't ask about it twice if output locations are also being configured.
 

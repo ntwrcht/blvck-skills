@@ -96,3 +96,5 @@ DELETE FROM users;
 
 Caveman resume. Verify backup exists + env correct first.
 ```
+
+_No **Next Step**: this skill modifies how every later reply is worded and has no pipeline stage after it. It ends when the user turns it off, not when an artifact is approved._

@@ -36,6 +36,13 @@ For a single pass, apply this skill directly. To converge — audit, fix, re-rea
 repeat until a pass finds nothing — hand off to the `kode-thai` loop, which
 enforces these rules to a fixed point rather than adding new ones.
 
+## Artifacts
+
+- Produces: Thai prose — drafted, edited, or translated in place. No file of its own, so it is
+  outside the shared artifact-paths registry; the destination belongs to whichever skill owns
+  the piece.
+- Consumes: the source text or English original, and the target register
+
 ## Honest limits
 
 Base-model choice may be a larger lever on Thai naturalness than this skill.
@@ -341,7 +348,7 @@ Minimum checklist:
   in Thai.
 - ทับศัพท์ judgment per the four-bucket guide in `references/style-rules.md`.
 
-## References
+## Reference Map
 
 Bundle order: `ai-tells.md` (mechanical), `craft.md` (soft taste),
 `examples.md` (register-tagged before/after), `forbidden-phrases.md` (audit

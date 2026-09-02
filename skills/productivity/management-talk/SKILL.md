@@ -1,6 +1,6 @@
 ---
 name: management-talk
-description: "Rewrites engineering updates into clear leadership and cross-functional communication while preserving state, impact, ownership, risks, and next steps. Use when drafting Jira comments, Slack posts, standup notes, emails, meeting talking points, or executive summaries from technical source material."
+description: "Rewrites existing engineering source material into leadership and cross-functional communication, preserving state, impact, ownership, risks, and next steps. Use when a ticket, postmortem, thread, or engineer's draft already exists and needs a Jira comment, Slack post, standup note, email, meeting talking points, or executive summary."
 argument-hint: "<technical update, draft, ticket context, or target channel>"
 ---
 
@@ -10,13 +10,19 @@ Turn engineer-to-engineer source material into management-ready communication. K
 
 ## When to Use
 
-Use this skill when the user asks for a leadership version, management update, executive summary, status rewrite, Jira comment, Slack post, standup note, email, or meeting talking points based on technical work.
+One question separates this skill from `stakeholder-update`, and it is answerable by looking:
 
-Use it for audiences such as managers, directors, VPs, PMs, TPMs, release managers, support leads, and cross-functional partners who understand product and system concepts but do not need to read code.
+> **Is there already written source material to rewrite?**
+
+If yes — a ticket, a postmortem, a Slack thread, an engineer's draft, a commit series — this skill translates it. The facts are settled; the work is audience and register. That covers requests for a leadership version, management update, executive summary, status rewrite, Jira comment, Slack post, standup note, email, or meeting talking points.
+
+If no — the facts still have to be gathered before anything can be framed — use `stakeholder-update`, which starts by establishing them.
+
+Write for audiences such as managers, directors, VPs, PMs, TPMs, release managers, support leads, and cross-functional partners who understand product and system concepts but do not need to read code.
 
 ## When Not to Use
 
-- Use `stakeholder-update` when the request is broader program reporting, launch status, sprint summary, or multi-audience status planning rather than rewriting technical material.
+- Use `stakeholder-update` when there is no written source to work from and the facts must be gathered first.
 - Use `write-a-story` when the output is backlog-ready acceptance criteria, story text, or Jira issue structure.
 - Use `post-mortem` when the user needs the full incident or bug writeup first; use this skill afterward for the leadership-facing version.
 - Do not make the copy customer-facing, marketing-oriented, legal, finance, or true ELI5 unless the user asks for that audience explicitly.

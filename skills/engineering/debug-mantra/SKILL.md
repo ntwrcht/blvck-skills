@@ -1,6 +1,6 @@
 ---
 name: debug-mantra
-description: "Debugs failures with a compact repro, fail-path trace, hypothesis falsification, and breadcrumb ledger. Use when investigating a bug or failure needs lightweight structure before proposing a fix."
+description: "Debugs a failure that already reproduces, through a fail-path trace, hypothesis falsification, and a breadcrumb ledger. Use when a failing test, command, or request already gives a reliable red signal and the cause is not yet proven."
 ---
 
 # Debug Mantra
@@ -9,9 +9,15 @@ Run debugging as an evidence loop: reproduce, trace, falsify, then fix.
 
 ## When to Use
 
-Use this skill for active debugging that needs lightweight structure: failing tests, local defects, unexpected errors, and bug reports where the cause is not already proven.
+One question separates this skill from `diagnose`, and it is answerable before any investigation starts:
 
-Use `diagnose` for heavier investigations: hard bugs, performance regressions, flaky failures, crashes, hangs, production-only symptoms, multi-service failures, or cases that need minimisation, bisection, trace replay, or human-in-the-loop reproduction. Use the relevant language or framework skill alongside this one when implementation patterns matter. After the bug is fixed and validated, use `post-mortem` for the engineering writeup.
+> **Do you already have a command that shows the failure every time you run it?**
+
+If yes — a failing test, a `curl`, a CLI invocation, a script someone handed you — the red signal already exists and this skill spends its effort on the cause instead. That covers failing tests, local defects, unexpected errors, and bug reports that come with steps that work.
+
+If no — the failure is intermittent, appears only in production, needs a harness, a bisection, a trace replay, or a human in the loop to surface — the first job is building that signal, which is `diagnose`. Answer it by running the repro twice, not by judging how hard the bug looks.
+
+Use the relevant language or framework skill alongside this one when implementation patterns matter. After the bug is fixed and validated, use `post-mortem` for the engineering writeup.
 
 ## When Not to Use
 
@@ -61,4 +67,4 @@ Default to a chat ledger. If the user asks to persist or hand off context, write
 Do not close the debugging session until the user confirms the bug is fixed and the fix has been validated.
 
 - **If approved:** the bug is fixed and validated — recommend `post-mortem` for the writeup, especially when the bug was significant or user-facing.
-- **If not approved:** stay in this skill's own loop and keep gathering evidence, or escalate to `diagnose` if hypothesis-driven debugging isn't converging — do not proceed to `post-mortem` until approval is explicit.
+- **If not approved:** stay in this skill's own loop and keep gathering evidence. Escalate to `diagnose` when the premise breaks — the repro that looked reliable turns out to be intermittent, or the fail path leaves the process and needs a harness to follow. Do not proceed to `post-mortem` until approval is explicit.

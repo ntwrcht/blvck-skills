@@ -66,14 +66,12 @@ If the detector cannot run, ask for the missing values that affect the work:
 
 ## Files to Create
 
-When context files are missing and the user accepts context setup, use the `setup-context` skill. It creates:
+When context files are missing and the user accepts context setup, tell the user to run `/setup-context`. It creates:
 
 - `.context/INDEX.md`: available context domains
 - `.context/project.md`: stack, repo layout, environment, and vocabulary
 - `.context/engineering.md`: Next.js and testing conventions
 - `.context/git-workflow.md`: branch, commit, and release conventions
-
-Use `skills/productivity/setup-context/references/domains.md` for exact structure.
 
 Create provider stubs only if they do not already exist:
 

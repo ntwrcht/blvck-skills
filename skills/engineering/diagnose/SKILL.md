@@ -1,6 +1,6 @@
 ---
 name: diagnose
-description: "Diagnoses hard bugs and performance regressions through a disciplined feedback-loop investigation. Use when a bug, flaky failure, crash, hang, data issue, or slowdown needs reproduction, minimisation, hypotheses, instrumentation, a fix, and a regression test."
+description: "Diagnoses hard bugs and performance regressions through a disciplined feedback-loop investigation. Use when a failure has no reliable repro yet — flaky, production-only, crash, hang, data corruption, or slowdown — and a harness must be built before minimisation, hypotheses, instrumentation, a fix, and a regression test."
 ---
 
 # Diagnose
@@ -9,9 +9,11 @@ Run hard bug work as a feedback-loop investigation: reproduce, minimise, hypothe
 
 ## When to Use
 
-Use this skill for hard bugs and regressions where a quick inspection is unlikely to be enough: flaky failures, crashes, hangs, data corruption, timing issues, production-only symptoms, multi-service failures, and performance regressions.
+Use this skill when **no command reliably shows the failure yet** — the signal has to be built before the cause can be chased. That is the case for flaky failures, crashes, hangs, data corruption, timing issues, production-only symptoms, multi-service failures, and performance regressions, and Step 2 exists to build exactly that signal.
 
-Use `debug-mantra` for lighter active debugging when the user needs a compact discipline rather than the full diagnosis workflow. Use the relevant language, framework, or domain skill alongside this one when implementation patterns matter. After the bug is fixed and validated, use `post-mortem` for the engineering writeup.
+Use `debug-mantra` when a failing test, command, or request already reproduces every run. There the red signal exists, so the loop-construction work here is overhead. Check by running the repro twice rather than by judging the bug's difficulty; an intermittent pass means the signal is not yet real and the work belongs here.
+
+Use the relevant language, framework, or domain skill alongside this one when implementation patterns matter. After the bug is fixed and validated, use `post-mortem` for the engineering writeup.
 
 ## When Not to Use
 
@@ -33,7 +35,7 @@ Load `references/feedback-loops.md` when you need loop-construction tactics, non
 
 ## Workflow
 
-1. **Load relevant context.** Read `.context/INDEX.md` when present, then load useful domains such as `.context/project.md`, `.context/engineering.md`, `.context/post-mortem.md`, `.context/learning.md`, and `.context/adr/`. Keep this quick; the feedback loop is still the priority.
+1. **Load relevant context.** Read `.context/INDEX.md` when present, then load relevant domain files such as `.context/project.md`, `.context/engineering.md`, `.context/post-mortem.md`, `.context/learning.md`, and `.context/adr/`. Keep this quick; the feedback loop is still the priority.
 2. **Build the feedback loop.** Prefer a failing test, HTTP script, CLI fixture, browser script, trace replay, throwaway harness, fuzz loop, bisection harness, or differential loop. Use `scripts/hitl-loop.template.sh` only when a human action is unavoidable. Once you have a loop, confirm it meets all four criteria before advancing:
    - [ ] Red-capable — asserts the user's exact symptom, not just "didn't crash"
    - [ ] Deterministic — same verdict every run (nondeterministic bugs: pinned high reproduction rate)
@@ -85,6 +87,11 @@ These thoughts mean the loop has been abandoned. Stop and return to the step nam
 ## Performance Branch
 
 For performance regressions, establish a baseline measurement before changing code: timing harness, profiler, query plan, trace, or benchmark. Prefer bisection and measurement over log-heavy inspection. Validate the fix against the original scenario and a focused regression guard when the project has an appropriate performance-test seam.
+
+## Reference Map
+
+- `references/feedback-loops.md`: loop-construction tactics, nondeterministic-bug handling, and the human-in-the-loop fallback.
+- `scripts/hitl-loop.template.sh`: the harness to use when a human action in the loop is unavoidable.
 
 ## Next Step
 

@@ -23,6 +23,14 @@ merges, it never scans.
 - Writing an internal changelog — this document is written for a customer's IT lead
 - Recapping a release that already shipped — this is an approval artifact, written before the window
 
+## Artifacts
+
+- Produces: one customer release document at `release-notes/<platform-version>.md`, from
+  `assets/release-document-template.md`. Outside the shared artifact-paths registry — this is a
+  personal skill and the path pairs with `release-scan`'s fixed `release-reports/` input.
+- Consumes: every Service Release Report in `release-reports/*.md`, read through the YAML
+  frontmatter contract `release-scan` writes
+
 ## Workflow
 
 ### Step 1 — Parse the frontmatter first
@@ -63,6 +71,11 @@ Save to `release-notes/<platform-version>.md`.
 Factual and calm. State breaking changes and downtime plainly and early. An enterprise client
 who finds a breaking change on their own, after reading a cheerful summary, trusts the next
 document less — naming a limitation is what makes the rest credible.
+
+## Reference Map
+
+- `references/document-sections.md`: the rule each of the eight sections follows — theme clustering, wave ordering from `deploy_after`, and what belongs in Customer Actions.
+- `assets/release-document-template.md`: the document skeleton. Copy it and work the sections in order.
 
 ## Next Step
 

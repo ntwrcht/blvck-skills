@@ -16,7 +16,7 @@ Use when the user wants to write a substantial document and is the one holding t
 
 - The conversation or repo already carries enough context to synthesize a draft without interviewing — use `write-a-prd` for a PRD, `write-a-story` for backlog items, `post-mortem` for an RCA.
 - The idea or decision itself is unsettled — use `brainstorming` to shape it or `grilling` to force the open questions, then come back to write it up.
-- Source material exists and only needs reframing for an audience — use `management-talk` or `stakeholder-update`.
+- Source material exists and only needs reframing for an audience — use `management-talk`. If the facts are still scattered and nobody has written them down, use `stakeholder-update`.
 - A draft already exists and the ask is review rather than authoring — use `scrutinize`.
 
 ## Artifacts

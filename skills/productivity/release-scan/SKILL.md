@@ -29,6 +29,15 @@ the reports afterward — never widen a report to cover more than one.
 - Writing the merged customer-facing document — this skill produces its per-service input
 - Explaining a release that already shipped and went wrong — use `post-mortem`
 
+## Artifacts
+
+- Produces: one Service Release Report at `release-reports/<service-name>__<old_tag>__<new_tag>.md`,
+  from `assets/service-report-template.md`. The path is fixed rather than configurable and sits
+  outside the shared artifact-paths registry — the roll-up parses these filenames and frontmatter,
+  so relocating or renaming them silently drops a service from the customer document.
+- Consumes: the repository at the two tags, the evidence pack from `scripts/collect_evidence.sh`,
+  and Jira issue summaries when an Atlassian tool is connected
+
 ## Core Rule
 
 **Every statement in the report must trace to evidence in the diff** — a commit, a PR title, a
@@ -100,6 +109,13 @@ stays internal. Then copy `assets/service-report-template.md`, fill every field,
 Keep the YAML frontmatter exactly as templated — key names, spelling, and enum values. The
 roll-up parses it, and a field renamed "helpfully" silently drops that service from the
 aggregated customer document.
+
+## Reference Map
+
+- `references/classification.md`: the six change buckets, breaking-vs-non-breaking rules, the customer-visible test, and the risk ladder. Read at step 4.
+- `references/customer-language.md`: what the customer reads versus what stays internal. Read at step 6, before writing.
+- `assets/service-report-template.md`: the report skeleton. Copy it; keep the frontmatter keys and enum values exactly.
+- `scripts/collect_evidence.sh`: deterministic git extraction. Run at step 2 instead of ad-hoc git commands.
 
 ## Next Step
 

@@ -25,7 +25,7 @@ Every finding must be grounded in evidence and must explain trust boundary, expl
 ## Workflow
 
 1. Define scope from the request: target files, endpoints, services, infrastructure, compliance regime, data sensitivity, and whether the system is internet-facing.
-2. Inspect local context before asking questions. Read `.context/INDEX.md`, then relevant domain files such as `.context/project.md`, `.context/security.md`, `.context/engineering.md`, `.context/learning.md`, and `.context/adr/`, plus security docs, configs, routes, auth code, dependency manifests, IaC, and prior findings when relevant.
+2. Inspect local context before asking questions. Read `.context/INDEX.md` when present, then load relevant domain files such as `.context/project.md`, `.context/security.md`, `.context/engineering.md`, `.context/learning.md`, and `.context/adr/`, plus security docs, configs, routes, auth code, dependency manifests, IaC, and prior findings when relevant.
 3. If scope is ambiguous, state reasonable assumptions and continue with the highest-risk surfaces first. Ask only when a missing answer would materially change severity or remediation. If the user asks to bootstrap reusable context, point them at the `setup-context` skill (`/setup-context`).
 4. Trace untrusted input across trust boundaries: request entry, parsing, validation, authn, authz, business logic, storage, outbound calls, logging, and response shaping.
 5. Check controls in context rather than by checklist alone. A weakness is a finding only when exploitability and impact are defensible.

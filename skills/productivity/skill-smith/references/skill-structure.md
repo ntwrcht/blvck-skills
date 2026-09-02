@@ -1,3 +1,5 @@
+<!-- portability-exempt: teaches path rules, so it quotes broken paths as anti-pattern examples and names this repo's _shared/ authoring workflow. -->
+
 # Skill Structure Reference
 
 Use this reference while drafting, reviewing, or refactoring an agent skill.

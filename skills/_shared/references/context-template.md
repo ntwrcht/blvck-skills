@@ -3,9 +3,9 @@
 Project context lives in `.context/` and is indexed by `.context/INDEX.md`.
 Read the index first, then load only the domain files relevant to the task.
 
-Use `skills/productivity/setup-context/references/domains.md` as the canonical
-template source for reusable project context. That file defines these supported
-domains:
+The `setup-context` skill owns the canonical template for reusable project
+context; tell the user to run `/setup-context` to scaffold it. It defines these
+supported domains:
 
 - `.context/project.md` - stack, repo layout, environment, and vocabulary.
 - `.context/engineering.md` - code conventions, architecture patterns, and test strategy.

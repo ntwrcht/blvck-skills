@@ -16,7 +16,7 @@ Use this skill for review requests: plans, PRs, diffs, design docs, architecture
 - **Live bug investigation** — use `debug-mantra`, or `diagnose` for a hard one. This skill reviews a proposal; it does not chase a failure.
 - **The goal itself is unclear and there is no artifact to review yet** — use `grilling` to interview the user first.
 - **The review is specifically about what an attacker could do** — use `security-audit`. It asks about exploitability and impact; this skill asks whether the change is correct and whether a smaller path exists.
-- **A deep framework-level review inside one stack** — the matching engineer skill (`angular-engineer`, `python-engineer`, `strapi-engineer`) carries its own review reference and stack conventions. Use this skill when the review does not depend on framework specifics.
+- **A deep framework-level review inside one stack** — the matching engineer skill (`angular-engineer`, `next-engineer`, `supabase-engineer`) carries its own review reference and stack conventions. Use this skill when the review does not depend on framework specifics.
 
 ## Artifacts
 

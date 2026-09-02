@@ -89,7 +89,7 @@ Before moving to the next slice, confirm:
 
 ## Workflow
 
-1. **Load relevant context.** Read `.context/INDEX.md` when present, then load useful domains such as `.context/project.md`, `.context/engineering.md`, `.context/learning.md`, and `.context/adr/`.
+1. **Load relevant context.** Read `.context/INDEX.md` when present, then load relevant domain files such as `.context/project.md`, `.context/engineering.md`, `.context/learning.md`, and `.context/adr/`.
 2. **Agree the seams, then the behaviors.** Write down the seams under test and confirm them with the user — no test is written at an unconfirmed seam. Then list the behaviors to test at those seams (not implementation steps) and get approval before writing any code. Ask: "What's the public interface, which seams should we test, and which behaviors matter most?"
 3. **Tracer bullet.** Write one test that confirms one thing about the system end-to-end. Run it and confirm it fails for the expected reason. This proves the path works before you commit to the rest.
 4. **Green.** Make the smallest production change that passes the current test. Avoid speculative branches, abstractions, configuration, or future behavior.
@@ -112,9 +112,9 @@ Before moving to the next slice, confirm:
 
 Load only the reference needed for the current decision:
 
-- [tests.md](tests.md): behavior test examples and anti-patterns.
-- [mocking.md](mocking.md): boundary mocking guidance.
-- [refactoring.md](refactoring.md): cleanup candidates after green.
+- `references/tests.md`: behavior test examples and anti-patterns.
+- `references/mocking.md`: boundary mocking guidance.
+- `references/refactoring.md`: cleanup candidates after green.
 
 ## Next Step
 

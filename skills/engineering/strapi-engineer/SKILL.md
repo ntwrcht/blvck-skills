@@ -22,21 +22,19 @@ Use a narrower skill instead when the request is mainly generic TypeScript, fron
 
 Choose the Strapi layer that matches the responsibility, keep controllers thin, put business logic in services, and validate behavior with tests or explicit runtime checks.
 
-## Project Context
+## Quick Path
 
-1. Look for `.context/INDEX.md` in the project root and read relevant domain files when present: `.context/project.md`, `.context/engineering.md`, `.context/git-workflow.md`, `.context/security.md`, `.context/learning.md`, and `.context/adr/`.
-2. If project context is missing and the task depends on it, infer what you can from `package.json`, `config/`, `src/`, and existing tests before asking questions.
-3. When context remains unclear, ask for only the missing decisions that affect implementation: Strapi version, draft/publish, i18n, auth method, main branch, and ticket prefix.
-4. If the user asks to create project context, point them at the `setup-context` skill (`/setup-context`), which scaffolds the `.context/` domain files.
+Answer conceptual and architecture questions directly as prose with tradeoffs, and give explanations, single-line fixes, or small snippets inline. Do not run the full project-context workflow unless you are generating, modifying, reviewing, or debugging project code.
 
 ## Workflow
 
-1. Identify the Strapi version, package manager, TypeScript setup, test framework, and existing API/plugin structure.
-2. State the important design decision before changing code, especially layer choice, data API choice, auth boundary, schema relation, or populate shape.
-3. Prefer existing project conventions for factories, services, naming, route files, tests, and config.
-4. Implement the smallest behavior slice. For risky or user-facing logic, write or update tests first when practical.
-5. Sanitize public controller input and output, avoid hardcoded secrets, and keep populate/select explicit.
-6. Validate with targeted tests, lint/typecheck, or a concrete manual check. Report any validation you could not run.
+1. Inspect local context before changing code. Read `.context/INDEX.md` when present, then load relevant domain files such as `.context/project.md`, `.context/engineering.md`, `.context/git-workflow.md`, `.context/security.md`, `.context/learning.md`, and `.context/adr/`. If context is missing and project code changes are needed, follow `references/project-context.md`.
+2. Confirm the Strapi version, draft/publish posture, and i18n posture from context, `package.json`, and the `content-types/*/schema.json` files, before choosing APIs.
+3. Check nearby code for naming, folder structure, factories, services, route files, populate conventions, and test style.
+4. Load only the reference files needed for the task from the Reference Map.
+5. State the important design decision before changing code, especially layer choice, data API choice, auth boundary, schema relation, or populate shape.
+6. Make the smallest coherent change, including tests when behavior changes. Sanitize public controller input and output, avoid hardcoded secrets, and keep populate/select explicit.
+7. Validate with the repo's focused test, lint, or typecheck command, or a concrete manual check. Report any validation you could not run.
 
 ## Strapi Defaults
 
@@ -49,6 +47,22 @@ Choose the Strapi layer that matches the responsibility, keep controllers thin, 
 - Lifecycle hooks handle entity operation side effects.
 - Plugins package reusable features; extensions override existing plugin behavior without forking.
 
+## Version Guide
+
+| Version | Default shape | Common APIs |
+|---|---|---|
+| Strapi v4 | Entity Service | `strapi.entityService`, numeric `id`, `strapi.db.query` for raw work, `publicationState` |
+| Strapi v5 | Document Service | `strapi.documents('api::x.x')`, string `documentId`, `status: 'draft' \| 'published'`, locale-aware by default |
+
+The two data APIs take different arguments and return different shapes, so confirm the major version before writing a query. Ask before defaulting when the version is unclear and the choice affects generated code.
+
+## Output Shape
+
+- Small fix: changed code plus one sentence explaining the decision.
+- New content type or endpoint: schema, controller, service, routes, policies, tests, and a short decision note.
+- Architecture or conceptual answer: direct prose with tradeoffs.
+- Review: findings first with file and line references.
+
 ## Reference Map
 
 Load only the reference needed for the current task:
@@ -60,6 +74,8 @@ Load only the reference needed for the current task:
 - `references/strapi-graphql.md`: GraphQL setup, custom queries/mutations, resolvers, depth limits, or amount limits.
 - `references/git-workflow.md`: branch naming, commits, tags, releases, changelog, or PR descriptions.
 - `references/context-template.md`: `.context/` domain creation.
+- `references/project-context.md`: what to read when `.context/` is missing or stale, the four facts that change generated code, and the detector.
+- `scripts/detect-project.sh`: inspects the repo and prints draft `.context/` domain files. Run it rather than interviewing the user.
 
 ## Review Checklist
 

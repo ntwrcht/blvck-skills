@@ -30,7 +30,7 @@ Track decisions, not clicks. Every event must answer a real question someone wil
 
 ## Workflow
 
-1. Load local context first. Check `.context/INDEX.md`, then relevant domain files such as `.context/project.md`, `.context/analytics.md`, and `.context/engineering.md`, along with analytics docs, tracking code, GTM snippets, dataLayer conventions, event constants, tests, or dashboards.
+1. Load local context first. Read `.context/INDEX.md` when present, then load relevant domain files such as `.context/project.md`, `.context/analytics.md`, and `.context/engineering.md`, along with analytics docs, tracking code, GTM snippets, dataLayer conventions, event constants, tests, or dashboards.
 2. Define the decision. Write the business question, report audience, success metric, and action the team will take from the data.
 3. Identify the flow outcome. Prefer completion, abandonment, error, conversion, adoption, and performance signals over raw UI interactions.
 4. Draft the event taxonomy. Use stable `snake_case` names, past-tense actions, and parameters that explain who, what, where, and why without PII.
@@ -77,7 +77,7 @@ editor_loaded
 
 Avoid names like `button_clicked`, `user_email_submitted`, `pageViewDashboard`, or custom `page_view_*` events that duplicate GA4 defaults.
 
-## Reference Files
+## Reference Map
 
 Read only the file needed for the task:
 

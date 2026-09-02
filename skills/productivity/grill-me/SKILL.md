@@ -15,6 +15,11 @@ Use when the user wants to be grilled, stress-test a plan, sharpen a design, pre
 
 Use `scrutinize` when the user wants findings on an already written plan, PR, or design doc. Use an implementation skill when the user asks for direct changes instead of an interview.
 
+## Artifacts
+
+- Produces: nothing of its own — the session's output is whatever `grilling` produces
+- Consumes: nothing
+
 ## Next Step
 
 See `grilling`'s Next Step section — this skill has no independent routing of its own.

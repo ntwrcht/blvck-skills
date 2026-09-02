@@ -78,7 +78,7 @@ When the user states how something works, check whether the code agrees. If you 
 
 ### Update CONTEXT.md inline
 
-When a term is resolved, update `CONTEXT.md` right there. Don't batch — capture terms as they crystallize. Use the format in [references/CONTEXT-FORMAT.md](./references/CONTEXT-FORMAT.md).
+When a term is resolved, update `CONTEXT.md` right there. Don't batch — capture terms as they crystallize. Use the format in `references/context-format.md`.
 
 `CONTEXT.md` is terminology only. Do not treat it as a spec, a scratch pad, or a repository for implementation decisions.
 
@@ -90,7 +90,7 @@ Only offer to create an ADR when all three are true:
 2. **Surprising without context** — a future reader will wonder "why did they do it this way?"
 3. **Result of a real trade-off** — there were genuine alternatives and you picked one for specific reasons
 
-If any of the three is missing, skip the ADR. Use the format in [references/ADR-FORMAT.md](./references/ADR-FORMAT.md). Write it to the `adr-dir` key path (default `.context/adr/`) — see `references/artifact-paths.md`.
+If any of the three is missing, skip the ADR. Use the format in `references/adr-format.md`. Write it to the `adr-dir` key path (default `.context/adr/`) — see `references/artifact-paths.md`.
 
 ## Completion Criteria
 
@@ -101,6 +101,11 @@ Offer to close the session when:
 - Any decisions that met the ADR gate are recorded
 
 When these are met, summarize: agreed terms, deferred terms, ADRs written, and the next open question if one remains.
+
+## Reference Map
+
+- `references/context-format.md`: glossary entry shape for `CONTEXT.md`, and the inline-update discipline.
+- `references/adr-format.md`: ADR structure, and the three-part test for which decisions earn one.
 
 ## Next Step
 

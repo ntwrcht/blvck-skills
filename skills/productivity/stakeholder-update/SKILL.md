@@ -1,6 +1,6 @@
 ---
 name: stakeholder-update
-description: "Drafts audience-aware stakeholder updates that clarify status, impact, risks, decisions, and next steps. Use when preparing status reports, sprint summaries, launch notes, risk escalations, executive updates, customer progress notes, or multi-audience variants."
+description: "Composes a stakeholder update from scratch by gathering the facts first, then framing status, impact, risks, decisions, and next steps for a chosen audience. Use when no written source exists yet and a status report, sprint summary, launch note, risk escalation, executive update, customer progress note, or multi-audience variant is needed."
 argument-hint: "<update type and audience>"
 ---
 
@@ -10,11 +10,13 @@ Draft stakeholder communication that makes current state, impact, risk, decision
 
 ## When to Use
 
-Use this skill for cadence reporting, sprint summaries, launch notes, customer progress updates, risk escalations, and multi-audience versions of the same update.
+One question separates this skill from `management-talk`, and it is answerable by looking:
 
-Use `management-talk` instead when the request is mainly rewriting engineering or team-internal material for leadership, Slack, Jira, email, standup notes, or meeting talking points without a broader status, risk, decision, or audience-routing problem.
+> **Is there already written source material to rewrite?**
 
-When both apply, use this skill first to decide the audience, message, risk framing, and update structure.
+If no — the facts live across tickets, dashboards, commits, and people's heads, and nobody has written them down yet — this skill gathers them first and then frames them. That covers cadence reporting, sprint summaries, launch notes, customer progress updates, risk escalations, and multi-audience versions of the same update.
+
+If yes — a ticket, postmortem, thread, or engineer's draft already carries the facts — use `management-talk`, which starts from that text instead. Step 4 below is the tell: when it has nothing to gather because the source already says it all, the work belonged there.
 
 ## Artifacts
 
@@ -37,7 +39,7 @@ Recommended: [audience], because [evidence from the request].
 1. Determine the audience: internal team, management, cross-functional partners, external customers, or multiple audiences. Use `references/audience-rules.md` for fit and sanitization.
 2. Determine the purpose: inform status, summarize progress, announce launch, escalate risk, request a decision, document a pivot, or provide a customer progress note.
 3. Determine the channel: issue tracker, team chat, email, website, document, slides, or meeting notes. Use `references/channel-templates.md` for channel formatting.
-4. Gather context from supplied material, `.context/INDEX.md` and relevant domain files such as `.context/project.md`, or authorized tools: goal, progress, impact, metrics, timeline, blockers, decisions, owners, and next milestone.
+4. Gather context from supplied material or authorized tools. Read `.context/INDEX.md` when present, then load relevant domain files such as `.context/project.md`. Establish: goal, progress, impact, metrics, timeline, blockers, decisions, owners, and next milestone.
 5. If context is missing, ask only for facts that change the message, decision, risk level, or required action.
 6. Draft the update using `references/update-templates.md` when a standard format fits.
 7. For risk-heavy updates, apply `references/risk-status.md`.
@@ -92,5 +94,5 @@ Before delivering the update:
 
 Before posting through any connected tool, show the exact message and wait for explicit approval.
 
-- **If approved:** post through the connected tool (already stated), or hand to `management-talk` first if the audience turns out to be mainly internal/technical.
+- **If approved:** post through the connected tool (already stated). Once this update exists, a later request to re-cut it for another audience starts from written source, so it belongs to `management-talk`.
 - **If not approved:** revise per feedback — keep as draft-only until approval is explicit.

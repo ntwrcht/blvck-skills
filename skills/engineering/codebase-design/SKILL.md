@@ -127,8 +127,8 @@ function applyDiscount(cart): void {
 
 ## Reference Map
 
-- [DEEPENING.md](DEEPENING.md): load when deepening a cluster of shallow modules — dependency categories, seam discipline, and replace-don't-layer testing.
-- [DESIGN-IT-TWICE.md](DESIGN-IT-TWICE.md): load when exploring alternative interfaces — parallel sub-agents design the interface several radically different ways, then you compare on depth, locality, and seam placement.
+- `references/deepening.md`: load when deepening a cluster of shallow modules — dependency categories, seam discipline, and replace-don't-layer testing.
+- `references/design-it-twice.md`: load when exploring alternative interfaces — parallel sub-agents design the interface several radically different ways, then you compare on depth, locality, and seam placement.
 
 ## Next Step
 

@@ -70,3 +70,5 @@ printf '%s\n' '{"tool_input":{"command":"git push origin main"}}' | <hook-path>
 - Preserve unrelated JSON keys and hook entries.
 - Do not weaken blocked patterns unless the user explicitly asks.
 - Report the installed path, settings path, and verification result.
+
+_No **Next Step**: this is a one-shot installer. It finishes when the hook is installed and verified, and hands off to nothing._
