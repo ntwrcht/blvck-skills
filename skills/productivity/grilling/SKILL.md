@@ -1,6 +1,7 @@
 ---
 name: grilling
-description: "Interviews the user relentlessly about a plan or design, mapping it as a decision tree and asking each round of unblocked questions together until nothing is left assumed. Use when grilling a plan, stress-testing a proposal, clarifying vague intent, or resolving decisions before implementation."
+description: "Interviews the user relentlessly about a plan or design, mapping it as a decision tree and asking each round of unblocked questions together until nothing is left assumed. Use when grilling a plan, stress-testing a proposal, clarifying vague intent, resolving decisions before implementation, or capturing domain terms and ADRs as the decisions land."
+argument-hint: "<plan or topic to stress-test> [with docs]"
 ---
 
 # Grilling
@@ -20,7 +21,14 @@ Use this skill when a plan, design, or proposal has open decisions that should b
 ## Artifacts
 
 - Produces: goals doc at the `goals` key path (on request) — see `references/artifact-paths.md` (default `docs/goals/<slug>.md`)
+- Produces, in docs mode: glossary entries in `CONTEXT.md` and ADRs, both through `domain-modeling`
 - Consumes: `.context/project.md`
+
+## Docs Mode
+
+When the user asks for the session "with docs", or wants the decisions captured rather than only resolved, run `domain-modeling` alongside the interview. As each round settles a term, challenge it against the glossary and record the canonical one; as each hard, surprising, real-tradeoff decision lands, record it as an ADR. The interview mechanics below do not change — docs mode only adds the writing-down as the frontier shrinks.
+
+Plain mode is the default. Offer docs mode once at the start when the plan touches domain vocabulary or an architectural commitment, then respect the answer.
 
 ## Core Rule
 

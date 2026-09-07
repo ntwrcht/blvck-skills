@@ -1,6 +1,7 @@
 ---
 name: kien-thai
-description: "Writes, edits, and translates Thai-language prose that reads like a native Thai writer rather than generic AI output, countering training-data skew toward over-formal, over-polite, calqued Thai. Use when producing a Thai paragraph or longer — blog post, landing page, doc page, Thai README, email, announcement — translating English into Thai, or reviewing and rewriting existing Thai prose."
+description: "Writes, edits, and translates Thai-language prose that reads like a native Thai writer rather than generic AI output, countering training-data skew toward over-formal, over-polite, calqued Thai, and can loop audit-and-fix passes until one finds nothing. Use when producing a Thai paragraph or longer — blog post, landing page, doc page, Thai README, email, announcement — translating English into Thai, reviewing or rewriting existing Thai prose, or when asked to polish to convergence (ตรวจวนๆ, วน audit, ขัดภาษาไทยให้สุด)."
+argument-hint: "<Thai text or English source, and the register> [converge]"
 ---
 
 # kien-thai
@@ -33,7 +34,7 @@ frames — many auto-resolve once the frames are right.
   `write-user-docs`; for stakeholder-facing English updates, `stakeholder-comms`.
 
 For a single pass, apply this skill directly. To converge — audit, fix, re-read,
-repeat until a pass finds nothing — hand off to the `kode-thai` loop, which
+repeat until a pass finds nothing — run **Convergence Mode** below, which
 enforces these rules to a fixed point rather than adding new ones.
 
 ## Artifacts
@@ -269,7 +270,7 @@ rules: sentence shape, verbs over nouns, openers/closings, concreteness, voice,
 
 0. **Check for an existing draft.** If a Thai draft already exists — from the
    user, from a Thai-native model, from an earlier turn — don't rewrite from
-   scratch. Skip to the audit passes (steps 3–4, or the full `kode-thai` loop)
+   scratch. Skip to the audit passes (steps 3–4, or the full Convergence Mode loop)
    over that draft. Draft from nothing only when there is nothing to audit.
 
 1. **Identify register, voice, and person deixis.** ASK if any are unclear —
@@ -365,6 +366,54 @@ Ingkaphirom, Smyth, Prasithrathsint, Takahashi, Olsson, the Thai Discourse
 Treebank, Singnoi, the Royal Institute, Marcel Barang. Those sources are cited,
 not bundled.
 
+## Convergence Mode
+
+โคตรไทย — run the rules above in a loop until the prose stops changing.
+
+Single-pass review misses issues that only surface after earlier fixes shift
+sentence shape: a connective collapses, the next sentence's framing changes, a
+new awkward seam appears. Run this mode when the user asks for `converge`,
+repeated review passes, or says variants of "ตรวจวนๆ", "วน audit",
+"ขัดภาษาไทยให้สุด", or "แก้ไปเรื่อยๆ จนกว่าจะไม่เจอที่ผิด". The scope limits in
+**When Not to Use** apply unchanged.
+
+### Protocol
+
+1. Load this skill in full — all eight references, not a subset. Both audit and
+   fix passes need depth; this is language analysis, not mechanical scanning.
+   When the register is known and context is tight, scope `register.md`,
+   `examples.md`, and `exemplars.md` to that register; load the rest in full.
+2. Read the target end-to-end before editing anything. Skim-and-fix produces
+   shallow passes.
+3. **Audit pass.** Deep-read end-to-end, then list every issue. Cite each with
+   the rule's slug (`f4/targhak-closure`, `wrong-classifier`,
+   `f6/ko-resumptive`) and quote the offending text inline. As a pre-check,
+   scan `references/forbidden-phrases.md` against the prose — un-backticked
+   occurrences only. If everything passes, output the single line `CLEAN`.
+4. **Fix pass.** Apply the listed edits.
+5. Re-read the edited text end-to-end. Diff-level review misses paragraph-flow
+   problems that only show on a full re-read.
+6. Repeat steps 3–5 until one audit pass produces zero new issues.
+
+### Stop condition
+
+The loop ends only on a fully clean pass — not on "good enough", not on running
+out of obvious things. A pass that finds one issue and fixes it does not end
+the loop; the next pass may surface a seam that fix created. If it looks done,
+run one more audit pass to confirm.
+
+### Token cost
+
+Each pass reloads this skill and its references plus the full target. Warn the
+user before starting on anything over ~1000 words so they can scope the loop to
+a section.
+
+### Rule gaps
+
+This mode adds no rules. If an audit surfaces a pattern no rule covers, trace
+it to a specific passage and name the gap in the report rather than inventing a
+rule mid-loop — a new rule belongs in the frames above, argued from evidence.
+
 ## Next Step
 
 Thai prose written or edited under these frames is a reviewable draft; the
@@ -373,7 +422,7 @@ author reads it before it ships.
 - **If approved** — the draft is done. Where the piece is a user-facing
   deliverable in another format, hand off to the skill that owns that format
   (`write-user-docs` for a guide, `stakeholder-comms` for an update).
-- **If not approved** — hand off to `kode-thai`, which loops audit-and-fix
+- **If not approved** — run Convergence Mode, which loops audit-and-fix
   until a full pass produces zero edits. If the reader's objection is voice or
   register rather than a specific rule, name the target register from
   `references/register.md` before looping, and revise in place.

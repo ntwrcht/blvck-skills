@@ -29,13 +29,13 @@ SHIPPABLE_BUCKETS=(
 
 # Curated minimal bundles — custom mode exposes the full shippable catalog.
 BUNDLE_PROJECT_PM_SKILLS=(
-  "grill-me" "grilling" "write-a-prd" "write-a-story"
+  "grilling" "write-a-prd" "write-a-story"
   "prototype" "stakeholder-comms" "handoff" "caveman"
   "to-questionnaire" "wait-what"
 )
 
 BUNDLE_PROJECT_DEV_SKILLS=(
-  "grill-with-docs" "grilling" "write-a-story" "handoff"
+  "grilling" "write-a-story" "handoff"
   "triage" "tdd" "debug"
   "domain-modeling" "prototype" "scrutinize" "security-audit" "git-guardrails"
   "codebase-design" "research"

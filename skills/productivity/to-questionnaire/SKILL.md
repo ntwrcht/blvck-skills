@@ -21,7 +21,7 @@ Use when the blocking knowledge sits with another person: a domain expert, a cus
 
 ## When Not to Use
 
-- **The user can answer it themselves with enough pushing** — use `grill-me`. This skill is the inverse: it mines someone else, not the user.
+- **The user can answer it themselves with enough pushing** — use `grilling`. This skill is the inverse: it mines someone else, not the user.
 - **The goal is reporting outward, not pulling inward** — use `stakeholder-comms`. That skill tells people things; this one asks them.
 - **The unknown is a fact in a document, not in a person's head** — use `research`.
 

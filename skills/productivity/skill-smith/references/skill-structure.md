@@ -111,7 +111,7 @@ Sections in this template are the repo's de facto convention, not spec requireme
 
 A thin wrapper may point at the skill it wraps ("See `grilling`'s Next Step"). A skill with no natural next stage — a one-shot installer, a tone modifier, a session-boundary tool — does not need one, but should say why not if it is not obvious.
 
-Only name a skill the agent can actually reach: a `disable-model-invocation: true` skill cannot be invoked by the model, so route the model to the engine (`grilling`), not the user entry point (`grill-me`). Telling the user to run `/grill-me` is fine; telling the model to use it is a dead end.
+Only name a skill the agent can actually reach: a `disable-model-invocation: true` skill cannot be invoked by the model, so route the model to the engine (`grilling`), not a user entry point such as `subagent-driven-development`. Telling the user to run `/subagent-driven-development` is fine; telling the model to use it is a dead end.
 
 The two cases are distinguished by form. A bare `` `name` `` is a route the model takes itself and must land on a model-invocable skill; `/name` addresses the human and may name any skill. Repos that validate this key off exactly that difference.
 

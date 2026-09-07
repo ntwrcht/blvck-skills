@@ -37,7 +37,7 @@ A file whose subject *is* the path rule has to quote the broken shapes to teach 
 
 To share a reference across skills, add it to `skills/_shared/references/`, map the skill to it in `get_shared_refs()` in `scripts/_skills-lib.sh`, and run `./scripts/sync-shared-refs.sh`. That writes a real, committed copy into the skill's own `references/`. Edit only the canonical file in `_shared/`; the copies carry a generated header and are overwritten.
 
-When routing to another skill, check the agent can reach it: a `disable-model-invocation: true` skill cannot be invoked by the model, so route the model to the engine (`grilling`), not the user entry point (`grill-me`).
+When routing to another skill, check the agent can reach it: a `disable-model-invocation: true` skill cannot be invoked by the model, so route the model to the engine (`grilling`), not a user entry point such as `subagent-driven-development`.
 
 In a `## Next Step` section this is enforced. A bare `` `name` `` there reads as a route the model takes itself, so it must name a model-invocable skill. To send the work to a user-invoked skill, address the human instead and write the slash form: "tell the user to run `/triage`". `scripts/validate-skills.sh` fails on the first shape and accepts the second.
 

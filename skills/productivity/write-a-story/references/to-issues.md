@@ -6,7 +6,7 @@ Use this reference when converting a plan, spec, PRD, or parent issue into indep
 
 Use this mode for requests such as "turn this plan into issues", "create implementation tickets", "break this PRD into issues", or "split this feature into tracer bullets".
 
-Use the normal feature breakdown flow when the user only wants draft backlog items in chat. Use `grill-me` first when the plan is too vague to identify goals, constraints, or major decisions.
+Use the normal feature breakdown flow when the user only wants draft backlog items in chat. Use `grilling` first when the plan is too vague to identify goals, constraints, or major decisions.
 
 ## Context
 

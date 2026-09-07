@@ -238,8 +238,8 @@ expect_accept "no Next Step section, but labelled as deliberate" \
 # artifact-paths.md is generated and pointed at inline, so a references/ dir
 # holding only it must not demand a Reference Map.
 expect_accept "references/ holding only the generated artifact-paths.md" \
-  "mkdir -p skills/productivity/grill-me/references
-   cp skills/_shared/references/artifact-paths.md skills/productivity/grill-me/references/"
+  "mkdir -p skills/productivity/handoff/references
+   cp skills/_shared/references/artifact-paths.md skills/productivity/handoff/references/"
 
 # Upstream licence notices keep their conventional name at the skill root.
 expect_accept "NOTICE.md at the skill root" \

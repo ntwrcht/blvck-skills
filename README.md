@@ -6,7 +6,7 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Version](https://img.shields.io/badge/version-1.0.0-informational)](.claude-plugin/plugin.json)
-[![Skills](https://img.shields.io/badge/skills-38-success)](#skill-catalog)
+[![Skills](https://img.shields.io/badge/skills-35-success)](#skill-catalog)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](#contributing)
 
 </div>
@@ -34,7 +34,7 @@ Install skills per project with the bundled installer, pull them with `npx skill
 
 ## Key Features
 
-- **38 production-ready skills** spanning daily engineering work (debugging, TDD, review, security) and product workflows (PRDs, stories, stakeholder updates, plan interviews, Thai-language writing).
+- **35 production-ready skills** spanning daily engineering work (debugging, TDD, review, security) and product workflows (PRDs, stories, stakeholder updates, plan interviews, Thai-language writing).
 - **Multi-CLI support** — one library installs into Claude Code, Codex, and Gemini CLI, each in its native format.
 - **Interactive installer with preset bundles** — curated *Project PM* and *Project Dev* scenarios for one-keystroke setup, or a custom picker across the full catalog.
 - **Safe, reversible installs** — every copied skill carries an ownership marker; the uninstaller only ever removes what the installer created.
@@ -74,12 +74,9 @@ Install skills per project with the bundled installer, pull them with `npx skill
 | [**Agent Smith**](skills/productivity/agent-smith/SKILL.md) | Designs specialized subagents as a persona-and-operations definition with an explicit tool and model budget, boundaries against sibling agents, and a delegation test run before the agent ships. Use when creating an agent, writing a subagent, defining an agent persona, reviewing an agent definition file, or planning a roster of specialized agents. |
 | [**Brainstorming**](skills/productivity/brainstorming/SKILL.md) | User entry point for shaping a rough idea into an approved design. Use when the user wants to brainstorm a new feature, component, or product idea before writing a plan or touching code. |
 | [**Doc Co-Authoring**](skills/productivity/doc-coauthoring/SKILL.md) | Co-authors a document with the user section by section — gathering their context, brainstorming and curating each section, then testing the draft against a fresh reader with no context. Use when writing a proposal, technical spec, decision doc, RFC, design doc, or similar long-form content where the user holds the context. |
-| [**Grill Me**](skills/productivity/grill-me/SKILL.md) | User entry point for a relentless plan interview. Use when the user asks to be grilled, stress-test a plan, prepare for review, or decide before building. |
-| [**Grill With Docs**](skills/productivity/grill-with-docs/SKILL.md) | User entry point for a grilling session that builds living documentation as decisions crystallize. Use when the user wants to stress-test a plan and simultaneously capture domain vocabulary and architectural decisions. |
-| [**Grilling**](skills/productivity/grilling/SKILL.md) | Interviews the user relentlessly about a plan or design, mapping it as a decision tree and asking each round of unblocked questions together until nothing is left assumed. Use when grilling a plan, stress-testing a proposal, clarifying vague intent, or resolving decisions before implementation. |
+| [**Grilling**](skills/productivity/grilling/SKILL.md) | Interviews the user relentlessly about a plan or design, mapping it as a decision tree and asking each round of unblocked questions together until nothing is left assumed. Use when grilling a plan, stress-testing a proposal, clarifying vague intent, resolving decisions before implementation, or capturing domain terms and ADRs as the decisions land. |
 | [**Handoff**](skills/productivity/handoff/SKILL.md) | Compacts the current conversation into a handoff document so a fresh agent can continue the work without losing context. Use when switching sessions, handing off to another agent, ending a long conversation, or preparing a context brief for a follow-up run. |
-| [**Kien Thai**](skills/productivity/kien-thai/SKILL.md) | Writes, edits, and translates Thai-language prose that reads like a native Thai writer rather than generic AI output, countering training-data skew toward over-formal, over-polite, calqued Thai. Use when producing a Thai paragraph or longer — blog post, landing page, doc page, Thai README, email, announcement — translating English into Thai, or reviewing and rewriting existing Thai prose. |
-| [**Kode Thai**](skills/productivity/kode-thai/SKILL.md) | Runs an iterative audit-and-fix loop over Thai prose against the kien-thai rule set, repeating passes until one produces zero new edits. Use when the user invokes /kode-thai, asks for an audit loop or repeated review passes on Thai writing, or says variants of "ตรวจวนๆ", "วน audit", "ขัดภาษาไทยให้สุด", or "แก้ไปเรื่อยๆ จนกว่าจะไม่เจอที่ผิด". |
+| [**Kien Thai**](skills/productivity/kien-thai/SKILL.md) | Writes, edits, and translates Thai-language prose that reads like a native Thai writer rather than generic AI output, countering training-data skew toward over-formal, over-polite, calqued Thai, and can loop audit-and-fix passes until one finds nothing. Use when producing a Thai paragraph or longer — blog post, landing page, doc page, Thai README, email, announcement — translating English into Thai, reviewing or rewriting existing Thai prose, or when asked to polish to convergence (ตรวจวนๆ, วน audit, ขัดภาษาไทยให้สุด). |
 | [**Release Scan**](skills/productivity/release-scan/SKILL.md) | Scans one service repository between two tags and produces a standardized Service Release Report used to assemble a customer-facing release note. Use when diffing two tags or versions, working out what shipped between releases, assessing deployment impact or breaking changes, or preparing a release for a dedicated or on-prem customer environment. |
 | [**Setup Context**](skills/productivity/setup-context/SKILL.md) | Scaffolds shared project context files in .context/ and configure the output locations pipeline skills write artifacts to (PRDs, stories, designs, ADRs, and more). Use when onboarding skills to a new or existing repo, when skills lack shared project context, or to relocate where a skill's output gets saved. |
 | [**Skill Smith**](skills/productivity/skill-smith/SKILL.md) | Crafts reusable agent skills with invocation design, progressive disclosure, leading words, and bundled resources. Use when the user asks to create a skill, write a skill, build an agent skill, review a SKILL.md, or package skill references, scripts, or examples. |
@@ -105,7 +102,7 @@ Install the full portable set by default, then rely on concise descriptions and 
 
 | Situation | Skill |
 | :--- | :--- |
-| The goal, plan, or decision is unclear and needs an interview before work starts. | [**Grill Me**](skills/productivity/grill-me/SKILL.md) |
+| The goal, plan, or decision is unclear and needs an interview before work starts. | [**Grilling**](skills/productivity/grilling/SKILL.md) |
 | The blocking knowledge sits in another person's head and has to be asked for. | [**To Questionnaire**](skills/productivity/to-questionnaire/SKILL.md) |
 | The blocking knowledge sits in external docs, a spec, or a library's source and has to be read. | [**Research**](skills/engineering/research/SKILL.md) |
 | A written plan, PR, diff, design doc, or implementation approach needs independent review. | [**Scrutinize**](skills/engineering/scrutinize/SKILL.md) |
@@ -118,7 +115,7 @@ Install the full portable set by default, then rely on concise descriptions and 
 | An undocumented codebase needs an architecture doc, API spec, diagrams, or a runbook derived from the code. | [**Code to Docs**](skills/engineering/code-to-docs/SKILL.md) |
 | A user manual, quickstart, help-center article, CLI reference, or tutorial is needed for readers outside the team. | [**Write User Docs**](skills/productivity/write-user-docs/SKILL.md) |
 | An audience outside the work needs a status, launch, sprint, risk, decision, customer, or leadership update — whether the facts are written down yet or not. | [**Stakeholder Comms**](skills/productivity/stakeholder-comms/SKILL.md) |
-| A Thai-language deliverable needs to read like native prose instead of translated AI output. | [**Kien Thai**](skills/productivity/kien-thai/SKILL.md), then [**Kode Thai**](skills/productivity/kode-thai/SKILL.md) to polish to convergence |
+| A Thai-language deliverable needs to read like native prose instead of translated AI output. | [**Kien Thai**](skills/productivity/kien-thai/SKILL.md), in convergence mode to polish until a pass finds nothing |
 | Work is mainly inside a specific stack or domain. | Use the matching engineering skill, and combine it with a workflow skill only when the request also needs debugging, TDD, review, security, measurement, or communication structure. |
 
 > **Looking for the PM OS?** The `pm-os-bootstrap` slash command moved to the separate `ai-system` plugin marketplace repo as the `pm-os` plugin (`/pm-os:setup`, `/pm-os:validate`, `/pm-os:score`).
@@ -221,7 +218,7 @@ Once installed, skills activate through your assistant's normal flow — the age
 A typical day with the *Project Dev* bundle:
 
 ```text
-> /grill-with-docs            # stress-test the plan, capture decisions as ADRs
+> /grilling with docs         # stress-test the plan, capture decisions as ADRs
 > /tdd                        # build the change through red-green-refactor slices
 > /scrutinize                 # independent review of the resulting diff
 > /handoff                    # compact the session for the next agent
