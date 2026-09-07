@@ -65,7 +65,8 @@ Ask before defaulting when the key naming, client library, or RLS posture is unc
 
 ## Reference Map
 
-- `references/project-context.md`: missing or stale `.context/` domain files or provider stubs.
+- `references/project-context.md`: reading, repairing, or skipping `.context/` — the shared skeleton.
+- `references/stack-facts.md`: the schema sources to read first, the four Supabase facts that change generated code, what makes context stale, and what to ask for when the detector cannot run.
 - `references/client-setup.md`: browser, server, and admin clients, `@supabase/ssr`, key selection, singletons.
 - `references/database-schema.md`: table design, keys, constraints, enums, relationships, soft deletes, multi-tenancy.
 - `references/rls-policies.md`: enabling RLS, per-operation policies, roles, helper functions, testing and debugging policies.

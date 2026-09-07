@@ -108,11 +108,8 @@ Load only the reference needed for the current decision:
   regression tests, or async tests.
 - `references/async-security-reliability.md`: asyncio, concurrency, resource
   cleanup, subprocesses, SQL, paths, secrets, retries, or timeouts.
-- `references/project-context.md`: what to read when `.context/` is missing or
-  stale, the four facts that change generated code, and the detector.
-- `scripts/detect-project.sh`: inspects the repo and prints draft `.context/`
-  domain files. Run it rather than interviewing the user.
-
+- `references/project-context.md`: reading, repairing, or skipping `.context/` — the shared skeleton.
+- `references/stack-facts.md`: the Python facts that change generated code, what makes context stale, and what to ask for when the detector cannot run.
 ## Next Step
 
 Do not treat a change as done until the project's formatter, linter, type checker, and test suite pass on it.

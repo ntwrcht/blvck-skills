@@ -82,13 +82,13 @@ log_section() { printf "\n  ${BOLD}${CYAN}%s${NC}\n\n" "$1"; }
 get_shared_refs() {
   local skill_name="$1"
   case "$skill_name" in
-    angular-engineer)             echo "git-workflow.md artifact-paths.md" ;;
-    next-engineer)                echo "git-workflow.md artifact-paths.md" ;;
-    strapi-engineer)              echo "context-template.md git-workflow.md artifact-paths.md" ;;
-    supabase-engineer)            echo "git-workflow.md artifact-paths.md" ;;
-    ga4-measurement)              echo "context-template.md artifact-paths.md" ;;
-    security-audit)               echo "context-template.md artifact-paths.md" ;;
-    python-engineer)              echo "artifact-paths.md" ;;
+    angular-engineer)             echo "project-context.md git-workflow.md artifact-paths.md" ;;
+    next-engineer)                echo "project-context.md git-workflow.md artifact-paths.md" ;;
+    strapi-engineer)              echo "project-context.md git-workflow.md artifact-paths.md" ;;
+    supabase-engineer)            echo "project-context.md git-workflow.md artifact-paths.md" ;;
+    ga4-measurement)              echo "project-context.md artifact-paths.md" ;;
+    security-audit)               echo "project-context.md artifact-paths.md" ;;
+    python-engineer)              echo "project-context.md artifact-paths.md" ;;
     code-to-docs)                 echo "artifact-paths.md" ;;
     write-user-docs)              echo "artifact-paths.md" ;;
     write-a-prd)                  echo "artifact-paths.md" ;;

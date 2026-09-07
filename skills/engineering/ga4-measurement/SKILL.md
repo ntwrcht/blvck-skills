@@ -87,7 +87,7 @@ Read only the file needed for the task:
 - `references/gtm-setup.md` - GTM container setup, dataLayer schema, triggers, variables, and tags.
 - `references/funnel-analysis.md` - funnel design, drop-off analysis, conversion reports, and exploration setup.
 - `references/debugging.md` - GA4 DebugView, GTM Preview, validation, and missing-event troubleshooting.
-- `references/context-template.md` - optional `.context/` domain structure for bootstrapping reusable analytics context.
+- `references/project-context.md` - reading, repairing, or skipping `.context/`; the shared domain structure for bootstrapping reusable analytics context.
 
 ## Next Step
 

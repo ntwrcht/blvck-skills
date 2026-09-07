@@ -65,7 +65,8 @@ Ask before defaulting when the Angular version or module style is unclear and th
 
 ## Reference Map
 
-- `references/project-context.md`: missing or stale `.context/` domain files or provider stubs.
+- `references/project-context.md`: reading, repairing, or skipping `.context/` — the shared skeleton.
+- `references/stack-facts.md`: the Angular facts that change generated code, what makes context stale, and what to ask for when the detector cannot run.
 - `references/module-patterns.md`: NgModule, AppModule, CoreModule, SharedModule, Angular 14-16 projects.
 - `references/signals-patterns.md`: Signals, `computed`, `effect`, `input`, `output`, `model`, `toSignal`.
 - `references/rxjs-patterns.md`: RxJS operators, stream composition, multicasting, unsubscribe strategy.

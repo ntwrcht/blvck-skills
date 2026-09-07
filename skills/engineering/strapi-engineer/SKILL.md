@@ -73,10 +73,8 @@ Load only the reference needed for the current task:
 - `references/strapi-server.md`: middleware, policies, lifecycle hooks, custom routes, cron, or webhooks.
 - `references/strapi-graphql.md`: GraphQL setup, custom queries/mutations, resolvers, depth limits, or amount limits.
 - `references/git-workflow.md`: branch naming, commits, tags, releases, changelog, or PR descriptions.
-- `references/context-template.md`: `.context/` domain creation.
-- `references/project-context.md`: what to read when `.context/` is missing or stale, the four facts that change generated code, and the detector.
-- `scripts/detect-project.sh`: inspects the repo and prints draft `.context/` domain files. Run it rather than interviewing the user.
-
+- `references/project-context.md`: reading, repairing, or skipping `.context/` — the shared skeleton.
+- `references/stack-facts.md`: the Strapi facts that change generated code, what makes context stale, and what to ask for when the detector cannot run.
 ## Review Checklist
 
 - Correct layer owns the behavior.

@@ -66,7 +66,8 @@ Ask before defaulting when the Next.js version or router is unclear and the choi
 
 ## Reference Map
 
-- `references/project-context.md`: missing or stale `.context/` domain files or provider stubs.
+- `references/project-context.md`: reading, repairing, or skipping `.context/` — the shared skeleton.
+- `references/stack-facts.md`: the four Next.js facts that change generated code, what makes context stale, and what to ask for when the detector cannot run.
 - `references/app-router.md`: routes, layouts, route groups, dynamic and catch-all segments, parallel and intercepting routes, navigation.
 - `references/server-components.md`: the server/client boundary, composition, serialization, `server-only`.
 - `references/data-fetching.md`: fetching in Server Components, the data-access layer, parallel and sequential loads, streaming.

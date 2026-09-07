@@ -82,7 +82,7 @@ Load only the reference needed for the current audit surface:
 - `references/infrastructure.md`: cloud config, deployment, network exposure, secrets management, IaC.
 - `references/compliance.md`: PDPA, GDPR, SOC2, ISO 27001, PCI-DSS gap analysis.
 - `references/report-template.md`: formal security report, pentest findings, executive summary, remediation roadmap.
-- `references/context-template.md`: optional `.context/` domain structure for reusable project context.
+- `references/project-context.md`: reading, repairing, or skipping `.context/`; the shared domain structure for reusable project context.
 
 ## Safety Boundaries
 
