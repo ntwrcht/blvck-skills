@@ -11,7 +11,7 @@ Execute an approved plan task-by-task: a fresh subagent builds each task, an ind
 
 ## When to Use
 
-Use when the user has an approved plan, task list, or backlog (from `write-a-story`, `write-a-prd`, `brainstorming`, or pasted directly) and wants it built out task by task with a review gate between each one.
+Use when the user has an approved plan, task list, or backlog (from `write-a-story`, `write-a-prd`, `grilling`, or pasted directly) and wants it built out task by task with a review gate between each one.
 
 ## When Not to Use
 

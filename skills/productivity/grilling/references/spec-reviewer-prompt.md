@@ -2,7 +2,7 @@
 
 Use this template when dispatching the subagent that reviews the written design.
 
-**Dispatch after:** the design is written to `docs/design.md`, before reporting it as approved.
+**Dispatch after:** the design is written to the `design` key path (see `references/artifact-paths.md`), before reporting it as approved.
 
 **Do not review your own work.** The agent that wrote the design is not the one that checks it — a fresh reviewer catches what the writer is blind to.
 

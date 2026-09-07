@@ -15,8 +15,7 @@ A project can override either root, or override an individual key, in `.context/
 |---|---|---|---|---|
 | `prd` | write-a-prd | `docs/prd/<slug>.md` | docs_root | slug'd |
 | `story` | write-a-story | `docs/stories/<slug>.md` | docs_root | slug'd |
-| `design` | brainstorming | `docs/design/<slug>.md` | docs_root | slug'd |
-| `goals` | grilling | `docs/goals/<slug>.md` | docs_root | slug'd |
+| `design` | grilling | `docs/design/<slug>.md` | docs_root | slug'd |
 | `adr-dir` | domain-modeling | `.context/adr/` (sequentially-numbered files inside) | context_root | already slug'd |
 | `postmortem-dir` | post-mortem | `docs/postmortems/<slug>.md` | docs_root | already slug'd (topic = slug) |
 | `debug-ledger` | debug | `.context/debug-ledger.md` | context_root | singular |
@@ -39,7 +38,7 @@ A project can override either root, or override an individual key, in `.context/
 
 `research` uses `docs_root` because a cited findings file stays valuable long after the question that prompted it — it is the kind of thing a future reader wants, unlike a one-shot work list. `questionnaire` likewise: the answers that come back are a primary source worth keeping beside the decision they informed.
 
-`architecture` is deliberately separate from `design`: `design` holds the forward-looking design doc `brainstorming` produces before code exists, while `architecture` holds the description of a system as it is actually built, extracted from the code. `doc-audit` uses `context_root` because an audit report is a work list consumed once and then acted on, not a durable artifact — the same reasoning as `scrutiny` and `security-findings`. `diagrams-dir` is directory-shaped rather than slug'd because one documented system normally yields several diagrams at different C4 levels.
+`architecture` is deliberately separate from `design`: `design` holds the forward-looking design doc `grilling` produces before code exists, while `architecture` holds the description of a system as it is actually built, extracted from the code. `doc-audit` uses `context_root` because an audit report is a work list consumed once and then acted on, not a durable artifact — the same reasoning as `scrutiny` and `security-findings`. `diagrams-dir` is directory-shaped rather than slug'd because one documented system normally yields several diagrams at different C4 levels.
 
 `adr-dir` uses `context_root`, not `docs_root`, even though ADRs are durable/reviewable — this matches the existing `adr/` domain in `setup-context`'s own domain reference (same `NNNN-short-title.md` numbering `domain-modeling` uses) and the majority of skills that already read `.context/adr/`.
 
@@ -66,7 +65,7 @@ This registry replaced a set of single-file defaults with directory + slug defau
 | `prd` | `docs/prd.md` | `docs/prd/<slug>.md` | one file couldn't hold more than one PRD without overwriting |
 | `story` | `tasks/stories.md` | `docs/stories/<slug>.md` | same, plus removed the single-file `tasks/` root |
 | `design` | `docs/design.md` | `docs/design/<slug>.md` | one file couldn't hold more than one design doc |
-| `goals` | `docs/goals.md` | `docs/goals/<slug>.md` | one file couldn't hold more than one goals doc |
+| `goals` | `docs/goals.md`, then `docs/goals/<slug>.md` | `docs/design/<slug>.md` | one file couldn't hold more than one goals doc; then `brainstorming` merged into `grilling` and the goals doc and design doc became one artifact |
 | `security-findings` | `.context/security-findings.md` | `.context/security-findings/<slug>.md` | one file couldn't hold more than one audit's findings |
 | `sdd-progress` | `.context/sdd-progress.md` | `.context/sdd-progress/<slug>.md` | one file couldn't hold more than one plan's ledger |
 | `management-update` | `.context/management-update.md`, then `.context/management-update/<slug>.md` | `.context/stakeholder-comms/<slug>.md` | one file couldn't hold more than one update; then `management-talk` and `stakeholder-update` merged into `stakeholder-comms` |

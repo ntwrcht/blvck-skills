@@ -23,7 +23,7 @@ Do not publish to any external issue tracker unless a compatible tool is availab
 ## Artifacts
 
 - Produces: PRD at the `prd` key path — see `references/artifact-paths.md` (default `docs/prd/<slug>.md`)
-- Consumes: goals doc at the `goals` key path (if present, default `docs/goals/<slug>.md`), `.context/project.md`, `.context/engineering.md`, `.context/adr/`
+- Consumes: design doc at the `design` key path (if present, default `docs/design/<slug>.md`), `.context/project.md`, `.context/engineering.md`, `.context/adr/`
 
 ## Core Rule
 

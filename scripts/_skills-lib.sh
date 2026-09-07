@@ -93,7 +93,6 @@ get_shared_refs() {
     write-user-docs)              echo "artifact-paths.md" ;;
     write-a-prd)                  echo "artifact-paths.md" ;;
     write-a-story)                echo "artifact-paths.md" ;;
-    brainstorming)                echo "artifact-paths.md" ;;
     grilling)                     echo "artifact-paths.md" ;;
     debug)                        echo "artifact-paths.md" ;;
     domain-modeling)              echo "artifact-paths.md" ;;

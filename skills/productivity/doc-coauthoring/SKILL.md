@@ -15,7 +15,7 @@ Use when the user wants to write a substantial document and is the one holding t
 ## When Not to Use
 
 - The conversation or repo already carries enough context to synthesize a draft without interviewing — use `write-a-prd` for a PRD, `write-a-story` for backlog items, `post-mortem` for an RCA.
-- The idea or decision itself is unsettled — use `brainstorming` to shape it or `grilling` to force the open questions, then come back to write it up.
+- The idea or decision itself is unsettled — use `grilling` to shape it and force the open questions, then come back to write it up.
 - The deliverable is an update rather than a document — use `stakeholder-comms`, whether the facts are already written down or still scattered.
 - A draft already exists and the ask is review rather than authoring — use `scrutinize`.
 
