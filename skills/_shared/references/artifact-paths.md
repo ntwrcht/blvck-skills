@@ -24,8 +24,7 @@ A project can override either root, or override an individual key, in `.context/
 | `analytics` | ga4-measurement | `.context/analytics.md` | context_root | singular — shares the file with `setup-context`'s own `analytics.md` domain; read-then-update, not per-feature |
 | `scrutiny` | scrutinize | `.context/scrutiny.md`, or `.context/scrutiny-<slug>.md` when a PR/design/topic is clear | context_root | slug'd (flat file, hyphen-suffixed — matches this skill's pre-existing convention, not a subdirectory) |
 | `sdd-progress` | subagent-driven-development | `.context/sdd-progress/<slug>.md` | context_root | slug'd (one ledger per plan) |
-| `management-update` | management-talk | `.context/management-update/<slug>.md` | context_root | slug'd |
-| `stakeholder-update` | stakeholder-update | `.context/stakeholder-update/<slug>.md` | context_root | slug'd |
+| `stakeholder-comms` | stakeholder-comms | `.context/stakeholder-comms/<slug>.md` | context_root | slug'd |
 | `domain-glossary` | domain-modeling | `CONTEXT.md` | none — fixed at repo root | singular (one evolving glossary, not per-feature) |
 | `architecture` | code-to-docs | `docs/architecture/<slug>.md` | docs_root | slug'd (one per documented service or subsystem) |
 | `openapi` | code-to-docs | `docs/api/<slug>.yaml` | docs_root | slug'd |
@@ -70,10 +69,11 @@ This registry replaced a set of single-file defaults with directory + slug defau
 | `goals` | `docs/goals.md` | `docs/goals/<slug>.md` | one file couldn't hold more than one goals doc |
 | `security-findings` | `.context/security-findings.md` | `.context/security-findings/<slug>.md` | one file couldn't hold more than one audit's findings |
 | `sdd-progress` | `.context/sdd-progress.md` | `.context/sdd-progress/<slug>.md` | one file couldn't hold more than one plan's ledger |
-| `management-update` | `.context/management-update.md` | `.context/management-update/<slug>.md` | one file couldn't hold more than one update |
+| `management-update` | `.context/management-update.md`, then `.context/management-update/<slug>.md` | `.context/stakeholder-comms/<slug>.md` | one file couldn't hold more than one update; then `management-talk` and `stakeholder-update` merged into `stakeholder-comms` |
+| `stakeholder-update` | `.context/stakeholder-update/<slug>.md` | `.context/stakeholder-comms/<slug>.md` | the two producing skills merged into `stakeholder-comms` |
 | `adr-dir` | `docs/adr/` | `.context/adr/` | this was an outright bug — `domain-modeling` wrote here while every consumer read `.context/adr/` |
 
-Keys not in this table (`debug-ledger`, `analytics`, `scrutiny`, `postmortem-dir`, `domain-glossary`, `stakeholder-update`) never had a default that changed shape — nothing to migrate for those.
+Keys not in this table (`debug-ledger`, `analytics`, `scrutiny`, `postmortem-dir`, `domain-glossary`) never had a default that changed shape — nothing to migrate for those.
 
 For directory-shaped keys (everything except `adr-dir`), migrating an old single file means choosing a slug for it (derive one from its content/title, or ask) and moving it to `<new-default-dir>/<slug>.md`. For `adr-dir`, move the whole `docs/adr/` directory to `.context/adr/` (merge by ADR number if `.context/adr/` already has entries — don't overwrite an existing number). Prefer `git mv` when the project is a git repo, to preserve file history.
 

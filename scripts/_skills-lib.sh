@@ -30,7 +30,7 @@ SHIPPABLE_BUCKETS=(
 # Curated minimal bundles — custom mode exposes the full shippable catalog.
 BUNDLE_PROJECT_PM_SKILLS=(
   "grill-me" "grilling" "write-a-prd" "write-a-story"
-  "prototype" "stakeholder-update" "management-talk" "handoff" "caveman"
+  "prototype" "stakeholder-comms" "handoff" "caveman"
   "to-questionnaire" "wait-what"
 )
 
@@ -98,8 +98,7 @@ get_shared_refs() {
     post-mortem)                  echo "artifact-paths.md" ;;
     scrutinize)                   echo "artifact-paths.md" ;;
     subagent-driven-development)  echo "artifact-paths.md" ;;
-    management-talk)              echo "artifact-paths.md" ;;
-    stakeholder-update)           echo "artifact-paths.md" ;;
+    stakeholder-comms)            echo "artifact-paths.md" ;;
     tdd)                          echo "artifact-paths.md" ;;
     triage)                       echo "artifact-paths.md" ;;
     setup-context)                echo "artifact-paths.md" ;;

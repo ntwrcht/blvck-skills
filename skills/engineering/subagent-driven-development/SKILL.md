@@ -70,5 +70,5 @@ Check the ledger at the `sdd-progress` key path (see `references/artifact-paths.
 
 ## Next Step
 
-- **If all tasks are complete and the final broad review passes:** move to `tdd` for any remaining test gaps, or `security-audit`/`ga4-measurement` for a pre-ship review, then `post-mortem` or `management-talk` to close out. To move remaining work onto the tracker, tell the user to run `/triage`.
+- **If all tasks are complete and the final broad review passes:** move to `tdd` for any remaining test gaps, or `security-audit`/`ga4-measurement` for a pre-ship review, then `post-mortem` or `stakeholder-comms` to close out. To move remaining work onto the tracker, tell the user to run `/triage`.
 - **If blocked, or a review verdict fails:** resolve the specific blocker (more context, a stronger model, a smaller task) and retry — do not advance to the next task.

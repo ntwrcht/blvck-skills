@@ -30,7 +30,7 @@ frames — many auto-resolve once the frames are right.
   nothing to say about a two-word label.
 - Conversational chat replies in Thai that aren't a deliverable.
 - Non-Thai content. For English prose aimed at readers outside the team, use
-  `write-user-docs`; for stakeholder-facing English updates, `stakeholder-update`.
+  `write-user-docs`; for stakeholder-facing English updates, `stakeholder-comms`.
 
 For a single pass, apply this skill directly. To converge — audit, fix, re-read,
 repeat until a pass finds nothing — hand off to the `kode-thai` loop, which
@@ -372,7 +372,7 @@ author reads it before it ships.
 
 - **If approved** — the draft is done. Where the piece is a user-facing
   deliverable in another format, hand off to the skill that owns that format
-  (`write-user-docs` for a guide, `stakeholder-update` for an update).
+  (`write-user-docs` for a guide, `stakeholder-comms` for an update).
 - **If not approved** — hand off to `kode-thai`, which loops audit-and-fix
   until a full pass produces zero edits. If the reader's objection is voice or
   register rather than a specific rule, name the target register from

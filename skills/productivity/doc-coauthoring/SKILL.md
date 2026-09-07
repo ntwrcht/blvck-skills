@@ -16,7 +16,7 @@ Use when the user wants to write a substantial document and is the one holding t
 
 - The conversation or repo already carries enough context to synthesize a draft without interviewing — use `write-a-prd` for a PRD, `write-a-story` for backlog items, `post-mortem` for an RCA.
 - The idea or decision itself is unsettled — use `brainstorming` to shape it or `grilling` to force the open questions, then come back to write it up.
-- Source material exists and only needs reframing for an audience — use `management-talk`. If the facts are still scattered and nobody has written them down, use `stakeholder-update`.
+- The deliverable is an update rather than a document — use `stakeholder-comms`, whether the facts are already written down or still scattered.
 - A draft already exists and the ask is review rather than authoring — use `scrutinize`.
 
 ## Artifacts
@@ -67,5 +67,5 @@ The user owns the doc. Close the context gap before writing a word of it: no sec
 
 The user does the final read and approves — the doc is theirs, not the agent's.
 
-- **If approved:** hand off to `write-a-story` when the doc is a spec or proposal that needs implementation items, or to `stakeholder-update` or `management-talk` to announce it to a specific audience.
+- **If approved:** hand off to `write-a-story` when the doc is a spec or proposal that needs implementation items, or to `stakeholder-comms` to announce it to a specific audience.
 - **If not approved:** loop back to Stage 2 for the failing sections and re-run reader testing. If the feedback shows the underlying decision was never settled, stop writing and escalate to `grilling`.

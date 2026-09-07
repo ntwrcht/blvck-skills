@@ -173,7 +173,7 @@ expect_reject "../.. path escaping the skill root" "reaches outside" \
 # cannot call a `disable-model-invocation: true` skill. Eight of these shipped
 # here before the check existed.
 expect_reject "Next Step routes the model to a user-invoked skill" "cannot be invoked by the model" \
-  "sed -i.bak 's|then hand off to shipping (\`post-mortem\`, \`management-talk\`)|then hand off to shipping (\`triage\`, \`post-mortem\`)|' skills/engineering/tdd/SKILL.md"
+  "sed -i.bak 's|then hand off to shipping (\`post-mortem\`, \`stakeholder-comms\`)|then hand off to shipping (\`triage\`, \`post-mortem\`)|' skills/engineering/tdd/SKILL.md"
 
 # Every skill records what it produces and consumes. Eight skills shipped without
 # an Artifacts section before anything checked for one.
@@ -227,7 +227,7 @@ expect_accept "a templated path with <placeholders>" \
 # Addressing the human is the sanctioned way to reach a user-invoked skill, and
 # is written `/name`. The check must read that as prose, not as a model route.
 expect_accept "Next Step telling the user to run a user-invoked skill" \
-  "sed -i.bak 's|then hand off to shipping (\`post-mortem\`, \`management-talk\`)|then tell the user to run \`/triage\`|' skills/engineering/tdd/SKILL.md"
+  "sed -i.bak 's|then hand off to shipping (\`post-mortem\`, \`stakeholder-comms\`)|then tell the user to run \`/triage\`|' skills/engineering/tdd/SKILL.md"
 
 # A skill with no next stage says so, and that label is what excuses the section.
 # The check must read the label, not just the heading.

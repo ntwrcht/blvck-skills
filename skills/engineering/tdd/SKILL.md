@@ -120,5 +120,5 @@ Load only the reference needed for the current decision:
 
 Get explicit approval on the seams under test and which behaviors matter most before writing any code (see Workflow step 2) — this is the approval gate for this skill.
 
-- **If approved and the planned slices are complete:** use `scrutinize` or `security-audit` for review, then hand off to shipping (`post-mortem`, `management-talk`). To move follow-up work onto the tracker, tell the user to run `/triage`.
+- **If approved and the planned slices are complete:** use `scrutinize` or `security-audit` for review, then hand off to shipping (`post-mortem`, `stakeholder-comms`). To move follow-up work onto the tracker, tell the user to run `/triage`.
 - **If the plan isn't approved yet:** keep working the seam list and the behavior list with the user — do not start the tracer bullet until both are explicitly approved.

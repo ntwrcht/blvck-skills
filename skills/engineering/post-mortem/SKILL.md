@@ -11,7 +11,7 @@ Write the engineering record of a bug fix after the cause is known and the fix i
 
 Use this skill for "post-mortem", "postmortem", "RCA", "root cause analysis", "document this fix", "write up the root cause", or after a debug session lands a real fix.
 
-Use `debug` first when the cause is still uncertain. Use `management-talk` after this skill when the user needs a leadership or cross-functional version.
+Use `debug` first when the cause is still uncertain. Use `stakeholder-comms` after this skill when the user needs a leadership or cross-functional version.
 
 ## When Not to Use
 
@@ -71,5 +71,5 @@ If the user asks to post externally, show the exact body first and wait for expl
 
 Do not treat the postmortem as final until the user confirms the root cause, fix, and validation sections are accurate.
 
-- **If approved:** use `management-talk` for the leadership-facing version, if one is needed.
+- **If approved:** use `stakeholder-comms` for the leadership-facing version, if one is needed.
 - **If not approved:** clarify the open root-cause or fix details before writing the final record.

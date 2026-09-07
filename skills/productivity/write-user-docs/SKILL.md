@@ -18,7 +18,7 @@ Use when the audience sits outside the team that built the thing: end users of a
 - The reader is a maintainer of this codebase — that is a README or an architecture doc.
 - The user holds the context and wants to co-write a spec, proposal, or RFC — use `doc-coauthoring`.
 - The output is a requirement or backlog item — use `write-a-prd` or `write-a-story`.
-- An audience needs a status or outcome summary rather than instructions — use `stakeholder-update` or `management-talk`.
+- An audience needs a status or outcome summary rather than instructions — use `stakeholder-comms`.
 
 ## Artifacts
 

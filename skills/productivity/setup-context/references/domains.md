@@ -11,7 +11,7 @@ Each domain file uses these layers where applicable:
 
 ## project.md
 
-**Consumed by:** angular-engineer, python-engineer, strapi-engineer, ga4-measurement, security-audit, stakeholder-update, write-a-prd, write-a-story
+**Consumed by:** angular-engineer, python-engineer, strapi-engineer, ga4-measurement, security-audit, stakeholder-comms, write-a-prd, write-a-story
 
 **Explainer:** Stack, repo layout, environment setup, and core vocabulary. The broadest context file — most skills read it first.
 

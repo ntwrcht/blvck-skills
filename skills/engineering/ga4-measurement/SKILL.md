@@ -93,5 +93,5 @@ Read only the file needed for the task:
 
 Do not treat instrumentation as done until the user confirms the event taxonomy and validation results are correct.
 
-- **If approved:** proceed to ship or stakeholder communication — hand off to `stakeholder-update`.
+- **If approved:** proceed to ship or stakeholder communication — hand off to `stakeholder-comms`.
 - **If not approved:** return to the implementation skill (`angular-engineer`, `python-engineer`, `strapi-engineer`, or whichever owns the affected code) to close instrumentation gaps, then re-validate with this skill.

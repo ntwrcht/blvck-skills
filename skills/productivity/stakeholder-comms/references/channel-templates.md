@@ -78,6 +78,24 @@ What's next:
 - [Expected next improvement or rollout note]
 ```
 
+## Standup
+
+Use 1-3 lines, spoken or typed. No labels, no bullets.
+
+```text
+[state] [thing]. [owner or artifact]. [next step].
+```
+
+## Meeting Talking Points
+
+Short bullets in speaking order. Include only the keys, names, and numbers the speaker has to say aloud — everything else is in the doc they can link to.
+
+```text
+- [Status in one clause]
+- [The number or name that makes the point]
+- [The ask, and who has to answer it]
+```
+
 ## Document or Slides
 
 Use section headings and scannable bullets. Put the decision or status on the first page or first section. Include an appendix only for technical detail that some readers may need.

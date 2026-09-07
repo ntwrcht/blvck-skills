@@ -94,7 +94,7 @@ read.
 
 - **If approved** — the prose is done; hand off to the skill that owns the
   destination format if the piece still needs one (`write-user-docs` for a
-  guide, `stakeholder-update` for an update).
+  guide, `stakeholder-comms` for an update).
 - **If not approved** — the objection is voice or register, not rule
   compliance, since the rules already converged. Name the target register from
   kien-thai's `register.md`, then re-run this loop against that register. If no

@@ -104,5 +104,5 @@ Load only the reference needed for the current audit surface:
 
 Do not treat the review as complete until the user confirms no blocking findings remain unaddressed.
 
-- **If approved:** no blocking findings remain, or all were fixed — proceed to ship, handing off to `post-mortem` (if issues were found and fixed) or `management-talk`/`stakeholder-update` for the summary. To move the findings onto the tracker, tell the user to run `/triage`.
+- **If approved:** no blocking findings remain, or all were fixed — proceed to ship, handing off to `post-mortem` (if issues were found and fixed) or `stakeholder-comms` for the summary. To move the findings onto the tracker, tell the user to run `/triage`.
 - **If not approved:** hand blocking findings back to the implementation skill that owns the affected code, then re-run this skill.
