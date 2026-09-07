@@ -6,7 +6,7 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Version](https://img.shields.io/badge/version-1.0.0-informational)](.claude-plugin/plugin.json)
-[![Skills](https://img.shields.io/badge/skills-39-success)](#skill-catalog)
+[![Skills](https://img.shields.io/badge/skills-38-success)](#skill-catalog)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](#contributing)
 
 </div>
@@ -34,7 +34,7 @@ Install skills per project with the bundled installer, pull them with `npx skill
 
 ## Key Features
 
-- **39 production-ready skills** spanning daily engineering work (debugging, TDD, review, security) and product workflows (PRDs, stories, stakeholder updates, plan interviews, Thai-language writing).
+- **38 production-ready skills** spanning daily engineering work (debugging, TDD, review, security) and product workflows (PRDs, stories, stakeholder updates, plan interviews, Thai-language writing).
 - **Multi-CLI support** — one library installs into Claude Code, Codex, and Gemini CLI, each in its native format.
 - **Interactive installer with preset bundles** — curated *Project PM* and *Project Dev* scenarios for one-keystroke setup, or a custom picker across the full catalog.
 - **Safe, reversible installs** — every copied skill carries an ownership marker; the uninstaller only ever removes what the installer created.
@@ -54,7 +54,6 @@ Install skills per project with the bundled installer, pull them with `npx skill
 | [**Debug**](skills/engineering/debug/SKILL.md) | Debugs failures and performance regressions as an evidence loop — establish a red signal, trace the fail path, falsify ranked hypotheses, then fix with a regression test. Use when a failing test or command already reproduces the bug every run, or when the failure is flaky, production-only, a crash, a hang, data corruption, or a slowdown that needs a harness built before the cause can be chased. |
 | [**Domain Modeling**](skills/engineering/domain-modeling/SKILL.md) | Builds and sharpens a project's domain model by challenging fuzzy language, updating the shared glossary inline, and recording hard architectural decisions as ADRs. Use when pinning down domain terminology, resolving contested terms, recording an architectural decision, or when another skill needs to maintain the domain vocabulary. |
 | [**GA4 Measurement**](skills/engineering/ga4-measurement/SKILL.md) | Plans, implements, reviews, and validates GA4/GTM measurement for product flows, funnels, feature adoption, conversion, errors, and performance. Use when designing event taxonomies, dataLayer or gtag tracking, GA4 reports, GTM setup, analytics QA, or measurement plans. |
-| [**Git Guardrails**](skills/engineering/git-guardrails/SKILL.md) | Installs Claude Code PreToolUse hooks that block dangerous git commands before execution. Use when setting up local or global guardrails for git push, force push, reset --hard, clean, branch deletion, checkout ., or restore . |
 | [**Next Engineer**](skills/engineering/next-engineer/SKILL.md) | Builds, modifies, reviews, and debugs Next.js applications using project conventions, App Router patterns, Server Components, caching and rendering strategies, Server Actions, testing, and deployment guidance. Use when working on Next.js routes, layouts, data fetching, forms, auth, proxy or middleware, route handlers, migrations, performance, security, or full-stack React architecture. |
 | [**Post-mortem**](skills/engineering/post-mortem/SKILL.md) | Writes engineering post-mortems for fixed and validated bugs with symptom, root cause, mechanism, fix, validation, and follow-ups. Use when closing a bug, drafting an RCA, documenting a fix, or converting a debug ledger into a maintainer-readable record. |
 | [**Prototype**](skills/engineering/prototype/SKILL.md) | Builds a throwaway prototype to answer one design question — a single shareable HTML file to feel out a state model, or several switchable UI variants to explore a look. Use when sanity-checking whether logic or a state model feels right, exploring what a page or component should look like, or feeling out an API shape before committing. |
@@ -66,7 +65,6 @@ Install skills per project with the bundled installer, pull them with `npx skill
 | [**Subagent-Driven Development**](skills/engineering/subagent-driven-development/SKILL.md) | User entry point for executing an approved implementation plan task-by-task, each task built by a fresh subagent and checked by an independent reviewer before the next one starts. Use when the user wants to build out an approved plan, task list, or backlog of engineering work with per-task review and a durable progress record. |
 | [**Supabase Engineer**](skills/engineering/supabase-engineer/SKILL.md) | Builds, modifies, reviews, and debugs Supabase applications across Postgres schema, Row Level Security, auth, the data API, storage, realtime, Edge Functions, migrations, and type generation. Use when working on Supabase database design, RLS policies, session handling, client setup, SQL functions and triggers, local development, performance, security, or backend architecture. |
 | [**TDD**](skills/engineering/tdd/SKILL.md) | Develops behavior through red-green-refactor test slices that exercise public interfaces and real code paths. Use when adding features, fixing bugs with regression tests, shaping APIs through examples, or refactoring while preserving observable behavior. |
-| [**Technical Trading Strategy**](skills/engineering/technical-trading-strategy/SKILL.md) | Designs, reviews, and implements rule-based technical trading strategies with disciplined backtesting, validation, risk controls, and Python engineering guidance. Use when working on indicator rules, strategy specs, backtest code, execution assumptions, market data, or live-trading readiness. |
 | [**Triage**](skills/engineering/triage/SKILL.md) | Triages tracker issues through canonical category and state roles, maintainer review, and durable handoff notes. Use when classifying bugs or enhancements, reviewing incoming issues, preparing AFK-agent briefs, requesting reporter info, or managing issue workflow. |
 
 ### Productivity
@@ -75,7 +73,6 @@ Install skills per project with the bundled installer, pull them with `npx skill
 | :--- | :--- |
 | [**Agent Smith**](skills/productivity/agent-smith/SKILL.md) | Designs specialized subagents as a persona-and-operations definition with an explicit tool and model budget, boundaries against sibling agents, and a delegation test run before the agent ships. Use when creating an agent, writing a subagent, defining an agent persona, reviewing an agent definition file, or planning a roster of specialized agents. |
 | [**Brainstorming**](skills/productivity/brainstorming/SKILL.md) | User entry point for shaping a rough idea into an approved design. Use when the user wants to brainstorm a new feature, component, or product idea before writing a plan or touching code. |
-| [**Caveman**](skills/productivity/caveman/SKILL.md) | Ultra-compressed communication mode that drops filler, articles, and pleasantries while keeping technical accuracy. Use when the user says caveman mode, talk like caveman, use caveman, less tokens, be brief, terse mode, or invokes /caveman. |
 | [**Doc Co-Authoring**](skills/productivity/doc-coauthoring/SKILL.md) | Co-authors a document with the user section by section — gathering their context, brainstorming and curating each section, then testing the draft against a fresh reader with no context. Use when writing a proposal, technical spec, decision doc, RFC, design doc, or similar long-form content where the user holds the context. |
 | [**Grill Me**](skills/productivity/grill-me/SKILL.md) | User entry point for a relentless plan interview. Use when the user asks to be grilled, stress-test a plan, prepare for review, or decide before building. |
 | [**Grill With Docs**](skills/productivity/grill-with-docs/SKILL.md) | User entry point for a grilling session that builds living documentation as decisions crystallize. Use when the user wants to stress-test a plan and simultaneously capture domain vocabulary and architectural decisions. |
@@ -88,10 +85,19 @@ Install skills per project with the bundled installer, pull them with `npx skill
 | [**Skill Smith**](skills/productivity/skill-smith/SKILL.md) | Crafts reusable agent skills with invocation design, progressive disclosure, leading words, and bundled resources. Use when the user asks to create a skill, write a skill, build an agent skill, review a SKILL.md, or package skill references, scripts, or examples. |
 | [**Stakeholder Comms**](skills/productivity/stakeholder-comms/SKILL.md) | Writes communication for leadership, cross-functional partners, and customers — gathering the facts first when nobody has written them down, or rewriting existing engineering source material for a new audience and register. Use when a status report, sprint summary, launch note, risk escalation, executive summary, customer progress note, Jira comment, Slack post, standup note, email, or meeting talking points is needed. |
 | [**To Questionnaire**](skills/productivity/to-questionnaire/SKILL.md) | Turns a decision the user cannot answer alone into a Markdown questionnaire aimed at the one person who can, interviewing them about the send rather than the subject. Use when knowledge sits with someone else, when preparing discovery questions for a stakeholder or domain expert, or when drafting an async request for information. |
-| [**Wait, What**](skills/productivity/wait-what/SKILL.md) | Re-pitches the message that just failed to land, adding the missing context and dropping the jargon. Use when the user says wait what, that made no sense, I don't follow, explain that again, or invokes /wait-what. |
 | [**Write a PRD**](skills/productivity/write-a-prd/SKILL.md) | Synthesizes conversation context and repository understanding into a product requirements document. Use when drafting, writing, or publishing a PRD from existing conversation, technical brief, design discussion, or approved scope. |
 | [**Write a Story**](skills/productivity/write-a-story/SKILL.md) | Backlog workflow for drafting, rewriting, splitting, reviewing, and converting plans into implementation-ready work items. Covers user stories, job stories, WWA items, issue breakdowns, acceptance criteria, readiness checks, and approved Jira payloads. |
 | [**Write User Docs**](skills/productivity/write-user-docs/SKILL.md) | Writes learning-oriented documentation for people outside the team — user manuals, how-to guides, getting-started pages, CLI references, and developer tutorials — with goal-shaped titles, numbered steps, and verification checkpoints. Use when producing a product user guide, help-center or knowledge-base article, quickstart, command reference, or step-by-step tutorial. |
+
+### Misc
+
+Situational — installed on request, kept out of the way of daily work.
+
+| Skill Name | Description |
+| :--- | :--- |
+| [**Caveman**](skills/misc/caveman/SKILL.md) | Ultra-compressed communication mode that drops filler, articles, and pleasantries while keeping technical accuracy. Use when the user says caveman mode, talk like caveman, use caveman, less tokens, be brief, terse mode, or invokes /caveman. |
+| [**Git Guardrails**](skills/misc/git-guardrails/SKILL.md) | Installs Claude Code PreToolUse hooks that block dangerous git commands before execution. Use when setting up local or global guardrails for git push, force push, reset --hard, clean, branch deletion, checkout ., or restore . |
+| [**Wait, What**](skills/misc/wait-what/SKILL.md) | Re-pitches the message that just failed to land, adding the missing context and dropping the jargon. Use when the user says wait what, that made no sense, I don't follow, explain that again, or invokes /wait-what. |
 
 ### Choosing the Right Skill
 
@@ -112,7 +118,6 @@ Install the full portable set by default, then rely on concise descriptions and 
 | An undocumented codebase needs an architecture doc, API spec, diagrams, or a runbook derived from the code. | [**Code to Docs**](skills/engineering/code-to-docs/SKILL.md) |
 | A user manual, quickstart, help-center article, CLI reference, or tutorial is needed for readers outside the team. | [**Write User Docs**](skills/productivity/write-user-docs/SKILL.md) |
 | An audience outside the work needs a status, launch, sprint, risk, decision, customer, or leadership update — whether the facts are written down yet or not. | [**Stakeholder Comms**](skills/productivity/stakeholder-comms/SKILL.md) |
-| An answer did not land and needs re-pitching with the missing context, not just fewer words. | [**Wait, What**](skills/productivity/wait-what/SKILL.md) |
 | A Thai-language deliverable needs to read like native prose instead of translated AI output. | [**Kien Thai**](skills/productivity/kien-thai/SKILL.md), then [**Kode Thai**](skills/productivity/kode-thai/SKILL.md) to polish to convergence |
 | Work is mainly inside a specific stack or domain. | Use the matching engineering skill, and combine it with a workflow skill only when the request also needs debugging, TDD, review, security, measurement, or communication structure. |
 

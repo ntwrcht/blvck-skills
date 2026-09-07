@@ -43,9 +43,11 @@ BUNDLE_PROJECT_DEV_SKILLS=(
 
 # Personal-bucket skills the local installer offers even though they stay out
 # of the shipped catalog (README + plugin.json). Kept local on purpose, e.g.
-# release-rollup pairs with the shipped release-scan but isn't promoted.
+# release-rollup pairs with the shipped release-scan but isn't promoted, and
+# technical-trading-strategy is a personal domain with no place in the catalog.
 LOCAL_EXTRA_SKILLS=(
   "release-rollup"
+  "technical-trading-strategy"
 )
 
 DIRECT_INSTALL_TARGETS=(

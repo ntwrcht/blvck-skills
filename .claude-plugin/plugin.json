@@ -8,7 +8,7 @@
     "./skills/engineering/code-to-docs",
     "./skills/engineering/debug",
     "./skills/engineering/ga4-measurement",
-    "./skills/engineering/git-guardrails",
+    "./skills/misc/git-guardrails",
     "./skills/engineering/next-engineer",
     "./skills/engineering/post-mortem",
     "./skills/engineering/prototype",
@@ -19,13 +19,12 @@
     "./skills/engineering/supabase-engineer",
     "./skills/engineering/subagent-driven-development",
     "./skills/engineering/tdd",
-    "./skills/engineering/technical-trading-strategy",
     "./skills/engineering/triage",
     "./skills/productivity/agent-smith",
     "./skills/productivity/skill-smith",
     "./skills/productivity/write-a-prd",
     "./skills/productivity/write-a-story",
-    "./skills/productivity/caveman",
+    "./skills/misc/caveman",
     "./skills/productivity/grill-me",
     "./skills/productivity/grilling",
     "./skills/productivity/grill-with-docs",
@@ -40,7 +39,7 @@
     "./skills/productivity/kode-thai",
     "./skills/engineering/codebase-design",
     "./skills/engineering/research",
-    "./skills/productivity/wait-what",
+    "./skills/misc/wait-what",
     "./skills/productivity/to-questionnaire"
   ]
 }
