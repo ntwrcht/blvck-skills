@@ -23,6 +23,17 @@ The problem that the user is facing, from the user's perspective.
 
 The solution to the problem, from the user's perspective.
 
+## Success Metrics
+
+How we will know the solution worked, as a metric tree from outcome down to signal.
+
+- **North Star:** the one metric this feature is meant to move, or the existing product North Star it contributes to. Name it, its direction, and the mechanism — how a user getting the Solution above shows up in this number.
+- **L1 metrics:** the two to four drivers of the North Star this feature touches. Each one: definition, direction, baseline, target.
+- **L2 metrics:** the leading indicators that move first — adoption, completion, error, or time signals per L1.
+- **Guardrails:** metrics that must not get worse (latency, support volume, churn, cost).
+
+Every metric row carries: definition, direction, baseline, target, and the event or data source that produces it. A baseline or target the conversation and repo do not supply is written as `UNKNOWN`, never estimated — an invented target becomes a commitment nobody agreed to. Read `.context/analytics.md` first when it exists: reuse its activation definition and event names rather than inventing parallel ones.
+
 ## User Stories
 
 A comprehensive, numbered list of user stories. Each user story should use this format:

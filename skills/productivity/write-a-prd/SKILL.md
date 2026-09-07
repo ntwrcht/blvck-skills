@@ -23,7 +23,7 @@ Do not publish to any external issue tracker unless a compatible tool is availab
 ## Artifacts
 
 - Produces: PRD at the `prd` key path — see `references/artifact-paths.md` (default `docs/prd/<slug>.md`)
-- Consumes: design doc at the `design` key path (if present, default `docs/design/<slug>.md`), `.context/project.md`, `.context/engineering.md`, `.context/adr/`
+- Consumes: design doc at the `design` key path (if present, default `docs/design/<slug>.md`), discovery findings at the `discovery` key path (if present), `.context/project.md`, `.context/engineering.md`, `.context/analytics.md`, `.context/adr/`
 
 ## Core Rule
 
@@ -33,11 +33,12 @@ Synthesize without interviewing by default. Use the current conversation, reposi
 
 1. Gather context from the conversation and inspect the repository if needed. Read `.context/INDEX.md` when present, then load relevant domain files such as `.context/project.md`, `.context/engineering.md`, and `.context/adr/`. Prefer existing domain terms, product vocabulary, local architecture boundaries, and relevant ADRs.
 2. Identify the product scope, actor set, user-facing value, implementation constraints, non-goals, dependencies, and open risks.
-3. Sketch testing seams at the highest practical behavior boundary. Prefer existing seams to new ones.
-4. Pause to confirm testing seams only when repo evidence is weak, the feature crosses multiple modules, or choosing the wrong seam would materially change the PRD.
-5. Load `references/prd-template.md` and write one PRD artifact. Keep user stories comprehensive but scoped; avoid padding.
-6. If tracker publishing is requested, prepare one tracker-neutral PRD issue payload with the `ready-for-agent` label.
-7. Show the exact title, body, labels, tracker target, and any required fields. Publish only after explicit user approval.
+3. Derive the success metrics from the outcome in the Problem and Solution sections: the North Star the feature moves, the L1 drivers it touches, the L2 leading indicators, and guardrails. Baselines and targets come from the conversation, the repo, or `.context/analytics.md` — anything else is `UNKNOWN`.
+4. Sketch testing seams at the highest practical behavior boundary. Prefer existing seams to new ones.
+5. Pause to confirm testing seams only when repo evidence is weak, the feature crosses multiple modules, or choosing the wrong seam would materially change the PRD.
+6. Load `references/prd-template.md` and write one PRD artifact. Keep user stories comprehensive but scoped; avoid padding.
+7. If tracker publishing is requested, prepare one tracker-neutral PRD issue payload with the `ready-for-agent` label.
+8. Show the exact title, body, labels, tracker target, and any required fields. Publish only after explicit user approval.
 
 ## Publishing Rules
 
@@ -49,12 +50,13 @@ Synthesize without interviewing by default. Use the current conversation, reposi
 
 ## Reference Map
 
-- `references/prd-template.md`: exact PRD sections, formatting rules, user story guidance, implementation-decision guidance, and testing-decision guidance.
+- `references/prd-template.md`: exact PRD sections, formatting rules, success-metrics tree rules, user story guidance, implementation-decision guidance, and testing-decision guidance.
 
 ## Review Checklist
 
 - Does the PRD reflect known conversation and repo context without invented business facts?
 - Are problem, solution, scope, non-goals, dependencies, and risks clear?
+- Does every success metric trace from the outcome, carry an event or data source, and mark unsupplied baselines and targets as `UNKNOWN`?
 - Are user stories comprehensive but scoped to the feature?
 - Are implementation decisions stable enough to avoid brittle file-path details?
 - Are testing seams tied to external behavior and existing codebase prior art?
@@ -64,5 +66,5 @@ Synthesize without interviewing by default. Use the current conversation, reposi
 
 Publish only after explicit user approval.
 
-- **If approved:** hand off to `write-a-story` to break the PRD into implementation-ready backlog items.
+- **If approved:** hand off to `write-a-story` to break the PRD into implementation-ready backlog items, and to `ga4-measurement` to turn the Success Metrics events into a measurement plan. When several PRDs or features compete for the same team, hand off to `prioritize` to rank them.
 - **If not approved:** revise the PRD in place, or recommend `grilling` first if the feedback shows the underlying goals were never nailed down.
