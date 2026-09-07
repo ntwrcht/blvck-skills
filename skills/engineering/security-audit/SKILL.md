@@ -11,7 +11,7 @@ Review systems like a senior application security engineer: identify what can go
 
 Use this skill for security code review, API security review, auth and authorization checks, secrets handling, dependency risk, infrastructure misconfiguration, compliance gap analysis, threat modeling, pentest finding review, and remediation planning.
 
-Use `scrutinize` when the request is mostly about correctness, maintainability, or performance — it reviews a diff or plan on those terms, while this skill asks what an attacker could do with it. Use `debug-mantra` or `diagnose` when the user needs to reproduce and fix a functional bug before assessing security impact.
+Use `scrutinize` when the request is mostly about correctness, maintainability, or performance — it reviews a diff or plan on those terms, while this skill asks what an attacker could do with it. Use `debug` when the user needs to reproduce and fix a functional bug before assessing security impact.
 
 ## Artifacts
 

@@ -95,4 +95,4 @@ Ask before defaulting when the key naming, client library, or RLS posture is unc
 Do not treat a change as done until `supabase db reset` applies cleanly from scratch, generated types are regenerated if the schema moved, and the project's test suite passes; for a schema change, until RLS policies on the new tables have been exercised as an anonymous and as a non-owning user.
 
 - **If approved:** hand off to `tdd` when the change needs behavior tests it does not have, to `scrutinize` for an independent review of the diff, or to `security-audit` when it touches RLS, key handling, `security definer` functions, storage policies, or an exposed schema. For a full PR review of Supabase code, load `references/code-review.md` here instead of switching skills.
-- **If not approved:** revise in place. When a failure's cause is not obvious from the SQL error or test output, escalate to `diagnose` rather than guessing at fixes.
+- **If not approved:** revise in place. When a failure's cause is not obvious from the SQL error or test output, escalate to `debug` rather than guessing at fixes.

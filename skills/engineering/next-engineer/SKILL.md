@@ -98,4 +98,4 @@ Ask before defaulting when the Next.js version or router is unclear and the choi
 Do not treat a change as done until `next build` succeeds and the project's test suite passes on it; for a visible UI change, until the user has seen it running.
 
 - **If approved:** hand off to `tdd` when the change needs behavior tests it does not have, to `scrutinize` for an independent review of the diff, or to `security-audit` when it touches Server Actions, route handlers, auth, proxy matchers, or rendering of user input. For a full PR review of Next.js code, load `references/code-review.md` here instead of switching skills.
-- **If not approved:** revise in place. When a failure's cause is not obvious from the build or test output, escalate to `diagnose` rather than guessing at fixes.
+- **If not approved:** revise in place. When a failure's cause is not obvious from the build or test output, escalate to `debug` rather than guessing at fixes.

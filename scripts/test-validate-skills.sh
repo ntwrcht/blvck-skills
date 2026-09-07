@@ -203,7 +203,7 @@ expect_reject "bundled reference escaping with ../.." "reaches outside" \
   "printf 'See \`../../_shared/references/artifact-paths.md\`.\n' >> skills/engineering/tdd/references/tests.md"
 
 expect_reject "bundled script escaping the skill root" "reaches outside" \
-  "printf '# see \`skills/_shared/references/git-workflow.md\`\n' >> skills/engineering/diagnose/scripts/hitl-loop.template.sh"
+  "printf '# see \`skills/_shared/references/git-workflow.md\`\n' >> skills/engineering/debug/scripts/hitl-loop.template.sh"
 
 # The marker is only honoured near the top, so it cannot be buried in prose.
 expect_reject "portability-exempt marker buried below the header" "reaches outside" \

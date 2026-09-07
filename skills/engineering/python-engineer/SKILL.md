@@ -115,4 +115,4 @@ Load only the reference needed for the current decision:
 Do not treat a change as done until the project's formatter, linter, type checker, and test suite pass on it.
 
 - **If approved:** hand off to `tdd` when the change needs behavior tests it does not have, to `scrutinize` for an independent review of the diff, or to `security-audit` when it touches auth, secrets, subprocess calls, deserialization, or user input.
-- **If not approved:** revise in place. When a failure's cause is not obvious from the traceback, escalate to `diagnose` rather than guessing at fixes.
+- **If not approved:** revise in place. When a failure's cause is not obvious from the traceback, escalate to `debug` rather than guessing at fixes.

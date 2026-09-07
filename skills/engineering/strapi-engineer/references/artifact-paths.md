@@ -21,7 +21,7 @@ A project can override either root, or override an individual key, in `.context/
 | `goals` | grilling | `docs/goals/<slug>.md` | docs_root | slug'd |
 | `adr-dir` | domain-modeling | `.context/adr/` (sequentially-numbered files inside) | context_root | already slug'd |
 | `postmortem-dir` | post-mortem | `docs/postmortems/<slug>.md` | docs_root | already slug'd (topic = slug) |
-| `debug-ledger` | debug-mantra (canonical owner), diagnose (shares) | `.context/debug-ledger.md` | context_root | singular |
+| `debug-ledger` | debug | `.context/debug-ledger.md` | context_root | singular |
 | `security-findings` | security-audit | `.context/security-findings/<slug>.md` | context_root | slug'd |
 | `analytics` | ga4-measurement | `.context/analytics.md` | context_root | singular — shares the file with `setup-context`'s own `analytics.md` domain; read-then-update, not per-feature |
 | `scrutiny` | scrutinize | `.context/scrutiny.md`, or `.context/scrutiny-<slug>.md` when a PR/design/topic is clear | context_root | slug'd (flat file, hyphen-suffixed — matches this skill's pre-existing convention, not a subdirectory) |

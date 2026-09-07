@@ -91,4 +91,4 @@ Load only the reference needed for the current task:
 Do not treat a change as done until the server restarts cleanly and the affected endpoints have been exercised — a content-type or schema edit has no real effect until the restart, so an untested schema change is an unverified one.
 
 - **If approved:** hand off to `tdd` when the change needs behavior tests it does not have, to `scrutinize` for an independent review of the diff, or to `security-audit` when it touches policies, permissions, auth, lifecycle hooks, or the public API surface.
-- **If not approved:** revise in place. When a failure's cause is not obvious from the server logs, escalate to `diagnose` rather than guessing at fixes.
+- **If not approved:** revise in place. When a failure's cause is not obvious from the server logs, escalate to `debug` rather than guessing at fixes.

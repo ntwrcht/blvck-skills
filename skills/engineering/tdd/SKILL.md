@@ -11,7 +11,7 @@ Work in vertical behavior slices: one failing test, one minimal implementation, 
 
 Use this skill when the user asks for TDD, red-green-refactor, regression tests before a bug fix, API behavior examples, or implementation driven by observable behavior.
 
-Use `debug-mantra` first when the failure mechanism is unknown. Use `scrutinize` for review-only work where no implementation is requested.
+Use `debug` first when the failure mechanism is unknown. Use `scrutinize` for review-only work where no implementation is requested.
 
 ## Artifacts
 

@@ -41,7 +41,7 @@ Each domain file uses these layers where applicable:
 
 ## engineering.md
 
-**Consumed by:** angular-engineer, python-engineer, strapi-engineer, tdd, diagnose
+**Consumed by:** angular-engineer, python-engineer, strapi-engineer, tdd, debug
 
 **Explainer:** Code conventions, patterns, and testing strategy. Skills use this to match the project's existing style rather than applying generic defaults.
 
@@ -155,7 +155,7 @@ Each domain file uses these layers where applicable:
 
 ## adr/ (directory)
 
-**Consumed by:** diagnose, tdd, scrutinize, and (as the `adr-dir` key) every skill listed in `references/artifact-paths.md`
+**Consumed by:** debug, tdd, scrutinize, and (as the `adr-dir` key) every skill listed in `references/artifact-paths.md`
 
 **Explainer:** Architectural decisions with rationale, produced by the `domain-modeling` skill. Skills check this before proposing changes that might contradict past decisions. This is the same directory as the `adr-dir` key in `artifact-paths.md` — don't ask about it twice if output locations are also being configured.
 
@@ -221,9 +221,9 @@ One file per decision, named `NNNN-short-title.md`:
 
 ## post-mortem.md
 
-**Consumed by:** post-mortem, diagnose
+**Consumed by:** post-mortem, debug
 
-**Explainer:** Recurring failure patterns and past incident summaries. diagnose reads this to avoid re-investigating known root causes.
+**Explainer:** Recurring failure patterns and past incident summaries. debug reads this to avoid re-investigating known root causes.
 
 ```markdown
 # Post-mortem Context
@@ -247,7 +247,7 @@ One file per decision, named `NNNN-short-title.md`:
 
 ## learning.md
 
-**Consumed by:** diagnose, tdd, angular-engineer, python-engineer
+**Consumed by:** debug, tdd, angular-engineer, python-engineer
 
 **Explainer:** Gotchas, non-obvious facts, and lessons learned. Skills read this to avoid repeating known mistakes.
 

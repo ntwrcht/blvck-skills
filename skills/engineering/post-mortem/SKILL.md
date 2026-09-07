@@ -11,7 +11,7 @@ Write the engineering record of a bug fix after the cause is known and the fix i
 
 Use this skill for "post-mortem", "postmortem", "RCA", "root cause analysis", "document this fix", "write up the root cause", or after a debug session lands a real fix.
 
-Use `debug-mantra` first when the cause is still uncertain. Use `management-talk` after this skill when the user needs a leadership or cross-functional version.
+Use `debug` first when the cause is still uncertain. Use `management-talk` after this skill when the user needs a leadership or cross-functional version.
 
 ## When Not to Use
 

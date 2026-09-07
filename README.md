@@ -6,7 +6,7 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Version](https://img.shields.io/badge/version-1.0.0-informational)](.claude-plugin/plugin.json)
-[![Skills](https://img.shields.io/badge/skills-41-success)](#skill-catalog)
+[![Skills](https://img.shields.io/badge/skills-40-success)](#skill-catalog)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](#contributing)
 
 </div>
@@ -34,7 +34,7 @@ Install skills per project with the bundled installer, pull them with `npx skill
 
 ## Key Features
 
-- **41 production-ready skills** spanning daily engineering work (debugging, TDD, review, security) and product workflows (PRDs, stories, stakeholder updates, plan interviews, Thai-language writing).
+- **40 production-ready skills** spanning daily engineering work (debugging, TDD, review, security) and product workflows (PRDs, stories, stakeholder updates, plan interviews, Thai-language writing).
 - **Multi-CLI support** — one library installs into Claude Code, Codex, and Gemini CLI, each in its native format.
 - **Interactive installer with preset bundles** — curated *Project PM* and *Project Dev* scenarios for one-keystroke setup, or a custom picker across the full catalog.
 - **Safe, reversible installs** — every copied skill carries an ownership marker; the uninstaller only ever removes what the installer created.
@@ -51,8 +51,7 @@ Install skills per project with the bundled installer, pull them with `npx skill
 | [**Angular Engineer**](skills/engineering/angular-engineer/SKILL.md) | Builds, modifies, reviews, and debugs Angular applications using project conventions, modern Angular patterns, RxJS, Signals, testing, SSR, and Nx guidance. Use when working on Angular components, services, routing, forms, guards, migrations, performance, security, or frontend architecture. |
 | [**Code to Docs**](skills/engineering/code-to-docs/SKILL.md) | Reverse-engineers technical documentation from an existing codebase — architecture overviews, OpenAPI specs, C4 and sequence diagrams, and operational runbooks — and audits technical docs that already exist. Use when documenting an inherited or undocumented service, extracting an API spec from route handlers, drawing system diagrams from code, writing a deployment or incident runbook, or reviewing existing technical docs for gaps. |
 | [**Codebase Design**](skills/engineering/codebase-design/SKILL.md) | Provides the shared vocabulary for designing deep modules — module, interface, depth, seam, adapter, leverage, locality — and applies it to interface design, deepening a cluster, and seam placement. Use when designing or improving a module's interface, finding deepening opportunities, deciding where a seam goes, making code more testable, or when another skill needs the deep-module vocabulary. |
-| [**Debug Mantra**](skills/engineering/debug-mantra/SKILL.md) | Debugs a failure that already reproduces, through a fail-path trace, hypothesis falsification, and a breadcrumb ledger. Use when a failing test, command, or request already gives a reliable red signal and the cause is not yet proven. |
-| [**Diagnose**](skills/engineering/diagnose/SKILL.md) | Diagnoses hard bugs and performance regressions through a disciplined feedback-loop investigation. Use when a failure has no reliable repro yet — flaky, production-only, crash, hang, data corruption, or slowdown — and a harness must be built before minimisation, hypotheses, instrumentation, a fix, and a regression test. |
+| [**Debug**](skills/engineering/debug/SKILL.md) | Debugs failures and performance regressions as an evidence loop — establish a red signal, trace the fail path, falsify ranked hypotheses, then fix with a regression test. Use when a failing test or command already reproduces the bug every run, or when the failure is flaky, production-only, a crash, a hang, data corruption, or a slowdown that needs a harness built before the cause can be chased. |
 | [**Domain Modeling**](skills/engineering/domain-modeling/SKILL.md) | Builds and sharpens a project's domain model by challenging fuzzy language, updating the shared glossary inline, and recording hard architectural decisions as ADRs. Use when pinning down domain terminology, resolving contested terms, recording an architectural decision, or when another skill needs to maintain the domain vocabulary. |
 | [**GA4 Measurement**](skills/engineering/ga4-measurement/SKILL.md) | Plans, implements, reviews, and validates GA4/GTM measurement for product flows, funnels, feature adoption, conversion, errors, and performance. Use when designing event taxonomies, dataLayer or gtag tracking, GA4 reports, GTM setup, analytics QA, or measurement plans. |
 | [**Git Guardrails**](skills/engineering/git-guardrails/SKILL.md) | Installs Claude Code PreToolUse hooks that block dangerous git commands before execution. Use when setting up local or global guardrails for git push, force push, reset --hard, clean, branch deletion, checkout ., or restore . |
@@ -105,8 +104,7 @@ Install the full portable set by default, then rely on concise descriptions and 
 | The blocking knowledge sits in another person's head and has to be asked for. | [**To Questionnaire**](skills/productivity/to-questionnaire/SKILL.md) |
 | The blocking knowledge sits in external docs, a spec, or a library's source and has to be read. | [**Research**](skills/engineering/research/SKILL.md) |
 | A written plan, PR, diff, design doc, or implementation approach needs independent review. | [**Scrutinize**](skills/engineering/scrutinize/SKILL.md) |
-| A command already shows the failure every run, and the cause is not yet proven. | [**Debug Mantra**](skills/engineering/debug-mantra/SKILL.md) |
-| No command reliably shows the failure yet — flaky, production-only, crash, hang, data issue, or performance regression. | [**Diagnose**](skills/engineering/diagnose/SKILL.md) |
+| A bug needs investigating — a reliable repro, a flaky test, a production-only symptom, a crash, a hang, data corruption, or a performance regression. | [**Debug**](skills/engineering/debug/SKILL.md) |
 | A behavior change should be driven through red-green-refactor tests. | [**TDD**](skills/engineering/tdd/SKILL.md) |
 | A module's interface, depth, or seam placement is the open question, not the tests over it. | [**Codebase Design**](skills/engineering/codebase-design/SKILL.md) |
 | A fixed and validated bug needs an engineering RCA or post-mortem. | [**Post-mortem**](skills/engineering/post-mortem/SKILL.md) |
@@ -213,7 +211,7 @@ Once installed, skills activate through your assistant's normal flow — the age
 
 ```text
 > /tdd
-> Use the diagnose skill to investigate this flaky integration test.
+> Use the debug skill to investigate this flaky integration test.
 > Grill me on this migration plan before I start.
 ```
 

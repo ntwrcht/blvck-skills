@@ -36,7 +36,7 @@ BUNDLE_PROJECT_PM_SKILLS=(
 
 BUNDLE_PROJECT_DEV_SKILLS=(
   "grill-with-docs" "grilling" "write-a-story" "handoff"
-  "triage" "tdd" "debug-mantra" "diagnose"
+  "triage" "tdd" "debug"
   "domain-modeling" "prototype" "scrutinize" "security-audit" "git-guardrails"
   "codebase-design" "research"
 )
@@ -93,8 +93,7 @@ get_shared_refs() {
     write-a-story)                echo "artifact-paths.md" ;;
     brainstorming)                echo "artifact-paths.md" ;;
     grilling)                     echo "artifact-paths.md" ;;
-    debug-mantra)                 echo "artifact-paths.md" ;;
-    diagnose)                     echo "artifact-paths.md" ;;
+    debug)                        echo "artifact-paths.md" ;;
     domain-modeling)              echo "artifact-paths.md" ;;
     post-mortem)                  echo "artifact-paths.md" ;;
     scrutinize)                   echo "artifact-paths.md" ;;
