@@ -100,6 +100,8 @@ Number the questions and separate them with a horizontal rule. One round per tur
 
 ## Operating Rules
 
+The round follows the library's house style for asking the user — `references/asking-the-user.md`. The rules below are what grilling adds to it.
+
 - Ask the whole frontier in one round — batching independent questions is the point. Splitting them across turns spends the user's turns for nothing.
 - Keep dependent questions out of the current round. If Q2's answer only makes sense once Q1 is settled, Q2 is next round.
 - Every question must unlock a decision, reduce risk, or expose a dependency. No interrogation theater.
@@ -111,6 +113,7 @@ Number the questions and separate them with a horizontal rule. One round per tur
 ## Reference Map
 
 - `references/spec-reviewer-prompt.md`: dispatch template for the independent design review in step 10.
+- `references/asking-the-user.md`: the house style every round follows — look it up first, batch what is independent, recommend on every question, number them, stop when the answer would not change the output.
 
 ## Next Step
 

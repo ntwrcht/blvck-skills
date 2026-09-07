@@ -37,7 +37,7 @@ Before searching any connected tool for an unfamiliar entity, ask first and wait
 
 ## Clarifying Questions
 
-When the dump slows or the user signals they are done, ask 5-10 numbered questions targeting the gaps. Ground each one in something they actually said — generic questions signal the dump was not read.
+When the dump slows or the user signals they are done, ask 5-10 numbered questions targeting the gaps, in the round shape from `asking-the-user.md`. Ground each one in something they actually said — generic questions signal the dump was not read. Where the dump already hints at the answer, put that hint under the question as the recommended answer so the user confirms rather than composes; where it does not, say there is no lead yet.
 
 Tell them shorthand answers are fine: `1: yes, 2: see #payments-eng, 3: no, backwards compat`. Links, channel pointers, and more dumping are all acceptable answers.
 

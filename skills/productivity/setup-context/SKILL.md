@@ -36,19 +36,19 @@ Before asking anything, read what already exists:
 
 ### 2. Present findings
 
-Summarise what was detected and what is missing. If domain files already exist, don't default to a full re-interview — offer the fast path: "Domains are already configured (`project`, `engineering`, ...). Add or update Output locations only, add another domain, or start over?" Only walk the full 9-domain interview again if the user asks to add domains or reset.
+Summarise what was detected and what is missing. If domain files already exist, don't default to a full re-interview — offer the fast path: "Domains are already configured (`project`, `engineering`, ...). Add or update Output locations only, add another domain, or start over?" Only present the full domain round again if the user asks to add domains or reset.
 
-### 3. Interview — one domain at a time
+### 3. Interview — domains, one round
 
-Walk through domains in this order: `project` → `engineering` → `git-workflow` → `security` → `analytics` → `adr` → `triage` → `post-mortem` → `learning`.
+Present all nine domains as one numbered round, following `references/asking-the-user.md`: for each domain, a one-line explainer of what it holds and which skills read it, and a **recommended yes or no** derived from what step 1 detected — `analytics` is a yes when tracking code or a GTM snippet is present, `triage` when a tracker is configured or `.triage/` exists, `security` when auth code or secrets handling was found, `adr` when an ADR directory exists, and so on. `project` and `engineering` are recommended yes for any project with code. Where detection found nothing either way, say so and recommend no.
 
-For each: give a one-line explainer of what it contains and which skills read it, then ask if it applies to this project. Do not present all domains at once.
+The user corrects the table in one reply; anything unmentioned keeps its recommendation. Ask a second round only for a domain whose answer raised a dependent question.
 
 Load `references/domains.md` for domain descriptions, consuming skills, and seed templates.
 
 ### 4. Interview — output locations
 
-A different shape from step 3: one table, one turn, not sequential questions. Load `references/artifact-paths.md` and present:
+The same shape as step 3: one table, one turn. Load `references/artifact-paths.md` and present:
 
 1. The two roots with a one-line explainer each: `docs_root` (default `docs/`) for durable, human-facing artifacts; `context_root` (default `.context/`) for ephemeral, session-scoped working state.
 2. The full key → producer → default-path table, noting that most keys are directories with a per-topic slug'd filename (e.g. `docs/prd/<slug>.md`), not a single file — this lets a project accumulate more than one PRD, story set, or design doc over its life without overwriting the last one.
@@ -99,6 +99,7 @@ Tell the user which skills will now read from `.context/`, which output paths we
 
 - `references/domains.md`: domain list, consuming skills, and seed content templates.
 - `references/artifact-paths.md`: output-location registry (roots, keys, defaults, resolution rule).
+- `references/asking-the-user.md`: the house style both interview steps follow.
 
 ## Next Step
 

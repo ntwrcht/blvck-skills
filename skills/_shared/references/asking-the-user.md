@@ -1,0 +1,30 @@
+# Asking the User
+
+The house style for every moment a skill turns to the user for input. One shape, whichever skill is running, so the user answers the same way every time.
+
+## The Five Rules
+
+1. **Look it up before asking it.** If the repo, the `.context/` files, `CONTEXT.md`, git history, or a connected tool can answer the question, answer it and never ask. A question the environment can answer is legwork, not a question.
+2. **Batch what is independent.** Every question whose answer does not depend on another question still open goes in the same turn. Hold a question for the next turn only when it genuinely depends on an answer not yet given. One question per turn is the exception, not the pacing.
+3. **Recommend on every question.** Each question carries the skill's provisional answer, drawn from the evidence it has, marked as provisional. The user confirms or corrects instead of composing from scratch. Where there is no evidence at all, say so rather than inventing a recommendation.
+4. **Number them and accept shorthand.** Questions are numbered so the user can answer in one line — `1 yes, 2 no, 3 see the PRD`. Links, file paths, and "don't know" are all valid answers.
+5. **Stop when the answer would not change the output.** A question exists because its answer changes what gets produced. No question is asked to be thorough.
+
+## The Round
+
+```text
+❓ **Q1** — **<question title>**: <question body, which may offer choices>
+
+➡️ <recommended answer, and the evidence it rests on>
+
+---
+
+❓ **Q2** — …
+```
+
+One round per turn, then stop and wait. After the answers, recompute what is still open and ask the next round.
+
+## Two Situations, One Style
+
+- **Decision interviews**, where the questions are the work (`grilling`, `doc-coauthoring` stage 1, `setup-context`, `to-questionnaire`): rounds until nothing is left open.
+- **Clarifications inside a producing skill** (`write-a-story`, `stakeholder-comms`, `security-audit`, `prioritize`, and the rest): usually one round, often one question, asked only when the answer blocks a good output. Rules 1, 3, and 5 carry the weight; rule 2 rarely has more than one question to batch.

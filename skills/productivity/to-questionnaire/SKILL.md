@@ -32,6 +32,8 @@ Use when the blocking knowledge sits with another person: a domain expert, a cus
 
 ## Workflow
 
+Both exchanges follow `references/asking-the-user.md`: recommend an answer from whatever the conversation and context already say, number the questions, accept shorthand.
+
 1. **Who is it going to?** Ask, in one exchange, the recipient's role, expertise, and relationship to the user. This fixes the questionnaire's tone and how much context it must carry. Done when you know who the recipient is and what they know that the user does not.
 2. **What do you need back?** Ask, in one exchange, the specific decisions or facts the user cannot resolve alone and needs from this person. Done when you have a concrete list of what the user must walk away able to do or decide.
 3. **Write the questionnaire.** Draft questions aimed at the gap from steps 1–2, following the structure below. Write it to the `questionnaire` key path and report the path. Done when the file exists and every item the user named in step 2 is covered by a question.
@@ -71,6 +73,10 @@ A closing catch-all: anything we did not ask that we should know?
 ```
 
 Every question is one idea, never compound, with an answer stub (`>`) directly beneath it.
+
+## Reference Map
+
+- `references/asking-the-user.md`: the house style the two exchanges follow.
 
 ## Next Step
 

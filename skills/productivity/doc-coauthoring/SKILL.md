@@ -54,6 +54,7 @@ The user owns the doc. Close the context gap before writing a word of it: no sec
 - `references/context-gathering.md`: Stage 1 — meta questions, info-dump prompts, template and image handling, clarifying-question batch, exit condition.
 - `references/section-loop.md`: Stage 2 — section ordering, scaffold creation, the six-step per-section loop, quality checks, whole-document pass.
 - `references/reader-testing.md`: Stage 3 — reader-question prediction, subagent test protocol and prompt, no-subagent fallback, exit condition.
+- `references/asking-the-user.md`: the house style the Stage 1 question batches follow.
 
 ## Review Checklist
 

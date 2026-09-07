@@ -93,7 +93,7 @@ get_shared_refs() {
     write-user-docs)              echo "artifact-paths.md" ;;
     write-a-prd)                  echo "artifact-paths.md" ;;
     write-a-story)                echo "artifact-paths.md" ;;
-    grilling)                     echo "artifact-paths.md" ;;
+    grilling)                     echo "artifact-paths.md asking-the-user.md" ;;
     debug)                        echo "artifact-paths.md" ;;
     domain-modeling)              echo "artifact-paths.md" ;;
     post-mortem)                  echo "artifact-paths.md" ;;
@@ -102,9 +102,10 @@ get_shared_refs() {
     stakeholder-comms)            echo "artifact-paths.md" ;;
     tdd)                          echo "artifact-paths.md" ;;
     triage)                       echo "artifact-paths.md" ;;
-    setup-context)                echo "artifact-paths.md" ;;
+    setup-context)                echo "artifact-paths.md asking-the-user.md" ;;
     research)                     echo "artifact-paths.md" ;;
-    to-questionnaire)             echo "artifact-paths.md" ;;
+    to-questionnaire)             echo "artifact-paths.md asking-the-user.md" ;;
+    doc-coauthoring)              echo "asking-the-user.md" ;;
     prioritize)                   echo "artifact-paths.md" ;;
     discovery-synthesis)          echo "artifact-paths.md" ;;
     *)                echo "" ;;

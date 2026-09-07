@@ -11,7 +11,7 @@ Each domain file uses these layers where applicable:
 
 ## project.md
 
-**Consumed by:** angular-engineer, python-engineer, strapi-engineer, ga4-measurement, security-audit, stakeholder-comms, write-a-prd, write-a-story
+**Consumed by:** angular-engineer, next-engineer, python-engineer, strapi-engineer, supabase-engineer, ga4-measurement, security-audit, stakeholder-comms, write-a-prd, write-a-story, prioritize, discovery-synthesis, grilling, debug, post-mortem
 
 **Explainer:** Stack, repo layout, environment setup, and core vocabulary. The broadest context file — most skills read it first.
 
@@ -41,7 +41,7 @@ Each domain file uses these layers where applicable:
 
 ## engineering.md
 
-**Consumed by:** angular-engineer, python-engineer, strapi-engineer, tdd, debug
+**Consumed by:** angular-engineer, next-engineer, python-engineer, strapi-engineer, supabase-engineer, tdd, debug, security-audit, ga4-measurement, write-a-prd
 
 **Explainer:** Code conventions, patterns, and testing strategy. Skills use this to match the project's existing style rather than applying generic defaults.
 
@@ -69,7 +69,7 @@ Each domain file uses these layers where applicable:
 
 ## git-workflow.md
 
-**Consumed by:** angular-engineer, python-engineer, strapi-engineer, triage
+**Consumed by:** angular-engineer, next-engineer, python-engineer, strapi-engineer, supabase-engineer, triage
 
 **Explainer:** Branch naming, commit conventions, PR process, and merge rules.
 
@@ -97,7 +97,7 @@ Each domain file uses these layers where applicable:
 
 ## security.md
 
-**Consumed by:** security-audit, angular-engineer, python-engineer, strapi-engineer
+**Consumed by:** security-audit, angular-engineer, next-engineer, python-engineer, strapi-engineer, supabase-engineer
 
 **Explainer:** Threat model, auth patterns, known risks, and controls. security-audit reads this before reviewing so it focuses on gaps rather than re-mapping known ground.
 
@@ -125,7 +125,7 @@ Each domain file uses these layers where applicable:
 
 ## analytics.md
 
-**Consumed by:** ga4-measurement
+**Consumed by:** ga4-measurement, write-a-prd, prioritize
 
 **Explainer:** Measurement plan, activation definitions, and event taxonomy. ga4-measurement treats this as the source of truth for event names and reporting audiences.
 
@@ -247,7 +247,7 @@ One file per decision, named `NNNN-short-title.md`:
 
 ## learning.md
 
-**Consumed by:** debug, tdd, angular-engineer, python-engineer
+**Consumed by:** debug, tdd, angular-engineer, next-engineer, python-engineer, strapi-engineer, supabase-engineer
 
 **Explainer:** Gotchas, non-obvious facts, and lessons learned. Skills read this to avoid repeating known mistakes.
 
