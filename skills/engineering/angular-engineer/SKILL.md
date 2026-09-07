@@ -11,7 +11,7 @@ Guide Angular code work with senior engineering judgment: read the project first
 
 Use this skill for Angular application work: components, services, routes, guards, forms, state, RxJS streams, Signals, SSR, Nx workspaces, migrations, tests, reviews, debugging, and frontend architecture decisions.
 
-Use a narrower skill when the request is mainly about generic debugging, security review, analytics, TDD workflow, or stakeholder communication and Angular is only incidental.
+Use a narrower skill when the request is mainly about generic debugging, security review, analytics, TDD workflow, or stakeholder communication and Angular is only incidental. When the open question is a module's interface, depth, or seam placement rather than anything Angular-specific, use `codebase-design` — this skill brings the Angular conventions, that one brings the design.
 
 ## Artifacts
 
@@ -91,5 +91,5 @@ Ask before defaulting when the Angular version or module style is unclear and th
 
 Do not treat a change as done until the app builds and the project's test suite passes on it; for a visible UI change, until the user has seen it running.
 
-- **If approved:** hand off to `tdd` when the change needs behavior tests it does not have, to `scrutinize` for an independent review of the diff, or to `security-audit` when it touches route guards, auth, template rendering of user input, or HTTP boundaries. For a full PR review of Angular code, load `references/code-review.md` here instead of switching skills.
+- **If approved:** hand off to `tdd` when the change needs behavior tests it does not have, to `scrutinize` for an independent review of the diff, or to `security-audit` when it touches route guards, auth, template rendering of user input, or HTTP boundaries. When the change exposed a shallow module or a contested seam, hand off to `codebase-design` before building more on it. For a full PR review of Angular code, load `references/code-review.md` here instead of switching skills.
 - **If not approved:** revise in place. When a failure's cause is not obvious from the build or test output, escalate to `debug` rather than guessing at fixes.

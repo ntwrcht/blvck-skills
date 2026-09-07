@@ -11,7 +11,7 @@ Apply senior Strapi engineering judgment to v4 and v5 projects, with clear desig
 
 Use this skill for Strapi application work: content-type schemas, API controllers, services, routes, policies, middleware, lifecycle hooks, plugins, extensions, RBAC, JWT, GraphQL, populate strategy, webhooks, cron, tests, migrations, and project workflow.
 
-Use a narrower skill instead when the request is mainly generic TypeScript, frontend Angular, security auditing, analytics, or a non-Strapi backend.
+Use a narrower skill instead when the request is mainly generic TypeScript, frontend Angular, security auditing, analytics, or a non-Strapi backend. When the open question is a module's interface, depth, or seam placement rather than anything Strapi-specific, use `codebase-design` — this skill brings the Strapi conventions, that one brings the design.
 
 ## Artifacts
 
@@ -90,5 +90,5 @@ Load only the reference needed for the current task:
 
 Do not treat a change as done until the server restarts cleanly and the affected endpoints have been exercised — a content-type or schema edit has no real effect until the restart, so an untested schema change is an unverified one.
 
-- **If approved:** hand off to `tdd` when the change needs behavior tests it does not have, to `scrutinize` for an independent review of the diff, or to `security-audit` when it touches policies, permissions, auth, lifecycle hooks, or the public API surface.
+- **If approved:** hand off to `tdd` when the change needs behavior tests it does not have, to `scrutinize` for an independent review of the diff, or to `security-audit` when it touches policies, permissions, auth, lifecycle hooks, or the public API surface. When the change exposed a shallow module or a contested seam, hand off to `codebase-design` before building more on it.
 - **If not approved:** revise in place. When a failure's cause is not obvious from the server logs, escalate to `debug` rather than guessing at fixes.

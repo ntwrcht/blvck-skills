@@ -1,17 +1,23 @@
 ---
 name: codebase-design
-description: "Provides the shared vocabulary for designing deep modules — module, interface, depth, seam, adapter, leverage, locality — and applies it to interface design, deepening a cluster, and seam placement. Use when designing or improving a module's interface, finding deepening opportunities, deciding where a seam goes, making code more testable, or when another skill needs the deep-module vocabulary."
+description: "Designs code independent of language or framework — shapes a module's interface, decides where a seam goes, plans how to deepen a cluster of shallow modules, and designs an interface several radically different ways in parallel before choosing one. Use when asked to design a module, decide where a boundary belongs, make code easier to test, compare interface options, untangle too many small classes, or when a stack-specific skill hits a design question that is not about its framework."
 ---
 
 # Codebase Design
 
-Design **deep modules**: a lot of behaviour behind a small interface, placed at a clean seam, testable through that interface. The aim is leverage for callers, locality for maintainers, and testability for everyone.
+The general code design skill. Design **deep modules**: a lot of behaviour behind a small interface, placed at a clean seam, testable through that interface. The aim is leverage for callers, locality for maintainers, and testability for everyone. Nothing here depends on a language or framework — the stack skills bring their conventions, this skill brings the design.
+
+## What You Get
+
+- **An interface designed several ways and compared** — the Design It Twice path spawns parallel sub-agents, each forced toward a radically different interface, then compares them on depth, locality, and seam placement.
+- **A deepening plan** for a cluster of shallow modules — which dependencies stay in-process, which get a local substitute, which get a port and adapter, and which are the only ones worth mocking.
+- **A seam decision** — where a module's interface should live, and whether a seam is real or hypothetical.
 
 ## When to Use
 
-Use this skill when code is being designed or restructured and the shape of an interface is in question: choosing what a module exposes, finding deepening opportunities, deciding where a seam belongs, or making code easier to test through its public surface.
+Use this skill when code is being designed or restructured and the shape of an interface is in question: choosing what a module exposes, finding deepening opportunities, deciding where a seam belongs, comparing interface options, or making code easier to test through its public surface. Typical asks: "design this module", "where should the boundary go", "this is hard to test", "too many small classes", "show me a few ways to shape this API".
 
-It is also the shared source of this vocabulary for other skills. `tdd` reaches for it when the seam under test is itself the open question; `scrutinize` and `prototype` reach for it when a design is being judged.
+It is also the shared source of this vocabulary for other skills. `tdd` reaches for it when the seam under test is itself the open question; `scrutinize` and `prototype` reach for it when a design is being judged; the stack skills (`angular-engineer`, `next-engineer`, `python-engineer`, `strapi-engineer`, `supabase-engineer`) reach for it when a task inside their framework turns into a design question that is not about the framework.
 
 ## When Not to Use
 
@@ -87,26 +93,22 @@ Good interfaces make testing natural.
 
 **Accept dependencies, don't create them:**
 
-```typescript
-// Testable
-function processOrder(order, paymentGateway) {}
+```text
+Testable:      process_order(order, payment_gateway)
+                 — the caller (or the test) chooses the gateway
 
-// Hard to test
-function processOrder(order) {
-  const gateway = new StripeGateway();
-}
+Hard to test:  process_order(order)
+                 gateway = new StripeGateway()   — the module chooses it, and only Stripe will do
 ```
 
 **Return results, don't produce side effects:**
 
-```typescript
-// Testable
-function calculateDiscount(cart): Discount {}
+```text
+Testable:      discount = calculate_discount(cart)
+                 — returns a value the test can assert on
 
-// Hard to test
-function applyDiscount(cart): void {
-  cart.total -= discount;
-}
+Hard to test:  apply_discount(cart)
+                 cart.total -= discount            — mutates its argument, returns nothing
 ```
 
 **Keep the surface small.** Fewer methods mean fewer tests needed; fewer parameters mean simpler test setup. A stable public interface lets the implementation change without rewriting tests.

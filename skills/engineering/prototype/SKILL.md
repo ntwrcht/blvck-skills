@@ -16,6 +16,7 @@ Two questions route to two branches — see **Pick a branch**.
 ## When Not to Use
 
 - **The decision is about terminology or an architectural commitment, not a feeling.** Use `domain-modeling` to pin down contested terms and record an ADR. Prototype answers *"does this model feel right when I push it?"*; domain-modeling answers *"what do we call this, and what did we decide?"* Feel it out here, then record the verdict there.
+- **The question is the interface's shape, not how it feels to drive.** Use `codebase-design` — its Design It Twice path compares several interfaces on paper, in parallel, before anything is built. Prototype here once one is chosen and the question becomes "does it hold under real cases?"
 - **You already know the answer.** No open question, no prototype — write the real code.
 - **The output needs to be kept and maintained.** This skill produces disposable code by design; anything durable gets rewritten under normal constraints when the answer is folded in. Throwaway does not mean deleted — see **Rules that apply to both**, rule 6.
 

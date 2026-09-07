@@ -30,7 +30,7 @@ Find the shortest defensible path from intent to evidence. Separate what the art
 ## Workflow
 
 1. **State intent.** Summarize the goal in one sentence. If the goal is missing or contradictory, lead with that and stop deep review until it is clarified.
-2. **Check alternatives.** Ask whether doing nothing, reusing an existing pattern, changing config, narrowing scope, or solving at a different layer would satisfy the goal with less risk.
+2. **Check alternatives.** Ask whether doing nothing, reusing an existing pattern, changing config, narrowing scope, or solving at a different layer would satisfy the goal with less risk. When the artifact under review is an interface or module boundary, judge it with `codebase-design`'s vocabulary — depth, seam placement, leverage, locality — and reach for its Design It Twice path if the shape itself is the open question.
 3. **Trace behavior.** Follow real paths through changed and unchanged code: entry points, call sites, branches, state mutation, outputs, side effects, and external contracts. For plans, trace proposed flow against the current system.
 4. **Verify claims.** Test each claim against inputs, edge cases, empty/nil states, retries, partial failures, concurrency, ordering, performance, observability, persistence, and API contracts.
 5. **Inspect tests.** Confirm tests exercise the traced path and would fail for the important regression. Call out mocks or assertions that bypass the behavior.

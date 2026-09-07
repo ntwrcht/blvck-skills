@@ -19,6 +19,9 @@ database access, and architecture decisions.
 Use a narrower skill when the request is mainly generic debugging, security
 audit, TDD process, stakeholder writing, or a framework-specific workflow where
 Python design judgment is only incidental.
+When the open question is a module's interface, depth, or seam placement rather
+than anything Python-specific, use `codebase-design` — this skill brings the
+Python conventions, that one brings the design.
 
 ## Artifacts
 
@@ -114,5 +117,5 @@ Load only the reference needed for the current decision:
 
 Do not treat a change as done until the project's formatter, linter, type checker, and test suite pass on it.
 
-- **If approved:** hand off to `tdd` when the change needs behavior tests it does not have, to `scrutinize` for an independent review of the diff, or to `security-audit` when it touches auth, secrets, subprocess calls, deserialization, or user input.
+- **If approved:** hand off to `tdd` when the change needs behavior tests it does not have, to `scrutinize` for an independent review of the diff, or to `security-audit` when it touches auth, secrets, subprocess calls, deserialization, or user input. When the change exposed a shallow module or a contested seam, hand off to `codebase-design` before building more on it.
 - **If not approved:** revise in place. When a failure's cause is not obvious from the traceback, escalate to `debug` rather than guessing at fixes.

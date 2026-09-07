@@ -11,7 +11,7 @@ Guide Next.js code work with senior engineering judgment: read the project first
 
 Use this skill for Next.js application work: routes, layouts, Server and Client Components, data fetching, caching and revalidation, Server Actions, route handlers, proxy/middleware, forms, auth, metadata, SSR and streaming, monorepos, migrations, tests, reviews, debugging, and full-stack React architecture decisions.
 
-Use a narrower skill when the request is mainly about generic debugging, security review, analytics, TDD workflow, or stakeholder communication and Next.js is only incidental. Use `angular-engineer` for Angular work — the two do not overlap.
+Use a narrower skill when the request is mainly about generic debugging, security review, analytics, TDD workflow, or stakeholder communication and Next.js is only incidental. When the open question is a module's interface, depth, or seam placement rather than anything Next.js-specific, use `codebase-design` — this skill brings the Next.js conventions, that one brings the design. Use `angular-engineer` for Angular work — the two do not overlap.
 
 Do not use this skill for Vercel platform behavior. When the Vercel plugin's skills (`vercel:nextjs` and its siblings) are installed, defer to them for deployment configuration, CDN and platform caching, firewall, storage, and AI SDK questions, and keep this skill for application code and project conventions.
 
@@ -97,5 +97,5 @@ Ask before defaulting when the Next.js version or router is unclear and the choi
 
 Do not treat a change as done until `next build` succeeds and the project's test suite passes on it; for a visible UI change, until the user has seen it running.
 
-- **If approved:** hand off to `tdd` when the change needs behavior tests it does not have, to `scrutinize` for an independent review of the diff, or to `security-audit` when it touches Server Actions, route handlers, auth, proxy matchers, or rendering of user input. For a full PR review of Next.js code, load `references/code-review.md` here instead of switching skills.
+- **If approved:** hand off to `tdd` when the change needs behavior tests it does not have, to `scrutinize` for an independent review of the diff, or to `security-audit` when it touches Server Actions, route handlers, auth, proxy matchers, or rendering of user input. When the change exposed a shallow module or a contested seam, hand off to `codebase-design` before building more on it. For a full PR review of Next.js code, load `references/code-review.md` here instead of switching skills.
 - **If not approved:** revise in place. When a failure's cause is not obvious from the build or test output, escalate to `debug` rather than guessing at fixes.

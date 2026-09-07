@@ -11,7 +11,7 @@ Guide Supabase work with senior engineering judgment: the database is the author
 
 Use this skill for Supabase work: schema and migrations, RLS policies, auth and sessions, PostgREST queries and mutations, SQL functions and triggers, storage buckets, realtime channels, Edge Functions, vector search, type generation, local development, performance tuning, tests, reviews, and backend architecture decisions.
 
-Use a narrower skill when the request is mainly about generic debugging, security review, analytics, TDD workflow, or stakeholder communication and Supabase is only incidental. Use `next-engineer` for Next.js rendering, routing, and caching concerns; this skill covers the Supabase half of that stack.
+Use a narrower skill when the request is mainly about generic debugging, security review, analytics, TDD workflow, or stakeholder communication and Supabase is only incidental. When the open question is a module's interface, depth, or seam placement rather than anything Supabase-specific, use `codebase-design` — this skill brings the Supabase conventions, that one brings the design. Use `next-engineer` for Next.js rendering, routing, and caching concerns; this skill covers the Supabase half of that stack.
 
 ## Artifacts
 
@@ -94,5 +94,5 @@ Ask before defaulting when the key naming, client library, or RLS posture is unc
 
 Do not treat a change as done until `supabase db reset` applies cleanly from scratch, generated types are regenerated if the schema moved, and the project's test suite passes; for a schema change, until RLS policies on the new tables have been exercised as an anonymous and as a non-owning user.
 
-- **If approved:** hand off to `tdd` when the change needs behavior tests it does not have, to `scrutinize` for an independent review of the diff, or to `security-audit` when it touches RLS, key handling, `security definer` functions, storage policies, or an exposed schema. For a full PR review of Supabase code, load `references/code-review.md` here instead of switching skills.
+- **If approved:** hand off to `tdd` when the change needs behavior tests it does not have, to `scrutinize` for an independent review of the diff, or to `security-audit` when it touches RLS, key handling, `security definer` functions, storage policies, or an exposed schema. When the change exposed a shallow module or a contested seam, hand off to `codebase-design` before building more on it. For a full PR review of Supabase code, load `references/code-review.md` here instead of switching skills.
 - **If not approved:** revise in place. When a failure's cause is not obvious from the SQL error or test output, escalate to `debug` rather than guessing at fixes.
