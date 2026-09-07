@@ -29,7 +29,7 @@ SHIPPABLE_BUCKETS=(
 
 # Curated minimal bundles — custom mode exposes the full shippable catalog.
 BUNDLE_PROJECT_PM_SKILLS=(
-  "grilling" "write-a-prd" "write-a-story"
+  "discovery-synthesis" "grilling" "write-a-prd" "prioritize" "write-a-story"
   "prototype" "stakeholder-comms" "handoff" "caveman"
   "to-questionnaire" "wait-what"
 )
@@ -105,6 +105,8 @@ get_shared_refs() {
     setup-context)                echo "artifact-paths.md" ;;
     research)                     echo "artifact-paths.md" ;;
     to-questionnaire)             echo "artifact-paths.md" ;;
+    prioritize)                   echo "artifact-paths.md" ;;
+    discovery-synthesis)          echo "artifact-paths.md" ;;
     *)                echo "" ;;
   esac
 }

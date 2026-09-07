@@ -6,7 +6,7 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Version](https://img.shields.io/badge/version-1.0.0-informational)](.claude-plugin/plugin.json)
-[![Skills](https://img.shields.io/badge/skills-34-success)](#skill-catalog)
+[![Skills](https://img.shields.io/badge/skills-36-success)](#skill-catalog)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](#contributing)
 
 </div>
@@ -34,7 +34,7 @@ Install skills per project with the bundled installer, pull them with `npx skill
 
 ## Key Features
 
-- **34 production-ready skills** spanning daily engineering work (debugging, TDD, review, security) and product workflows (PRDs, stories, stakeholder updates, plan interviews, Thai-language writing).
+- **36 production-ready skills** spanning daily engineering work (debugging, TDD, review, security) and product workflows (discovery synthesis, PRDs, prioritization, stories, stakeholder updates, plan interviews, Thai-language writing).
 - **Multi-CLI support** — one library installs into Claude Code, Codex, and Gemini CLI, each in its native format.
 - **Interactive installer with preset bundles** — curated *Project PM* and *Project Dev* scenarios for one-keystroke setup, or a custom picker across the full catalog.
 - **Safe, reversible installs** — every copied skill carries an ownership marker; the uninstaller only ever removes what the installer created.
@@ -72,10 +72,12 @@ Install skills per project with the bundled installer, pull them with `npx skill
 | Skill Name | Description |
 | :--- | :--- |
 | [**Agent Smith**](skills/productivity/agent-smith/SKILL.md) | Designs specialized subagents as a persona-and-operations definition with an explicit tool and model budget, boundaries against sibling agents, and a delegation test run before the agent ships. Use when creating an agent, writing a subagent, defining an agent persona, reviewing an agent definition file, or planning a roster of specialized agents. |
+| [**Discovery Synthesis**](skills/productivity/discovery-synthesis/SKILL.md) | Synthesizes raw user evidence — interview notes, support tickets, survey responses, call transcripts — into Jobs-to-be-Done findings, each framed as a job with its pains and desired outcomes and backed by verbatim quotes with a count of how many sources support it. Use when turning research notes into findings, running a discovery synthesis, extracting jobs or pains from customer feedback, or building the evidence base before a PRD or a grilling session. |
 | [**Doc Co-Authoring**](skills/productivity/doc-coauthoring/SKILL.md) | Co-authors a document with the user section by section — gathering their context, brainstorming and curating each section, then testing the draft against a fresh reader with no context. Use when writing a proposal, technical spec, decision doc, RFC, design doc, or similar long-form content where the user holds the context. |
 | [**Grilling**](skills/productivity/grilling/SKILL.md) | Shapes a rough idea or stress-tests an existing plan by interviewing the user as a decision tree — proposing approaches before asking, asking each round of unblocked questions together with a recommended answer, and writing the approved design. Use when brainstorming a new feature or product idea, grilling a plan, stress-testing a proposal, clarifying vague intent, resolving decisions before implementation, or capturing domain terms and ADRs as the decisions land. |
 | [**Handoff**](skills/productivity/handoff/SKILL.md) | Compacts the current conversation into a handoff document so a fresh agent can continue the work without losing context. Use when switching sessions, handing off to another agent, ending a long conversation, or preparing a context brief for a follow-up run. |
 | [**Kien Thai**](skills/productivity/kien-thai/SKILL.md) | Writes, edits, and translates Thai-language prose that reads like a native Thai writer rather than generic AI output, countering training-data skew toward over-formal, over-polite, calqued Thai, and can loop audit-and-fix passes until one finds nothing. Use when producing a Thai paragraph or longer — blog post, landing page, doc page, Thai README, email, announcement — translating English into Thai, reviewing or rewriting existing Thai prose, or when asked to polish to convergence (ตรวจวนๆ, วน audit, ขัดภาษาไทยให้สุด). |
+| [**Prioritize**](skills/productivity/prioritize/SKILL.md) | Ranks candidate backlog items with RICE — Reach, Impact, Confidence, Effort — scoring each factor from cited evidence or a labelled assumption on one fixed scale, and producing a ranked table the team can argue with. Use when prioritizing a backlog, ranking features or stories, deciding what to build next, comparing candidates for a sprint or quarter, or re-scoring after new evidence. |
 | [**Release Scan**](skills/productivity/release-scan/SKILL.md) | Scans one service repository between two tags and produces a standardized Service Release Report used to assemble a customer-facing release note. Use when diffing two tags or versions, working out what shipped between releases, assessing deployment impact or breaking changes, or preparing a release for a dedicated or on-prem customer environment. |
 | [**Setup Context**](skills/productivity/setup-context/SKILL.md) | Scaffolds shared project context files in .context/ and configure the output locations pipeline skills write artifacts to (PRDs, stories, designs, ADRs, and more). Use when onboarding skills to a new or existing repo, when skills lack shared project context, or to relocate where a skill's output gets saved. |
 | [**Skill Smith**](skills/productivity/skill-smith/SKILL.md) | Crafts reusable agent skills with invocation design, progressive disclosure, leading words, and bundled resources. Use when the user asks to create a skill, write a skill, build an agent skill, review a SKILL.md, or package skill references, scripts, or examples. |
@@ -101,9 +103,11 @@ Install the full portable set by default, then rely on concise descriptions and 
 
 | Situation | Skill |
 | :--- | :--- |
+| Raw user evidence — interview notes, tickets, survey text — needs synthesizing into jobs and pains before anything is decided. | [**Discovery Synthesis**](skills/productivity/discovery-synthesis/SKILL.md) |
 | A rough idea needs shaping into a design, or a plan has open decisions that need an interview before work starts. | [**Grilling**](skills/productivity/grilling/SKILL.md) |
 | The blocking knowledge sits in another person's head and has to be asked for. | [**To Questionnaire**](skills/productivity/to-questionnaire/SKILL.md) |
 | The blocking knowledge sits in external docs, a spec, or a library's source and has to be read. | [**Research**](skills/engineering/research/SKILL.md) |
+| Several candidate items compete for the same team and need ranking with the assumptions shown. | [**Prioritize**](skills/productivity/prioritize/SKILL.md) |
 | A written plan, PR, diff, design doc, or implementation approach needs independent review. | [**Scrutinize**](skills/engineering/scrutinize/SKILL.md) |
 | A bug needs investigating — a reliable repro, a flaky test, a production-only symptom, a crash, a hang, data corruption, or a performance regression. | [**Debug**](skills/engineering/debug/SKILL.md) |
 | A behavior change should be driven through red-green-refactor tests. | [**TDD**](skills/engineering/tdd/SKILL.md) |

@@ -73,6 +73,7 @@ After generating a feature breakdown, offer 2-4 relevant follow-ups:
 
 - Generate test scenarios for the backlog items.
 - Create development or QA dummy data.
+- Rank the items with `prioritize` when they compete for the same team.
 - Estimate sprint capacity or phase the work.
 - Convert between user stories, job stories, WWA, and generic backlog items.
 - Extract an epic summary and child-item list.

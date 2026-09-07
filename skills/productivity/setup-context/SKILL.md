@@ -10,7 +10,7 @@ Scaffold the per-project context files that skills read before doing work, and c
 
 ## When to Use
 
-Run once per project before first use of any pipeline skill — `grilling`, `write-a-prd`, `write-a-story`, `domain-modeling`, `debug`, `scrutinize`, `security-audit`, `ga4-measurement`, `tdd`, `angular-engineer`, `python-engineer`, `strapi-engineer`, `subagent-driven-development`, `post-mortem`, `triage`, or `stakeholder-comms`. Re-run to add domains, reconfigure output locations, migrate an artifact found at an old default location, or reset from scratch.
+Run once per project before first use of any pipeline skill — `discovery-synthesis`, `grilling`, `write-a-prd`, `prioritize`, `write-a-story`, `domain-modeling`, `debug`, `scrutinize`, `security-audit`, `ga4-measurement`, `tdd`, `angular-engineer`, `python-engineer`, `strapi-engineer`, `subagent-driven-development`, `post-mortem`, `triage`, or `stakeholder-comms`. Re-run to add domains, reconfigure output locations, migrate an artifact found at an old default location, or reset from scratch.
 
 Do not use to update domain content — edit `.context/*.md` files directly instead. Every skill above also works with no setup at all: it falls back to a sensible default path and asks no orientation questions if `.context/` doesn't exist.
 
