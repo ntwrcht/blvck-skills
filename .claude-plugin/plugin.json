@@ -17,6 +17,7 @@
     "./skills/engineering/security-audit",
     "./skills/engineering/strapi-engineer",
     "./skills/engineering/supabase-engineer",
+    "./skills/engineering/tidb-engineer",
     "./skills/engineering/subagent-driven-development",
     "./skills/engineering/tdd",
     "./skills/engineering/triage",

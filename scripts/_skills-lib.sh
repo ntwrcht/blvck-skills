@@ -86,6 +86,7 @@ get_shared_refs() {
     next-engineer)                echo "project-context.md git-workflow.md artifact-paths.md" ;;
     strapi-engineer)              echo "project-context.md git-workflow.md artifact-paths.md" ;;
     supabase-engineer)            echo "project-context.md git-workflow.md artifact-paths.md" ;;
+    tidb-engineer)                echo "project-context.md git-workflow.md artifact-paths.md" ;;
     ga4-measurement)              echo "project-context.md artifact-paths.md" ;;
     security-audit)               echo "project-context.md artifact-paths.md" ;;
     python-engineer)              echo "project-context.md artifact-paths.md" ;;
