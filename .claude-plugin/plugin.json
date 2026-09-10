@@ -18,6 +18,7 @@
     "./skills/engineering/strapi-engineer",
     "./skills/engineering/supabase-engineer",
     "./skills/engineering/tidb-engineer",
+    "./skills/engineering/mongodb-to-tidb-migration",
     "./skills/engineering/subagent-driven-development",
     "./skills/engineering/tdd",
     "./skills/engineering/triage",

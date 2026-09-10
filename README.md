@@ -6,7 +6,7 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Version](https://img.shields.io/badge/version-1.0.0-informational)](.claude-plugin/plugin.json)
-[![Skills](https://img.shields.io/badge/skills-37-success)](#skill-catalog)
+[![Skills](https://img.shields.io/badge/skills-38-success)](#skill-catalog)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](#contributing)
 
 </div>
@@ -34,7 +34,7 @@ Install skills per project with the bundled installer, pull them with `npx skill
 
 ## Key Features
 
-- **37 production-ready skills** spanning daily engineering work (debugging, TDD, review, security) and product workflows (discovery synthesis, PRDs, prioritization, stories, stakeholder updates, plan interviews, Thai-language writing).
+- **38 production-ready skills** spanning daily engineering work (debugging, TDD, review, security) and product workflows (discovery synthesis, PRDs, prioritization, stories, stakeholder updates, plan interviews, Thai-language writing).
 - **Multi-CLI support** — one library installs into Claude Code, Codex, and Gemini CLI, each in its native format.
 - **Interactive installer with preset bundles** — curated *Project PM* and *Project Dev* scenarios for one-keystroke setup, or a custom picker across the full catalog.
 - **Safe, reversible installs** — every copied skill carries an ownership marker; the uninstaller only ever removes what the installer created.
@@ -65,6 +65,7 @@ Install skills per project with the bundled installer, pull them with `npx skill
 | [**Subagent-Driven Development**](skills/engineering/subagent-driven-development/SKILL.md) | User entry point for executing an approved implementation plan task-by-task, each task built by a fresh subagent and checked by an independent reviewer before the next one starts. Use when the user wants to build out an approved plan, task list, or backlog of engineering work with per-task review and a durable progress record. |
 | [**Supabase Engineer**](skills/engineering/supabase-engineer/SKILL.md) | Builds, modifies, reviews, and debugs Supabase applications across Postgres schema, Row Level Security, auth, the data API, storage, realtime, Edge Functions, migrations, and type generation. Use when working on Supabase database design, RLS policies, session handling, client setup, SQL functions and triggers, local development, performance, security, or backend architecture. |
 | [**TiDB Engineer**](skills/engineering/tidb-engineer/SKILL.md) | Builds, modifies, reviews, and tunes applications on TiDB and TiDB Cloud across schema design, MySQL-compatible SQL, transactions, query plans and statistics, drivers and ORMs, TLS connections, vector and full-text search, and cluster provisioning. Use when working on TiDB DDL, hotspots, AUTO_RANDOM, EXPLAIN ANALYZE, optimizer hints, TiDB Cloud Starter or Dedicated, the serverless HTTP driver, Prisma or Kysely or mysql2 or pytidb against TiDB, or porting MySQL SQL to TiDB. |
+| [**MongoDB to TiDB Migration**](skills/engineering/mongodb-to-tidb-migration/SKILL.md) | Plans and executes a migration from MongoDB to TiDB: infers the source schema and access paths, maps document patterns to columns, JSON columns, and child tables, translates queries and updates to SQL, moves data with a bulk load and change-stream catch-up, and validates before cutover. Use when moving collections off MongoDB or Atlas onto TiDB or TiDB Cloud, converting embedded arrays and ObjectIds to relational tables, rewriting find and aggregate pipelines as SQL, or planning a document-store cutover. |
 | [**TDD**](skills/engineering/tdd/SKILL.md) | Develops behavior through red-green-refactor test slices that exercise public interfaces and real code paths. Use when adding features, fixing bugs with regression tests, shaping APIs through examples, or refactoring while preserving observable behavior. |
 | [**Triage**](skills/engineering/triage/SKILL.md) | Triages tracker issues through canonical category and state roles, maintainer review, and durable handoff notes. Use when classifying bugs or enhancements, reviewing incoming issues, preparing AFK-agent briefs, requesting reporter info, or managing issue workflow. |
 
