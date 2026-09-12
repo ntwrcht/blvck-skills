@@ -110,6 +110,7 @@ get_shared_refs() {
     prioritize)                   echo "artifact-paths.md" ;;
     discovery-synthesis)          echo "artifact-paths.md" ;;
     mongodb-to-tidb-migration)    echo "artifact-paths.md asking-the-user.md" ;;
+    skill-smith)                  echo "asking-the-user.md" ;;
     *)                echo "" ;;
   esac
 }

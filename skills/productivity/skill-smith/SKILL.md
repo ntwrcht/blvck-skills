@@ -1,23 +1,24 @@
 ---
 name: skill-smith
-description: "Crafts reusable agent skills with invocation design, progressive disclosure, leading words, and bundled resources. Use when the user asks to create a skill, write a skill, build an agent skill, review a SKILL.md, or package skill references, scripts, or examples."
+description: "Crafts reusable agent skills from confirmed use cases, with invocation design, progressive disclosure, bundled resources, and evals that prove the skill triggers and delivers the right output. Use when the user asks to create, write, review, or test a skill, check whether a SKILL.md triggers, or package skill references, scripts, or examples."
 argument-hint: "<skill idea or draft>"
 ---
 
 # Skill Smith
 
-Craft agent skills that are scoped, predictable, easy to trigger, and packaged with only the resources the work needs.
+Craft agent skills that are scoped, predictable, easy to trigger, and packaged with only the resources the work needs — and prove it with evals before they ship.
 
 ## When to Use
 
-Use this skill when the user wants to create, write, build, draft, review, or improve an agent skill. It covers new skill folders, `SKILL.md` authoring, invocation design, progressive disclosure, bundled references, utility scripts, examples, and validation checklists.
+Use this skill when the user wants to create, write, build, draft, review, test, or improve an agent skill. It covers use-case discovery, new skill folders, `SKILL.md` authoring, invocation design, progressive disclosure, bundled references, utility scripts, examples, trigger and output evals, and validation checklists.
 
 If the user is asking to install an existing skill, use a skill installation workflow instead. If they are asking for a one-off prompt or instruction block that will not become a reusable skill, keep the output lightweight and do not force the full structure.
 
 ## Artifacts
 
 - Produces: `skills/<bucket>/<name>/SKILL.md`
-- Consumes: nothing
+- Produces: `skills/<bucket>/<name>/assets/evals/` — the confirmed use cases as eval cases, re-runnable after every edit
+- Consumes: the target folder's existing skills, read for near-misses and overlap
 
 ## Core Rule
 
@@ -25,15 +26,29 @@ Optimize for a skill another agent can load quickly and apply correctly. Keep tr
 
 ## Workflow
 
-1. Capture requirements from the conversation before asking questions. Identify the task or domain, expected use cases, output shape, likely tools, references, and any deterministic steps.
-2. Ask only for missing details that affect the skill design: scope boundaries, common user phrasing, required scripts, examples, and source materials.
+1. Capture what the conversation already settles: the task or domain, output shape, likely tools, references, and any deterministic steps.
+2. Collect and confirm the use cases. See **Use Cases** below. This step is done when the user has confirmed every trigger case, every near-miss, and the output criteria of each trigger case.
 3. Decide invocation type before writing anything else. See **Invocation Design** below.
 4. Choose the folder location and resource shape. Default to `SKILL.md` only; add `references/`, `scripts/`, or `assets/` only when they reduce context load or improve reliability.
-5. Draft the skill using local repository conventions. Use the description format below, and put detailed activation guidance under `When to Use` or `When Not to Use`.
+5. Draft the skill using local repository conventions. Write the description from the confirmed trigger cases, and put detailed activation guidance under `When to Use` or `When Not to Use`.
 6. Apply progressive disclosure. Put core behavior in `SKILL.md`; point to specific bundled files for deeper rules, examples, templates, or deterministic helpers.
-7. Review the draft against the checklist. Confirm the skill covers intended use cases without overlapping unrelated skills.
-8. Test the skill if it enforces a discipline. Watch an agent fail the scenario without it, then verify compliance with it — see **Testing the Skill** below.
-9. Run any repository validation scripts requested by local instructions before finishing.
+7. Write one eval case per confirmed use case into the new skill's `assets/evals/`, per `references/evals.md`.
+8. Run `bash scripts/run-evals.sh <new-skill-dir>` and fix until every case passes: a trigger failure is a description fix, an output failure is an instruction fix. Load `references/evals.md` for reading failures.
+9. Review the draft against the checklist. Confirm the skill covers intended use cases without overlapping unrelated skills.
+10. Pressure-test the skill if it enforces a discipline. Watch an agent fail the scenario without it, then verify compliance with it — see **Testing the Skill** below.
+11. Run any repository validation scripts requested by local instructions before finishing.
+
+## Use Cases
+
+The use cases are the skill's contract: the description is written from them, and the evals are built from them. Collect them in one round, in the house style of `references/asking-the-user.md`.
+
+- **Trigger cases.** Ask for three to five requests the user would actually type. Then widen the set and offer the additions for confirmation: rephrasings, other vocabulary for the same job, indirect asks that name the symptom instead of the task, and requests that arrive with a file or tool attached.
+- **Near-misses.** Propose requests that sound close but belong elsewhere — a neighbouring skill already in the target folder, or no skill at all. Read the folder's other skill descriptions to find them. Match the number of trigger cases.
+- **Output criteria.** For each trigger case, propose what a good output must contain, as properties an observer can check in the final message.
+
+In the same round, ask what the use cases leave open when the answer changes the design: required scripts, source material to preserve, or an output format.
+
+For a user-invoked skill, the model never fires it, so skip trigger cases and near-misses and collect output criteria only; each output case's prompt starts with `/<skill-name>`, the way the user fires it.
 
 ## Invocation Design
 
@@ -43,16 +58,6 @@ Every skill faces one decision first: who reaches it?
 - **User-invoked** — set `disable-model-invocation: true`. Only the human can fire it by typing its name; zero context load, but costs _cognitive load_ — the human becomes the index. When user-invoked skills multiply, a router skill (one skill that names the others and when to reach for each) cures the cognitive load.
 
 Pick model-invocation only when the agent must fire the skill on its own. If it only ever fires by hand, make it user-invoked.
-
-## Requirement Questions
-
-Ask concise questions when the answer is not already clear:
-
-- What task or domain should this skill cover?
-- Which user requests should activate it, and which nearby requests should not?
-- What output format should the agent produce?
-- Does it need executable scripts, bundled references, templates, assets, or only instructions?
-- Are there example inputs, existing workflows, or source materials to preserve?
 
 ## Description Format
 
@@ -67,11 +72,17 @@ If a local repository bans activation phrasing in public descriptions, rewrite t
 
 Load `references/skill-structure.md` when drafting or reviewing a full skill. It contains the folder layout, `SKILL.md` template, progressive disclosure rules, split-file guidance, script guidance, and review checklist.
 
+Load `references/evals.md` when writing eval cases, running them, or reading a failure — case layout, grader templates, what `scripts/run-evals.sh` does, and a symptom-to-fix table.
+
+Load `references/asking-the-user.md` before the use-case round — the house style every question round follows.
+
 Load `references/testing-skills.md` when the skill enforces a discipline and needs a baseline before it ships.
 
 Load `references/principles.md` when a design decision doesn't follow obviously from the rules — it explains the reasoning behind progressive disclosure, leading words, completion criteria, single source of truth and caching, steering by the positive, and the four failure modes (sediment, sprawl, duplication, no-ops).
 
 ## Testing the Skill
+
+Evals prove the skill fires for its use cases and delivers the output. A pressure test proves something different: that the skill holds a discipline when an agent is tempted to skip it. A skill that enforces a rule needs both.
 
 A skill that reads well is not a skill that works. For any skill that enforces a discipline — a rule with a compliance cost that an agent under pressure would skip — the evidence that it works is having watched an agent fail without it.
 
@@ -79,7 +90,7 @@ The cycle is TDD applied to process documentation: run a pressure scenario **wit
 
 Skipping the baseline is the same mistake as writing a test you never watched fail — you end up countering imagined failures instead of real ones.
 
-Load `references/testing-skills.md` for the pressure-scenario formats, the pressure types, and the four edits that close a loophole. Skip testing for pure reference skills: with no rule to violate, a baseline reveals nothing.
+Load `references/testing-skills.md` for the pressure-scenario formats, the pressure types, and the four edits that close a loophole. Skip pressure-testing for pure reference skills: with no rule to violate, a baseline reveals nothing.
 
 ## Drafting Rules
 
@@ -106,6 +117,7 @@ Before finalizing:
 - Is invocation type decided — model-invoked (keep `description`) or user-invoked (`disable-model-invocation: true`)?
 - Does the description identify the capability without violating local public-description rules?
 - Are activation boundaries clear in `When to Use` and, if needed, `When Not to Use`, naming the neighbouring skills they contrast against?
+- Does every confirmed use case have an eval case in `assets/evals/`, with as many near-misses as trigger cases, and did the latest `scripts/run-evals.sh` run pass?
 - Does `Artifacts` record what the skill produces and consumes, by key path rather than a hardcoded location?
 - Does `Next Step` state an observable approval gate plus both branches — or is its absence explained?
 - Does every skill it routes to actually exist, and can the agent reach it? A `disable-model-invocation: true` skill is a dead end for the model. In `Next Step`, a bare `` `name` `` is a route the model takes and must be model-invocable; write `/name` when you mean "tell the user to run it".
@@ -134,7 +146,7 @@ Also check for premature-completion risk: a step whose completion criterion is t
 
 ## Next Step
 
-Do not register the new skill until the user has reviewed the draft SKILL.md.
+Do not register the new skill until the user has reviewed the draft SKILL.md and its latest eval run — every case passing, or each remaining failure named and accepted by the user.
 
 - **If approved:** add entries to the top-level `README.md`, the bucket `README.md`, and `.claude-plugin/plugin.json` (skip this entirely for skills placed in `personal/`, `in-progress/`, or `deprecated/`, which must not appear in those files per this repo's `CLAUDE.md`). Then run `./scripts/sync-shared-refs.sh` if the skill declares a shared reference, and `./scripts/validate-skills.sh` to check frontmatter, links, and catalog sync.
-- **If not approved:** revise the draft per feedback before running the validation scripts.
+- **If not approved:** revise the draft per feedback, re-run the evals, and only then run the validation scripts.
