@@ -35,10 +35,11 @@ Optimize for a skill another agent can load quickly and apply correctly. Keep tr
 3. Decide the invocation type — see **Invocation Design**. It decides which eval cases exist.
 4. Choose the name, the folder, and the resource shape. Place the skill where the target keeps its skills; with none yet, use `.claude/skills/<name>/`, or `~/.claude/skills/<name>/` when the user says it serves all their projects. Start with `SKILL.md` alone; add `references/`, `scripts/`, or `assets/` when a file cuts context load or makes a step deterministic.
 5. Write one eval case per confirmed use case into the new skill's `assets/evals/`, per `references/evals.md`. Write them before any prose, so the cases test the use cases rather than the draft.
-6. Draft the skill: the description per **Description Format**, the body per **Writing the Instructions**, the common path in `SKILL.md` and branch-only detail behind pointers.
-7. Run `bash scripts/run-evals.sh <new-skill-dir>` and fix until every case passes — a trigger failure is a description fix, an output failure is an instruction fix. Load `references/evals.md` to read a failure.
-8. If the skill enforces a discipline, pressure-test it — see **Testing the Skill**.
-9. Review the draft against the **Review Checklist**, then validate: run the validators the target's instructions name, or `bash scripts/check-skill.sh <new-skill-dir>` where they name none.
+6. Decide whether the skill should exist — see **Should It Exist**. The step is done when the user has seen the recommendation with its evidence and made the call.
+7. Draft the skill: the description per **Description Format**, the body per **Writing the Instructions**, the common path in `SKILL.md` and branch-only detail behind pointers.
+8. Run `bash scripts/run-evals.sh <new-skill-dir>` and fix until every case passes — a trigger failure is a description fix, an output failure is an instruction fix. Load `references/evals.md` to read a failure.
+9. If the skill enforces a discipline, pressure-test it — see **Testing the Skill**.
+10. Review the draft against the **Review Checklist**, then validate: run the validators the target's instructions name, or `bash scripts/check-skill.sh <new-skill-dir>` where they name none.
 
 ## Use Cases
 
@@ -51,6 +52,23 @@ The use cases are the skill's contract: the description is written from them, an
 In the same round, ask what the use cases leave open where the answer changes the design: required scripts, source material to preserve, or an output format.
 
 For a user-invoked skill, the model never fires it, so skip trigger cases and near-misses and collect output criteria only; each output case's prompt starts with `/<skill-name>`, the way the user fires it.
+
+## Should It Exist
+
+Decide from evidence, before any prose, whether the target needs this skill at all:
+
+1. **Overlap.** Read every skill description in the target — user-invoked skills too, since their descriptions are not in context. For each confirmed trigger case, name the skill that would fire on it today.
+2. **Value.** Run `bash scripts/run-evals.sh <new-skill-dir> --baseline`: the output checks with no skill loaded. A case plain Claude already passes is a job the skill does not have.
+3. **Whole job.** Check whether the skill finishes a job for the user or is one stage that always needs another skill.
+
+| Evidence | Recommend |
+|---|---|
+| No overlap, and the baseline fails | **Create** — continue to drafting |
+| One existing skill takes most trigger cases | **Extend** it — improve that skill instead, moving these eval cases into its `assets/evals/` |
+| Two skills split the trigger cases, or the new skill is only a stage | **Merge**, or redraw the boundary between them |
+| The baseline passes every case | **Don't build** — show the baseline outputs as proof |
+
+Give the user the recommendation with its evidence; the call is theirs. When they build against it, carry on and name the reason in your final report.
 
 ## Invocation Design
 
@@ -138,6 +156,7 @@ Before finalizing:
 - Is the invocation type decided — model-invoked, or `disable-model-invocation: true`?
 - Does the description follow **Description Format** and any local description rules?
 - Do `When to Use` and `When Not to Use` name the neighbouring skills they contrast against?
+- Did the user see the **Should It Exist** recommendation and its evidence before drafting — and is any override named in the report?
 - Does every confirmed use case have an eval case, with as many near-misses as trigger cases, and did the latest `scripts/run-evals.sh` run pass?
 - Does the skill carry the sections the target's conventions require — in a repo that chains skills, an `Artifacts` record and a `Next Step` with an observable approval gate plus both branches?
 - Does every skill it routes to exist, and can the agent reach it? A `disable-model-invocation: true` skill is a dead end for the model. In `Next Step`, a bare `` `name` `` is a route the model takes and must be model-invocable; `/name` tells the user to run it.

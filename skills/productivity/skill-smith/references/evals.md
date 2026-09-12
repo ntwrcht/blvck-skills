@@ -100,6 +100,16 @@ match: contains
 ---
 ```
 
+## Baseline Before Drafting
+
+```bash
+bash scripts/run-evals.sh <path-to-new-skill> --baseline [--runs N] [--model MODEL]
+```
+
+`--baseline` runs the trigger and output cases' output checks with no skill loaded, so it needs only `assets/evals/` and runs before `SKILL.md` exists. It drops each case's `tool_used` grader, skips near-misses, and strips a leading `/<skill-name>` from a user-invoked case's prompt. Each case prints `SKILL HAS A JOB` (plain Claude missed a check) or `PLAIN CLAUDE PASSES`, followed by one verdict line.
+
+A case plain Claude passes is a job the skill does not have. Keep it only when the user wants the behaviour pinned down anyway — as a regression guard, say — and tell them the skill adds nothing there today. The fallback cannot grade output, so it prints each baseline output beside its criteria for you to judge.
+
 ## Running
 
 ```bash
