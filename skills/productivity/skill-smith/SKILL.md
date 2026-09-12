@@ -39,7 +39,7 @@ Optimize for a skill another agent can load quickly and apply correctly. Keep tr
 6. Decide whether the skill should exist — see **Should It Exist**. The step is done when the user has seen the recommendation with its evidence and made the call.
 7. Draft the skill: the description per **Description Format**, the body per **Writing the Instructions**, the common path in `SKILL.md` and branch-only detail behind pointers.
 8. Run `bash scripts/run-evals.sh <new-skill-dir>` and fix until every case passes — a trigger failure is a description fix, an output failure is an instruction fix. Load `references/evals.md` to read a failure.
-9. If the skill enforces a discipline, pressure-test it — see **Testing the Skill**.
+9. If the skill enforces a discipline — a rule an agent under pressure would skip — pressure-test it as well: evals prove it fires and delivers, a pressure test proves it holds. Load `references/testing-skills.md`.
 10. Review the draft against the **Review Checklist**, then validate: run the validators the target's instructions name, or `bash scripts/check-skill.sh <new-skill-dir>` where they name none.
 
 ## Use Cases
@@ -73,22 +73,14 @@ Give the user the recommendation with its evidence; the call is theirs. When the
 
 ## Improving an Existing Skill
 
-When the input is a skill that already exists, follow `references/reviewing.md` in place of steps 2–9, then finish with step 10:
-
-1. Read the skill and summarize it for the user.
-2. Pin its current behaviour with evals; that score is the floor every change keeps.
-3. Find, rank, and report the findings, each with evidence.
-4. Fix one finding at a time with approval, re-running the evals after each; batch only when the user asks.
-5. Close with a before/after eval table.
+When the input is a skill that already exists, load and follow `references/reviewing.md` in place of steps 2–9, then finish with step 10. Its core rule: the skill's current eval score is the floor every change keeps.
 
 ## Invocation Design
 
-Every skill faces one decision first: who reaches it?
+- **Model-invoked** — keep the `description`. The agent fires it on its own, at a _context load_ on every turn.
+- **User-invoked** — set `disable-model-invocation: true`. Only the human fires it, at no context cost but a _cognitive load_: the human becomes the index, which a router skill cures once such skills multiply.
 
-- **Model-invoked** — keep the `description` field. The agent fires it autonomously, and other skills can reach it. It costs _context load_ on every turn, since every loaded description spends tokens and attention.
-- **User-invoked** — set `disable-model-invocation: true`. Only the human fires it, by typing its name. It costs no context but _cognitive load_ — the human becomes the index. When user-invoked skills multiply, a router skill that names the others and when to reach for each cures that load.
-
-Make a skill model-invoked only when the agent must fire it on its own; make every hand-fired skill user-invoked.
+Make a skill model-invoked only when the agent must fire it on its own.
 
 ## Description Format
 
@@ -129,47 +121,21 @@ Every sentence in a skill names an action the agent can take or a fact it needs.
 
 ## Reference Map
 
-Load `references/reviewing.md` when the input is an existing skill — the six review steps, the finding order, the report table, and the regression rule.
-
-Load `references/writing-instructions.md` when drafting or reviewing a skill's prose — a before/after and a source for each of the thirteen rules, plus a worked rewrite.
-
-Load `references/skill-structure.md` when laying out a skill folder — the layout, the `SKILL.md` template, portability and shared references, the `Artifacts` and `Next Step` conventions, and when to add references, scripts, or assets.
-
-Load `references/evals.md` when writing eval cases, running them, or reading a failure — case layout, grader templates, what `scripts/run-evals.sh` does, and a symptom-to-fix table.
-
-Load `references/asking-the-user.md` before the use-case round — the house style every question round follows.
-
-Load `references/testing-skills.md` when the skill enforces a discipline and needs a pressure test before it ships.
-
-Load `references/principles.md` when a design decision does not follow from the rules — the reasoning behind progressive disclosure, leading words, completion criteria, single source of truth and caching, steering by the positive, and the four failure modes.
-
-## Testing the Skill
-
-Evals prove the skill fires for its use cases and delivers the output. A pressure test proves something else: that the skill holds a discipline — a rule with a compliance cost — when an agent is tempted to skip it. A skill that enforces a rule needs both; a pure reference skill has no rule to violate and needs evals only.
-
-Load `references/testing-skills.md` to run one: the baseline without the skill, the pressure-scenario formats, and the four edits that close a loophole.
-
-## Drafting Rules
-
-- Keep `SKILL.md` on the common path; past about 150 lines, move branch-only detail into `references/`. The spec's ceiling is 500.
-- Keep every path a skill names inside its own folder — only that folder is copied on install. To share a reference, copy it into each skill's `references/`, or use the target repo's sync tool if it has one; a symlink or a path into a sibling skill breaks on install.
-- Put long examples, templates, domain rules, and schemas in `references/`; put deterministic validation, formatting, and conversion in `scripts/`.
-- Leave out time-sensitive claims unless the skill verifies them, and bundle no secrets, private data, or unrelated files.
-- Hunt for **leading words**: one pretrained term (_legwork_, _fog of war_) in place of a principle restated across several sentences.
-- Keep each meaning in a **single source of truth**, and leave to the environment what one lookup finds — `package.json`, config files, `--help`. Cache only what looking cannot find: the unwritten convention, the reason behind a choice, the gotcha.
-- Co-locate a concept's definition, rules, and caveats under one heading.
-
-`references/principles.md` holds the reasoning behind the last three.
+- `references/reviewing.md` — load when the input is an existing skill: the six review steps, the finding order, the report table, and the regression rule.
+- `references/writing-instructions.md` — load when drafting or reviewing prose: a before/after and a source for each of the thirteen rules.
+- `references/evals.md` — load when writing, running, or reading eval cases: case layout, grader templates, what `scripts/run-evals.sh` does, and a symptom-to-fix table.
+- `references/skill-structure.md` — load when laying out a folder: the template, portability, the `Artifacts` and `Next Step` conventions, when to add references, scripts, or assets, and what to leave out.
+- `references/asking-the-user.md` — load before the use-case round: the house style for every question round.
+- `references/testing-skills.md` — load to pressure-test a skill that enforces a discipline.
+- `references/principles.md` — load when a decision does not follow from the rules: the reasoning behind progressive disclosure, leading words, completion criteria, single source of truth, positive steering, and the four failure modes.
 
 ## Review Checklist
 
 Before finalizing:
 
 - Does `name` match the folder — lowercase letters, digits, and single hyphens, at most 64 characters?
-- Is the invocation type decided — model-invoked, or `disable-model-invocation: true`?
 - Does the description follow **Description Format** and any local description rules?
 - Do `When to Use` and `When Not to Use` name the neighbouring skills they contrast against?
-- Did the user see the **Should It Exist** recommendation and its evidence before drafting — and is any override named in the report?
 - Does every confirmed use case have an eval case, with as many near-misses as trigger cases, and did the latest `scripts/run-evals.sh` run pass?
 - Does the skill carry the sections the target's conventions require — in a repo that chains skills, an `Artifacts` record and a `Next Step` with an observable approval gate plus both branches?
 - Does every skill it routes to exist, and can the agent reach it? A `disable-model-invocation: true` skill is a dead end for the model. In `Next Step`, a bare `` `name` `` is a route the model takes and must be model-invocable; `/name` tells the user to run it.

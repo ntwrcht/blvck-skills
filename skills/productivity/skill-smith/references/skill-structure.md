@@ -154,3 +154,7 @@ Make scripts small, documented by usage comments, and safe for the expected work
 ## When to Add Assets
 
 Add `assets/` files when the skill needs static templates, fixtures, visual references, or reusable starter files. Keep assets directly relevant to the skill output. A skill's eval cases live in `assets/evals/` too.
+
+## What to Leave Out
+
+Bundle no secrets, private data, or unrelated files. Leave out time-sensitive claims unless the skill verifies them.
