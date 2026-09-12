@@ -135,23 +135,6 @@ Keep a concept's definition, rules, and caveats under one heading rather than sc
 
 Scattering is not duplication. Duplication repeats one meaning in two places; scattering fragments one meaning across many. The cure for duplication is deletion, the cure for scattering is grouping.
 
-## Description Guidance
-
-Respect local repository rules first. Prefer enough trigger context for the agent to select the skill, unless the repository requires neutral public descriptions.
-
-Use a concise two-sentence pattern when possible. Target 150-300 characters, stay under 500 characters when practical, and use a platform limit such as 1024 characters only when the skill needs unusually specific trigger coverage.
-
-1. First sentence: describe the capability with strong task keywords.
-2. Second sentence: start with `Use when` and list specific trigger keywords, contexts, file types, tools, outputs, or bundled resources.
-
-Default description style:
-
-```text
-Craft reusable agent skills with invocation design, progressive disclosure, leading words, and bundled resources. Use when the user asks to create a skill, write a skill, build an agent skill, review a SKILL.md, or package skill references, scripts, or examples.
-```
-
-If a repository bans activation phrasing in public descriptions, rewrite the second sentence as neutral scope text with the same keywords. Keep descriptions under the platform limit.
-
 ## When to Add References
 
 Add `references/` files when:
@@ -176,22 +159,4 @@ Make scripts small, documented by usage comments, and safe for the expected work
 
 ## When to Add Assets
 
-Add `assets/` files when the skill needs static templates, fixtures, visual references, or reusable starter files. Keep assets directly relevant to the skill output.
-
-## Review Checklist
-
-- Folder name and YAML `name` match.
-- Invocation type decided — model-invoked (keep `description`) or user-invoked (`disable-model-invocation: true`).
-- Public description follows local conventions and gives enough trigger context for skill selection.
-- Activation guidance has clear inclusions and exclusions.
-- `SKILL.md` covers the common path without excessive detail.
-- References are named and linked from `SKILL.md`.
-- Scripts are deterministic and safe.
-- Examples cover realistic user prompts.
-- Required README, manifest, or install metadata entries are updated.
-- Required validation commands pass.
-- Main `SKILL.md` is under the spec's 500-line ceiling, and split where length hurts scanning.
-- `Artifacts` and `Next Step` are present, or their absence is explained.
-- Every path resolves inside the skill folder — no `../`, no sibling-skill path, no symlink.
-- Every skill named in a handoff exists and is reachable by whoever is being told to reach it.
-- Failure modes checked: sediment, sprawl, duplication, no-ops, premature completion risk.
+Add `assets/` files when the skill needs static templates, fixtures, visual references, or reusable starter files. Keep assets directly relevant to the skill output. A skill's eval cases live in `assets/evals/` too.

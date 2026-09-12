@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Runs a skill's trigger and output evals from <skill-dir>/assets/evals/.
-# Usage: bash scripts/run-evals.sh <skill-dir> [--runs N] [--max-cost-usd USD] [--fallback]
+# Usage: bash scripts/run-evals.sh <skill-dir> [--runs N] [--model MODEL] [--max-cost-usd USD] [--fallback]
 #
 # Wraps the skill in a throwaway plugin first: `claude plugin eval` given a bare
 # skill folder resolves no plugin and silently scores the baseline instead.
@@ -15,12 +15,14 @@ usage() { sed -n '2,3p' "$0" | sed 's/^# \{0,1\}//' >&2; exit 2; }
 
 SKILL_DIR=""
 RUNS=3
+MODEL=""
 MAX_COST=5
 FORCE_FALLBACK=0
 
 while [ $# -gt 0 ]; do
   case "$1" in
     --runs)         RUNS="${2:?--runs needs a number}"; shift 2 ;;
+    --model)        MODEL="${2:?--model needs a model name}"; shift 2 ;;
     --max-cost-usd) MAX_COST="${2:?--max-cost-usd needs an amount}"; shift 2 ;;
     --fallback)     FORCE_FALLBACK=1; shift ;;
     -h|--help)      usage ;;
@@ -91,9 +93,9 @@ eval_available() {
 # ── primary: claude plugin eval ──────────────────────────────────────────────
 
 run_plugin_eval() {
-  echo "Running claude plugin eval on '$NAME': $RUNS run(s) per case, cost ceiling \$$MAX_COST."
+  echo "Running claude plugin eval on '$NAME': $RUNS run(s) per case, cost ceiling \$$MAX_COST${MODEL:+, model $MODEL}."
   local status=0
-  claude plugin eval "$PLUGIN" --trust-plugin --no-publish --runs "$RUNS" -j 4 \
+  claude plugin eval "$PLUGIN" --trust-plugin --no-publish --runs "$RUNS" -j 4 ${MODEL:+--model "$MODEL"} \
     --max-cost-usd "$MAX_COST" --output-dir "$RESULTS" --report "$RESULTS/report.html" || status=$?
   echo "Results: $RESULTS"
   [ "$status" -eq 0 ] || exit 1
@@ -127,7 +129,7 @@ run_fallback() {
     run=1
     while [ "$run" -le "$RUNS" ]; do
       out="$RESULTS/$case_name-$run.jsonl"
-      (cd "$WORK/cwd" && claude -p "$prompt" --plugin-dir "$PLUGIN" --output-format stream-json --verbose \
+      (cd "$WORK/cwd" && claude -p "$prompt" --plugin-dir "$PLUGIN" ${MODEL:+--model "$MODEL"} --output-format stream-json --verbose \
         --max-turns "${max_turns:-10}" --allowedTools "$tools" > "$out" 2>/dev/null) || true
 
       fired=no

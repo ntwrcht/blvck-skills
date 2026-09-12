@@ -100,7 +100,7 @@ match: contains
 ## Running
 
 ```bash
-bash scripts/run-evals.sh <path-to-new-skill> [--runs N] [--max-cost-usd USD] [--fallback]
+bash scripts/run-evals.sh <path-to-new-skill> [--runs N] [--model MODEL] [--max-cost-usd USD] [--fallback]
 ```
 
 The script:
@@ -123,5 +123,9 @@ The script passes `--trust-plugin` because the wrapper holds a skill you wrote t
 | Near-miss case: skill fired | The description is too broad or overlaps a neighbour | Narrow the description; name the neighbour in `When Not to Use` |
 | Skill fired, output failed | The instructions | Sharpen the step that produces the failing property |
 | Output passes without the skill too | The skill adds nothing for this request | Find what the skill should do that the default does not, or drop the use case with the user's agreement |
+
+Read the transcript of a failing run, not just its score — it shows where the agent went instead: a skill never opened, a reference skipped, a step misread. `claude plugin eval` links each transcript from its report; the fallback writes `<case>-<run>.jsonl` beside its results.
+
+When the skill will run on more than one model, re-run the final pass with `--model <model>` for each — wording that lands on a large model can need more detail for a small one.
 
 Change one thing per round and re-run. Fix the skill, not the case: a case changes only when the user changes the use case. After three rounds without progress, stop and report the still-failing cases and what each round tried.
