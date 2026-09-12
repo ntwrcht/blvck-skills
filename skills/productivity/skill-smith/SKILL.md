@@ -10,7 +10,7 @@ Craft agent skills that are scoped, predictable, easy to trigger, and packaged w
 
 ## When to Use
 
-Use this skill when the user wants to create, write, draft, review, test, or improve an agent skill: use-case discovery, `SKILL.md` authoring, invocation design, bundled references and scripts, and trigger and output evals.
+Covers the whole life of one skill — use-case discovery, `SKILL.md` authoring, invocation design, bundled references and scripts, and trigger and output evals — in whichever project it is installed.
 
 ## When Not to Use
 
@@ -20,9 +20,9 @@ Use this skill when the user wants to create, write, draft, review, test, or imp
 
 ## Artifacts
 
-- Produces: `skills/<bucket>/<name>/SKILL.md`
-- Produces: `skills/<bucket>/<name>/assets/evals/` — the confirmed use cases as eval cases, re-runnable after every edit
-- Consumes: the target folder's existing skills, read for near-misses and overlap
+- Produces: `<skills-root>/<name>/SKILL.md` — the target's existing skills layout, else `.claude/skills/<name>/`
+- Produces: `<skills-root>/<name>/assets/evals/` — the confirmed use cases as eval cases, re-runnable after every edit
+- Consumes: the target's instructions (`CLAUDE.md`, `AGENTS.md`) and its existing skills, read for conventions, near-misses, and overlap
 
 ## Core Rule
 
@@ -30,15 +30,15 @@ Optimize for a skill another agent can load quickly and apply correctly. Keep tr
 
 ## Workflow
 
-1. Capture what the conversation already settles: the task or domain, output shape, likely tools, references, and deterministic steps.
+1. Read the target project's instructions (`CLAUDE.md`, `AGENTS.md`) and the layout of any skills it already has — they decide where the skill goes, how it registers, and which validators run. Then capture what the conversation already settles: the task or domain, output shape, likely tools, references, and deterministic steps.
 2. Collect and confirm the use cases — see **Use Cases**. The step is done when the user has confirmed every trigger case, every near-miss, and each trigger case's output criteria.
 3. Decide the invocation type — see **Invocation Design**. It decides which eval cases exist.
-4. Choose the name, the folder, and the resource shape. Start with `SKILL.md` alone; add `references/`, `scripts/`, or `assets/` when a file cuts context load or makes a step deterministic.
+4. Choose the name, the folder, and the resource shape. Place the skill where the target keeps its skills; with none yet, use `.claude/skills/<name>/`, or `~/.claude/skills/<name>/` when the user says it serves all their projects. Start with `SKILL.md` alone; add `references/`, `scripts/`, or `assets/` when a file cuts context load or makes a step deterministic.
 5. Write one eval case per confirmed use case into the new skill's `assets/evals/`, per `references/evals.md`. Write them before any prose, so the cases test the use cases rather than the draft.
 6. Draft the skill: the description per **Description Format**, the body per **Writing the Instructions**, the common path in `SKILL.md` and branch-only detail behind pointers.
 7. Run `bash scripts/run-evals.sh <new-skill-dir>` and fix until every case passes — a trigger failure is a description fix, an output failure is an instruction fix. Load `references/evals.md` to read a failure.
 8. If the skill enforces a discipline, pressure-test it — see **Testing the Skill**.
-9. Review the draft against the **Review Checklist**, then run the repository's validation scripts if it has any.
+9. Review the draft against the **Review Checklist**, then validate: run the validators the target's instructions name, or `bash scripts/check-skill.sh <new-skill-dir>` where they name none.
 
 ## Use Cases
 
@@ -69,7 +69,8 @@ The description is the only part of a skill the agent sees before choosing it, s
 - Open the first sentence with a third-person capability verb and strong task keywords: "Reviews pull requests for…", not "Review…" or "I can help…". The description is injected into the system prompt, where a mixed point of view degrades selection.
 - Start the second sentence with `Use when`, then list the trigger keywords, contexts, file types, and tools from the confirmed trigger cases, the most common first.
 - Keep the wording plain: all-caps commands to use the skill make current models fire it where it does not belong.
-- Follow the local repository's description rules where it has them, keeping the same keywords in whatever form it requires. Put the detailed activation boundaries in `When to Use` and `When Not to Use`.
+- Follow the target repository's description rules where it has them, keeping the same keywords in whatever form it requires.
+- Put every trigger here, because the body loads only after the skill fires. Keep the body's `When to Use` to scope, and use `When Not to Use` to separate the skill from its neighbours once loaded. Leave `when_to_use` out of the frontmatter — it is a Claude Code extension outside the spec, and other agents ignore it.
 
 ## Writing the Instructions
 
@@ -120,7 +121,7 @@ Load `references/testing-skills.md` to run one: the baseline without the skill, 
 ## Drafting Rules
 
 - Keep `SKILL.md` on the common path; past about 150 lines, move branch-only detail into `references/`. The spec's ceiling is 500.
-- Keep every path a skill names inside its own folder — only that folder is copied on install. Share a reference via `_shared/` and `./scripts/sync-shared-refs.sh`, never a symlink or a path into a sibling skill.
+- Keep every path a skill names inside its own folder — only that folder is copied on install. To share a reference, copy it into each skill's `references/`, or use the target repo's sync tool if it has one; a symlink or a path into a sibling skill breaks on install.
 - Put long examples, templates, domain rules, and schemas in `references/`; put deterministic validation, formatting, and conversion in `scripts/`.
 - Leave out time-sensitive claims unless the skill verifies them, and bundle no secrets, private data, or unrelated files.
 - Hunt for **leading words**: one pretrained term (_legwork_, _fog of war_) in place of a principle restated across several sentences.
@@ -138,12 +139,11 @@ Before finalizing:
 - Does the description follow **Description Format** and any local description rules?
 - Do `When to Use` and `When Not to Use` name the neighbouring skills they contrast against?
 - Does every confirmed use case have an eval case, with as many near-misses as trigger cases, and did the latest `scripts/run-evals.sh` run pass?
-- Does `Artifacts` record what the skill produces and consumes, by key path rather than a hardcoded location?
-- Does `Next Step` state an observable approval gate plus both branches — or explain its absence?
+- Does the skill carry the sections the target's conventions require — in a repo that chains skills, an `Artifacts` record and a `Next Step` with an observable approval gate plus both branches?
 - Does every skill it routes to exist, and can the agent reach it? A `disable-model-invocation: true` skill is a dead end for the model. In `Next Step`, a bare `` `name` `` is a route the model takes and must be model-invocable; `/name` tells the user to run it.
 - Does every path resolve inside the skill folder — no `../`, no sibling-skill path, no symlink?
 - Does each bundled file earn its place: references for branch-only detail, scripts where deterministic execution beats generated steps, examples concrete and representative?
-- Are local indexes, manifests, and install metadata updated?
+- Is the skill registered where the target's instructions say — catalog, manifest, shared-reference sync — or does the target need no registration?
 - If the skill enforces a discipline, did an agent fail a pressure scenario without it first — and does every rationalization it counters come from that observed failure?
 - Sentence pass: does every sentence name an action or a needed fact, and hold to **Writing the Instructions** — above all rules 1, 5, 7, and 9?
 - Does anything restate what `package.json`, a config file, the directory layout, or `--help` already says?
@@ -154,5 +154,5 @@ Before finalizing:
 
 Register the new skill once the user has reviewed the draft SKILL.md and its latest eval run — every case passing, or each remaining failure named and accepted by the user.
 
-- **If approved:** add entries to the top-level `README.md`, the bucket `README.md`, and `.claude-plugin/plugin.json` — except for skills in `personal/`, `in-progress/`, or `deprecated/`, which stay out of those files per this repo's `CLAUDE.md`. Then run `./scripts/sync-shared-refs.sh` if the skill declares a shared reference, and `./scripts/validate-skills.sh` to check frontmatter, links, and catalog sync.
-- **If not approved:** revise the draft per the feedback, re-run the evals, and then run the validation scripts.
+- **If approved:** register the skill the way the target's instructions say — catalog entries, manifests, shared-reference sync — and run the validators they name, or `bash scripts/check-skill.sh <new-skill-dir>` where they name none. A skill in `.claude/skills/` with no catalog to join is live from the next session.
+- **If not approved:** revise the draft per the feedback, re-run the evals, then validate again.

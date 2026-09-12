@@ -1,4 +1,4 @@
-<!-- portability-exempt: teaches path rules, so it quotes broken paths as anti-pattern examples and names this repo's _shared/ authoring workflow. -->
+<!-- portability-exempt: teaches path rules, so it quotes broken paths as anti-pattern examples. -->
 
 # Skill Structure Reference
 
@@ -24,22 +24,16 @@ The spec requires the `name` field to match this folder name exactly: 1-64 chara
 
 ## Everything a Skill Needs, It Carries
 
-A skill folder is copied out of this repo on its own — by `install-skills.sh`, by `claude --plugin-dir`, or by `npx skills add`. Only that folder travels. So every path a `SKILL.md` names must resolve inside the folder:
+A skill folder is copied on its own — by `npx skills add`, by `claude --plugin-dir`, or by a repo's own installer. Only that folder travels. So every path a `SKILL.md` names must resolve inside the folder:
 
-- **Good:** `references/artifact-paths.md`, `scripts/helper.sh`
-- **Broken once installed:** `../../_shared/references/artifact-paths.md`, `skills/productivity/setup-context/references/domains.md`, or any absolute path
+- **Good:** `references/domain-rules.md`, `scripts/helper.sh`
+- **Broken once installed:** `../../shared/references/style.md`, `skills/other-skill/references/domains.md`, or any absolute path
 
-To reference another skill, name it (`` `setup-context` ``) rather than reaching into its folder. `./scripts/validate-skills.sh` fails on any path that escapes the skill root.
+To reference another skill, name it (`` `other-skill` ``) rather than reaching into its folder. `scripts/check-skill.sh` fails on any path that escapes the skill folder.
 
 ## Sharing a Reference Across Skills
 
-Common material lives in `skills/_shared/references/`. Do not symlink it and do not hand-copy it:
-
-1. Add the file to `skills/_shared/references/`.
-2. Map the skill to it in `get_shared_refs()` in `scripts/_skills-lib.sh`.
-3. Run `./scripts/sync-shared-refs.sh`, which writes a real copy into the skill's own `references/` and commits it.
-
-Edit only the canonical file in `_shared/`; the copies carry a generated header and are overwritten. `./scripts/sync-shared-refs.sh --check` fails if a copy drifts.
+Copy the file into each skill's `references/`, or use the target repo's sync tool if it has one. A symlink or a path into a sibling skill breaks on install.
 
 ## SKILL.md Template
 
@@ -56,7 +50,7 @@ One short paragraph describing the reusable capability.
 
 ## When to Use
 
-Describe activation boundaries, common user phrases, related contexts, and exclusions.
+Scope only — what the skill covers. Every trigger phrase belongs in the description, which the agent reads before choosing; this body loads only after.
 
 ## When Not to Use
 
@@ -65,7 +59,7 @@ Name the neighbouring skills and contrast them. Prefer a contrast over a redirec
 
 ## Artifacts
 
-- Produces: <what this skill writes, and at which key path — see `references/artifact-paths.md`>
+- Produces: <what this skill writes, and where — by the key the target repo configures, if it keeps an output registry>
 - Consumes: <the context files and upstream artifacts it reads>
 
 ## Core Rule
@@ -97,21 +91,21 @@ State the main judgment the agent should optimize for.
 - **If not approved:** revise in place, escalate to `<named skill>`, or pause on a specific question.
 ```
 
-Sections in this template are the repo's de facto convention, not spec requirements. `Artifacts` and `Next Step` are the two that `CLAUDE.md` actually enforces.
+Sections in this template are a convention, not spec requirements. Follow the target repo's own section rules where it has them; `Artifacts` and `Next Step` earn their place in any repo that chains skills into a pipeline.
 
 ## Artifacts and Next Step
 
-**Artifacts** records what the skill reads and writes, so a pipeline of skills can hand work along without re-deriving where things live. Name the key path from `references/artifact-paths.md` and its default, rather than hardcoding a path.
+**Artifacts** records what the skill reads and writes, so a pipeline of skills can hand work along without re-deriving where things live. Where the repo keeps an output registry, name the configured key and its default rather than hardcoding a path.
 
 **Next Step** is required of any skill that produces a reviewable artifact and hands off. It needs an approval gate plus both branches:
 
-- The gate should be an **observable event**, not a feeling. `prototype` is the model: "the user has driven it and stated the answer." Compare a gate that cannot be checked: "when the design feels right."
+- The gate should be an **observable event**, not a feeling: "the user has run the prototype and stated the answer." Compare a gate that cannot be checked: "when the design feels right."
 - **If approved** names the next skill and why it follows.
 - **If not approved** says which: revise in place, escalate to a named skill, or pause on a specific question.
 
-A thin wrapper may point at the skill it wraps ("See `grilling`'s Next Step"). A skill with no natural next stage — a one-shot installer, a tone modifier, a session-boundary tool — does not need one, but should say why not if it is not obvious.
+A thin wrapper may point at the skill it wraps ("See `<engine-skill>`'s Next Step"). A skill with no natural next stage — a one-shot installer, a tone modifier, a session-boundary tool — needs none, and says so with the reason.
 
-Only name a skill the agent can actually reach: a `disable-model-invocation: true` skill cannot be invoked by the model, so route the model to the engine (`grilling`), not a user entry point such as `subagent-driven-development`. Telling the user to run `/subagent-driven-development` is fine; telling the model to use it is a dead end.
+Only name a skill the agent can actually reach: a `disable-model-invocation: true` skill cannot be invoked by the model, so route the model to a model-invocable engine skill, not a user entry point. Telling the user to run `/<entry-skill>` is fine; telling the model to use it is a dead end.
 
 The two cases are distinguished by form. A bare `` `name` `` is a route the model takes itself and must land on a model-invocable skill; `/name` addresses the human and may name any skill. Repos that validate this key off exactly that difference.
 
