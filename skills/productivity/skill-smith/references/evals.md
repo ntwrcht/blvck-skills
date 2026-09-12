@@ -45,7 +45,7 @@ Can you look over the diff on this branch before I open the PR?
 - Word the prompt the way the user types it, and leave the skill's name out — a prompt that names the skill tests the name, not the description.
 - Add `Write`, `Edit`, or `Bash` to `allowed_tools` only when the output depends on them.
 - The prompt runs in an empty folder with no repository and no shell, so paste whatever the skill reads — a diff, a file, a log — into the prompt after the request.
-- For a user-invoked skill (`disable-model-invocation: true`), write output cases only and start the prompt with `/<skill-name>` followed by the request, the way the user fires it. Name the folder `output-...`.
+- For a user-invoked skill (`disable-model-invocation: true`), write output cases only and start the prompt with `/<skill-name>` followed by the request, the way the user fires it. Name the folder `output-...`. A `/<skill-name>` prompt fails without the skill, so the normal run skips the no-skill arm; run `--baseline` for the comparison.
 
 ### `graders/fired.md` — trigger case
 
@@ -122,6 +122,8 @@ The script:
 2. Uses `claude plugin eval` when the account has it (early access, Claude Code 2.1.269 or later), keeping the report local.
 3. Otherwise falls back to `claude -p`: triggering is checked on every case, and each output is printed beside its criteria for you to grade.
 4. Exits 3 when no Claude Code CLI is installed — tell the user the cases are written but unrun.
+
+Read the exit code from the script itself: `run-evals.sh … | tail` reports `tail`'s exit code, which is 0 even when a case failed.
 
 A run costs roughly $0.13 per case per run, baseline arm included; the default is 3 runs. Triggering varies run to run, so use `--runs 1` while iterating and the default for the final pass. The cost ceiling is checked before each run starts and the script runs four at once, so a pass can overshoot it by up to four runs' cost.
 

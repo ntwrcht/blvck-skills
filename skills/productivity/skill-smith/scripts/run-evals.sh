@@ -152,8 +152,14 @@ run_baseline_eval() {
 
 run_plugin_eval() {
   echo "Running claude plugin eval on '$NAME': $RUNS run(s) per case, cost ceiling \$$MAX_COST${MODEL:+, model $MODEL}."
-  local status=0
-  claude plugin eval "$PLUGIN" --trust-plugin --no-publish --runs "$RUNS" -j 4 ${MODEL:+--model "$MODEL"} \
+  local status=0 ablation=""
+  # A /<name> prompt fails without the skill, so the no-skill arm would score a
+  # meaningless 0 for free. --baseline gives the real comparison.
+  if grep -q '^disable-model-invocation:[[:space:]]*true' "$SKILL_DIR/SKILL.md"; then
+    ablation="none"
+    echo "User-invoked skill: skipping the no-skill arm. Run --baseline for the comparison."
+  fi
+  claude plugin eval "$PLUGIN" --trust-plugin --no-publish --runs "$RUNS" -j 4 ${MODEL:+--model "$MODEL"} ${ablation:+--ablation "$ablation"} \
     --max-cost-usd "$MAX_COST" --output-dir "$RESULTS" --report "$RESULTS/report.html" || status=$?
   echo "Results: $RESULTS"
   [ "$status" -eq 0 ] || exit 1

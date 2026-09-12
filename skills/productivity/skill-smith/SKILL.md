@@ -1,6 +1,6 @@
 ---
 name: skill-smith
-description: "Crafts reusable agent skills from confirmed use cases, with invocation design, progressive disclosure, bundled resources, and evals that prove the skill triggers and delivers the right output. Use when the user asks to create, write, review, or test a skill, check whether a SKILL.md triggers, or package skill references, scripts, or examples."
+description: "Crafts reusable agent skills from confirmed use cases, with invocation design, progressive disclosure, bundled resources, and evals that prove the skill triggers and delivers the right output. Use when the user asks to create, write, review, improve, or test a skill, upgrade an existing SKILL.md, check whether a skill triggers, or package skill references, scripts, or examples."
 argument-hint: "<skill idea or draft>"
 ---
 
@@ -10,13 +10,14 @@ Craft agent skills that are scoped, predictable, easy to trigger, and packaged w
 
 ## When to Use
 
-Covers the whole life of one skill — use-case discovery, `SKILL.md` authoring, invocation design, bundled references and scripts, and trigger and output evals — in whichever project it is installed.
+Covers the whole life of one skill — use-case discovery, `SKILL.md` authoring, invocation design, bundled references and scripts, trigger and output evals, and reviewing or upgrading a skill that already exists — in whichever project it is installed.
 
 ## When Not to Use
 
 - **An agent, not a skill.** A skill is knowledge the current agent loads; an agent is a colleague it hands work to. For a subagent or persona with its own tool budget, use `agent-smith`.
 - **Installing an existing skill.** That is an installer's job — `npx skills add` or the host's plugin command — with nothing to author.
 - **A one-off prompt.** An instruction block used once needs no folder, evals, or catalog entry; write the prompt directly.
+- **A change to a skill, not the skill.** A pull request or diff that edits a skill goes to `scrutinize`, which verifies the change; this skill judges the skill itself.
 
 ## Artifacts
 
@@ -30,7 +31,7 @@ Optimize for a skill another agent can load quickly and apply correctly. Keep tr
 
 ## Workflow
 
-1. Read the target project's instructions (`CLAUDE.md`, `AGENTS.md`) and the layout of any skills it already has — they decide where the skill goes, how it registers, and which validators run. Then capture what the conversation already settles: the task or domain, output shape, likely tools, references, and deterministic steps.
+1. Read the target project's instructions (`CLAUDE.md`, `AGENTS.md`) and the layout of any skills it already has — they decide where the skill goes, how it registers, and which validators run. Then capture what the conversation already settles: the task or domain, output shape, likely tools, references, and deterministic steps. If the input is a skill that already exists, switch to **Improving an Existing Skill**.
 2. Collect and confirm the use cases — see **Use Cases**. The step is done when the user has confirmed every trigger case, every near-miss, and each trigger case's output criteria.
 3. Decide the invocation type — see **Invocation Design**. It decides which eval cases exist.
 4. Choose the name, the folder, and the resource shape. Place the skill where the target keeps its skills; with none yet, use `.claude/skills/<name>/`, or `~/.claude/skills/<name>/` when the user says it serves all their projects. Start with `SKILL.md` alone; add `references/`, `scripts/`, or `assets/` when a file cuts context load or makes a step deterministic.
@@ -64,11 +65,21 @@ Decide from evidence, before any prose, whether the target needs this skill at a
 | Evidence | Recommend |
 |---|---|
 | No overlap, and the baseline fails | **Create** — continue to drafting |
-| One existing skill takes most trigger cases | **Extend** it — improve that skill instead, moving these eval cases into its `assets/evals/` |
+| One existing skill takes most trigger cases | **Extend** it — move these eval cases into its `assets/evals/` and follow **Improving an Existing Skill** |
 | Two skills split the trigger cases, or the new skill is only a stage | **Merge**, or redraw the boundary between them |
 | The baseline passes every case | **Don't build** — show the baseline outputs as proof |
 
 Give the user the recommendation with its evidence; the call is theirs. When they build against it, carry on and name the reason in your final report.
+
+## Improving an Existing Skill
+
+When the input is a skill that already exists, follow `references/reviewing.md` in place of steps 2–9, then finish with step 10:
+
+1. Read the skill and summarize it for the user.
+2. Pin its current behaviour with evals; that score is the floor every change keeps.
+3. Find, rank, and report the findings, each with evidence.
+4. Fix one finding at a time with approval, re-running the evals after each; batch only when the user asks.
+5. Close with a before/after eval table.
 
 ## Invocation Design
 
@@ -117,6 +128,8 @@ Every sentence in a skill names an action the agent can take or a fact it needs.
 13. Reserve emphasis for the one line an eval shows being skipped.
 
 ## Reference Map
+
+Load `references/reviewing.md` when the input is an existing skill — the six review steps, the finding order, the report table, and the regression rule.
 
 Load `references/writing-instructions.md` when drafting or reviewing a skill's prose — a before/after and a source for each of the thirteen rules, plus a worked rewrite.
 
