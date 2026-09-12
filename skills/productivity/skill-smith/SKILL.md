@@ -30,7 +30,7 @@ Optimize for a skill another agent can load quickly and apply correctly. Keep tr
 2. Collect and confirm the use cases. See **Use Cases** below. This step is done when the user has confirmed every trigger case, every near-miss, and the output criteria of each trigger case.
 3. Decide invocation type before writing anything else. See **Invocation Design** below.
 4. Choose the folder location and resource shape. Default to `SKILL.md` only; add `references/`, `scripts/`, or `assets/` only when they reduce context load or improve reliability.
-5. Draft the skill using local repository conventions. Write the description from the confirmed trigger cases, and put detailed activation guidance under `When to Use` or `When Not to Use`.
+5. Draft the skill using local repository conventions and **Writing the Instructions** below. Write the description from the confirmed trigger cases, and put detailed activation guidance under `When to Use` or `When Not to Use`.
 6. Apply progressive disclosure. Put core behavior in `SKILL.md`; point to specific bundled files for deeper rules, examples, templates, or deterministic helpers.
 7. Write one eval case per confirmed use case into the new skill's `assets/evals/`, per `references/evals.md`.
 8. Run `bash scripts/run-evals.sh <new-skill-dir>` and fix until every case passes: a trigger failure is a description fix, an output failure is an instruction fix. Load `references/evals.md` for reading failures.
@@ -68,7 +68,35 @@ Use a concise two-sentence YAML description when possible. Target 150–300 char
 
 If a local repository bans activation phrasing in public descriptions, rewrite the second sentence as neutral scope text with the same keywords. Still keep detailed activation boundaries in `When to Use` and `When Not to Use`.
 
+## Writing the Instructions
+
+Every sentence in a skill names an action the agent can take or a fact it needs. Write each to these rules; `references/writing-instructions.md` holds a before/after and the Anthropic source for every one.
+
+**What to write**
+
+1. Keep a sentence only if removing it would cause a mistake — the model already knows the rest.
+2. Match specificity to fragility: the exact command for a fragile step, a goal plus a heuristic for judgment work. Default to the general form.
+3. Give one default with an escape hatch in place of a menu of options.
+
+**How to phrase**
+
+4. Open with an imperative verb.
+5. Give the reason in one clause in place of a MUST, so the agent can generalize.
+6. Say what to do and name the alternative; a bare prohibition pulls the banned behaviour into context.
+7. Set a concrete bar — a number or a checkable property — in place of an adjective.
+8. State the scope explicitly; the agent applies an instruction only where it is stated.
+9. Write a qualifier ("be conservative", "only if sure") only for its effect — every qualifier is obeyed literally.
+10. Use one term per concept; a synonym reads as a new thing.
+
+**Structure**
+
+11. Number the steps where order matters, and write each decision point as an `If …, …` branch.
+12. Show the format with an example or a template.
+13. Reserve emphasis for the one line an eval shows being skipped.
+
 ## Reference Map
+
+Load `references/writing-instructions.md` when drafting or reviewing a skill's prose — a before/after and a source for each of the thirteen rules, plus a worked rewrite.
 
 Load `references/skill-structure.md` when drafting or reviewing a full skill. It contains the folder layout, `SKILL.md` template, progressive disclosure rules, split-file guidance, script guidance, and review checklist.
 
@@ -104,7 +132,6 @@ Load `references/testing-skills.md` for the pressure-scenario formats, the press
 - Avoid time-sensitive claims unless the skill includes a verification step.
 - Do not bundle secrets, private data, or unrelated files.
 - Hunt for **leading words** — compact pretrained concepts (e.g. _legwork_, _fog of war_, _tracer bullets_) that collapse a behavioural principle into a single token. A restatement spread across two or three sentences is a candidate. Coin your own only if no pretrained word fits; a made-up word recruits no priors and costs definition tokens.
-- Steer by the **positive**. State the target behaviour so the banned one is never spoken — a prohibition drags the forbidden behaviour into context and makes it more available, not less. Keep a prohibition only as a hard guardrail you cannot phrase positively, and pair it with the positive target.
 - Keep each meaning in a **single source of truth**, so changing the behaviour is a one-place edit. Duplication costs maintenance and inflates a meaning's rank past what it deserves.
 - Treat the environment as a source of truth too. A skill that restates `package.json` scripts, config files, the directory layout, or `--help` output is a **cache** of a lookup, and earns its load only when that lookup is expensive. Cache what the agent cannot find by looking — the unwritten convention, the reason behind a choice, the gotcha no config confesses.
 - Co-locate a concept's definition, rules, and caveats under one heading, so reading one part brings its neighbours with it.
@@ -129,7 +156,7 @@ Before finalizing:
 - Are local indexes, manifests, or install metadata updated?
 - Have required validation scripts been run?
 - If the skill enforces a discipline, was it run against a pressure scenario without it first — and does every rationalization it counters come from an observed failure rather than an imagined one?
-- Does the draft steer by the positive, and is every remaining prohibition a guardrail that cannot be phrased positively?
+- Sentence pass: does every sentence name an action or a needed fact, and hold to **Writing the Instructions** — above all rules 1, 5, 7, and 9?
 - Does anything here restate what `package.json`, a config file, the directory layout, or `--help` already says?
 - Read the draft for its **silences**: every decision it declines to make is delegated to the agent's priors, so each omission should be deliberate — filled, or left open as a real branch.
 
