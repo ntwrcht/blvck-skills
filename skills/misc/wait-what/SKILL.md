@@ -9,7 +9,7 @@ disable-model-invocation: true
 
 The last message did not land. Re-pitch it.
 
-Give a little more context than before, write in ASD-STE100 Simplified Technical English, and use the ubiquitous language from `CONTEXT.md` — follow `CONTEXT-MAP.md` to the right one if the repo has more than one.
+Give a little more context than before, write in ASD-STE100 Simplified Technical English, and use the ubiquitous language from `CONTEXT.md` — follow `CONTEXT-MAP.md` to the right one if the repo has more than one. Where the repo has neither, take the nouns from the reader's own messages, and open with the re-pitch itself.
 
 ## When to Use
 
@@ -33,7 +33,7 @@ Naming the *output* (`/tldr`, `/no-fluff`) makes the model clip words and lose t
 
 ## Next Step
 
-This skill repairs one message; it has no pipeline stage after it, so it needs no handoff. If messages keep failing to land, the cure is a shared vocabulary built up front — tell the user to run `/grilling` with docs to establish one in `CONTEXT.md`.
+This skill repairs one message; it has no pipeline stage after it, so it needs no handoff. The cure for messages that keep failing to land is a shared vocabulary built up front: when the user has fired `/wait-what` three times in one conversation, end that re-pitch with one line suggesting `/grilling` with docs to establish one in `CONTEXT.md`.
 
 ---
 
