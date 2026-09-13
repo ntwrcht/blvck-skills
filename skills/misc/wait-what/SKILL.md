@@ -1,6 +1,6 @@
 ---
 name: wait-what
-description: "Re-pitches the message that just failed to land, adding the missing context and dropping the jargon. Use when the user says wait what, that made no sense, I don't follow, explain that again, or invokes /wait-what."
+description: "Re-pitches the message that just failed to land, adding the missing context and dropping the jargon. Use when a reply lost the reader through unexplained jargon, a skipped step, or missing context; the user runs it with /wait-what."
 argument-hint: "(nothing — the last message is the target)"
 disable-model-invocation: true
 ---
