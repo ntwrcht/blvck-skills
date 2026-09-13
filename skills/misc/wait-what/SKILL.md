@@ -7,7 +7,7 @@ disable-model-invocation: true
 
 # Wait, What
 
-The last message did not land. Re-pitch it.
+That did not land. Re-pitch that, going back to where the reader got lost.
 
 Give a little more context than before, write in ASD-STE100 Simplified Technical English, and use the ubiquitous language from `CONTEXT.md` — follow `CONTEXT-MAP.md` to the right one if the repo has more than one. Where the repo has neither, take the nouns from the reader's own messages, and open with the re-pitch itself.
 
@@ -22,7 +22,7 @@ Use when a message lost the reader: unexplained jargon, a leap the reader could 
 
 ## Artifacts
 
-- Produces: nothing — it rewrites the previous message in place
+- Produces: nothing — the re-pitch is a new reply in the conversation
 - Consumes: `CONTEXT.md`, `CONTEXT-MAP.md`
 
 ## Why It Is This Short
