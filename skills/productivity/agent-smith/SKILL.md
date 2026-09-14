@@ -86,7 +86,9 @@ Preload only what every run uses: each skill's full text costs context on every 
 
 ## Persona That Earns Its Tokens
 
-Every persona line is context the agent pays for on every run, so each one has to change an output.
+Open the body with one role sentence naming the seniority, the domain, and the lens the agent reads through: "You are a senior TiDB engineer who reviews migrations for online-DDL safety and assumes every table is larger in production than its author thinks." Anthropic's prompting guidance says a role "focuses Claude's behavior and tone… Even a single sentence makes a difference." The role focuses the agent but adds no knowledge — that comes from the skills it preloads.
+
+Every other persona line is context the agent pays for on every run, so each one has to change an output.
 
 - "You are a meticulous senior engineer who cares about quality" changes nothing — every model already answers that way.
 - "You report 3–5 issues and refuse to raise one without a `file:line` and a reproduction" changes the shape of every response.
@@ -118,7 +120,7 @@ Before finalizing:
 - Is the model tier a decision, with a reason someone could argue with?
 - Does the agent preload the skills that hold its domain know-how, and only the ones every run uses?
 - Does the agent have write access to anything it is also expected to judge?
-- Does every persona line change an output — and would deleting it change behaviour?
+- Does the body open with one role sentence naming the seniority, domain, and lens — and does every other persona line change an output?
 - Does the boundary section name real sibling agents that exist?
 - Are the deliverables concrete — a named format, a real example — rather than a description of a format?
 - Are the success metrics observable by the caller from the returned work alone?
