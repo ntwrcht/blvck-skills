@@ -57,7 +57,7 @@ Before writing or reading a keyed artifact:
 
 ## Out of scope
 
-Not part of this registry, with reasons: `handoff` (always the OS temp directory, deliberately never the repo), `codebase-design` (produces vocabulary and a recommendation, not a file), `wait-what` (rewrites a message, produces nothing), `git-guardrails` (target is inherent to the tool — `.claude/settings.json`), `skill-smith` (its output path — `skills/<bucket>/<name>/SKILL.md` — is structural, not a workspace preference), `agent-smith` (same reason — one output path is the repo's own agent roster, the other is fixed by the agent runtime), `caveman` (produces nothing), `triage` (produces tracker state via a connected tool, not a file), `technical-trading-strategy` (no single fixed artifact path).
+Not part of this registry, with reasons: `handoff` (always the OS temp directory, deliberately never the repo), `codebase-design` (produces vocabulary and a recommendation, not a file), `wait-what` (rewrites a message, produces nothing), `git-guardrails` (target is inherent to the tool — `.claude/settings.json`), `skill-smith` (its output path — `skills/<bucket>/<name>/SKILL.md` — is structural, not a workspace preference), `agent-smith` (same reason — its output path, `.claude/agents/<name>.md` or the plugin or user equivalent, is fixed by the agent runtime), `caveman` (produces nothing), `triage` (produces tracker state via a connected tool, not a file), `technical-trading-strategy` (no single fixed artifact path).
 
 ## Migration (pre-existing projects only)
 

@@ -30,7 +30,7 @@ Write three scenarios, and keep them with the agent so a later change can be re-
 
 - **The bullseye** — the request the agent exists for, phrased the way a caller would actually type it, never using the agent's name.
 - **The neighbour** — the adjacent request owned by a sibling agent. Expected outcome: not picked, or picked and handed back.
-- **The pressure case** — the bullseye plus a reason to cut corners: a deadline, a request to "just give me the short answer," a caller who says the analysis is probably unnecessary. This is where a rule with a compliance cost gets abandoned, and where the canonical file's `Critical Rules` earn their place.
+- **The pressure case** — the bullseye plus a reason to cut corners: a deadline, a request to "just give me the short answer," a caller who says the analysis is probably unnecessary. This is where a rule with a compliance cost gets abandoned, and where the agent file's `Critical Rules` earn their place.
 
 ## Closing a Loophole
 

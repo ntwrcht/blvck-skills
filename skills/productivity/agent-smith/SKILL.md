@@ -10,7 +10,7 @@ Design agents a delegating model reaches for correctly, that stay inside their l
 
 ## When to Use
 
-Use this skill when the user wants to create, draft, review, or sharpen a specialized agent — a named persona that runs in its own context window with its own tool budget and returns work to whoever delegated to it. It covers the canonical agent definition, the runnable subagent derived from it, tool and model budgets, roster boundaries, and the delegation test that proves the agent gets picked.
+Use this skill when the user wants to create, draft, review, or sharpen a specialized agent — a named persona that runs in its own context window with its own tool budget and returns work to whoever delegated to it. It covers the agent file — frontmatter, persona, and operations — its tool and model budget, the skills it preloads, roster boundaries, and the delegation test that proves the agent gets picked.
 
 ## When Not to Use
 
@@ -22,11 +22,11 @@ Use this skill when the user wants to create, draft, review, or sharpen a specia
 
 ## Artifacts
 
-- Produces: `agents/<name>.md` — the canonical definition (persona + operations). Write it beside an existing roster if the repo already has one; otherwise default to `agents/`.
-- Produces: `.claude/agents/<name>.md` — the runnable subagent derived from the canonical file.
+- Produces: `<agents-dir>/<name>.md` — the agent file, the one copy that both runs and gets reviewed. `<agents-dir>` is set by **One File, Where the Runtime Reads It**.
 - Consumes: the existing agent roster, read for overlap and boundary checks.
+- Consumes: the target's skills, read for know-how the agent should preload.
 
-Both paths are structural — one is the repo's roster convention, the other is fixed by the agent runtime — so neither is a configurable output location.
+The path is fixed by the agent runtime, so it is not a configurable output location.
 
 ## Core Rule
 
@@ -37,17 +37,23 @@ An agent nobody delegates to is a file. Design the routing contract first — na
 1. **Name the job, not the topic.** `database` is a topic; `migration-archaeologist` is a job with an output. A name that reads as a role predicts what comes back.
 2. **Read the existing roster.** List every sibling agent and its one-line remit. If the new agent's remit is a subset of one already there, extend that agent instead of adding a competitor — two agents that answer the same request make delegation a coin flip.
 3. **Set the tool and model budget before writing prose.** See **Tool and Model Budget** below. This decision constrains everything after it: an agent with no write tools cannot promise fixes.
-4. **Draft the canonical file.** Load `references/agent-template.md` for the section-by-section structure, the frontmatter fields, and a worked example.
-5. **Write the boundary section.** Name the sibling agents this one hands off to and what it declines. An agent with no stated edges expands into its neighbours.
-6. **Derive the runnable subagent.** Load `references/subagent-mapping.md` for the field mapping, the description that drives delegation, and what to compress.
+4. **Split the expertise from the know-how.** See **Expert Plus Skills** below. The step is done when every domain rule the agent needs on every run sits in a skill it preloads, or in its body with a reason no skill holds it.
+5. **Draft the agent file.** Load `references/agent-template.md` for the frontmatter, the description that drives delegation, the section structure, and a worked example.
+6. **Write the boundary section.** Name the sibling agents this one hands off to and what it declines. An agent with no stated edges expands into its neighbours.
 7. **Test the delegation.** Load `references/testing-agents.md`. Run the target request without the agent, record what happens, then confirm the agent is picked and returns something the caller can use.
 8. **Review against the checklist** below, then register the agent in the roster index if the repo keeps one.
 
-## Two Files, One Source of Truth
+## One File, Where the Runtime Reads It
 
-The canonical `agents/<name>.md` holds the full persona and operations. The runnable `.claude/agents/<name>.md` is derived from it — compressed, with runtime frontmatter.
+The agent file is the source of truth: the copy that runs is the copy that gets reviewed, so there is no second copy to drift from it.
 
-Edit the canonical file and regenerate the derived one. Hand-editing the derived file forks the agent: the version that runs and the version that gets reviewed drift apart, and nobody notices until the agent misbehaves in a way the canonical file says it cannot.
+| Scope | `<agents-dir>` |
+|---|---|
+| One project | `.claude/agents/` — check it into version control so the team shares it |
+| All the user's projects | `~/.claude/agents/` |
+| A plugin | `agents/` at the plugin root — Claude Code ignores `hooks`, `mcpServers`, and `permissionMode` there |
+
+Put the agent beside the target's existing agents; with none yet, use `.claude/agents/`. In a plugin, keep drafts and notes out of `agents/`: Claude Code loads every file there as a live agent.
 
 ## Tool and Model Budget
 
@@ -63,6 +69,21 @@ Every agent declares an explicit tool allowlist and a model tier. An agent grant
 
 **Separate the hand from the eye.** An agent that writes code is a poor judge of the code it just wrote — it defends its own choices. Split the reviewer from the implementer rather than granting one agent both budgets.
 
+## Expert Plus Skills
+
+An expert agent is two things: a stance and a body of know-how. Put the stance in the agent and the know-how in skills it preloads.
+
+- **The agent holds the stance** — the domain it argues from, what it looks for, its boundaries, and its output contract.
+- **Skills hold the know-how** — conventions, procedures, and reference facts. List them in the `skills` frontmatter field; Claude Code injects each one in full at startup, not only its description.
+
+A subagent starts without the skills its caller has loaded, so name every skill it needs on every run. It can still fire an unlisted skill through the `Skill` tool, which suits know-how only some runs need.
+
+1. Search the target's skills for the domain before writing any rule into the body. If one covers it, preload it — `tidb-engineer` for a TiDB migration reviewer.
+2. If the know-how would serve another agent or the main thread, write it as a skill with `skill-smith` and preload that.
+3. If it serves only this agent, keep it in the body.
+
+Preload only what every run uses: each skill's full text costs context on every delegation.
+
 ## Persona That Earns Its Tokens
 
 Every persona line is context the agent pays for on every run, so each one has to change an output.
@@ -71,9 +92,6 @@ Every persona line is context the agent pays for on every run, so each one has t
 - "You report 3–5 issues and refuse to raise one without a `file:line` and a reproduction" changes the shape of every response.
 
 Apply the test to each line: **what would this agent produce differently if the line were deleted?** No answer means no line. This is the same no-op failure that bloats skills, and it costs more here — an agent's persona is reloaded on every delegation.
-
-The same test sharpens the `vibe` field. A vibe is a compression handle, not decoration: it should let a reader predict the agent's first move.
-
 ## Roster Boundaries
 
 Agents overlap silently. Two symptoms, both worth catching before ship:
@@ -85,9 +103,7 @@ Once a roster passes roughly five agents, keep a one-line remit per agent in an 
 
 ## Reference Map
 
-Load `references/agent-template.md` when drafting or reviewing a canonical agent file — it holds the full section structure, frontmatter fields, per-section guidance, and a complete worked example.
-
-Load `references/subagent-mapping.md` when deriving or refreshing the runnable subagent — field mapping, name and description transforms, tool syntax, model values, and what to compress.
+Load `references/agent-template.md` when drafting or reviewing an agent file — it holds the frontmatter fields, the three-sentence description, the section structure and per-section guidance, the line budget, and a complete worked example.
 
 Load `references/testing-agents.md` when the agent is drafted and needs proof it works — the three agent-specific failure classes (routing, boundary, contract), scenario formats, and how to close a loophole.
 
@@ -100,17 +116,18 @@ Before finalizing:
 - Is there a request two agents in this roster would both accept?
 - Is the tool allowlist explicit, and is every listed tool needed for a deliverable the agent actually promises?
 - Is the model tier a decision, with a reason someone could argue with?
+- Does the agent preload the skills that hold its domain know-how, and only the ones every run uses?
 - Does the agent have write access to anything it is also expected to judge?
 - Does every persona line change an output — and would deleting it change behaviour?
 - Does the boundary section name real sibling agents that exist?
 - Are the deliverables concrete — a named format, a real example — rather than a description of a format?
 - Are the success metrics observable by the caller from the returned work alone?
-- Does the canonical file stay the only hand-edited copy?
+- Is the agent one file in the folder the runtime reads, with no second copy to drift from it?
 - Was the delegation tested: the agent picked for the request it targets, and passed over for the neighbouring request it should decline?
 
 ## Next Step
 
-Do not write the runnable subagent or register the agent until the user has reviewed the canonical draft.
+Do not write the agent file or register the agent until the user has reviewed the draft.
 
-- **If approved:** derive `.claude/agents/<name>.md` per `references/subagent-mapping.md`, add the agent to the roster index if the repo keeps one, and run the delegation test in `references/testing-agents.md` against the live agent.
-- **If not approved:** revise the canonical file in place. If the objection is overlap with an existing agent, return to step 2 and decide whether to extend that agent instead. If the objection is that the remit is too broad to test, split it into two agents and draft the narrower one first.
+- **If approved:** write it to `<agents-dir>/<name>.md` per **One File, Where the Runtime Reads It**, add the agent to the roster index if the repo keeps one, and run the delegation test in `references/testing-agents.md` against the live agent.
+- **If not approved:** revise the draft in place. If the objection is overlap with an existing agent, return to step 2 and decide whether to extend that agent instead. If the objection is that the remit is too broad to test, split it into two agents and draft the narrower one first.
