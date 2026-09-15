@@ -50,6 +50,8 @@ Write the boundary into the description when two agents sit close together: "Rep
 
 Name the inputs the caller must pass when it would not pass them by default: "Pass the PRD path and one lens: engineer, designer, or executive." The caller writes its task prompt from the description alone and never reads the body.
 
+Keep the wording plain and brief. Leave out "use proactively" and all-caps triggers: current models already delegate readily, and Anthropic's Opus 5 guidance is to damp delegation, not push it. Add "use proactively" only when the delegation test shows the agent passed over for the request it exists for. Claude Code warns when all agent descriptions together pass 15,000 tokens.
+
 ## Body Structure
 
 Use plain `##` headings: the body is a system prompt, and decoration in it is noise.

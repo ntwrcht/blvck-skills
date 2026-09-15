@@ -1,6 +1,6 @@
 ---
 name: agent-smith
-description: "Designs specialized subagents as a persona-and-operations definition with an explicit tool and model budget, boundaries against sibling agents, and a delegation test run before the agent ships. Use when creating an agent, writing a subagent, defining an agent persona, reviewing an agent definition file, or planning a roster of specialized agents."
+description: "Designs Claude Code subagents as domain experts: an expert role, preloaded skills, an explicit tool and model budget, sibling boundaries, and a delegation test. Use when creating, writing, or reviewing a subagent, agent persona, or agent definition file, or planning a roster of agents."
 argument-hint: "<agent idea, role, or draft agent file>"
 ---
 
