@@ -11,13 +11,30 @@ Target roughly 60–120 lines. Past that, the agent's remit is usually two agent
 name: agent-name                       # lowercase and hyphens, matches the filename
 description: What it does. When to delegate. What comes back.
 tools: Read, Grep, Glob                # explicit allowlist, never omitted
-model: opus                            # opus | sonnet | haiku | inherit
+model: opus                            # opus | sonnet | haiku | fable | inherit | a full model ID
 skills:                                # optional — skills preloaded in full at startup
   - skill-name
 ---
 ```
 
 Omitting `tools` grants the full tool set — which is why the budget is never left out. Omitting `model` lets the runtime pick one by its default order, which is a valid choice only when it is a choice.
+
+Add an optional field only when the agent's job calls for it. The full reference is `https://code.claude.com/docs/en/sub-agents`.
+
+| Field | Add it when |
+|---|---|
+| `disallowedTools` | The agent inherits most tools but must lose a few — `Write, Edit` for a reviewer that still runs `Bash` |
+| `maxTurns` | A run could loop; at the limit the output returns marked partial |
+| `effort` | The job is lighter or harder than the session's: `low`, `medium`, `high`, `xhigh`, or `max` |
+| `isolation: worktree` | The agent edits files and should work in a temporary git worktree, not the main checkout |
+| `memory` | The agent should keep notes across sessions, scoped `user`, `project`, or `local` |
+| `permissionMode` | The agent needs a mode other than the session's, such as `plan` or `acceptEdits` |
+| `mcpServers` | The agent needs an MCP server the session does not give it |
+| `hooks` | A rule has to hold deterministically rather than by instruction |
+| `background: true` | The agent should always run in the background |
+| `color` | The task list should tell agents apart: `red`, `blue`, `green`, `yellow`, `purple`, `orange`, `pink`, or `cyan` |
+
+A plugin agent ignores `permissionMode`, `mcpServers`, and `hooks`; for those, place the agent in `.claude/agents/` or `~/.claude/agents/`.
 
 ## The Description Drives Delegation
 

@@ -17,7 +17,7 @@ Use this skill when the user wants to create, draft, review, or sharpen a specia
 **A skill is knowledge the current agent loads. An agent is a colleague the current agent hands the work to.** That distinction decides which tool to reach for:
 
 - Instructions that change how *this* agent performs a task, loaded into the running context — that is a skill. Use `skill-smith`.
-- Driving agents that already exist through a multi-step plan — use `subagent-driven-development`.
+- Driving agents that already exist through a multi-step plan — tell the user to run `/subagent-driven-development`, which only the user can invoke.
 - A one-off role prompt for a single message, never reused — write the prompt, skip the file.
 
 ## Artifacts
