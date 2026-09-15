@@ -1,6 +1,9 @@
 #!/usr/bin/env bash
 # Runs a skill's trigger and output evals from <skill-dir>/assets/evals/.
-# Usage: bash scripts/run-evals.sh <skill-dir> [--baseline] [--runs N] [--model MODEL] [--max-cost-usd USD] [--fallback]
+# Usage: bash scripts/run-evals.sh <skill-dir> [--baseline] [--runs N] [--model MODEL] [--max-cost-usd USD] [--fallback] [--keep-temp]
+#
+# --keep-temp keeps each run's sandbox and transcript, plus the plugin wrapper,
+# and lists the transcript of every failed run, so a judge's FAIL can be read.
 #
 # Wraps the skill in a throwaway plugin first: `claude plugin eval` given a bare
 # skill folder resolves no plugin and silently scores the baseline instead.
@@ -22,10 +25,12 @@ RUNS=3
 MODEL=""
 MAX_COST=5
 FORCE_FALLBACK=0
+KEEP_TEMP=""
 
 while [ $# -gt 0 ]; do
   case "$1" in
     --baseline)     BASELINE=1; shift ;;
+    --keep-temp)    KEEP_TEMP=1; shift ;;
     --runs)         RUNS="${2:?--runs needs a number}"; shift 2 ;;
     --model)        MODEL="${2:?--model needs a model name}"; shift 2 ;;
     --max-cost-usd) MAX_COST="${2:?--max-cost-usd needs an amount}"; shift 2 ;;
@@ -61,7 +66,11 @@ WORK="$(mktemp -d "${TMP_ROOT%/}/skill-eval.XXXXXX")"
 PLUGIN="$WORK/plugin"
 BASE="$WORK/baseline"
 RESULTS="$WORK/results"
-trap 'rm -rf "$PLUGIN" "$BASE" "$WORK/cwd" "$WORK"/probe.*' EXIT
+if [ -n "$KEEP_TEMP" ]; then
+  trap 'rm -rf "$WORK"/probe.*' EXIT
+else
+  trap 'rm -rf "$PLUGIN" "$BASE" "$WORK/cwd" "$WORK"/probe.*' EXIT
+fi
 mkdir -p "$WORK/cwd" "$RESULTS"
 
 # ── helpers ──────────────────────────────────────────────────────────────────
@@ -93,6 +102,20 @@ eval_available() {
 }
 
 need_jq() { command -v jq >/dev/null 2>&1 || { echo "This mode needs jq on PATH." >&2; exit 2; }; }
+
+# With --keep-temp, name the transcript of every failed run so it can be read.
+list_failed_traces() {
+  [ -n "$KEEP_TEMP" ] || return 0
+  command -v jq >/dev/null 2>&1 || return 0
+  local agg lines
+  agg="$(find "$RESULTS" -name aggregate-result.json | head -1)"
+  [ -n "$agg" ] || return 0
+  lines="$(jq -r '.cases[] | .name as $c | .arms | to_entries[] | .key as $a | .value | to_entries[]
+                  | select(.value.passed == false)
+                  | "  \($c) [\($a)] run \(.key + 1): \(.value.tracePath // "no transcript")"' "$agg")"
+  echo "Transcripts of failed runs:"
+  echo "${lines:-  none — every run passed}"
+}
 
 # ── the skill under test: a throwaway plugin wrapper ─────────────────────────
 
@@ -134,7 +157,7 @@ run_baseline_eval() {
   need_jq
   echo "Baseline for '$NAME': output checks only, no skill loaded, $RUNS run(s) per case."
   claude plugin eval "$BASE" --trust-plugin --no-publish --ablation none --runs "$RUNS" -j 4 ${MODEL:+--model "$MODEL"} \
-    --max-cost-usd "$MAX_COST" --output-dir "$RESULTS" --report "$RESULTS/report.html" || true
+    ${KEEP_TEMP:+--keep-temp} --max-cost-usd "$MAX_COST" --output-dir "$RESULTS" --report "$RESULTS/report.html" || true
   local agg
   agg="$(find "$RESULTS" -name aggregate-result.json | head -1)"
   [ -n "$agg" ] || { echo "The baseline run produced no results." >&2; exit 1; }
@@ -146,6 +169,7 @@ run_baseline_eval() {
     echo "VERDICT: plain Claude misses at least one output check — the skill has a job."
   fi
   echo "Results: $RESULTS"
+  list_failed_traces
 }
 
 # ── primary: claude plugin eval ──────────────────────────────────────────────
@@ -160,8 +184,9 @@ run_plugin_eval() {
     echo "User-invoked skill: skipping the no-skill arm. Run --baseline for the comparison."
   fi
   claude plugin eval "$PLUGIN" --trust-plugin --no-publish --runs "$RUNS" -j 4 ${MODEL:+--model "$MODEL"} ${ablation:+--ablation "$ablation"} \
-    --max-cost-usd "$MAX_COST" --output-dir "$RESULTS" --report "$RESULTS/report.html" || status=$?
+    ${KEEP_TEMP:+--keep-temp} --max-cost-usd "$MAX_COST" --output-dir "$RESULTS" --report "$RESULTS/report.html" || status=$?
   echo "Results: $RESULTS"
+  list_failed_traces
   [ "$status" -eq 0 ] || exit 1
 }
 

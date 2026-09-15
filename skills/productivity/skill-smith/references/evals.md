@@ -103,7 +103,7 @@ match: contains
 ## Baseline Before Drafting
 
 ```bash
-bash scripts/run-evals.sh <path-to-new-skill> --baseline [--runs N] [--model MODEL]
+bash scripts/run-evals.sh <path-to-new-skill> --baseline [--runs N] [--model MODEL] [--keep-temp]
 ```
 
 `--baseline` runs the trigger and output cases' output checks with no skill loaded, so it needs only `assets/evals/` and runs before `SKILL.md` exists. It drops each case's `tool_used` grader, skips near-misses, and strips a leading `/<skill-name>` from a user-invoked case's prompt. Each case prints `SKILL HAS A JOB` (plain Claude missed a check) or `PLAIN CLAUDE PASSES`, followed by one verdict line.
@@ -113,7 +113,7 @@ A case plain Claude passes is a job the skill does not have. Keep it only when t
 ## Running
 
 ```bash
-bash scripts/run-evals.sh <path-to-new-skill> [--runs N] [--model MODEL] [--max-cost-usd USD] [--fallback]
+bash scripts/run-evals.sh <path-to-new-skill> [--runs N] [--model MODEL] [--max-cost-usd USD] [--fallback] [--keep-temp]
 ```
 
 The script:
@@ -139,7 +139,7 @@ The script passes `--trust-plugin` because the wrapper holds a skill you wrote t
 | Skill fired, output failed | The instructions | Sharpen the step that produces the failing property |
 | Output passes without the skill too | The skill adds nothing for this request | Find what the skill should do that the default does not, or drop the use case with the user's agreement |
 
-Read the transcript of a failing run, not just its score — it shows where the agent went instead: a skill never opened, a reference skipped, a step misread. `claude plugin eval` links each transcript from its report; the fallback writes `<case>-<run>.jsonl` beside its results.
+Read the transcript of a failing run, not just its score — it shows where the agent went instead: a skill never opened, a reference skipped, a step misread. `claude plugin eval` deletes each run's sandbox, transcript included, when the run ends, so re-run the failing case with `--keep-temp`: the script keeps the sandboxes and lists the transcript of every failed run. The transcript holds every message the agent wrote, the last of them the one the judge graded; the judge itself records only its votes. The fallback always writes `<case>-<run>.jsonl` beside its results.
 
 When the skill will run on more than one model, re-run the final pass with `--model <model>` for each — wording that lands on a large model can need more detail for a small one.
 
