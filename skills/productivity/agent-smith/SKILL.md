@@ -39,7 +39,7 @@ An agent nobody delegates to is a file. Design the routing contract first — na
 3. **Set the tool and model budget before writing prose.** See **Tool and Model Budget** below. This decision constrains everything after it: an agent with no write tools cannot promise fixes.
 4. **Split the expertise from the know-how.** See **Expert Plus Skills** below. The step is done when every domain rule the agent needs on every run sits in a skill it preloads, or in its body with a reason no skill holds it.
 5. **Draft the agent file.** Load `references/agent-template.md` for the frontmatter, the description that drives delegation, the section structure, and a worked example.
-6. **Write the boundary section.** Name the sibling agents this one hands off to and what it declines. An agent with no stated edges expands into its neighbours.
+6. **Write the boundary and the inputs.** Name the sibling agents this one hands off to and what it declines — an agent with no stated edges expands into its neighbours. Then name what the caller must pass; see **What the Caller Passes** below.
 7. **Test the delegation.** Load `references/testing-agents.md`. Run the target request without the agent, record what happens, then confirm the agent is picked and returns something the caller can use.
 8. **Review against the checklist** below, then register the agent in the roster index if the repo keeps one.
 
@@ -84,6 +84,15 @@ A subagent starts without the skills its caller has loaded, so name every skill 
 
 Preload only what every run uses: each skill's full text costs context on every delegation.
 
+## What the Caller Passes
+
+The delegating model writes the task prompt from the description alone, and the subagent starts from that prompt, its body, `CLAUDE.md`, and its preloaded skills — not the conversation. An input the agent needs arrives only if the description asks for it.
+
+- **In the description**, name each input the caller would not pass by default: "Pass the PRD path and one lens: engineer, designer, or executive."
+- **In the body's `## Inputs`**, list each input and the one-line request the agent returns when it is missing, so a thin brief produces a question instead of a guess.
+
+Anthropic's multi-agent research found that vague briefs made subagents duplicate each other's work; a brief needs an objective, an output format, and boundaries. The description decides what the caller sends; the body decides what the agent does with a thin one.
+
 ## Persona That Earns Its Tokens
 
 Open the body with one role sentence naming the seniority, the domain, and the lens the agent reads through: "You are a senior TiDB engineer who reviews migrations for online-DDL safety and assumes every table is larger in production than its author thinks." Anthropic's prompting guidance says a role "focuses Claude's behavior and tone… Even a single sentence makes a difference." The role focuses the agent but adds no knowledge — that comes from the skills it preloads.
@@ -122,6 +131,7 @@ Before finalizing:
 - Does the agent have write access to anything it is also expected to judge?
 - Does the body open with one role sentence naming the seniority, domain, and lens — and does every other persona line change an output?
 - Does the boundary section name real sibling agents that exist?
+- Does the description name every input the caller would not pass by default, and does `## Inputs` say what the agent returns when one is missing?
 - Are the deliverables concrete — a named format, a real example — rather than a description of a format?
 - Are the success metrics observable by the caller from the returned work alone?
 - Is the agent one file in the folder the runtime reads, with no second copy to drift from it?

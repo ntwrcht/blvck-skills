@@ -48,6 +48,8 @@ The third sentence is the one usually missing, and its absence is what produces 
 
 Write the boundary into the description when two agents sit close together: "Reports on dependencies; does not perform the migration." That single clause resolves more routing ambiguity than any amount of body text, because it is read at decision time.
 
+Name the inputs the caller must pass when it would not pass them by default: "Pass the PRD path and one lens: engineer, designer, or executive." The caller writes its task prompt from the description alone and never reads the body.
+
 ## Body Structure
 
 Use plain `##` headings: the body is a system prompt, and decoration in it is noise.
@@ -73,6 +75,10 @@ output wrong if broken, not preferences.
 ### Operations — what the agent does
 
 ```markdown
+## Inputs
+- Input 1 — what it is, and the one-line request returned when it is missing
+- Input 2 — what it is, and the default used when it is missing
+
 ## Your Core Mission
 - Responsibility 1, with the deliverable it produces
 - Responsibility 2, with the deliverable it produces
@@ -103,6 +109,8 @@ schema, a report skeleton with the headings it actually emits.
 
 **What You Don't Do.** The section that keeps a roster from collapsing. Name real sibling agents. If nothing else owns the adjacent work, say the agent returns it to the caller rather than inventing a handoff target.
 
+**Inputs.** List only what the agent cannot find for itself. Give each one either a safe default or the one-line request the agent returns in place of a guess — "Which lens: engineer, designer, or executive?" Mirror every required input in the description, since the caller never reads this section.
+
 **Technical Deliverables.** Show one real example. An agent given a described format invents its own; an agent given a filled-in example matches it.
 
 **Workflow Process.** Start Discovery with what the agent must read each run: it starts without the caller's conversation. Give each phase a completion criterion sharp enough to resist an early exit — "research the codebase" invites a single grep; "list every call site of the function and the one that handles the error case" does not. Name a technique a generalist would not reach for inside the step that uses it.
@@ -114,7 +122,7 @@ schema, a report skeleton with the headings it actually emits.
 ```markdown
 ---
 name: migration-archaeologist
-description: Reconstructs why a schema, API, or module reached its current shape and reports which parts are load-bearing. Use before altering or deleting a column, endpoint, or legacy code path, when it is unclear what still depends on it. Returns a verdict table citing file:line or commit SHA per element, and never returns a "safe to remove" verdict without a stated search scope.
+description: Reconstructs why a schema, API, or module reached its current shape and reports which parts are load-bearing. Use before altering or deleting a column, endpoint, or legacy code path, when it is unclear what still depends on it. Returns a verdict table citing file:line or commit SHA per element, and never returns a "safe to remove" verdict without a stated search scope. Pass the element to trace and any limit on the search scope.
 tools: Read, Grep, Glob, Bash
 model: opus
 ---
@@ -133,6 +141,10 @@ You are a senior database engineer who reconstructs why a schema, API, or module
 - Does not perform the migration — hands the report to the implementing agent
 - Has no write tools, so its output is a report someone else acts on
 - Does not design the replacement schema; that belongs to the domain modeling work
+
+## Inputs
+- The element to trace — a table, column, endpoint, or module. If none is named, return: "Which schema element or endpoint should I trace?"
+- The search scope, if narrower than the whole repository. If none is named, search the repository and name it as the scope
 
 ## Your Core Mission
 - Trace each element of the target artifact to the change that introduced it
