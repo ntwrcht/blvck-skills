@@ -1,6 +1,6 @@
 ---
 name: write-a-story
-description: "Backlog workflow for drafting, rewriting, splitting, reviewing, and converting plans into implementation-ready work items. Covers user stories, job stories, WWA items, issue breakdowns, acceptance criteria, readiness checks, and approved Jira payloads."
+description: "Drafts, splits, rewrites, and reviews individual backlog items — stories, tasks, bugs — with testable acceptance criteria and approved Jira payloads. Use when writing a story, splitting a feature into issues, adding acceptance criteria, checking sprint readiness, or breaking work into tickets."
 argument-hint: "<backlog item brief>"
 ---
 
@@ -12,11 +12,13 @@ Shape rough product, engineering, or operational work into implementation-ready 
 
 Use this skill when the user wants to draft, rewrite, split, review, or prepare backlog work. It covers epics, stories, tasks, bugs, chores, spikes, issue breakdowns, acceptance criteria, Definition of Done, Sprint Readiness checks, and approved Jira creation or updates when a Jira MCP/tool is connected.
 
-Good inputs include rough notes, PRDs, research findings, bugs, design decisions, incident follow-ups, verbal ideas, existing Jira text, or a request such as "write a story", "make this Jira-ready", "split this feature", "turn this plan into issues", "add acceptance criteria", or "is this sprint-ready?"
+Good inputs include rough notes, an approved PRD, research findings, bugs, design decisions, incident follow-ups, verbal ideas, existing Jira text, or a request such as "write a story", "make this Jira-ready", "split this feature", "turn this plan into issues", "add acceptance criteria", or "is this sprint-ready?"
 
 ## When Not to Use
 
-Do not use this skill for narrative fiction, brand storytelling, stakeholder updates, status reports, leadership rewrites, full product specs, or one-off implementation plans unless the requested output is a backlog item.
+Do not use this skill for narrative fiction, brand storytelling, stakeholder updates, status reports, leadership rewrites, or one-off implementation plans unless the requested output is a backlog item.
+
+This skill works below the approval gate, on the items; `write-a-prd` works above it, on the document the team reviews. A request for a PRD, a spec, a requirements doc, or anything the team reads before agreeing to build belongs to `write-a-prd`, even when the same message also asks for tickets — the tickets come after the document is approved, in a second pass. Take the request here once the scope is settled and the work needs breaking down.
 
 ## Artifacts
 
