@@ -35,7 +35,7 @@ Do not invent business facts, customer impact, deadlines, owners, priorities, es
 
 1. Ingest the input and choose the output shape: single item, feature breakdown, or review/rewrite. Read `.context/INDEX.md` when present, then load relevant domain files such as `.context/project.md`, `.context/engineering.md`, and `.context/triage.md`. When the input is a PRD, read its User Stories list as the scope boundary rather than as finished items: split each line into the work it implies and add the acceptance criteria the PRD leaves out.
 2. Identify the decision that shapes the story: actor, outcome, scope boundary, value, readiness target, or tracker action.
-3. Answer from available context first. Ask one concise question only when that decision would materially change the draft.
+3. Answer from available context first. Ask one concise question only when that decision would materially change the draft, in the house style of `references/asking-the-user.md` — carry a recommended answer drawn from the context you have.
 4. Choose the item format. Default to user stories for product-facing work; use job stories, WWA, or generic backlog items when requested or clearly better.
 5. Draft the smallest useful backlog output: one cohesive item, multiple independent items, or an epic with children. For feature breakdowns, target 5-15 items only when the scope justifies it.
 6. Add testable acceptance criteria, implementation notes, dependencies, risks, open questions, and Definition of Done or Sprint Readiness scoring when requested or relevant.
@@ -45,6 +45,7 @@ Do not invent business facts, customer impact, deadlines, owners, priorities, es
 
 Load only the references needed for the current request:
 
+- `references/asking-the-user.md`: the house style the clarifying question follows.
 - `references/story-formats.md`: user stories, job stories, WWA, 3 C's, and INVEST checks.
 - `references/output-templates.md`: default item format, feature breakdown format, story map, and save-as-markdown behavior.
 - `references/item-types-and-splitting.md`: epic/story/task/chore/bug/spike guidance and decomposition rules.

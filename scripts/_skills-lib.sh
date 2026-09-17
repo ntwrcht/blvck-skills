@@ -92,8 +92,8 @@ get_shared_refs() {
     python-engineer)              echo "project-context.md artifact-paths.md" ;;
     code-to-docs)                 echo "artifact-paths.md" ;;
     write-user-docs)              echo "artifact-paths.md" ;;
-    write-a-prd)                  echo "artifact-paths.md" ;;
-    write-a-story)                echo "artifact-paths.md" ;;
+    write-a-prd)                  echo "artifact-paths.md asking-the-user.md" ;;
+    write-a-story)                echo "artifact-paths.md asking-the-user.md" ;;
     grilling)                     echo "artifact-paths.md asking-the-user.md" ;;
     debug)                        echo "artifact-paths.md" ;;
     domain-modeling)              echo "artifact-paths.md" ;;
