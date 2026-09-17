@@ -36,7 +36,7 @@ Synthesize without interviewing by default. Use the current conversation, reposi
 3. Derive the success metrics from the outcome in the Problem and Solution sections: the North Star the feature moves, the L1 drivers it touches, the L2 leading indicators, and guardrails. Baselines and targets come from the conversation, the repo, or `.context/analytics.md` — anything else is `UNKNOWN`.
 4. Sketch testing seams at the highest practical behavior boundary. Prefer existing seams to new ones.
 5. Pause to confirm testing seams only when repo evidence is weak, the feature crosses multiple modules, or choosing the wrong seam would materially change the PRD.
-6. Load `references/prd-template.md` and write one PRD artifact. Keep user stories comprehensive but scoped; avoid padding.
+6. Load `references/prd-template.md` and write one PRD artifact. Keep the user stories at scope level — three to eight lines that bound the feature, leaving acceptance criteria to `write-a-story`.
 7. If tracker publishing is requested, prepare one tracker-neutral PRD issue payload with the `ready-for-agent` label.
 8. Show the exact title, body, labels, tracker target, and any required fields. Publish only after explicit user approval.
 
@@ -57,7 +57,7 @@ Synthesize without interviewing by default. Use the current conversation, reposi
 - Does the PRD reflect known conversation and repo context without invented business facts?
 - Are problem, solution, scope, non-goals, dependencies, and risks clear?
 - Does every success metric trace from the outcome, carry an event or data source, and mark unsupplied baselines and targets as `UNKNOWN`?
-- Are user stories comprehensive but scoped to the feature?
+- Do the user stories bound the feature in three to eight lines, without acceptance criteria or task breakdowns?
 - Are implementation decisions stable enough to avoid brittle file-path details?
 - Are testing seams tied to external behavior and existing codebase prior art?
 - Has the user approved the exact tracker payload before publishing?

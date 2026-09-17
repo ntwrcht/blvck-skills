@@ -9,8 +9,8 @@ Use this template for `write-a-prd` output. Keep the structure stable unless the
 - Label assumptions, unknowns, and unresolved decisions explicitly.
 - Do not include specific file paths or code snippets in implementation decisions.
 - Exception: include a trimmed prototype snippet only when it captures a decision more precisely than prose, such as a state machine, reducer, schema, or type shape. Note that it came from a prototype.
-- Keep user stories comprehensive but scoped. Cover primary, secondary, edge, and operational workflows without padding.
-- For very large features, group stories by actor or workflow instead of creating an oversized flat list.
+- Keep user stories at scope level: three to eight lines that bound the feature, with no acceptance criteria and no task breakdown.
+- Group them by actor when the feature has more than one actor.
 
 ## Template
 
@@ -36,11 +36,13 @@ Every metric row carries: definition, direction, baseline, target, and the event
 
 ## User Stories
 
-A comprehensive, numbered list of user stories. Each user story should use this format:
+A numbered list that bounds the feature — the smallest set that shows a reviewer what it covers. Each story uses this format:
 
 1. As an <actor>, I want a <feature>, so that <benefit>
 
-Cover primary, secondary, edge, and operational workflows. For very large features, group stories by actor or workflow.
+Write three to eight, one per distinct actor-and-outcome pair, grouped by actor when the feature has more than one. Cover the primary workflow, plus any secondary or operational workflow a reviewer would otherwise ask about.
+
+Leave out acceptance criteria, task breakdowns, estimates, and edge-case enumeration. This list settles scope before approval; `write-a-story` turns it into implementation-ready items with acceptance criteria after.
 
 ## Implementation Decisions
 
