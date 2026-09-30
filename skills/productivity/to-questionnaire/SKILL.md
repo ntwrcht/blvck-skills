@@ -7,7 +7,7 @@ disable-model-invocation: true
 
 # To Questionnaire
 
-Turn something the user cannot answer alone into a **questionnaire**: a Markdown document they hand to one person to fill in async, or work through together in a meeting. The recipient holds knowledge the user lacks; the questionnaire pulls it out of them.
+Turn something the user cannot answer alone into a **questionnaire**: a Markdown document they hand to one person to fill in async. The recipient holds knowledge the user lacks; the questionnaire pulls it out of them.
 
 ## Grill the Send, Not the Subject
 
@@ -17,7 +17,7 @@ So interview the user only about the **send**, which they can always answer: who
 
 ## When to Use
 
-Use when the blocking knowledge sits with another person: a domain expert, a customer, a partner team, a stakeholder with context the user lacks. Also use when preparing discovery questions ahead of a meeting.
+Use when the blocking knowledge sits with another person: a domain expert, a customer, a partner team, a stakeholder with context the user lacks.
 
 ## When Not to Use
 
@@ -32,11 +32,13 @@ Use when the blocking knowledge sits with another person: a domain expert, a cus
 
 ## Workflow
 
-Both exchanges follow `references/asking-the-user.md`: recommend an answer from whatever the conversation and context already say, number the questions, accept shorthand.
+1. **Ask about the send, in one round.** Read `.context/project.md` and `CONTEXT.md` first, where they exist, to pre-fill recommendations. Follow `references/asking-the-user.md`: recommend an answer from whatever the conversation and context already say, number the questions, accept shorthand, and skip any question the user already answered. Ask:
+   - **Who is it going to?** The recipient's role, expertise, and relationship to the user — this fixes the questionnaire's tone and how much context it must carry.
+   - **What do you need back?** The specific decisions or facts the user cannot resolve alone and needs from this person.
 
-1. **Who is it going to?** Ask, in one exchange, the recipient's role, expertise, and relationship to the user. This fixes the questionnaire's tone and how much context it must carry. Done when you know who the recipient is and what they know that the user does not.
-2. **What do you need back?** Ask, in one exchange, the specific decisions or facts the user cannot resolve alone and needs from this person. Done when you have a concrete list of what the user must walk away able to do or decide.
-3. **Write the questionnaire.** Draft questions aimed at the gap from steps 1–2, following the structure below. Write it to the `questionnaire` key path and report the path. Done when the file exists and every item the user named in step 2 is covered by a question.
+   Ask about the subject itself only for a fact the Context paragraph needs and the conversation lacks — at most one question. Leave out any menu of subject topics to cover; which topics matter is what the recipient answers. Done when you know who the recipient is, what they know that the user does not, and have a concrete list of what the user must walk away able to do or decide.
+2. **Draft the questions.** Aim them at the gap from step 1, following the structure below. Lead each item from step 1 with the question that settles it, worded in the user's terms — for "does Stripe's invoice format satisfy our auditors", ask about Stripe's format, not what an invoice must contain in general. If answering needs material the recipient must see, such as a sample invoice, and the user has not provided it, name it in the question as "the sample invoice we'll attach", never "I've attached", and put it first in a **Before you send** checklist after the questionnaire, so the user attaches it before sending. If a question joins two asks with *and* or *or*, split it or cut one — the recipient answers the first half and skips the second. Keep at most two questions per item from step 1, plus the closing catch-all, so the recipient can answer in one pass. Done when every item from step 1 has a question, no question carries two asks, and the count is within that cap.
+3. **Write the questionnaire.** Write it to the `questionnaire` key path and report the path. Done when the file exists.
 
 ## Document Structure
 
@@ -76,14 +78,14 @@ Every question is one idea, never compound, with an answer stub (`>`) directly b
 
 ## Reference Map
 
-- `references/asking-the-user.md`: the house style the two exchanges follow.
+- `references/asking-the-user.md`: the house style the intake round follows.
 
 ## Next Step
 
 The questionnaire is not finished until the user has read it as the recipient would and confirmed it asks for what they actually need.
 
 - **If approved:** the user sends it. When answers come back, hand off to `grilling` to work the decision the answers unblocked, or to `write-a-prd` / `write-a-story` if the answers complete a product artifact.
-- **If not approved:** ask which item from step 2 the draft failed to cover, or which question the recipient could not answer, and revise in place — do not send a questionnaire the user cannot picture the recipient answering.
+- **If not approved:** ask which item from step 1 the draft failed to cover, or which question the recipient could not answer, and revise in place — do not send a questionnaire the user cannot picture the recipient answering.
 
 ---
 
