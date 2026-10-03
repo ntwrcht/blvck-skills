@@ -1,6 +1,6 @@
 ---
 name: codebase-design
-description: "Designs code independent of language or framework — shapes a module's interface, decides where a seam goes, plans how to deepen a cluster of shallow modules, and designs an interface several radically different ways in parallel before choosing one. Use when asked to design a module, decide where a boundary belongs, make code easier to test, compare interface options, untangle too many small classes, or when a stack-specific skill hits a design question that is not about its framework."
+description: "Designs code independent of language or framework — shapes a module's interface, decides where a seam goes, plans how to deepen a cluster of shallow modules, and designs an interface several radically different ways in parallel before choosing one. Use when asked to design a module, decide where a module's seam belongs, make code easier to test, compare interface options, untangle too many small classes, or when a stack-specific skill hits a design question that is not about its framework."
 ---
 
 # Codebase Design
@@ -25,6 +25,7 @@ It is also the shared source of this vocabulary for other skills. `tdd` reaches 
 
 - **The vocabulary is settled and you just need to write the tests** — stay in `tdd`. This skill is for when the interface's *shape* is the question, not when you are testing an agreed one.
 - **The contested thing is a domain term, not a module boundary** — use `domain-modeling`. That skill names concepts; this one shapes the code that carries them.
+- **The boundary in question is a bounded context** — where one domain model stops and another starts — use `domain-modeling`. This skill places seams between modules, not between domains.
 - **A written design needs findings rather than vocabulary** — use `scrutinize`.
 
 ## Artifacts
