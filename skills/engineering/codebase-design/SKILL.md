@@ -17,6 +17,8 @@ The general code design skill. Design **deep modules**: a lot of behaviour behin
 
 Use this skill when code is being designed or restructured and the shape of an interface is in question: choosing what a module exposes, finding deepening opportunities, deciding where a seam belongs, comparing interface options, or making code easier to test through its public surface. Typical asks: "design this module", "where should the boundary go", "this is hard to test", "too many small classes", "show me a few ways to shape this API".
 
+If the user or codebase already follows an architecture style such as Clean Architecture or Hexagonal, keep this vocabulary and translate the style into it with `references/framework-mapping.md`.
+
 It is also the shared source of this vocabulary for other skills. `tdd` reaches for it when the seam under test is itself the open question; `scrutinize` and `prototype` reach for it when a design is being judged; the stack skills (`angular-engineer`, `next-engineer`, `python-engineer`, `strapi-engineer`, `supabase-engineer`) reach for it when a task inside their framework turns into a design question that is not about the framework.
 
 ## When Not to Use
@@ -131,6 +133,7 @@ Hard to test:  apply_discount(cart)
 
 - `references/deepening.md`: load when deepening a cluster of shallow modules — dependency categories, seam discipline, and replace-don't-layer testing.
 - `references/design-it-twice.md`: load when exploring alternative interfaces — parallel sub-agents design the interface several radically different ways, then you compare on depth, locality, and seam placement.
+- `references/framework-mapping.md`: load when the user or codebase already speaks an architecture style (Hexagonal, Clean, Onion, Layered, DDD tactical, Vertical slice) — translates its terms into this vocabulary and names where the style tends to produce shallow modules.
 
 ## Next Step
 
