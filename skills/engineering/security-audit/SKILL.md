@@ -1,6 +1,6 @@
 ---
 name: security-audit
-description: "Reviews application security across code, APIs, infrastructure, authentication, authorization, secrets, dependencies, and compliance gaps. Use when assessing vulnerabilities, threat models, pentest findings, security controls, exploitability, impact, or remediation plans."
+description: "Reviews application security across code, APIs, authentication, tokens, secrets, dependencies, infrastructure, and compliance gaps. Use when asking whether code, an endpoint, or a JWT or session check is safe, or when assessing vulnerabilities, threat models, pentest findings, exploitability, or remediation plans."
 ---
 
 # Security Audit
