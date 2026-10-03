@@ -26,6 +26,7 @@ Prompt each sub-agent with a separate technical brief (file paths, coupling deta
 - Agent 2: "Maximise flexibility: support many use cases and extension."
 - Agent 3: "Optimise for the most common caller: make the default case trivial."
 - Agent 4 (if applicable): "Design around ports & adapters for cross-seam dependencies."
+- Agent 5 (if the user or codebase follows an architecture style other than Hexagonal, which Agent 4 covers): "Design it the way <style> would, naming every part in this vocabulary via [framework-mapping.md](framework-mapping.md)." Step 3 judges it like the others, so the user sees what the style costs in depth.
 
 Include both [SKILL.md](SKILL.md) vocabulary and CONTEXT.md vocabulary in the brief so each sub-agent names things consistently with the architecture language and the project's domain language.
 
