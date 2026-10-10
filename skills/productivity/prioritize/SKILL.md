@@ -36,7 +36,7 @@ Every score traces to a source or is labelled an assumption. A number with no so
 3. **Score each factor with its source.** For every item and every factor, record the value, the scale step it maps to, and where the value came from — a metric, a PRD, a discovery finding, a ticket count, an engineer's estimate, or `assumption: <what was assumed>`. Look facts up before asking; ask only for values the environment cannot supply.
 4. **Compute RICE** as Reach × Impact × Confidence ÷ Effort, and rank.
 5. **Test the order.** For each of the top items, ask which single assumption, if wrong, would move it down, and which item below it would move up. Items whose place depends on one assumption get a **fragile** flag.
-6. **Write the table** to the `priorities` key path using `references/priorities-template.md`.
+6. **Write the table** to the `priorities` key path using `references/priorities-template.md`, after loading `references/humanizer.md` and running its prose through it.
 7. **Report:** the top items, the three assumptions that most affect the order, and the evidence that would raise confidence on each fragile item.
 
 ## Operating Rules
@@ -51,6 +51,7 @@ Every score traces to a source or is labelled an assumption. A number with no so
 
 - `references/rice-scales.md`: the Reach, Impact, Confidence, and Effort scales, what each step means, and the rule that caps Confidence when a factor is assumed.
 - `references/priorities-template.md`: the ranked-table structure, the assumptions ledger, and the fragile-item section.
+- `references/humanizer.md`: the final pass on prose before it is written or delivered; removes AI-writing patterns and keeps the template's structure.
 
 ## Review Checklist
 

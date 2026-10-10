@@ -33,6 +33,7 @@ Every finding must be grounded in evidence and must explain trust boundary, expl
 7. Provide remediation that is specific enough to implement. Prefer code-level or configuration-level fixes when the affected stack is known.
 8. Sanitize secrets, tokens, PII, hostnames, and customer data from evidence and output.
 9. Validate fix recommendations against the codebase or configuration when possible, then note residual risk and test coverage gaps.
+10. Load `references/humanizer.md` and run the report's prose through it before delivering it; evidence, code, and severity labels stay exact.
 
 ## Severity Framework
 
@@ -83,6 +84,7 @@ Load only the reference needed for the current audit surface:
 - `references/compliance.md`: PDPA, GDPR, SOC2, ISO 27001, PCI-DSS gap analysis.
 - `references/report-template.md`: formal security report, pentest findings, executive summary, remediation roadmap.
 - `references/project-context.md`: reading, repairing, or skipping `.context/`; the shared domain structure for reusable project context.
+- `references/humanizer.md`: the final pass on prose before it is written or delivered; removes AI-writing patterns and keeps the template's structure.
 
 ## Safety Boundaries
 

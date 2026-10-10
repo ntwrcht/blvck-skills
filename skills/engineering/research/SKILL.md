@@ -33,7 +33,7 @@ Spin up a **background agent** to do the research, so the session keeps working 
 Its job:
 
 1. **Investigate against primary sources** — official docs, source code, specs, first-party APIs — not a secondary write-up of them. When a blog post or answer thread supplies the lead, follow it to the document that owns the claim and cite that instead.
-2. **Write the findings to a single Markdown file**, citing each claim's source inline. A claim with no citation does not go in the file.
+2. **Write the findings to a single Markdown file**, citing each claim's source inline. A claim with no citation does not go in the file. Load `references/humanizer.md` and run the prose through it before saving; citations and quotes stay as written.
 3. **Say what it could not settle.** An open question named explicitly is worth more than a confident guess, and it tells the reader where to pick up.
 4. **Save it to the `research` key path**, matching whatever convention the repo already uses for such notes if one differs. Report where the file landed.
 
@@ -47,6 +47,11 @@ Rank sources by who owns the claim:
 4. Third-party write-ups — usable as leads, cited only when nothing first-party covers the point, and flagged as second-hand when they are.
 
 Note the version, date, or commit a claim is true of. A fact with no version attached goes stale silently.
+
+## Reference Map
+
+- `references/artifact-paths.md` — where the output is written.
+- `references/humanizer.md` — the final pass on prose before it is written or delivered; removes AI-writing patterns and keeps the template's structure.
 
 ## Next Step
 

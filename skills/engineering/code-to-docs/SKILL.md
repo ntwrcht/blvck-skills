@@ -36,7 +36,7 @@ Document what the code does, not what it was supposed to do. Cite the file behin
 2. Detect the stack. Glob for manifest files, then grep to confirm the framework signature. Load `references/framework-detection.md`.
 3. Read outward from the entry point: startup and config, then routes, then data model, then services, then auth, then deployment files. Stop at the depth the chosen deliverables need.
 4. Note every gap as you go — behavior you could not confirm from code becomes an "Open Questions" section, never a guess.
-5. Write the deliverables:
+5. Write the deliverables, then load `references/humanizer.md` and run their prose through it; specs, diagram code, and commands stay as written:
    - Architecture doc → load `references/architecture-arc42.md`
    - OpenAPI spec → load `references/openapi-extraction.md`
    - Diagrams → load `references/diagrams-c4.md`
@@ -53,6 +53,7 @@ Document what the code does, not what it was supposed to do. Cite the file behin
 - `references/runbooks.md` — runbook template, the four runbook categories, and the rollback and verification rules.
 - `references/audit-checklist.md` — per-doc-type quality checklists, severity ranking, and the audit report format.
 - `references/artifact-paths.md` — where each artifact is written.
+- `references/humanizer.md` — the final pass on prose before it is written or delivered; removes AI-writing patterns and keeps the template's structure.
 
 ## Next Step
 

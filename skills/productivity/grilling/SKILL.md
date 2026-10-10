@@ -80,7 +80,7 @@ The *decisions* are the user's. Put each to them and wait.
 7. Wait for the user's answers. Fold sub-agent findings in as they report.
 8. Recompute the frontier and ask the next round. Repeat.
 9. When the frontier is empty, summarize agreed decisions, open risks, the validation plan, and the next action.
-10. **Write the design** *(shaping by default, stress-test on request)*. Write the summary as a design doc to the `design` key path, sections scaled to the decision's complexity. Then dispatch an independent reviewer using `references/spec-reviewer-prompt.md` and resolve what it finds. Do not skip the review, even for a short design.
+10. **Write the design** *(shaping by default, stress-test on request)*. Write the summary as a design doc to the `design` key path, sections scaled to the decision's complexity, then load `references/humanizer.md` and run its prose through it before writing. Then dispatch an independent reviewer using `references/spec-reviewer-prompt.md` and resolve what it finds. Do not skip the review, even for a short design.
 
 ## Round Format
 
@@ -114,6 +114,7 @@ The round follows the library's house style for asking the user — `references/
 
 - `references/spec-reviewer-prompt.md`: dispatch template for the independent design review in step 10.
 - `references/asking-the-user.md`: the house style every round follows — look it up first, batch what is independent, recommend on every question, number them, stop when the answer would not change the output.
+- `references/humanizer.md`: the final pass on prose before it is written or delivered; removes AI-writing patterns and keeps the template's structure.
 
 ## Next Step
 

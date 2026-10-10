@@ -52,6 +52,7 @@ Load only the references needed for the current request:
 - `references/readiness.md`: acceptance criteria rules, Definition of Done, Sprint Readiness Score, and mental model triggers.
 - `references/jira-integration.md`: Jira MCP/tool workflow, exact payload approval, multi-item creation, and field-mapping rules.
 - `references/to-issues.md`: tracer-bullet vertical issue slicing, HITL/AFK classification, user review, and dependency-ordered issue publishing.
+- `references/humanizer.md`: the final pass on prose before it is written or delivered; removes AI-writing patterns and keeps the template's structure.
 
 Default loading:
 
@@ -68,6 +69,7 @@ Default loading:
 - Label assumptions and unknowns instead of smoothing them over.
 - Keep tracker-specific language out unless requested.
 - Preserve user-provided team conventions, templates, field names, and issue hierarchy.
+- Load `references/humanizer.md` and run item prose through it before showing or saving it; titles, field names, and the acceptance-criteria format stay as templated.
 - Save to a file or create/update Jira only after the user asks for that action.
 
 ## Follow-up Options

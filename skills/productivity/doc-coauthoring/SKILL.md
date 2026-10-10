@@ -34,7 +34,7 @@ The user owns the doc. Close the context gap before writing a word of it: no sec
 2. **Stage 1 — Context gathering.** Ask the meta questions (doc type, audience, intended impact, template, constraints), take the user's info dump, then ask 5-10 numbered clarifying questions. Load `references/context-gathering.md`.
 3. Exit Stage 1 only when questions can probe edge cases and trade-offs without needing basics re-explained. Ask whether to add more context or start drafting.
 4. Agree the section list, then write the file as a scaffold of headers with placeholders.
-5. **Stage 2 — Refinement and structure.** Run the per-section loop: clarify, brainstorm, curate, gap-check, draft, refine. Start with the section holding the most unknowns; leave summaries for last. Load `references/section-loop.md`.
+5. **Stage 2 — Refinement and structure.** Run the per-section loop: clarify, brainstorm, curate, gap-check, draft, refine. Start with the section holding the most unknowns; leave summaries for last. Load `references/section-loop.md`, then load `references/humanizer.md` and run each section you draft through it before showing it.
 6. **Stage 3 — Reader testing.** Predict what readers will ask, then dispatch subagents that see only the document and one question each. Load `references/reader-testing.md`.
 7. Fix every gap reader testing exposes by looping back to step 5 for the failing sections. Re-test after fixing.
 8. Hand ownership back: tell the user to do a final read themselves and to verify facts, links, and technical details. They are responsible for the doc's quality.
@@ -55,6 +55,7 @@ The user owns the doc. Close the context gap before writing a word of it: no sec
 - `references/section-loop.md`: Stage 2 — section ordering, scaffold creation, the six-step per-section loop, quality checks, whole-document pass.
 - `references/reader-testing.md`: Stage 3 — reader-question prediction, subagent test protocol and prompt, no-subagent fallback, exit condition.
 - `references/asking-the-user.md`: the house style the Stage 1 question batches follow.
+- `references/humanizer.md`: the final pass on prose before it is written or delivered; removes AI-writing patterns and keeps the template's structure.
 
 ## Review Checklist
 

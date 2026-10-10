@@ -38,7 +38,7 @@ Every finding names its evidence. A finding supported by one source is an anecdo
 5. **Write each finding:** the job statement, its pains ranked by severity, the outcomes people asked for, the workarounds they use today, the evidence count, and two or three verbatim quotes with source ids.
 6. **Rank findings by evidence strength** — breadth (how many sources) and severity (how much the pain costs the person). Move single-source findings to an Anecdotes section.
 7. **Record contradictions and gaps.** Where sources disagree, say so with both sides cited. Where the questions asked could not have surfaced something, name it under Gaps.
-8. **Write the artifact** to the `discovery` key path using `references/synthesis-template.md`.
+8. **Write the artifact** to the `discovery` key path using `references/synthesis-template.md`, after loading `references/humanizer.md` and running its prose through it; quoted evidence stays verbatim.
 9. **Report:** the top jobs, the strongest pain under each, and the questions this evidence cannot answer.
 
 ## Operating Rules
@@ -53,6 +53,7 @@ Every finding names its evidence. A finding supported by one source is an anecdo
 
 - `references/jtbd-frame.md`: job statement format, definitions of pain, outcome, and workaround, the severity scale, and the evidence-strength rule.
 - `references/synthesis-template.md`: the findings artifact structure, including the anecdotes, contradictions, gaps, and hypotheses sections.
+- `references/humanizer.md`: the final pass on prose before it is written or delivered; removes AI-writing patterns and keeps the template's structure.
 
 ## Review Checklist
 

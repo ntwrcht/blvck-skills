@@ -64,6 +64,7 @@ Close with a line starting `Verdict:` — one of `ship`, `fix then ship`, `rewor
 - Do not pad with style nits when structural risk exists.
 - Do not rewrite the artifact unless the user asks for edits.
 - Prefer concise, actionable findings over broad critique.
+- Load `references/humanizer.md` and run the findings' prose through it before delivering them; file paths, symbols, and quoted code stay exact.
 - For local files, use clickable file links when practical.
 
 ## Optional Artifact
@@ -74,6 +75,7 @@ Default to chat output. If the user asks to persist or hand off context, write t
 
 - `references/verification-checklist.md`: load in step 4 for code changes — swallowed errors, partial writes, edge values, and N+1 or unbounded growth.
 - `references/removal-plan.md`: load when the change leaves code unused or a smaller path would delete code — the delete-now test and the defer-with-a-plan fields.
+- `references/humanizer.md`: the final pass on prose before it is written or delivered; removes AI-writing patterns and keeps the template's structure.
 
 ## Next Step
 

@@ -55,6 +55,7 @@ Step 4 is the tell in both directions. When it has nothing to gather because the
 5. Draft one complete output block in the chosen channel format, using `references/update-templates.md` when a standard format fits. On the source-exists branch, hold every line to `references/rewriting-source.md` — each fact traces back to the source, and nothing is invented to fill a gap.
 6. For risk-heavy updates, apply `references/risk-status.md`. For decision records or decision-needed updates, apply `references/decision-notes.md`.
 7. Review for audience fit, outcome-first language, channel fit, specific asks, and sensitive internal references.
+8. Load `references/humanizer.md` and run the draft through it before showing it.
 
 If the user asks to persist the draft, write it to the `stakeholder-comms` key path (see `references/artifact-paths.md`).
 
@@ -93,6 +94,7 @@ Use the available evidence to recommend an answer when possible, then ask the us
 - `references/risk-status.md`: Green/Yellow/Red status and risk communication.
 - `references/decision-notes.md`: compact decision note and ADR format.
 - `references/artifact-paths.md`: where a persisted update gets written.
+- `references/humanizer.md`: the final pass on prose before it is written or delivered; removes AI-writing patterns and keeps the template's structure.
 
 ## Final Review Checklist
 

@@ -38,7 +38,7 @@ Use when the blocking knowledge sits with another person: a domain expert, a cus
 
    Ask about the subject itself only for a fact the Context paragraph needs and the conversation lacks — at most one question. Leave out any menu of subject topics to cover; which topics matter is what the recipient answers. Done when you know who the recipient is, what they know that the user does not, and have a concrete list of what the user must walk away able to do or decide.
 2. **Draft the questions.** Aim them at the gap from step 1, following the structure below. Lead each item from step 1 with the question that settles it, worded in the user's terms — for "does Stripe's invoice format satisfy our auditors", ask about Stripe's format, not what an invoice must contain in general. If answering needs material the recipient must see, such as a sample invoice, and the user has not provided it, name it in the question as "the sample invoice we'll attach", never "I've attached", and put it first in a **Before you send** checklist after the questionnaire, so the user attaches it before sending. If a question joins two asks with *and* or *or*, split it or cut one — the recipient answers the first half and skips the second. Keep at most two questions per item from step 1, plus the closing catch-all, so the recipient can answer in one pass. Done when every item from step 1 has a question, no question carries two asks, and the count is within that cap.
-3. **Write the questionnaire.** Write it to the `questionnaire` key path and report the path. Done when the file exists.
+3. **Write the questionnaire.** Load `references/humanizer.md` and run its prose through it, then write it to the `questionnaire` key path and report the path. Done when the file exists.
 
 ## Document Structure
 
@@ -79,6 +79,7 @@ Every question is one idea, never compound, with an answer stub (`>`) directly b
 ## Reference Map
 
 - `references/asking-the-user.md`: the house style the intake round follows.
+- `references/humanizer.md`: the final pass on prose before it is written or delivered; removes AI-writing patterns and keeps the template's structure.
 
 ## Next Step
 

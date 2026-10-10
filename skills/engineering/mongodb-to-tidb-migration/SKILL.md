@@ -37,7 +37,7 @@ Each stage ends when its section of the plan is filled, not when it feels unders
 3. **Model.** Assign each field a landing shape from the access paths using `references/pattern-map.md` and `references/type-map.md`; choose each key from its insert rate; write the DDL and the field map, including how every `schemaVersion` converges. Done when each table's primary key has a number beside it and each array has a stated shape.
 4. **Translate.** Rewrite each access path with `references/query-translation.md`; write paths become transactions; the repository seam is named. Done when every path has SQL and an intended index.
 5. **Move.** Choose the movement shape and design export, transform, load, and applier from `references/data-movement.md`. Done when the plan states `T0` handling, the resume-token store, the load method, and its expected duration.
-6. **Validate and cut over.** Fill the validation table and the runbook from `references/validation-and-cutover.md`. Done when each check has a pass criterion and the runbook names its go/no-go step and rollback boundary.
+6. **Validate and cut over.** Fill the validation table and the runbook from `references/validation-and-cutover.md`. Done when each check has a pass criterion and the runbook names its go/no-go step and rollback boundary. Load `references/humanizer.md` and run the plan's prose through it before presenting it; DDL, queries, and the validation table stay exact.
 
 Present the plan at the end of stage 6 for approval, then execute it section by section, writing observed values back into the validation table as they are measured. TiDB DDL, tuning, and driver work go through `tidb-engineer`; the transform and applier are application code and get tests like any other.
 
@@ -82,6 +82,7 @@ MongoDB's `ObjectId` is time-prefixed, so a table clustered on it writes every n
 - `references/migration-plan-template.md`: the plan's sections.
 - `references/asking-the-user.md`: the house style for question rounds.
 - `references/artifact-paths.md`: where the plan is written.
+- `references/humanizer.md`: the final pass on prose before it is written or delivered; removes AI-writing patterns and keeps the template's structure.
 - `scripts/infer-schema.js`: mongosh script; samples a collection and prints field statistics, array cardinality, drift, indexes with usage, and hints.
 
 ## Next Step

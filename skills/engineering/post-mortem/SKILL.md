@@ -63,9 +63,16 @@ Use these sections in order. Omit optional sections only when no facts exist.
 
 ## Output Flow
 
+Before delivering, load `references/humanizer.md` and run the final text through it; identifiers, commands, and numbers stay exact.
+
 Default to chat output. If the user asks to create a file, use their path or suggest `docs/postmortems/<ticket-or-topic>.md` when a durable record is appropriate. Ask before overwriting unrelated context.
 
 If the user asks to post externally, show the exact body first and wait for explicit approval before using any posting tool.
+
+## Reference Map
+
+- `references/artifact-paths.md` — where the output is written.
+- `references/humanizer.md` — the final pass on prose before it is written or delivered; removes AI-writing patterns and keeps the template's structure.
 
 ## Next Step
 

@@ -36,7 +36,7 @@ Synthesize without interviewing by default. Use the current conversation, reposi
 3. Derive the success metrics from the outcome in the Problem and Solution sections: the North Star the feature moves, the L1 drivers it touches, the L2 leading indicators, and guardrails. Baselines and targets come from the conversation, the repo, or `.context/analytics.md` — anything else is `UNKNOWN`.
 4. Sketch testing seams at the highest practical behavior boundary. Prefer existing seams to new ones.
 5. Pause to confirm testing seams only when repo evidence is weak, the feature crosses multiple modules, or choosing the wrong seam would materially change the PRD.
-6. Load `references/prd-template.md` and write one PRD artifact. Keep the user stories at scope level — three to eight lines that bound the feature, leaving acceptance criteria to `write-a-story`.
+6. Load `references/prd-template.md` and write one PRD artifact. Keep the user stories at scope level — three to eight lines that bound the feature, leaving acceptance criteria to `write-a-story`. Then load `references/humanizer.md` and run the prose through it before writing.
 7. If tracker publishing is requested, prepare one tracker-neutral PRD issue payload with the `ready-for-agent` label.
 8. Show the exact title, body, labels, tracker target, and any required fields. Publish only after explicit user approval.
 
@@ -51,6 +51,7 @@ Synthesize without interviewing by default. Use the current conversation, reposi
 ## Reference Map
 
 - `references/prd-template.md`: exact PRD sections, formatting rules, success-metrics tree rules, user story guidance, implementation-decision guidance, and testing-decision guidance.
+- `references/humanizer.md`: the final pass on prose before it is written or delivered; removes AI-writing patterns and keeps the template's structure.
 
 ## Review Checklist
 

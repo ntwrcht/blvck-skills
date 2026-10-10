@@ -37,7 +37,7 @@ Write to the reader's goal, not the product's structure. "How to assign a task t
 4. Draft the steps. Numbered, one action each, UI labels and commands in bold or code. State the expected result after any step whose success is not self-evident.
 5. Add the parts writers skip: what happens next, troubleshooting for the two or three ways this actually goes wrong, and links to the adjacent task.
 6. Mark where visuals belong with a concrete caption — `[Screenshot: the New Task dialog, Title field highlighted]`. Do not describe an image as though it were already there.
-7. Run the fresh-reader pass: read the draft as someone with only the stated prerequisites. Every assumed term, skipped click, or unexplained result is a defect. Fix and re-read.
+7. Run the fresh-reader pass: read the draft as someone with only the stated prerequisites. Every assumed term, skipped click, or unexplained result is a defect. Fix and re-read, then load `references/humanizer.md` and run the prose through it; steps, UI labels, and commands stay exact.
 8. Verify the code. Every command and snippet must run as written, with imports and setup included.
 
 ## Reference Map
@@ -45,6 +45,7 @@ Write to the reader's goal, not the product's structure. "How to assign a task t
 - `references/manual-structure.md` — section layouts for user manuals, how-to guides, getting-started pages, and knowledge-base articles, plus the plain-language and accessibility rules.
 - `references/howto-and-tutorials.md` — developer tutorial progression, checkpoint pattern, CLI reference layout, and API integration guide structure.
 - `references/artifact-paths.md` — where the document is written.
+- `references/humanizer.md` — the final pass on prose before it is written or delivered; removes AI-writing patterns and keeps the template's structure.
 
 ## Next Step
 

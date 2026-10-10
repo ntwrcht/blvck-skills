@@ -110,10 +110,13 @@ Keep the YAML frontmatter exactly as templated — key names, spelling, and enum
 roll-up parses it, and a field renamed "helpfully" silently drops that service from the
 aggregated customer document.
 
+Load `references/humanizer.md` and run the report's prose through it before saving; the frontmatter stays exactly as templated.
+
 ## Reference Map
 
 - `references/classification.md`: the six change buckets, breaking-vs-non-breaking rules, the customer-visible test, and the risk ladder. Read at step 4.
 - `references/customer-language.md`: what the customer reads versus what stays internal. Read at step 6, before writing.
+- `references/humanizer.md`: the final pass on prose before it is written or delivered; removes AI-writing patterns and keeps the template's structure.
 - `assets/service-report-template.md`: the report skeleton. Copy it; keep the frontmatter keys and enum values exactly.
 - `scripts/collect_evidence.sh`: deterministic git extraction. Run at step 2 instead of ad-hoc git commands.
 
