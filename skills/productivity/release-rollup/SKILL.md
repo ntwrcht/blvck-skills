@@ -2,8 +2,6 @@
 name: release-rollup
 description: "Merges per-service release reports into one customer-facing release document covering major changes, benefits, impact, a deployment playbook, and a version matrix. Use when combining several service reports into a single release note, customer announcement, upgrade notice, change request, or maintenance-window plan for a dedicated or on-prem environment."
 argument-hint: "<reports directory>"
-metadata:
-  internal: true
 ---
 
 # Release Roll-Up — Customer Release Document
@@ -28,8 +26,9 @@ merges, it never scans.
 ## Artifacts
 
 - Produces: one customer release document at `release-notes/<platform-version>.md`, from
-  `assets/release-document-template.md`. Outside the shared artifact-paths registry — this is a
-  personal skill and the path pairs with `release-scan`'s fixed `release-reports/` input.
+  `assets/release-document-template.md`, or `release-notes/draft.md` while the platform release
+  number is `TBC`. The path is fixed and outside the shared artifact-paths registry, to pair with
+  `release-scan`'s fixed `release-reports/` input.
 - Consumes: every Service Release Report in `release-reports/*.md`, read through the YAML
   frontmatter contract `release-scan` writes
 
@@ -53,7 +52,9 @@ around — it silently drops that service from the document. Say so and stop.
 ### Step 2 — Block on gaps
 
 Collect every `NEEDS-HUMAN` and `UNKNOWN` across the reports and present them as one chase list,
-**before** drafting.
+**before** drafting. Add the platform release number to that list unless the user already gave
+it: no report carries it, and both the Version Matrix and the file name depend on it. It alone
+does not block the draft — write `TBC` in the matrix and save to `release-notes/draft.md`.
 
 Do not resolve them yourself. This document becomes the customer's reference for a maintenance
 window — an invented downtime figure or a guessed config owner surfaces at the worst possible
@@ -66,7 +67,11 @@ Copy `assets/release-document-template.md` and work its eight sections in order.
 `references/document-sections.md` for the rule each section follows — clustering by theme rather
 than by repo, wave ordering from `deploy_after`, and what belongs in Customer Actions.
 
-Save to `release-notes/<platform-version>.md`.
+Load `references/humanizer.md` and run the document's prose through it before saving; the
+template's sections, tables, and playbook block stay as they are.
+
+Save to `release-notes/<platform-version>.md`, or `release-notes/draft.md` while the version is
+`TBC`.
 
 ## Tone
 
@@ -77,6 +82,7 @@ document less — naming a limitation is what makes the rest credible.
 ## Reference Map
 
 - `references/document-sections.md`: the rule each of the eight sections follows — theme clustering, wave ordering from `deploy_after`, and what belongs in Customer Actions.
+- `references/humanizer.md`: the final pass on prose before it is written or delivered; removes AI-writing patterns and keeps the template's structure.
 - `assets/release-document-template.md`: the document skeleton. Copy it and work the sections in order.
 
 ## Next Step

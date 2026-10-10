@@ -33,7 +33,7 @@ the reports afterward — never widen a report to cover more than one.
 
 - Produces: one Service Release Report at `release-reports/<service-name>__<old_tag>__<new_tag>.md`,
   from `assets/service-report-template.md`. The path is fixed rather than configurable and sits
-  outside the shared artifact-paths registry — the roll-up parses these filenames and frontmatter,
+  outside the shared artifact-paths registry — `release-rollup` parses these filenames and frontmatter,
   so relocating or renaming them silently drops a service from the customer document.
 - Consumes: the repository at the two tags, the evidence pack from `scripts/collect_evidence.sh`,
   and Jira issue summaries when an Atlassian tool is connected
@@ -107,7 +107,7 @@ stays internal. Then copy `assets/service-report-template.md`, fill every field,
 `release-reports/<service-name>__<old_tag>__<new_tag>.md`.
 
 Keep the YAML frontmatter exactly as templated — key names, spelling, and enum values. The
-roll-up parses it, and a field renamed "helpfully" silently drops that service from the
+`release-rollup` parses it, and a field renamed "helpfully" silently drops that service from the
 aggregated customer document.
 
 Load `references/humanizer.md` and run the report's prose through it before saving; the frontmatter stays exactly as templated.
@@ -125,8 +125,8 @@ Load `references/humanizer.md` and run the report's prose through it before savi
 The report is the PO's input, not a customer deliverable. It is not done until the PO has worked
 the **Open questions** list — every `NEEDS-HUMAN` blocks the customer document.
 
-- **If approved:** hand it to the roll-up that merges every per-service report into the customer
-  release note. Unscanned repos get their own run of this skill first — the roll-up is only as
+- **If approved:** hand it to `release-rollup`, which merges every per-service report into the
+  customer release note. Unscanned repos get their own run of this skill first — the roll-up is only as
   accurate as its least-scanned repo.
 - **If not approved:** revise in place. A disputed classification means re-reading
   `references/classification.md` against the evidence pack, not softening the wording. If the

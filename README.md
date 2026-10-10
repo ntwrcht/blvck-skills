@@ -6,7 +6,7 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Version](https://img.shields.io/badge/version-1.0.0-informational)](.claude-plugin/plugin.json)
-[![Skills](https://img.shields.io/badge/skills-38-success)](#skill-catalog)
+[![Skills](https://img.shields.io/badge/skills-39-success)](#skill-catalog)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](#contributing)
 
 </div>
@@ -34,7 +34,7 @@ Install skills per project with the bundled installer, pull them with `npx skill
 
 ## Key Features
 
-- **38 production-ready skills** spanning daily engineering work (debugging, TDD, review, security) and product workflows (discovery synthesis, PRDs, prioritization, stories, stakeholder updates, plan interviews, Thai-language writing).
+- **39 production-ready skills** spanning daily engineering work (debugging, TDD, review, security) and product workflows (discovery synthesis, PRDs, prioritization, stories, stakeholder updates, plan interviews, Thai-language writing).
 - **Multi-CLI support** — one library installs into Claude Code, Codex, and Gemini CLI, each in its native format.
 - **Interactive installer with preset bundles** — curated *Project PM* and *Project Dev* scenarios for one-keystroke setup, or a custom picker across the full catalog.
 - **Safe, reversible installs** — every copied skill carries an ownership marker; the uninstaller only ever removes what the installer created.
@@ -80,6 +80,7 @@ Install skills per project with the bundled installer, pull them with `npx skill
 | [**Handoff**](skills/productivity/handoff/SKILL.md) | Compacts the current conversation into a handoff document so a fresh agent can continue the work without losing context. Use when switching sessions, handing off to another agent, ending a long conversation, or preparing a context brief for a follow-up run. |
 | [**Kien Thai**](skills/productivity/kien-thai/SKILL.md) | Writes, edits, and translates Thai-language prose that reads like a native Thai writer rather than generic AI output, countering training-data skew toward over-formal, over-polite, calqued Thai, and can loop audit-and-fix passes until one finds nothing. Use when producing a Thai paragraph or longer — blog post, landing page, doc page, Thai README, email, announcement — translating English into Thai, reviewing or rewriting existing Thai prose, or when asked to polish to convergence (ตรวจวนๆ, วน audit, ขัดภาษาไทยให้สุด). |
 | [**Prioritize**](skills/productivity/prioritize/SKILL.md) | Ranks candidate backlog items with RICE — Reach, Impact, Confidence, Effort — scoring each factor from cited evidence or a labelled assumption on one fixed scale, and producing a ranked table the team can argue with. Use when prioritizing a backlog, ranking features or stories, deciding what to build next, comparing candidates for a sprint or quarter, or re-scoring after new evidence. |
+| [**Release Roll-Up**](skills/productivity/release-rollup/SKILL.md) | Merges per-service release reports into one customer-facing release document covering major changes, benefits, impact, a deployment playbook, and a version matrix. Use when combining several service reports into a single release note, customer announcement, upgrade notice, change request, or maintenance-window plan for a dedicated or on-prem environment. |
 | [**Release Scan**](skills/productivity/release-scan/SKILL.md) | Scans one service repository between two tags and produces a standardized Service Release Report used to assemble a customer-facing release note. Use when diffing two tags or versions, working out what shipped between releases, assessing deployment impact or breaking changes, or preparing a release for a dedicated or on-prem customer environment. |
 | [**Setup Context**](skills/productivity/setup-context/SKILL.md) | Scaffolds shared project context files in .context/ and configure the output locations pipeline skills write artifacts to (PRDs, stories, designs, ADRs, and more). Use when onboarding skills to a new or existing repo, when skills lack shared project context, or to relocate where a skill's output gets saved. |
 | [**Skill Smith**](skills/productivity/skill-smith/SKILL.md) | Crafts reusable agent skills from confirmed use cases, with invocation design, progressive disclosure, bundled resources, and evals that prove the skill triggers and delivers the right output. Use when the user asks to create, write, review, improve, or test a skill, upgrade an existing SKILL.md, check whether a skill triggers, or package skill references, scripts, or examples. |
