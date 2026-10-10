@@ -15,7 +15,8 @@
 #                explicit line saying why it has no next stage; and a
 #                `## Reference Map` whenever it bundles real references
 #   Layout       bundled material lives in references/ (kebab-case), never as a
-#                loose .md at the skill root
+#                loose .md at the skill root; eval cases live in evals/<name>/,
+#                never in the skill folder
 #   Portability  no path in a SKILL.md *or a bundled file* reaches outside the
 #                skill folder; a file teaching the rule opts out with a
 #                `portability-exempt:` comment in its first 5 lines
@@ -231,6 +232,12 @@ while IFS= read -r skill_dir; do
     find "$skill_dir" -maxdepth 1 -name '*.md' -exec basename {} \; 2>/dev/null |
       grep -vxE 'SKILL\.md|NOTICE\.md' || true
   )
+
+  # The skill folder is what installers copy and security scanners audit, and a
+  # review skill's eval cases hold deliberately vulnerable code.
+  if [ -d "$skill_dir/assets/evals" ]; then
+    fail "$rel_dir has assets/evals/ — move its eval cases to evals/$name/ so they never ship"
+  fi
 
 done < <(list_skill_dirs)
 

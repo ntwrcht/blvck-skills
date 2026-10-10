@@ -194,6 +194,11 @@ expect_reject "skill with no Next Step and no explanation" "no '## Next Step' se
 expect_reject "bundled references with no Reference Map" "no '## Reference Map' section" \
   "sed -i.bak '/^## Reference Map$/d' skills/engineering/tdd/SKILL.md"
 
+# Eval cases shipped inside skill folders, so Socket rated security-audit
+# "Critical Risk" for the vulnerable code its cases hand the skill to review.
+expect_reject "eval cases inside the skill folder" "assets/evals" \
+  "mkdir -p skills/engineering/security-audit/assets && cp -R evals/security-audit skills/engineering/security-audit/assets/evals"
+
 # Eleven bundled files sat at skill roots in three naming conventions, so
 # "does this skill bundle anything" could not be answered by looking.
 expect_reject "loose .md at the skill root" "loose" \

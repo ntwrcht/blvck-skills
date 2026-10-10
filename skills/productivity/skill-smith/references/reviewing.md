@@ -10,7 +10,7 @@ Read `SKILL.md`, every bundled file, and the target's instructions. Give the use
 
 ## 2. Pin the Current Behaviour
 
-- If the skill has `assets/evals/`, run `bash scripts/run-evals.sh <skill-dir>`; its score is the before-score.
+- If the skill has eval cases — in `assets/evals/` or `<repo-root>/evals/<name>/` — run `bash scripts/run-evals.sh <skill-dir>`; its score is the before-score.
 - If it has none, infer the use cases from the description and body and confirm them in one round in the house style, each question pre-filled with the case you inferred so the user corrects rather than composes. Write the cases per `evals.md`, then run them.
 - Run `bash scripts/run-evals.sh <skill-dir> --baseline` as well: a trigger case plain Claude passes is a job the skill does not have.
 

@@ -22,7 +22,7 @@ Covers the whole life of one skill — use-case discovery, `SKILL.md` authoring,
 ## Artifacts
 
 - Produces: `<skills-root>/<name>/SKILL.md` — the target's existing skills layout, else `.claude/skills/<name>/`
-- Produces: `<skills-root>/<name>/assets/evals/` — the confirmed use cases as eval cases, re-runnable after every edit
+- Produces: `<skills-root>/<name>/assets/evals/`, or `<repo-root>/evals/<name>/` when the target publishes its skill folders — the confirmed use cases as eval cases, re-runnable after every edit
 - Consumes: the target's instructions (`CLAUDE.md`, `AGENTS.md`) and its existing skills, read for conventions, near-misses, and overlap
 
 ## Core Rule
@@ -35,7 +35,7 @@ Optimize for a skill another agent can load quickly and apply correctly. Keep tr
 2. Collect and confirm the use cases — see **Use Cases**. The step is done when the user has confirmed every trigger case, every near-miss, and each trigger case's output criteria.
 3. Decide the invocation type — see **Invocation Design**. It decides which eval cases exist.
 4. Choose the name, the folder, and the resource shape. Place the skill where the target keeps its skills; with none yet, use `.claude/skills/<name>/`, or `~/.claude/skills/<name>/` when the user says it serves all their projects. Start with `SKILL.md` alone; add `references/`, `scripts/`, or `assets/` when a file cuts context load or makes a step deterministic.
-5. Write one eval case per confirmed use case into the new skill's `assets/evals/`, per `references/evals.md`. Write them before any prose, so the cases test the use cases rather than the draft.
+5. Write one eval case per confirmed use case into the new skill's `assets/evals/` — or `<repo-root>/evals/<name>/` when the target publishes its skill folders — per `references/evals.md`. Write them before any prose, so the cases test the use cases rather than the draft.
 6. Decide whether the skill should exist — see **Should It Exist**. The step is done when the user has seen the recommendation with its evidence and made the call.
 7. Draft the skill: the description per **Description Format**, the body per **Writing the Instructions**, the common path in `SKILL.md` and branch-only detail behind pointers.
 8. Run `bash scripts/run-evals.sh <new-skill-dir>` and fix until every case passes — a trigger failure is a description fix, an output failure is an instruction fix. Load `references/evals.md` to read a failure.
@@ -65,7 +65,7 @@ Decide from evidence, before any prose, whether the target needs this skill at a
 | Evidence | Recommend |
 |---|---|
 | No overlap, and the baseline fails | **Create** — continue to drafting |
-| One existing skill takes most trigger cases | **Extend** it — move these eval cases into its `assets/evals/` and follow **Improving an Existing Skill** |
+| One existing skill takes most trigger cases | **Extend** it — move these eval cases in with its own and follow **Improving an Existing Skill** |
 | Two skills split the trigger cases, or the new skill is only a stage | **Merge**, or redraw the boundary between them |
 | The baseline passes every case | **Don't build** — show the baseline outputs as proof |
 

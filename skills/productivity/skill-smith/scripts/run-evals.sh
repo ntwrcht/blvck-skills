@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Runs a skill's trigger and output evals from <skill-dir>/assets/evals/.
+# Runs a skill's trigger and output evals from <skill-dir>/assets/evals/, else <repo-root>/evals/<name>/.
 # Usage: bash scripts/run-evals.sh <skill-dir> [--baseline] [--runs N] [--model MODEL] [--max-cost-usd USD] [--fallback] [--keep-temp]
 #
 # --keep-temp keeps each run's sandbox and transcript, plus the plugin wrapper,
@@ -9,7 +9,9 @@
 # skill folder resolves no plugin and silently scores the baseline instead.
 # --baseline turns that trap into a tool: it runs only the output checks with no
 # skill loaded, to show whether plain Claude already does the job. It needs only
-# assets/evals/, so it runs before SKILL.md exists.
+# the eval cases, so it runs before SKILL.md exists.
+# A repo that publishes its skill folders keeps cases in <repo-root>/evals/<name>/,
+# so installers and security scanners never pick up deliberately vulnerable fixtures.
 # Uses `claude plugin eval` when the account has it; otherwise falls back to
 # `claude -p`, which checks triggering only and prints outputs for judging.
 #
@@ -44,9 +46,6 @@ done
 [ -n "$SKILL_DIR" ] || usage
 SKILL_DIR="$(cd "$SKILL_DIR" && pwd)"
 
-CASES="$SKILL_DIR/assets/evals"
-ls -d "$CASES"/*/ >/dev/null 2>&1 || { echo "No eval cases in $CASES — write them first." >&2; exit 2; }
-
 NAME=""
 if [ -f "$SKILL_DIR/SKILL.md" ]; then
   NAME="$(sed -n 's/^name:[[:space:]]*"\{0,1\}\([a-z0-9-]*\)"\{0,1\}[[:space:]]*$/\1/p' "$SKILL_DIR/SKILL.md" | head -1)"
@@ -55,6 +54,13 @@ elif [ "$BASELINE" -eq 0 ]; then
   exit 2
 fi
 [ -n "$NAME" ] || NAME="$(basename "$SKILL_DIR")"
+
+CASES="$SKILL_DIR/assets/evals"
+if ! ls -d "$CASES"/*/ >/dev/null 2>&1; then
+  REPO_ROOT="$(git -C "$SKILL_DIR" rev-parse --show-toplevel 2>/dev/null || true)"
+  [ -n "$REPO_ROOT" ] && [ -d "$REPO_ROOT/evals/$NAME" ] && CASES="$REPO_ROOT/evals/$NAME"
+fi
+ls -d "$CASES"/*/ >/dev/null 2>&1 || { echo "No eval cases in $CASES — write them first." >&2; exit 2; }
 
 command -v claude >/dev/null 2>&1 || {
   echo "No claude CLI on PATH: these evals need Claude Code. The cases in $CASES are written but unrun." >&2

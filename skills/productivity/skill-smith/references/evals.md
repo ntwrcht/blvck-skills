@@ -16,7 +16,7 @@ Three claims, each checked by a different grader:
 
 ## Case Layout
 
-One folder per case under the new skill's `assets/evals/`, named for the request and prefixed by type:
+One folder per case under the new skill's `assets/evals/`, named for the request and prefixed by type. If the target publishes its skill folders — through `npx skills add` or a plugin — put the cases in `<repo-root>/evals/<name>/` instead, unless its instructions name another folder: whatever sits in the skill folder ships to every user, and security scanners flag the deliberately vulnerable code a review skill's cases contain. `scripts/run-evals.sh` looks in `assets/evals/` first, then `<repo-root>/evals/<name>/`.
 
 ```text
 assets/evals/
@@ -106,7 +106,7 @@ match: contains
 bash scripts/run-evals.sh <path-to-new-skill> --baseline [--runs N] [--model MODEL] [--keep-temp]
 ```
 
-`--baseline` runs the trigger and output cases' output checks with no skill loaded, so it needs only `assets/evals/` and runs before `SKILL.md` exists. It drops each case's `tool_used` grader, skips near-misses, and strips a leading `/<skill-name>` from a user-invoked case's prompt. Each case prints `SKILL HAS A JOB` (plain Claude missed a check) or `PLAIN CLAUDE PASSES`, followed by one verdict line.
+`--baseline` runs the trigger and output cases' output checks with no skill loaded, so it needs only the eval cases and runs before `SKILL.md` exists. It drops each case's `tool_used` grader, skips near-misses, and strips a leading `/<skill-name>` from a user-invoked case's prompt. Each case prints `SKILL HAS A JOB` (plain Claude missed a check) or `PLAIN CLAUDE PASSES`, followed by one verdict line.
 
 A case plain Claude passes is a job the skill does not have. Keep it only when the user wants the behaviour pinned down anyway — as a regression guard, say — and tell them the skill adds nothing there today. The fallback cannot grade output, so it prints each baseline output beside its criteria for you to judge.
 
@@ -118,7 +118,7 @@ bash scripts/run-evals.sh <path-to-new-skill> [--runs N] [--model MODEL] [--max-
 
 The script:
 
-1. Copies the skill into a throwaway plugin wrapper, minus its `assets/evals/`, so the skill under test never sees the answer key. A bare skill folder handed to `claude plugin eval` resolves no plugin and silently scores the baseline — the wrapper is what makes the run test anything.
+1. Copies the skill into a throwaway plugin wrapper, minus any `assets/evals/`, so the skill under test never sees the answer key. A bare skill folder handed to `claude plugin eval` resolves no plugin and silently scores the baseline — the wrapper is what makes the run test anything.
 2. Uses `claude plugin eval` when the account has it (early access, Claude Code 2.1.269 or later), keeping the report local.
 3. Otherwise falls back to `claude -p`: triggering is checked on every case, and each output is printed beside its criteria for you to grade.
 4. Exits 3 when no Claude Code CLI is installed — tell the user the cases are written but unrun.

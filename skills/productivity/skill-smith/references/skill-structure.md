@@ -153,7 +153,7 @@ Make scripts small, documented by usage comments, and safe for the expected work
 
 ## When to Add Assets
 
-Add `assets/` files when the skill needs static templates, fixtures, visual references, or reusable starter files. Keep assets directly relevant to the skill output. A skill's eval cases live in `assets/evals/` too.
+Add `assets/` files when the skill needs static templates, fixtures, visual references, or reusable starter files. Keep assets directly relevant to the skill output. A skill's eval cases live in `assets/evals/` too, unless the target publishes its skill folders — then they go in `<repo-root>/evals/<name>/` (see `references/evals.md`).
 
 ## What to Leave Out
 
