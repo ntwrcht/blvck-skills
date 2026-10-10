@@ -3,6 +3,8 @@ name: grill-me
 description: "User entry point for a relentless plan interview. Use when the user asks to be grilled, stress-test a plan, prepare for review, or decide before building."
 disable-model-invocation: true
 argument-hint: "<plan or topic to stress-test>"
+metadata:
+  internal: true
 ---
 
 # Grill Me

@@ -3,6 +3,8 @@ name: brainstorming
 description: "User entry point for shaping a rough idea into an approved design. Use when the user wants to brainstorm a new feature, component, or product idea before writing a plan or touching code."
 disable-model-invocation: true
 argument-hint: "<idea or feature to shape>"
+metadata:
+  internal: true
 ---
 
 # Brainstorming

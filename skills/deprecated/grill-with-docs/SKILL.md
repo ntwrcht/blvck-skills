@@ -3,6 +3,8 @@ name: grill-with-docs
 description: "User entry point for a grilling session that builds living documentation as decisions crystallize. Use when the user wants to stress-test a plan and simultaneously capture domain vocabulary and architectural decisions."
 disable-model-invocation: true
 argument-hint: "<plan or topic to stress-test>"
+metadata:
+  internal: true
 ---
 
 # Grill With Docs

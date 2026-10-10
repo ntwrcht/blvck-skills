@@ -2,6 +2,8 @@
 
 Skills that are no longer used. Kept for history; not installed, not catalogued.
 
+Each one sets `metadata.internal: true`, so `npx skills add` hides it and `npx skills update` offers to remove an installed copy. In non-interactive mode `update` keeps it; remove it with `npx skills remove <name>`.
+
 | Skill Name | Retired | Why |
 | :--- | :--- | :--- |
 | [Grill Me](grill-me/SKILL.md) | 2026-09-07 | Wrapper whose whole body was "run `grilling`". `/grilling` is already a slash command, so the name added nothing. |

@@ -1,6 +1,8 @@
 ---
 name: technical-trading-strategy
 description: "Designs, reviews, and implements rule-based technical trading strategies with disciplined backtesting, validation, risk controls, and Python engineering guidance. Use when working on indicator rules, strategy specs, backtest code, execution assumptions, market data, or live-trading readiness."
+metadata:
+  internal: true
 ---
 
 # Technical Trading Strategy

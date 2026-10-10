@@ -1,6 +1,8 @@
 ---
 name: kode-thai
 description: Runs an iterative audit-and-fix loop over Thai prose against the kien-thai rule set, repeating passes until one produces zero new edits. Use when the user invokes /kode-thai, asks for an audit loop or repeated review passes on Thai writing, or says variants of "ตรวจวนๆ", "วน audit", "ขัดภาษาไทยให้สุด", or "แก้ไปเรื่อยๆ จนกว่าจะไม่เจอที่ผิด".
+metadata:
+  internal: true
 ---
 
 # kode-thai

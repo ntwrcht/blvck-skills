@@ -18,6 +18,7 @@ ALL_BUCKETS=(
   "misc"
   "personal"
   "in-progress"
+  "personal"
   "deprecated"
 )
 
@@ -25,6 +26,13 @@ SHIPPABLE_BUCKETS=(
   "engineering"
   "productivity"
   "misc"
+)
+
+# Buckets whose skills carry `metadata.internal: true`, which hides them from
+# `npx skills add` and lets `npx skills update` offer to remove installed copies.
+HIDDEN_BUCKETS=(
+  "personal"
+  "deprecated"
 )
 
 # Curated minimal bundles — custom mode exposes the full shippable catalog.

@@ -175,6 +175,11 @@ expect_reject "../.. path escaping the skill root" "reaches outside" \
 expect_reject "Next Step routes the model to a user-invoked skill" "cannot be invoked by the model" \
   "sed -i.bak 's|then hand off to shipping (\`post-mortem\`, \`stakeholder-comms\`)|then hand off to shipping (\`triage\`, \`post-mortem\`)|' skills/engineering/tdd/SKILL.md"
 
+# Retired skills sat in deprecated/ with valid frontmatter, so `npx skills add`
+# still offered them and `npx skills update` kept refreshing installed copies.
+expect_reject "deprecated skill not marked internal" "metadata.internal" \
+  "sed -i.bak '/^  internal: true\$/d; /^metadata:\$/d' skills/deprecated/grill-me/SKILL.md"
+
 # Every skill records what it produces and consumes. Eight skills shipped without
 # an Artifacts section before anything checked for one.
 expect_reject "skill with no Artifacts section" "no '## Artifacts' section" \

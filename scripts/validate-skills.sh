@@ -20,7 +20,8 @@
 #                skill folder; a file teaching the rule opts out with a
 #                `portability-exempt:` comment in its first 5 lines
 #   Catalog      shippable skills appear in plugin.json + both README surfaces;
-#                unshippable buckets appear in neither
+#                unshippable buckets appear in neither; hidden buckets mark
+#                every skill `metadata.internal: true`
 #
 # Usage:
 #   ./scripts/validate-skills.sh
@@ -344,6 +345,12 @@ while IFS= read -r skill_dir; do
   fi
   if grep -q "](skills/$bucket/$name/SKILL.md)" "$REPO_ROOT/README.md"; then
     fail "$bucket/$name is not shippable but is linked in README.md"
+  fi
+  # The skills CLI still finds any SKILL.md in the repo, so without this flag a
+  # retired skill stays installable and `update` keeps refreshing old copies.
+  if _is_in_list "$bucket" "${HIDDEN_BUCKETS[@]}" &&
+     ! extract_frontmatter "$skill_dir/SKILL.md" | grep -qE '^[[:space:]]+internal: true[[:space:]]*$'; then
+    fail "$bucket/$name must set 'metadata.internal: true' so the skills CLI hides it"
   fi
 done < <(list_skill_dirs)
 
