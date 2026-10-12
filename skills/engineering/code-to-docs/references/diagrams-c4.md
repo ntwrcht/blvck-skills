@@ -115,6 +115,8 @@ stateDiagram-v2
 - **Keep the source in the repo.** Commit the Mermaid block in Markdown, not an exported PNG — an image cannot be diffed or corrected.
 - **Cap it at roughly nine boxes.** Past that, split into a parent diagram and a zoomed child.
 
+For a polished, branded diagram meant for slides or stakeholders rather than the repo, suggest the `diagram-design` skill if the user has it installed. Repo docs stay in Mermaid.
+
 ## PlantUML
 
 Reach for PlantUML only when Mermaid cannot express the diagram — detailed deployment topologies, complex class hierarchies, or when the repo already standardizes on `.puml`. It needs a renderer, so match whatever the project already uses.
